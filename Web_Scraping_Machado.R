@@ -12,7 +12,7 @@ library(quanteda.textplots)
 library(lexiconPT)
 library(scales)
 
-theme_set(theme_minimal(base_size = 11))
+theme_set(theme_minimal(base_size = 12))
 
 # ==============================================================================
 # ETAPA 0: CONFIGURAÇÃO DE REDE E LEITURA HTML NATIVA DO WINDOWS (WININET)
@@ -220,7 +220,8 @@ matriz_dfm <- dfm(tokens_limpos)
 
 # ==============================================================================
 # ETAPA 5: COMPLEXIDADE LÉXICA E LEGIBILIDADE
-# ==============================================================================
+
+# Tabela Resumo
 div_lexica <- textstat_lexdiv(matriz_dfm, measure = c("TTR", "CTTR"))
 legibilidade <- textstat_readability(meu_corpus, measure = "Flesch.Kincaid")
 
@@ -237,6 +238,47 @@ tabela_complexidade <- div_lexica %>%
 
 print("=== MÉTRICAS DE COMPLEXIDADE LÉXICA E LEGIBILIDADE ===")
 print(tabela_complexidade)
+
+# Gráfico da Diversidade Léxica (TTR - Type-Token Ratio)
+g_ttr <- tabela_complexidade %>%
+  mutate(Livro = fct_reorder(Livro, Diversidade_TTR)) %>%
+  ggplot(aes(x = Livro, y = Diversidade_TTR, fill = Livro)) +
+  geom_col(show.legend = FALSE, width = 0.7) +
+  geom_text(aes(label = round(Diversidade_TTR, 3)), hjust = -0.15, size = 3.8, fontface = "bold") +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    title = "Lexical Diversion Plot (Métrica TTR)",
+    x = NULL,
+    y = "TTR (Type-Token Ratio)"
+  )
+print(g_ttr)
+
+
+# Gráfico Comparativo: TTR vs CTTR lado a lado
+g_lex_comp <- tabela_complexidade %>%
+  select(Livro, `TTR (Bruto)` = Diversidade_TTR, `CTTR (Corrigido)` = Diversidade_Corrigida_CTTR) %>%
+  pivot_longer(cols = -Livro, names_to = "Metrica", values_to = "Valor") %>%
+  ggplot(aes(x = reorder_within(Livro, Valor, Metrica), y = Valor, fill = Metrica)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label = round(Valor, 2)), hjust = -0.15, size = 3.3) +
+  facet_wrap(~ Metrica, scales = "free") +
+  coord_flip() +
+  scale_x_reordered() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
+  labs(
+    title = "Comparativo de Diversidade Léxica: TTR vs. CTTR",
+    subtitle = "O CTTR corrige o efeito do tamanho da obra na contagem de vocabulário",
+    x = NULL,
+    y = "Pontuação"
+  )
+print(g_lex_comp)
+# ==============================================================================
+
+
+
+
+
 
 # ==============================================================================
 # ETAPA 6: OCORRÊNCIA DE PALAVRAS ESPECÍFICAS E DISPERSÃO (X-RAY)
@@ -267,6 +309,9 @@ g_top <- ggplot(top_palavras,
   theme(strip.text = element_text(face = "bold"))
 print(g_top)
 
+
+
+
 palavras_alvo <- c("olhos", "amor", "morte", "fogo", 
                    "alma", "razão", "loucura", "senhora")
 
@@ -283,6 +328,8 @@ freq_especificas <- df_livros %>%
 print("=== OCORRÊNCIA DE PALAVRAS ESPECÍFICAS (A CADA 10 MIL PALAVRAS) ===")
 print(freq_especificas %>% select(book_short, word, n, freq_por_10mil), n = 30)
 
+
+
 g_heatmap <- ggplot(freq_especificas, aes(x = word, y = book_short, fill = freq_por_10mil)) +
   geom_tile(color = "white") +
   geom_text(aes(label = freq_por_10mil), color = "black", size = 3.2) +
@@ -294,6 +341,9 @@ g_heatmap <- ggplot(freq_especificas, aes(x = word, y = book_short, fill = freq_
   )
 print(g_heatmap)
 
+
+#-------------------------------------------------------------------------------#
+# Gráfico de Dispersão Léxica 
 kwic_busca <- kwic(tokens(meu_corpus),
                    pattern = c("olhos", "alma", "amor", "dinheiro", "senhora"),
                    case_insensitive = TRUE)
@@ -303,11 +353,14 @@ if (nrow(kwic_busca) > 0) {
     aes(color = keyword) +
     scale_color_brewer(palette = "Dark2", guide = "none") +
     labs(
-      title = "Dispersão Léxica ao Longo das Obras (Raio-X)",
-      x = "Índice Relativo de Tokens (Início -> Fim da Obra)"
+      title = "Lexical Dispersion Plot",
+      x = "Relative Tokens Index"
     )
   print(g_xray)
 }
+#-------------------------------------------------------------------------------#
+
+
 
 # ==============================================================================
 # ETAPA 7: ANÁLISE DE SENTIMENTO AO LONGO DA NARRATIVA (LEXICONPT)
@@ -361,24 +414,28 @@ df_sentimento_valido <- df_sentimento %>%
   filter(n() >= 3) %>%
   ungroup()
 
+
+#-------------------------------------------------------------------------------#
 # Gráfico 1: Arco Emocional ao longo da obra
 g_sent1 <- ggplot(df_sentimento_valido, aes(x = posicao_relativa, 
                                             y = polaridade_soma, 
                                             color = book_short)) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray40") +
-  geom_line(alpha = 0.35) +
-  geom_smooth(method = "loess", se = FALSE, linewidth = 1.0) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "black") +
+  geom_line(alpha = 1.0) +
+  #geom_smooth(method = "loess", se = FALSE, linewidth = 2.0) +
   facet_wrap(~ book_short, scales = "free_y", ncol = 4) +
   scale_x_continuous(labels = scales::percent) +
   labs(
-    title = "Arco Emocional das Obras de Machado de Assis",
-    subtitle = "Saldo de polaridade por capítulo (OpLexicon v3.0) com curva de tendência",
     x = "Posição Relativa no Livro",
     y = "Saldo de Sentimento"
   ) +
   theme(legend.position = "none", strip.text = element_text(face = "bold"))
 print(g_sent1)
+#-------------------------------------------------------------------------------#
 
+
+
+#-------------------------------------------------------------------------------#
 # Gráfico 2: Volatilidade Emocional (Desvio Padrão entre capítulos)
 g_sent2 <- df_sentimento_valido %>%
   group_by(book_short) %>%
@@ -395,3 +452,68 @@ g_sent2 <- df_sentimento_valido %>%
     y = "Desvio Padrão do Sentimento"
   )
 print(g_sent2)
+#-------------------------------------------------------------------------------#
+
+
+
+
+
+#-------------------------------------------------------------------------------#
+
+library(wordcloud)
+library(reshape2)
+
+# 1. Lista de palavras funcionais/stopwords que o OpLexicon classifica com polaridade,
+# mas que não carregam emoção literária real no texto
+ruido_sentimento <- c(
+  stopwords("portuguese"),
+  "mas", "bem", "mal", "pouco", "pouca", "poucos", "poucas",
+  "grande", "grandes", "melhor", "pior", "certo", "certa",
+  "tal", "assim", "ainda", "agora", "sempre", "nunca", "nada", "tudo"
+)
+
+# 2. Filtra o ruído e monta a matriz de comparação
+matriz_nuvem_sent <- df_tokens_sent %>%
+  filter(polarity != 0) %>%
+  filter(!term %in% ruido_sentimento, nchar(term) > 2) %>%
+  mutate(sentimento = ifelse(polarity > 0, "Positivas", "Negativas")) %>%
+  count(term, sentimento, sort = TRUE) %>%
+  acast(term ~ sentimento, value.var = "n", fill = 0)
+
+# 3. Gera a nuvem com palavras maiores e melhor espaçamento
+par(mar = c(0, 0, 2, 0))
+comparison.cloud(
+  matriz_nuvem_sent,
+  colors = c("#d95f02", "#1b9e77"), # Laranja = Negativas | Verde = Positivas
+  max.words = 80,                   # Menos palavras = fontes bem maiores e legíveis
+  scale = c(4.5, 0.9),              # Aumenta a fonte máxima (4.5) e a mínima (0.9)
+  title.size = 1.5,
+  title.bg.colors = "white",
+  random.order = FALSE
+)
+title(main = "Machado de Assis")
+
+
+
+
+
+
+#-------------------------------------------------------------------------------#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
