@@ -1,0 +1,154 @@
+---
+title: "Arquitetura de Coleta e Pipeline de Text Mining"
+subtitle: "Web Scraping no Wikisource, tratamento de dados não estruturados e ecossistema R"
+title-block-banner: FALSE
+---
+
+
+
+
+::: {.callout-tip appearance="minimal"}
+**Reprodutibilidade:** Todo o fluxo de coleta e processamento foi desenvolvido em linguagem **R**. Para evitar requisições repetidas aos servidores da Wikimedia durante a compilação deste portfólio, os textos coletados foram persistidos localmente em formato binário nativo (`.rds`).
+:::
+
+## 1. Ecossistema de Pacotes e Referências Técnicas
+
+O pipeline computacional deste projeto apoia-se em bibliotecas consolidadas da comunidade **R** para ciência de dados, raspagem web e linguística computacional. A tabela abaixo sistematiza cada pacote empregado, sua função na arquitetura do projeto e seus respectivos autores principais:
+
+| Pacote | Função no Pipeline | Autores / Mantenedores Principais |
+|:-----------------------|:-----------------------|:-----------------------|
+| **`rvest` & `xml2`** | Navegação na árvore DOM/HTML, seleção de nós via CSS (`#mw-content-text`) e extração de atributos e parágrafos. | Hadley Wickham, Jim Hester & Jeroen Ooms |
+| **`tidyverse`** | Manipulação tabular (`dplyr`, `tidyr`), expressões regulares (`stringr`), programação funcional (`purrr`) e visualização (`ggplot2`). | Hadley Wickham e equipe Posit |
+| **`tidytext`** | Tokenização em formato *tidy* (uma palavra ou n-grama por linha) e cálculo de ponderação estatística `TF-IDF`. | Julia Silge & David Robinson |
+| **`quanteda`** | Construção formal do `corpus`, limpeza de tokens e geração da Matriz Documento-Termo (`dfm`). | Kenneth Benoit, Kohei Watanabe e equipe |
+| **`quanteda.textstats`** | Cálculo de diversidade léxica (`TTR`, `CTTR`), legibilidade (`Flesch-Kincaid`) e similaridade de cosseno. | Kenneth Benoit & Kohei Watanabe |
+| **`quanteda.textplots`** | Visualização de dispersão léxica longitudinal ao longo das narrativas (`textplot_xray`). | Kenneth Benoit & Kohei Watanabe |
+| **`lexiconPT`** | Fornecimento do dicionário de polaridade em língua portuguesa *OpLexicon v3.0* e base metodológica inspirada no pacote `literaturaBR`. | Sillas Gonzaga |
+| **`gt` & `DT`** | Renderização de tabelas acadêmicas estáticas de alta precisão (`gt`) e tabelas interativas navegáveis (`DT`). | Richard Iannone (`gt`) & Yihui Xie (`DT`) |
+
+------------------------------------------------------------------------
+
+## 2. Estratégia de Web Scraping (`pt.wikisource.org`)
+
+O **Wikisource** é uma biblioteca digital livre mantida pela Fundação Wikimedia que hospeda obras em domínio público fielmente transcritas. Diferente de repositórios com arquivos únicos em `.txt`, os romances de Machado de Assis no Wikisource em português são organizados hierarquicamente:
+
+1.  **Página Índice da Obra:** Contém os metadados bibliográficos e uma lista de hiperlinks apontando para cada capítulo individual (ex.: `/wiki/Dom_Casmurro/I`, `/wiki/Dom_Casmurro/II`).
+2.  **Subpáginas de Capítulos:** Contêm o texto literário propriamente dito, encapsulado dentro do seletor HTML `#mw-content-text .mw-parser-output p`, acompanhado de elementos de navegação (*Anterior*, *Próximo*, *Índice*) e notas de rodapé numéricas (`[1]`, `[2]`).
+
+### Contorno de Proxy e Leitura Nativa (`wininet`)
+
+Em ambientes Windows corporativos ou institucionais com restrições de proxy, requisições diretas via `curl` ou `httr` frequentemente sofrem bloqueio de certificado SSL ou *timeout*. Para garantir estabilidade, implementou-se uma função de leitura baseada no motor nativo de rede do Windows (`method = "wininet"` via `download.file`), combinada com:
+
+-   **Pausa ética (`Sys.sleep(0.25)`):** Intervalo de 250 milissegundos entre requisições para não sobrecarregar os servidores da Wikimedia.
+-   **Decodificação de URLs (`URLdecode`):** Normalização de caracteres acentuados (como em *Memórias Póstumas* e *Esaú e Jacó*) para garantir o pareamento exato dos links de capítulos.
+-   **Persistência em Cache (`.rds`):** Armazenamento local da base bruta após a primeira coleta.
+
+```{r}
+#| label: code-scraping
+#| eval: false
+#| echo: true
+
+library(tidyverse)
+library(rvest)
+
+# Configuração automática de proxy do sistema Windows
+proxy_sistema <- tryCatch(curl::ie_get_proxy_for_url("[https://pt.wikisource.org](https://pt.wikisource.org)"), error = function(e) NA)
+if (!is.na(proxy_sistema) && proxy_sistema != "") {
+  Sys.setenv(https_proxy = proxy_sistema, http_proxy = proxy_sistema)
+}
+
+# Função de leitura HTML usando motor nativo wininet
+ler_html_wininet <- function(url) {
+  arquivo_temp <- tempfile(fileext = ".html")
+  status <- tryCatch(
+    suppressWarnings(download.file(url, destfile = arquivo_temp, method = "wininet", quiet = TRUE)),
+    error = function(e) return(1)
+  )
+  if (status != 0 || !file.exists(arquivo_temp)) return(NULL)
+  pagina <- tryCatch(read_html(arquivo_temp, encoding = "UTF-8"), error = function(e) NULL)
+  unlink(arquivo_temp)
+  return(pagina)
+}
+
+# Extração dos parágrafos de cada capítulo
+extrair_texto_pagina <- function(url_pagina) {
+  Sys.sleep(0.25) # Pausa ética
+  pagina <- ler_html_wininet(url_pagina)
+  if (is.null(pagina)) return(tibble(url = url_pagina, paragraph_number = NA_integer_, text = NA_character_))
+  
+  paragrafos <- pagina %>%
+    html_elements("#mw-content-text .mw-parser-output p") %>%
+    html_text2() %>%
+    str_remove_all("\\[\\d+\\]") %>% # Remove referências de notas de rodapé
+    str_squish()
+  
+  paragrafos <- paragrafos[paragrafos != "" & nchar(paragrafos) > 1]
+  tibble(url = url_pagina, paragraph_number = seq_along(paragrafos), text = paragrafos)
+}
+```
+
+------------------------------------------------------------------------
+
+## 3. Limpeza, Padronização e Estruturação do Banco de Dados
+
+Os textos brutos extraídos da web contêm ruídos estruturais que precisam ser removidos antes de qualquer cálculo estatístico. O fluxo de higienização segue quatro etapas:
+
+1.  **Filtragem de Ruído Editorial:** Remoção de linhas vazias (`NA`) e de parágrafos administrativos capturados acidentalmente pelos seletores HTML (como cabeçalhos iniciados por *"Índice"*, *"Anterior"*, *"Próximo"*, *"Wikisource"* ou *"Obra editada"*).
+2.  **Padronização de Metadados:** Criação de identificadores curtos (`book_short`) para visualização gráfica e classificação das obras segundo a periodização crítica da literatura brasileira (**Fase Romântica** vs. **Fase Realista**).
+3.  **Estruturação Tabular (`Tidy Data`):** Organização do banco em quatro variáveis fundamentais: `book_short` (obra), `chapter_name` (capítulo), `paragraph_number` (ordem sequencial do parágrafo) e `text` (conteúdo textual limpo).
+4.  **Remoção de Stopwords e Arcaísmos:** Para a análise de frequência e modelagem temática, eliminam-se pontuações, algarismos, símbolos, *stopwords* padrão da língua portuguesa e termos auxiliares/arcaicos recorrentes na prosa oitocentista (como *"dous"*, *"cousa"*, *"havia"*, *"disse"*).
+
+```{r}
+#| label: code-limpeza
+#| eval: false
+#| echo: true
+
+library(quanteda)
+
+# Higienização e enriquecimento de metadados
+df_livros <- df_livros_bruto %>%
+  filter(!is.na(text)) %>%
+  filter(!str_detect(text, "^(Índice|Anterior|Próximo|Wikisource|Obra editada)")) %>%
+  mutate(
+    author = "Machado de Assis",
+    fase = ifelse(book_short == "Helena", "Fase Romântica", "Fase Realista")
+  )
+
+# Agregação por obra para construção do Corpus e da Matriz Documento-Termo (DFM)
+df_corpus_agregado <- df_livros %>%
+  group_by(book_short) %>%
+  summarise(text = paste(text, collapse = " "), .groups = "drop")
+
+meu_corpus <- corpus(df_corpus_agregado$text, docnames = df_corpus_agregado$book_short)
+
+sw_extra <- c("é", "era", "disse", "ia", "ser", "ter", "havia", "ainda", 
+              "assim", "tudo", "nada", "outro", "outra", "dous", "cousa")
+
+tokens_limpos <- tokens(
+  meu_corpus,
+  remove_punct = TRUE,
+  remove_numbers = TRUE,
+  remove_symbols = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra))
+
+matriz_dfm <- dfm(tokens_limpos)
+```
+
+------------------------------------------------------------------------
+
+## 4. Fluxo Completo da Arquitetura
+
+O diagrama abaixo resume a transformação dos dados desde o código-fonte HTML até os modelos analíticos apresentados nas próximas abas:
+
+| Estágio | Entrada | Processamento | Saída Estruturada |
+|:-----------------|:-----------------|:-----------------|:-----------------|
+| **1. Coleta** | URLs do Wikisource (`HTML`) | Raspagem DOM via `rvest` + `wininet` | Arquivo local `.rds` bruto |
+| **2. Higienização** | Parágrafos brutos com ruído | Regex (`stringr`) + filtros de metadados | Tabela `df_livros` (827 capítulos) |
+| **3. Tokenização** | Texto corrido por obra | Normalização + remoção de *stopwords* | `corpus` e `dfm` (`quanteda`) |
+| **4. Modelagem** | `dfm` + `OpLexicon v3.0` | Estatística léxica, TF-IDF, sentimentos e clusters | Tabelas `gt` e gráficos `ggplot2` |
+
+Avance para a aba **Métricas Estatísticas** para consultar a fundamentação matemática das medidas utilizadas neste estudo.
+
+------------------------------------------------------------------------
