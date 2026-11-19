@@ -82,5 +82,54 @@
     "title": "Vida, Contexto e Obra",
     "section": "6. Conexão com a Análise Computacional",
     "text": "6. Conexão com a Análise Computacional\nA transição da Primeira Fase (representada neste corpus por Helena, de 1876) para a Segunda Fase (representada por Memórias Póstumas, O Alienista, Quincas Borba, Dom Casmurro, Esaú e Jacó e Memorial de Aires) levanta hipóteses literárias que serão testadas quantitativamente nas próximas seções:\n\nRiqueza Vocabular e Sintaxe: O estilo mais seco, elíptico e fragmentado dos romances realistas altera a diversidade léxica (TTR e CTTR) e a complexidade sintática em relação à prosa romântica de Helena?\nAssinatura Temática: Como termos centrais da filosofia machadiana — como olhos, alma, morte, razão e loucura — se distribuem ao longo das narrativas?\nPolaridade Emocional: O pessimismo e a ironia da fase realista se refletem em um saldo de sentimento mais negativo ou em maior volatilidade emocional entre capítulos?\n\nAvance para a aba Scraping & Pipeline para acompanhar a arquitetura técnica de coleta e tratamento desses dados em R."
+  },
+  {
+    "objectID": "metricas-teoria.html",
+    "href": "metricas-teoria.html",
+    "title": "Fundamentação Estatística e Linguística",
+    "section": "",
+    "text": "Rigor Metodológico: A mineração de textos transforma fenômenos estilísticos e semânticos em variáveis quantitativas comparáveis. Esta seção detalha as equações matemáticas e os critérios estatísticos adotados nas etapas analíticas do estudo."
+  },
+  {
+    "objectID": "metricas-teoria.html#diversidade-e-riqueza-léxica",
+    "href": "metricas-teoria.html#diversidade-e-riqueza-léxica",
+    "title": "Fundamentação Estatística e Linguística",
+    "section": "1. Diversidade e Riqueza Léxica",
+    "text": "1. Diversidade e Riqueza Léxica\nA riqueza vocabular mede o grau de variedade lexical de um autor, avaliando o equilíbrio entre a introdução de palavras novas (Types) e a repetição de palavras já utilizadas (Tokens).\n\n1.1 Type-Token Ratio (\\(TTR\\))\nO índice TTR expressa a razão simples entre o número de vocábulos únicos (\\(V\\)) e o total de palavras ocorridas (\\(N\\)) em um documento:\n\\[TTR = \\frac{V}{N}\\]\n\nInterpretação: Varia no intervalo \\((0, 1]\\). Valores próximos de \\(1\\) indicam ausência de repetição vocabular.\nLimitação Estatística (Viés de Extensão): O \\(TTR\\) é inversamente sensível ao tamanho do texto. Em narrativas longas, à medida que \\(N\\) cresce, o repertório de conectivos e substantivos comuns esgota-se, fazendo com que o \\(TTR\\) decaia naturalmente — penalizando romances extensos como Quincas Borba frente a novelas curtas como O Alienista.\n\n\n\n\n1.2 Corrected Type-Token Ratio (\\(CTTR\\))\nProposto por John B. Carroll (1964), o CTTR corrige o efeito da extensão textual aplicando uma transformação de raiz quadrada no denominador:\n\\[CTTR = \\frac{V}{\\sqrt{2N}}\\]\n\nInterpretação: Ao amortecer o crescimento linear de \\(N\\), o \\(CTTR\\) permite comparar diretamente obras de extensões muito distintas (como uma novela de 16 mil palavras e um romance de 90 mil palavras) sem distorção de escala."
+  },
+  {
+    "objectID": "metricas-teoria.html#complexidade-sintática-e-legibilidade",
+    "href": "metricas-teoria.html#complexidade-sintática-e-legibilidade",
+    "title": "Fundamentação Estatística e Linguística",
+    "section": "2. Complexidade Sintática e Legibilidade",
+    "text": "2. Complexidade Sintática e Legibilidade\nPara avaliar a estrutura frasal e o esforço cognitivo exigido na leitura de cada obra, utiliza-se o índice de Flesch-Kincaid Grade Level (\\(FK\\)), calculado sobre o texto integral não filtrado (preservando pontuação para delimitação exata de sentenças):\n\\[FK = 0{,}39 \\left( \\frac{N_{\\text{palavras}}}{N_{\\text{sentenças}}} \\right) + 11{,}8 \\left( \\frac{N_{\\text{sílabas}}}{N_{\\text{palavras}}} \\right) - 15{,}59\\]\n\nInterpretação: O índice combina o comprimento médio das sentenças (complexidade sintática) com a extensão silábica média das palavras (complexidade morfológica). Valores mais elevados indicam períodos mais longos, subordinados e vocabulário mais erudito."
+  },
+  {
+    "objectID": "metricas-teoria.html#frequência-normalizada-e-distintividade-vocabular",
+    "href": "metricas-teoria.html#frequência-normalizada-e-distintividade-vocabular",
+    "title": "Fundamentação Estatística e Linguística",
+    "section": "3. Frequência Normalizada e Distintividade Vocabular",
+    "text": "3. Frequência Normalizada e Distintividade Vocabular\n\n3.1 Frequência Relativa por 10.000 Palavras\nComparar contagens brutas de palavras-chave (como “olhos”, “morte” ou “alma”) entre livros de tamanhos diferentes gera conclusões enviesadas. A normalização por base fixa de \\(10.000\\) tokens estabelece uma taxa proporcional:\n\\[F_{\\text{rel}}(t, d) = \\left( \\frac{f_{t,d}}{N_d} \\right) \\times 10.000\\]\nOnde \\(f_{t,d}\\) é a frequência absoluta do termo \\(t\\) no livro \\(d\\), e \\(N_d\\) é o total de palavras do livro \\(d\\).\n\n\n\n3.2 Term Frequency – Inverse Document Frequency (\\(TF\\text{-}IDF\\))\nEnquanto a frequência simples destaca palavras muito comuns em toda a língua, o TF-IDF identifica os termos que funcionam como assinatura exclusiva de um livro específico dentro do conjunto das 7 obras (\\(D\\)):\n\\[TF(t, d) = \\frac{f_{t,d}}{\\sum_{k \\in d} f_{k,d}} \\qquad \\text{e} \\qquad IDF(t, D) = \\ln \\left( \\frac{|D|}{|\\{d \\in D : t \\in d\\}|} \\right)\\]\n\\[TF\\text{-}IDF(t, d, D) = TF(t, d) \\times IDF(t, D)\\]\n\nInterpretação: Um termo recebe pontuação máxima quando aparece com alta frequência em um único romance (\\(TF\\) alto), mas é raro ou ausente nos demais romances do autor (\\(IDF\\) alto), revelando personagens centrais, cenários e obsessões temáticas específicas de cada narrativa."
+  },
+  {
+    "objectID": "metricas-teoria.html#análise-de-sentimentos-e-volatilidade-emocional",
+    "href": "metricas-teoria.html#análise-de-sentimentos-e-volatilidade-emocional",
+    "title": "Fundamentação Estatística e Linguística",
+    "section": "4. Análise de Sentimentos e Volatilidade Emocional",
+    "text": "4. Análise de Sentimentos e Volatilidade Emocional\nA dimensão afetiva das narrativas é mensurada por meio de abordagem léxica utilizando o dicionário OpLexicon v3.0 (Souza et al., 2011; disponibilizado via lexiconPT), que atribui a cada termo \\(t\\) uma polaridade discreta \\(p(t) \\in \\{-1, 0, +1\\}\\) (negativo, neutro ou positivo).\n\n4.1 Saldo de Polaridade por Capítulo (\\(S_c\\)) e Progresso Relativo\nPara cada capítulo \\(c\\) de uma obra com \\(C\\) capítulos totais, calcula-se o saldo líquido de polaridade e sua posição normalizada na linha do tempo narrativa:\n\\[S_c = \\sum_{i=1}^{n_c} p(t_i) \\qquad \\text{e} \\qquad \\text{Posição Relativa}_c = \\frac{c}{C} \\in (0, 1]\\]\nA normalização da posição em percentual (\\(0\\%\\) a \\(100\\%\\)) permite sobrepor e comparar os arcos emocionais de obras com estruturas capitulares muito distintas (como os 28 capítulos longos de Helena frente aos 198 capítulos curtos de Quincas Borba), suavizados por regressão local não paramétrica (LOESS).\n\n\n\n4.2 Volatilidade Emocional (\\(\\sigma_S\\))\nMede a instabilidade dramática de cada obra por meio do desvio padrão amostral dos saldos de polaridade entre seus capítulos:\n\\[\\sigma_S = \\sqrt{\\frac{1}{C - 1} \\sum_{c=1}^{C} \\left( S_c - \\bar{S} \\right)^2}\\]\n\nInterpretação: Obras com \\(\\sigma_S\\) elevado alternam bruscamente capítulos de euforia/ironia positiva com capítulos de crise, luto ou pessimismo; obras com \\(\\sigma_S\\) baixo mantêm um tom emocional mais homogêneo e contido."
+  },
+  {
+    "objectID": "metricas-teoria.html#similaridade-de-cosseno-e-clusterização-hierárquica",
+    "href": "metricas-teoria.html#similaridade-de-cosseno-e-clusterização-hierárquica",
+    "title": "Fundamentação Estatística e Linguística",
+    "section": "5. Similaridade de Cosseno e Clusterização Hierárquica",
+    "text": "5. Similaridade de Cosseno e Clusterização Hierárquica\nPara medir a proximidade estilística entre dois livros \\(A\\) e \\(B\\), cada obra é representada como um vetor de frequências relativas na Matriz Documento-Termo (\\(\\mathbf{v}_A\\) e \\(\\mathbf{v}_B\\)). A Similaridade de Cosseno calcula o cosseno do ângulo \\(\\theta\\) entre esses dois vetores no espaço multidimensional do vocabulário:\n\\[\\text{Similaridade}(A, B) = \\cos(\\theta) = \\frac{\\mathbf{v}_A \\cdot \\mathbf{v}_B}{\\|\\mathbf{v}_A\\| \\, \\|\\mathbf{v}_B\\|} = \\frac{\\sum_{i=1}^{M} v_{A,i} \\, v_{B,i}}{\\sqrt{\\sum_{i=1}^{M} v_{A,i}^2} \\sqrt{\\sum_{i=1}^{M} v_{B,i}^2}}\\]\nA partir da matriz de dissimilaridade \\(D(A, B) = 1 - \\cos(\\theta)\\), aplica-se o algoritmo de Agrupamento Hierárquico Aglomerativo pelo método de Ward (ward.D2), que minimiza a variância interna dos grupos a cada fusão, permitindo verificar empiricamente o distanciamento vocabular entre a Fase Romântica e a Fase Realista de Machado de Assis."
+  },
+  {
+    "objectID": "metricas-teoria.html#síntese-das-métricas-aplicadas",
+    "href": "metricas-teoria.html#síntese-das-métricas-aplicadas",
+    "title": "Fundamentação Estatística e Linguística",
+    "section": "6. Síntese das Métricas Aplicadas",
+    "text": "6. Síntese das Métricas Aplicadas\n\n\n\n\n\n\n\n\n\nDimensão Analítica\nMétrica\nPacote R\nObjetivo Principal\n\n\n\n\nRiqueza Vocabular\n\\(TTR\\) e \\(CTTR\\)\nquanteda.textstats\nAvaliar variedade lexical com e sem controle de extensão.\n\n\nSintaxe / Estilo\nFlesch-Kincaid (\\(FK\\))\nquanteda.textstats\nMedir densidade frasal e complexidade de leitura.\n\n\nRelevância Temática\n\\(TF\\text{-}IDF\\) e Freq/10k\ntidytext / dplyr\nIdentificar palavras exclusivas e densidade de motivos literários.\n\n\nArco Emocional\nPolaridade (\\(S_c\\)) e \\(\\sigma_S\\)\nlexiconPT\nMapear a trajetória afetiva e a volatilidade dramática.\n\n\nEstilometria\nCosseno + Ward.D2\nquanteda.textstats\nAgrupar obras por afinidade vocabular e fase literária.\n\n\n\nAvance para a aba Resultados & Léxico para explorar as tabelas descritivas e os gráficos gerados a partir das 7 obras completas."
   }
 ]
