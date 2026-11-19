@@ -4,9 +4,6 @@ subtitle: "Web Scraping no Wikisource, tratamento de dados não estruturados e e
 title-block-banner: FALSE
 ---
 
-
-
-
 ::: {.callout-tip appearance="minimal"}
 **Reprodutibilidade:** Todo o fluxo de coleta e processamento foi desenvolvido em linguagem **R**. Para evitar requisições repetidas aos servidores da Wikimedia durante a compilação deste portfólio, os textos coletados foram persistidos localmente em formato binário nativo (`.rds`).
 :::

@@ -1,0 +1,394 @@
+---
+title: "Resultados Descritivos e Análise Léxica"
+subtitle: "Volumetria, complexidade vocabular, assinatura temática (TF-IDF) e dispersão narrativa"
+title-block-banner: FALSE
+---
+
+
+
+
+```{r}
+#| label: setup-resultados
+#| include: false
+
+library(tidyverse)
+library(tidytext)
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(gt)
+library(DT)
+library(scales)
+
+theme_set(theme_minimal(base_size = 11))
+
+# Carrega a base já raspada e limpa
+df_livros <- readRDS("machado_wikisource_7livros.rds") %>%
+  filter(!is.na(text)) %>%
+  filter(!str_detect(text, "^(Índice|Anterior|Próximo|Wikisource|Obra editada)")) %>%
+  mutate(
+    author = "Machado de Assis",
+    book_short = case_when(
+      str_detect(book_name, "Dom Casmurro") ~ "Dom Casmurro",
+      str_detect(book_name, "Brás Cubas") ~ "Memórias Póstumas",
+      str_detect(book_name, "Quincas Borba") ~ "Quincas Borba",
+      str_detect(book_name, "Alienista") ~ "O Alienista",
+      str_detect(book_name, "Helena") ~ "Helena",
+      str_detect(book_name, "Memorial de Aires") ~ "Memorial de Aires",
+      str_detect(book_name, "Esaú") ~ "Esaú e Jacó",
+      TRUE ~ book_name
+    ),
+    fase = ifelse(book_short == "Helena", "Fase Romântica", "Fase Realista")
+  )
+
+# Agregação para Corpus e DFM
+df_corpus_agregado <- df_livros %>%
+  group_by(book_short) %>%
+  summarise(text = paste(text, collapse = " "), .groups = "drop")
+
+meu_corpus <- corpus(df_corpus_agregado$text, docnames = df_corpus_agregado$book_short)
+
+sw_extra <- c("é", "era", "disse", "ia", "ser", "ter", "havia", "ainda", 
+              "assim", "tudo", "nada", "outro", "outra", "dous", "cousa")
+
+tokens_limpos <- tokens(
+  meu_corpus,
+  remove_punct = TRUE,
+  remove_numbers = TRUE,
+  remove_symbols = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra))
+
+matriz_dfm <- dfm(tokens_limpos)
+```
+
+::: {.callout-note appearance="minimal"}
+**Visão Geral do Corpus:** O conjunto analisado reúne **7 obras integrais** de Machado de Assis (6 romances e 1 novela), totalizando **827 capítulos**, **8.915 parágrafos** e mais de **428 mil tokens** extraídos diretamente do Wikisource em português.
+:::
+
+## 1. Estatística Descritiva das Obras
+
+A tabela executiva abaixo consolida a estrutura narrativa de cada obra, agrupada por escola/fase literária, detalhando a quantidade de capítulos, parágrafos, volume total de palavras (*tokens*) e as médias de extensão por unidade estrutural.
+
+```{r}
+#| label: tbl-volumetria-geral
+#| tbl-cap: "Estatística Descritiva e Volumetria das 7 Obras Analisadas"
+
+tabela_geral <- df_livros %>%
+  mutate(tokens_brutos = str_count(text, "\\S+")) %>%
+  group_by(fase, book_short) %>%
+  summarise(
+    capitulos = n_distinct(chapter_name),
+    paragrafos = n(),
+    total_tokens = sum(tokens_brutos),
+    media_palavras_cap = round(total_tokens / capitulos, 1),
+    media_palavras_par = round(total_tokens / paragrafos, 1),
+    .groups = "drop"
+  ) %>%
+  arrange(fase, desc(total_tokens))
+
+tabela_geral %>%
+  gt(groupname_col = "fase") %>%
+  cols_label(
+    book_short = "Obra",
+    capitulos = "Capítulos",
+    paragrafos = "Parágrafos",
+    total_tokens = "Tokens",
+    media_palavras_cap = "Tokens/Cap.",
+    media_palavras_par = "Tokens/Par."
+  ) %>%
+  fmt_number(columns = c(capitulos, paragrafos, total_tokens), decimals = 0, sep_mark = ".") %>%
+  fmt_number(columns = c(media_palavras_cap, media_palavras_par), decimals = 1, dec_mark = ",") %>%
+  summary_rows(
+    columns = c(capitulos, paragrafos, total_tokens),
+    fns = list(Subtotal = ~ sum(.)),
+    fmt = ~ fmt_number(., decimals = 0, sep_mark = ".")
+  ) %>%
+  grand_summary_rows(
+    columns = c(capitulos, paragrafos, total_tokens),
+    fns = list(`Total Geral` = ~ sum(.)),
+    fmt = ~ fmt_number(., decimals = 0, sep_mark = ".")
+  ) %>%
+  tab_header(
+    title = md("**Volumetria e Arquitetura Narrativa das Obras**"),
+    subtitle = "Comparação estrutural entre a Fase Romântica e a Fase Realista"
+  ) %>%
+  tab_source_note("Fonte: Elaboração própria a partir de textos integrais do Wikisource.")
+```
+
+### Consulta Interativa por Capítulo (`DT`)
+Para inspecionar a granularidade interna de cada romance, a tabela dinâmica abaixo permite pesquisar, ordenar e filtrar todos os **827 capítulos** por obra, número de parágrafos e extensão em palavras:
+
+```{r}
+#| label: tbl-interativa-capitulos
+
+df_capitulos_dt <- df_livros %>%
+  mutate(tokens_brutos = str_count(text, "\\S+")) %>%
+  group_by(Obra = book_short, Fase = fase, Capítulo = chapter_name) %>%
+  summarise(
+    Parágrafos = n(),
+    Tokens = sum(tokens_brutos),
+    `Média Tokens/Par.` = round(Tokens / Parágrafos, 1),
+    .groups = "drop"
+  )
+
+datatable(
+  df_capitulos_dt,
+  filter = "top",
+  rownames = FALSE,
+  options = list(
+    pageLength = 10,
+    language = list(url = "//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json")
+  )
+)
+```
+
+---
+
+## 2. Complexidade Léxica e Legibilidade
+
+A segunda tabela avalia a riqueza do repertório vocabular de cada livro após a higienização de pontuação e *stopwords*, contrastando o índice bruto (**TTR**) com o índice corrigido pela extensão (**CTTR**) e a complexidade sintática (**Flesch-Kincaid**).
+
+```{r}
+#| label: tbl-complexidade-lexica
+#| tbl-cap: "Métricas de Diversidade Léxica e Legibilidade por Livro"
+
+div_lexica <- textstat_lexdiv(matriz_dfm, measure = c("TTR", "CTTR"))
+legibilidade <- textstat_readability(meu_corpus, measure = "Flesch.Kincaid")
+
+tabela_complexidade <- div_lexica %>%
+  left_join(legibilidade, by = "document") %>%
+  left_join(
+    tibble(
+      document = docnames(matriz_dfm),
+      vocab_unico = ntype(matriz_dfm),
+      tokens_uteis = ntoken(matriz_dfm)
+    ),
+    by = "document"
+  ) %>%
+  select(
+    Livro = document,
+    vocab_unico,
+    tokens_uteis,
+    Diversidade_TTR = TTR,
+    Diversidade_Corrigida_CTTR = CTTR,
+    Complexidade_Flesch_Kincaid = Flesch.Kincaid
+  ) %>%
+  arrange(desc(Diversidade_Corrigida_CTTR))
+
+tabela_complexidade %>%
+  gt() %>%
+  cols_label(
+    Livro = "Obra",
+    vocab_unico = "Vocabulário Único (Types)",
+    tokens_uteis = "Tokens Úteis",
+    Diversidade_TTR = "TTR (Bruto)",
+    Diversidade_Corrigida_CTTR = "CTTR (Corrigido)",
+    Complexidade_Flesch_Kincaid = "Flesch-Kincaid"
+  ) %>%
+  fmt_number(columns = c(vocab_unico, tokens_uteis), decimals = 0, sep_mark = ".") %>%
+  fmt_number(columns = c(Diversidade_TTR, Diversidade_Corrigida_CTTR, Complexidade_Flesch_Kincaid), decimals = 3, dec_mark = ",") %>%
+  data_color(columns = Diversidade_Corrigida_CTTR, palette = c("#f7fbff", "#2171b5")) %>%
+  tab_header(
+    title = md("**Riqueza Vocabular e Legibilidade Sintática**"),
+    subtitle = "Ordenado pela diversidade léxica corrigida (CTTR)"
+  )
+```
+
+```{r}
+#| label: fig-diversidade-lexica
+#| fig-cap: "Comparativo visual entre a diversidade léxica bruta (TTR) e corrigida pela extensão (CTTR)."
+#| fig-width: 10
+#| fig-height: 4.8
+
+tabela_complexidade %>%
+  select(Livro, `TTR (Bruto)` = Diversidade_TTR, `CTTR (Corrigido)` = Diversidade_Corrigida_CTTR) %>%
+  pivot_longer(cols = -Livro, names_to = "Metrica", values_to = "Valor") %>%
+  ggplot(aes(x = reorder_within(Livro, Valor, Metrica), y = Valor, fill = Metrica)) +
+  geom_col(show.legend = FALSE, width = 0.7) +
+  geom_text(aes(label = round(Valor, 2)), hjust = -0.15, size = 3.5) +
+  facet_wrap(~ Metrica, scales = "free") +
+  coord_flip() +
+  scale_x_reordered() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
+  scale_fill_manual(values = c("TTR (Bruto)" = "#6baed6", "CTTR (Corrigido)" = "#08519c")) +
+  labs(
+    title = "Comparativo de Diversidade Léxica: TTR vs. CTTR",
+    subtitle = "O CTTR corrige o viés de extensão que favorece obras curtas como O Alienista",
+    x = NULL, y = "Pontuação"
+  )
+```
+
+---
+
+## 3. Frequência Vocabular e Assinatura Temática (TF-IDF)
+
+### 3.1 Termos Mais Frequentes por Obra
+```{r}
+#| label: fig-top-palavras
+#| fig-cap: "Top 15 palavras mais frequentes em cada obra (excluindo stopwords)."
+#| fig-width: 12
+#| fig-height: 7.5
+
+top_palavras <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  filter(!word %in% c(stopwords("portuguese"), sw_extra), 
+         !str_detect(word, "^[0-9]+$"),
+         nchar(word) > 2) %>%
+  count(book_short, word, sort = TRUE) %>%
+  group_by(book_short) %>%
+  slice_max(n, n = 15, with_ties = FALSE) %>%
+  ungroup()
+
+ggplot(top_palavras, aes(x = reorder_within(word, n, book_short), y = n, fill = book_short)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ book_short, scales = "free", ncol = 4) +
+  coord_flip() +
+  scale_x_reordered() +
+  labs(
+    title = "Top 15 Palavras Mais Frequentes por Livro",
+    subtitle = "Frequência absoluta após remoção de stopwords e verbos auxiliares",
+    x = NULL, y = "Frequência Absoluta"
+  ) +
+  theme(strip.text = element_text(face = "bold", size = 9.5))
+```
+
+### 3.2 Assinatura Vocabular Distintiva (TF-IDF)
+Enquanto a frequência bruta destaca vocábulos comuns a todo o corpus, a ponderação **TF-IDF** isola os termos exclusivos que caracterizam o universo de cada romance:
+
+```{r}
+#| label: fig-tfidf
+#| fig-cap: "Top 10 termos mais exclusivos de cada obra segundo a métrica TF-IDF."
+#| fig-width: 12
+#| fig-height: 6.5
+
+tfidf_livros <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  filter(!word %in% c(stopwords("portuguese"), sw_extra),
+         !str_detect(word, "^[0-9]+$"),
+         nchar(word) > 2) %>%
+  count(book_short, word, sort = TRUE) %>%
+  bind_tf_idf(word, book_short, n) %>%
+  group_by(book_short) %>%
+  slice_max(tf_idf, n = 10, with_ties = FALSE) %>%
+  ungroup()
+
+ggplot(tfidf_livros, aes(x = reorder_within(word, tf_idf, book_short), y = tf_idf, fill = book_short)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ book_short, scales = "free", ncol = 4) +
+  coord_flip() +
+  scale_x_reordered() +
+  labs(
+    title = "Assinatura Vocabular Exclusiva de Cada Obra (TF-IDF)",
+    subtitle = "Termos com maior poder de discriminação temática entre os 7 livros",
+    x = NULL, y = "Pontuação TF-IDF"
+  ) +
+  theme(strip.text = element_text(face = "bold", size = 9.5))
+```
+
+---
+
+## 4. Motivos Literários, Dispersão (X-Ray) e Bigramas
+
+### 4.1 Mapa de Calor de Palavras-Chave
+```{r}
+#| label: fig-heatmap-tematico
+#| fig-cap: "Densidade relativa de motivos literários clássicos de Machado de Assis (ocorrências por 10.000 palavras)."
+#| fig-width: 9
+#| fig-height: 4.8
+
+palavras_alvo <- c("olhos", "amor", "morte", "fogo", "alma", "razão", "loucura", "senhora")
+
+freq_especificas <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  group_by(book_short) %>%
+  mutate(total_palavras_livro = n()) %>%
+  filter(word %in% palavras_alvo) %>%
+  count(book_short, word, total_palavras_livro) %>%
+  mutate(freq_por_10mil = round((n / total_palavras_livro) * 10000, 2)) %>%
+  ungroup()
+
+ggplot(freq_especificas, aes(x = word, y = book_short, fill = freq_por_10mil)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = freq_por_10mil), color = "black", size = 3.5) +
+  scale_fill_gradient(low = "#f7fbff", high = "#2171b5") +
+  labs(
+    title = "Intensidade Temática: Ocorrência Relativa por Livro",
+    subtitle = "Frequência normalizada a cada 10.000 palavras",
+    x = "Palavra-Chave", y = NULL, fill = "Freq / 10k"
+  )
+```
+
+### 4.2 Dispersão Léxica ao Longo das Narrativas (Gráfico de Raio-X)
+```{r}
+#| label: fig-xray
+#| fig-cap: "Posição relativa das ocorrências de termos selecionados do início (0) ao fim (1) de cada livro."
+#| fig-width: 11
+#| fig-height: 6.5
+
+kwic_busca <- kwic(
+  tokens(meu_corpus),
+  pattern = c("olhos", "alma", "amor", "dinheiro", "senhora"),
+  case_insensitive = TRUE
+)
+
+kwic_busca$docname <- factor(kwic_busca$docname, levels = docnames(meu_corpus))
+
+textplot_xray(kwic_busca, scale = "relative") +
+  aes(color = keyword) +
+  scale_color_brewer(palette = "Dark2", guide = "none") +
+  facet_grid(docname ~ keyword, drop = FALSE) +
+  labs(
+    title = "Dispersão Léxica ao Longo dos 7 Livros (Raio-X)",
+    x = "Índice Relativo de Tokens (Início -> Fim da Obra)"
+  ) +
+  theme(strip.text.y = element_text(angle = 0, hjust = 0, size = 9))
+```
+
+### 4.3 Colocações e Expressões Recorrentes (Bigramas)
+```{r}
+#| label: fig-bigramas
+#| fig-cap: "Top 20 pares de palavras consecutivas mais frequentes no conjunto das 7 obras."
+#| fig-width: 9
+#| fig-height: 5.5
+
+bigramas_machado <- df_livros %>%
+  unnest_tokens(bigrama, text, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigrama)) %>%
+  separate(bigrama, c("palavra1", "palavra2"), sep = " ") %>%
+  filter(
+    !palavra1 %in% c(stopwords("portuguese"), sw_extra),
+    !palavra2 %in% c(stopwords("portuguese"), sw_extra),
+    nchar(palavra1) > 2, nchar(palavra2) > 2
+  ) %>%
+  unite(bigrama, palavra1, palavra2, sep = " ") %>%
+  count(bigrama, sort = TRUE) %>%
+  slice_max(n, n = 20)
+
+ggplot(bigramas_machado, aes(x = fct_reorder(bigrama, n), y = n)) +
+  geom_col(fill = "#2c7fb8", width = 0.75) +
+  geom_text(aes(label = n), hjust = -0.2, size = 3.5) +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(
+    title = "Top 20 Expressões Mais Comuns (Bigramas)",
+    subtitle = "Pares de palavras consecutivas no conjunto dos 7 livros",
+    x = NULL, y = "Frequência"
+  )
+```
+
+Avance para a última aba, **Análise de Sentimentos**, para visualizar os arcos emocionais, a nuvem de polaridade e a clusterização estilística das obras.
+
+
+
+
+
+
+
+
+
+
+
+
+
