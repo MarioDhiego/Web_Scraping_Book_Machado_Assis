@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Vida, Contexto e Obra – MINERAÇÃO DE TEXTOS EM R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta name="twitter:title" content="Vida, Contexto e Obra – MINERAÇÃO DE TEXTOS EM R">
+<meta name="twitter:description" content="Perfil biográfico, trajetória e cronologia literária de Machado de Assis">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">MINERAÇÃO DE TEXTOS EM R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Machado de Assis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./scraping-metodologia.html"> 
+<span class="menu-text">Web Scraping</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./metricas-teoria.qmd"> 
+<span class="menu-text">Métricas Estatísticas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resultados-descritivos.qmd"> 
+<span class="menu-text">Resultados &amp; Léxico</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./analise-sentimento.qmd"> 
+<span class="menu-text">Análise de Sentimentos</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+  <li><a href="#origens-e-formação" id="toc-origens-e-formação" class="nav-link active" data-scroll-target="#origens-e-formação">1. Origens e Formação</a></li>
+  <li><a href="#o-brasil-de-machado-império-escravidão-e-república" id="toc-o-brasil-de-machado-império-escravidão-e-república" class="nav-link" data-scroll-target="#o-brasil-de-machado-império-escravidão-e-república">2. O Brasil de Machado: Império, Escravidão e República</a></li>
+  <li><a href="#trajetória-profissional-funcionalismo-público-e-a-academia" id="toc-trajetória-profissional-funcionalismo-público-e-a-academia" class="nav-link" data-scroll-target="#trajetória-profissional-funcionalismo-público-e-a-academia">3. Trajetória Profissional, Funcionalismo Público e a Academia</a>
+  <ul class="collapse">
+  <li><a href="#imprensa-e-tipografia-18561897" id="toc-imprensa-e-tipografia-18561897" class="nav-link" data-scroll-target="#imprensa-e-tipografia-18561897">Imprensa e Tipografia (1856–1897)</a></li>
+  <li><a href="#carreira-no-serviço-público-18671908" id="toc-carreira-no-serviço-público-18671908" class="nav-link" data-scroll-target="#carreira-no-serviço-público-18671908">Carreira no Serviço Público (1867–1908)</a></li>
+  <li><a href="#a-fundação-da-academia-brasileira-de-letras-abl" id="toc-a-fundação-da-academia-brasileira-de-letras-abl" class="nav-link" data-scroll-target="#a-fundação-da-academia-brasileira-de-letras-abl">A Fundação da Academia Brasileira de Letras (ABL)</a></li>
+  </ul></li>
+  <li><a href="#escolas-literárias-e-a-virada-estética" id="toc-escolas-literárias-e-a-virada-estética" class="nav-link" data-scroll-target="#escolas-literárias-e-a-virada-estética">4. Escolas Literárias e a Virada Estética</a></li>
+  <li><a href="#cronologia-completa-das-obras-de-machado-de-assis" id="toc-cronologia-completa-das-obras-de-machado-de-assis" class="nav-link" data-scroll-target="#cronologia-completa-das-obras-de-machado-de-assis">5. Cronologia Completa das Obras de Machado de Assis</a>
+  <ul class="collapse">
+  <li><a href="#romances-produção-integral" id="toc-romances-produção-integral" class="nav-link" data-scroll-target="#romances-produção-integral">5.1 Romances (Produção Integral)</a></li>
+  <li><a href="#coletâneas-de-contos-e-novelas" id="toc-coletâneas-de-contos-e-novelas" class="nav-link" data-scroll-target="#coletâneas-de-contos-e-novelas">5.2 Coletâneas de Contos e Novelas</a></li>
+  <li><a href="#poesia-teatro-e-crítica" id="toc-poesia-teatro-e-crítica" class="nav-link" data-scroll-target="#poesia-teatro-e-crítica">5.3 Poesia, Teatro e Crítica</a></li>
+  </ul></li>
+  <li><a href="#conexão-com-a-análise-computacional" id="toc-conexão-com-a-análise-computacional" class="nav-link" data-scroll-target="#conexão-com-a-análise-computacional">6. Conexão com a Análise Computacional</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Vida, Contexto e Obra</h1>
+<p class="subtitle lead">Perfil biográfico, trajetória e cronologia literária de Machado de Assis</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Sobre este Portfólio:</strong> Este projeto aplica técnicas de <em>Web Scraping</em> e <em>Text Mining</em> (Mineração de Textos) em linguagem <strong>R</strong> sobre obras completas de Machado de Assis extraídas do <strong>Wikisource</strong>. Esta primeira seção estabelece o lastro histórico, biográfico e literário necessário para interpretar os padrões léxicos, estilísticos e emocionais revelados nas análises computacionais das abas seguintes.</p>
+</div>
+</div>
+</div>
+<hr>
+<section id="origens-e-formação" class="level2">
+<h2 class="anchored" data-anchor-id="origens-e-formação">1. Origens e Formação</h2>
+<div class="columns">
+<div class="column" style="width:68%;">
+<p><strong>Joaquim Maria Machado de Assis</strong> nasceu em <strong>21 de junho de 1839</strong>, no <strong>Morro do Livramento</strong>, na cidade do Rio de Janeiro (então capital do Império do Brasil). Filho de Francisco José de Assis — pintor de paredes e dourador, filho de escravizados alforriados — e de Maria Leopoldina Machado da Câmara — lavadeira açoriana oriunda da Ilha de São Miguel —, Machado cresceu em uma família modesta, marcada pela mestiçagem e pela precariedade material.</p>
+<p>Órfão de mãe aos dez anos e de pai na adolescência, teve uma educação formal fragmentada e essencialmente autodidata. Não frequentou universidades nem colégios de elite da Corte; aprendeu os primeiros rudimentos de leitura em uma escola pública primária de São Cristóvão e aprofundou seus estudos por conta própria, frequentando gabinetes de leitura e aprendendo francês com um padeiro imigrante (Madame Gallot) e latim com o padre Silveira Sarmento.</p>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:28%;">
+<div id="fig-machado" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-machado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/machado-de-assis.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-machado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Machado de Assis (1839–1908), fundador e primeiro presidente da Academia Brasileira de Letras.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Ao longo da vida, sua geografia afetiva e residencial concentrou-se na antiga Corte carioca:</p>
+<ul>
+<li><strong>Morro do Livramento (atual bairro da Gamboa / Saúde):</strong> Local de seu nascimento e infância, próximo à zona portuária do Rio de Janeiro. A chácara onde nasceu (propriedade da madrinha, Maria José de Mendonça Barroso, viúva do senador Bento Barroso Pereira) deu lugar à urbanização portuária e ferroviária no início do século XX, mas o morro e a Igreja de Nossa Senhora do Livramento permanecem como marcos históricos da região.</li>
+<li><strong>Centro e Lapa / Catete / Flamengo:</strong> Na juventude e início da vida adulta, circulou intensamente pelas redações e livrarias da <strong>Rua do Ouvidor</strong> (epicentro intelectual e político do Segundo Reinado), residindo em pensões e casas nos bairros centrais e no Catete após seu casamento, em <strong>1869</strong>, com a portuguesa <strong>Carolina Augusta Xavier de Novais</strong>.</li>
+<li><strong>Cosme Velho (Rua Cosme Velho, nº 18):</strong> Em 1884, mudou-se com Carolina para o chalé na Rua Cosme Velho, bairro arborizado aos pés do Corcovado, onde viveu até sua morte em <strong>29 de setembro de 1908</strong>. Foi ali que ganhou a alcunha de <strong>“Bruxo do Cosme Velho”</strong> (popularizada por Carlos Drummond de Andrade). A casa original foi demolida na década de 1960, mas o bairro conserva sua atmosfera histórica e abrigou por décadas instituições culturais em sua memória.</li>
+</ul>
+<hr>
+</section>
+<section id="o-brasil-de-machado-império-escravidão-e-república" class="level2">
+<h2 class="anchored" data-anchor-id="o-brasil-de-machado-império-escravidão-e-república">2. O Brasil de Machado: Império, Escravidão e República</h2>
+<p>A vida de Machado de Assis (1839–1908) atravessa as transformações políticas e sociais mais profundas da história brasileira. Sua obra não é alienada da realidade nacional; ao contrário, utiliza a ironia e o distanciamento crítico para expor as contradições de uma sociedade patriarcal, escravocrata e estamental.</p>
+<ul>
+<li><strong>O Segundo Reinado (1840–1889):</strong> Machado cresceu e amadureceu intelectualmente sob o reinado de <strong>Dom Pedro II</strong>. A estabilidade política relativa da Corte contrastava com a economia baseada na monocultura cafeeira e no trabalho escravo.</li>
+<li><strong>A Escravidão e o Processo Abolicionista:</strong> Neto de escravizados libertos, Machado testemunhou todo o lento desmonte jurídico da escravidão no Brasil:
+<ul>
+<li><strong>Lei Eusébio de Queirós (1850):</strong> Proibiu o tráfico transatlântico de escravizados quando Machado tinha 11 anos.</li>
+<li><strong>Lei do Ventre Livre (1871):</strong> Declarou livres os filhos de mulheres escravizadas nascidos a partir daquela data — lei que o próprio Machado, na condição de funcionário público do Ministério da Agricultura, ajudou a fiscalizar e aplicar administrativamente.</li>
+<li><strong>Lei dos Sexagenários (1885)</strong> e <strong>Lei Áurea (13 de maio de 1888):</strong> Aboliu definitivamente a escravidão, assinada pela Princesa Isabel. Dias depois, em 19 de maio de 1888, Machado publicou uma célebre crônica na série <em>Bons Dias!</em> ironizando a hipocrisia dos antigos senhores que tentavam reescrever seu passado escravista.</li>
+</ul></li>
+<li><strong>A Proclamação da República (1889) e a Primeira República:</strong> Aos 50 anos, testemunhou a queda da monarquia liderada pelo Marechal Deodoro da Fonseca, a crise financeira do Encilhamento e os primeiros governos republicanos (Deodoro, Floriano Peixoto, Prudente de Moraes, Campos Sales e Rodrigues Alves) — contexto que serve de pano de fundo direto para romances como <em>Esaú e Jacó</em> (1904) e <em>Memorial de Aires</em> (1908).</li>
+</ul>
+<hr>
+</section>
+<section id="trajetória-profissional-funcionalismo-público-e-a-academia" class="level2">
+<h2 class="anchored" data-anchor-id="trajetória-profissional-funcionalismo-público-e-a-academia">3. Trajetória Profissional, Funcionalismo Público e a Academia</h2>
+<p>Diferente de muitos escritores boêmios de sua geração, Machado de Assis construiu uma carreira sólida e disciplinada no serviço público e na imprensa, garantindo estabilidade financeira para dedicar-se à literatura.</p>
+<section id="imprensa-e-tipografia-18561897" class="level3">
+<h3 class="anchored" data-anchor-id="imprensa-e-tipografia-18561897">Imprensa e Tipografia (1856–1897)</h3>
+<ul>
+<li><strong>Tipógrafo e Revisor:</strong> Iniciou sua vida profissional em <strong>1856</strong> como aprendiz de tipógrafo na <strong>Imprensa Nacional</strong> (então Tipografia Nacional), sob a direção de <strong>Manuel Antônio de Almeida</strong> (autor de <em>Memórias de um Sargento de Milícias</em>), seu primeiro grande incentivador. Em seguida, atuou como revisor de provas na livraria e editora de <strong>Francisco de Paula Brito</strong>, figura central da cultura negra e editorial no Rio de Janeiro.</li>
+<li><strong>Jornalista e Cronista:</strong> Ingressou no jornalismo profissional no <em>Correio Mercantil</em> (1858) e no <em>Diário do Rio de Janeiro</em> (1860), onde cobriu debates do Senado e escreveu críticas teatrais e literárias. Ao longo de quatro décadas, colaborou com os principais periódicos do país, como <em>A Semana Ilustrada</em>, <em>O Cruzeiro</em>, <em>A Estação</em> e a <em>Gazeta de Notícias</em>.</li>
+</ul>
+<hr>
+</section>
+<section id="carreira-no-serviço-público-18671908" class="level3">
+<h3 class="anchored" data-anchor-id="carreira-no-serviço-público-18671908">Carreira no Serviço Público (1867–1908)</h3>
+<ul>
+<li>Em <strong>1867</strong>, foi nomeado ajudante do diretor de publicação do <em>Diário Oficial</em>.</li>
+<li>Em <strong>1873</strong>, ingressou como primeiro-oficial na <strong>Secretaria de Estado do Ministério da Agricultura, Comércio e Obras Públicas</strong> (pasta estratégica no Império, responsável tanto pela infraestrutura quanto pela fiscalização dos fundos de emancipação de escravos).</li>
+<li>Ascendeu por mérito técnico até alcançar o cargo de <strong>Diretor-Geral da Diretoria de Comércio</strong> (1889) e, posteriormente, <strong>Diretor-Geral de Contabilidade</strong> do Ministério da Indústria, Viação e Obras Públicas (1902), cargo equivalente hoje ao mais alto escalão técnico ministerial, no qual permaneceu até seu falecimento.</li>
+</ul>
+<hr>
+</section>
+<section id="a-fundação-da-academia-brasileira-de-letras-abl" class="level3">
+<h3 class="anchored" data-anchor-id="a-fundação-da-academia-brasileira-de-letras-abl">A Fundação da Academia Brasileira de Letras (ABL)</h3>
+<p>Sem diplomas universitários, mas reconhecido unanimemente como o maior homem de letras do país, Machado de Assis liderou, ao lado de intelectuais como Lúcio de Mendonça, Joaquim Nabuco, Visconde de Taunay, Olavo Bilac e Rui Barbosa, a fundação da <strong>Academia Brasileira de Letras (ABL)</strong> em <strong>20 de julho de 1897</strong>. Eleito por unanimidade seu <strong>primeiro presidente</strong>, ocupou a Cadeira nº 23 (cujo patrono escolhido por ele foi José de Alencar) e presidiu a instituição por mais de uma década, consolidando-a como a casa máxima da língua e da literatura no Brasil.</p>
+<hr>
+</section>
+</section>
+<section id="escolas-literárias-e-a-virada-estética" class="level2">
+<h2 class="anchored" data-anchor-id="escolas-literárias-e-a-virada-estética">4. Escolas Literárias e a Virada Estética</h2>
+<p>A crítica literária divide a produção romanesca de Machado de Assis em duas grandes fases, refletindo sua evolução estética de um escritor alinhado às convenções de seu tempo para um revolucionário da narrativa moderna:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Dimensão</th>
+<th style="text-align: left;">Primeira Fase (1864–1878)</th>
+<th style="text-align: left;">Segunda Fase (1881–1908)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Escola Literária</strong></td>
+<td style="text-align: left;"><strong>Romantismo</strong> (com traços de transição e análise psicológica incipiente)</td>
+<td style="text-align: left;"><strong>Realismo Psicológico</strong> (precursor do Modernismo e da metalinguagem)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Foco Narrativo</strong></td>
+<td style="text-align: left;">Enredos lineares, conflitos amorosos, ascensão social e moralismo familiar.</td>
+<td style="text-align: left;">Crítica ácida à hipocrisia burguesa, pessimismo filosófico, ironia e ambiguidade.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Narrador</strong></td>
+<td style="text-align: left;">Onisciente tradicional em 3ª pessoa, confiável e convencional.</td>
+<td style="text-align: left;">Narrador não confiável (em 1ª pessoa ou irônico), digressivo e interlocutor do leitor.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Obras Representativas</strong></td>
+<td style="text-align: left;"><em>Ressurreição</em>, <em>A Mão e a Luva</em>, <em>Helena</em>, <em>Iaiá Garcia</em>.</td>
+<td style="text-align: left;"><em>Memórias Póstumas de Brás Cubas</em>, <em>Quincas Borba</em>, <em>Dom Casmurro</em>, <em>Esaú e Jacó</em>, <em>Memorial de Aires</em>.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="cronologia-completa-das-obras-de-machado-de-assis" class="level2">
+<h2 class="anchored" data-anchor-id="cronologia-completa-das-obras-de-machado-de-assis">5. Cronologia Completa das Obras de Machado de Assis</h2>
+<p>Para situar os <strong>7 livros selecionados no corpus deste estudo</strong> dentro do conjunto total da produção machadiana, as tabelas a seguir organizam suas obras publicadas em vida por gênero literário.</p>
+<section id="romances-produção-integral" class="level3">
+<h3 class="anchored" data-anchor-id="romances-produção-integral">5.1 Romances (Produção Integral)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Ano</th>
+<th style="text-align: left;">Título da Obra</th>
+<th style="text-align: left;">Fase Literária</th>
+<th style="text-align: left;">Status no Corpus deste Estudo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1872</strong></td>
+<td style="text-align: left;"><em>Ressurreição</em></td>
+<td style="text-align: left;">Primeira Fase (Romântica)</td>
+<td style="text-align: left;">Não incluído (texto parcial no Wikisource)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1874</strong></td>
+<td style="text-align: left;"><em>A Mão e a Luva</em></td>
+<td style="text-align: left;">Primeira Fase (Romântica)</td>
+<td style="text-align: left;">Não incluído (texto parcial no Wikisource)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>1876</strong></td>
+<td style="text-align: left;"><strong><em>Helena</em></strong></td>
+<td style="text-align: left;">Primeira Fase (Romântica)</td>
+<td style="text-align: left;"><strong>Incluído (28 capítulos)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1878</strong></td>
+<td style="text-align: left;"><em>Iaiá Garcia</em></td>
+<td style="text-align: left;">Primeira Fase (Romântica)</td>
+<td style="text-align: left;">Não incluído (texto parcial no Wikisource)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>1881</strong></td>
+<td style="text-align: left;"><strong><em>Memórias Póstumas de Brás Cubas</em></strong></td>
+<td style="text-align: left;">Segunda Fase (Realista)</td>
+<td style="text-align: left;"><strong>Incluído (160 capítulos)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1891</strong></td>
+<td style="text-align: left;"><strong><em>Quincas Borba</em></strong></td>
+<td style="text-align: left;">Segunda Fase (Realista)</td>
+<td style="text-align: left;"><strong>Incluído (198 capítulos)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>1899</strong></td>
+<td style="text-align: left;"><strong><em>Dom Casmurro</em></strong></td>
+<td style="text-align: left;">Segunda Fase (Realista)</td>
+<td style="text-align: left;"><strong>Incluído (145 capítulos)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1904</strong></td>
+<td style="text-align: left;"><strong><em>Esaú e Jacó</em></strong></td>
+<td style="text-align: left;">Segunda Fase (Realista)</td>
+<td style="text-align: left;"><strong>Incluído (122 capítulos)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>1908</strong></td>
+<td style="text-align: left;"><strong><em>Memorial de Aires</em></strong></td>
+<td style="text-align: left;">Segunda Fase (Realista)</td>
+<td style="text-align: left;"><strong>Incluído (161 capítulos)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="coletâneas-de-contos-e-novelas" class="level3">
+<h3 class="anchored" data-anchor-id="coletâneas-de-contos-e-novelas">5.2 Coletâneas de Contos e Novelas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Ano</th>
+<th style="text-align: left;">Título da Obra</th>
+<th style="text-align: left;">Destaques / Observações</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1870</strong></td>
+<td style="text-align: left;"><em>Contos Fluminenses</em></td>
+<td style="text-align: left;">Primeira coletânea de narrativas curtas (<em>Miss Dollar</em>, <em>Luís Soares</em>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1873</strong></td>
+<td style="text-align: left;"><em>Histórias da Meia-Noite</em></td>
+<td style="text-align: left;">Inclui <em>A Parasita Azul</em> e <em>Aurora sem Dia</em>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>1882</strong></td>
+<td style="text-align: left;"><strong><em>Papéis Avulsos</em></strong></td>
+<td style="text-align: left;">Contém a novela <strong><em>O Alienista</em></strong> (<strong>incluída no corpus — 13 capítulos</strong>), <em>Teoria do Medalhão</em> e <em>O Espelho</em>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1884</strong></td>
+<td style="text-align: left;"><em>Histórias sem Data</em></td>
+<td style="text-align: left;">Inclui <em>A Igreja do Diabo</em>, <em>Noite de Almirante</em> e <em>Conto Alexandrino</em>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>1896</strong></td>
+<td style="text-align: left;"><em>Várias Histórias</em></td>
+<td style="text-align: left;">Inclui <em>A Cartomante</em>, <em>A Causa Secreta</em>, <em>Uns Braços</em> e <em>O Enfermeiro</em>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1899</strong></td>
+<td style="text-align: left;"><em>Páginas Recolhidas</em></td>
+<td style="text-align: left;">Inclui <em>Missa do Galo</em> e <em>O Caso da Vara</em>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>1906</strong></td>
+<td style="text-align: left;"><em>Relíquias de Casa Velha</em></td>
+<td style="text-align: left;">Inclui <em>Pai contra Mãe</em> e textos memorialísticos.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="poesia-teatro-e-crítica" class="level3">
+<h3 class="anchored" data-anchor-id="poesia-teatro-e-crítica">5.3 Poesia, Teatro e Crítica</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 38%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Gênero</th>
+<th style="text-align: center;">Ano</th>
+<th style="text-align: left;">Obras Publicadas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Poesia</strong></td>
+<td style="text-align: center;">1864–1901</td>
+<td style="text-align: left;"><em>Crisálidas</em> (1864), <em>Falenas</em> (1870), <em>Americanas</em> (1875), <em>Ocidentais</em> (em <em>Poesias Completas</em>, 1901).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Teatro</strong></td>
+<td style="text-align: center;">1861–1881</td>
+<td style="text-align: left;"><em>Desencantos</em> (1861), <em>O Caminho da Porta</em> (1863), <em>O Protocolo</em> (1863), <em>Quase Ministro</em> (1864), <em>Os Deuses de Casaca</em> (1866), <em>Tu, só tu, puro amor</em> (1880).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Crônicas</strong></td>
+<td style="text-align: center;">1859–1897</td>
+<td style="text-align: left;">Séries publicadas na imprensa e reunidas postumamente: <em>Balas de Estalo</em> (1883–1886), <em>Bons Dias!</em> (1888–1889) e <em>A Semana</em> (1892–1897).</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="conexão-com-a-análise-computacional" class="level2">
+<h2 class="anchored" data-anchor-id="conexão-com-a-análise-computacional">6. Conexão com a Análise Computacional</h2>
+<p>A transição da <strong>Primeira Fase</strong> (representada neste corpus por <em>Helena</em>, de 1876) para a <strong>Segunda Fase</strong> (representada por <em>Memórias Póstumas</em>, <em>O Alienista</em>, <em>Quincas Borba</em>, <em>Dom Casmurro</em>, <em>Esaú e Jacó</em> e <em>Memorial de Aires</em>) levanta hipóteses literárias que serão testadas quantitativamente nas próximas seções:</p>
+<ol type="1">
+<li><strong>Riqueza Vocabular e Sintaxe:</strong> O estilo mais seco, elíptico e fragmentado dos romances realistas altera a diversidade léxica (<code>TTR</code> e <code>CTTR</code>) e a complexidade sintática em relação à prosa romântica de <em>Helena</em>?</li>
+<li><strong>Assinatura Temática:</strong> Como termos centrais da filosofia machadiana — como <em>olhos</em>, <em>alma</em>, <em>morte</em>, <em>razão</em> e <em>loucura</em> — se distribuem ao longo das narrativas?</li>
+<li><strong>Polaridade Emocional:</strong> O pessimismo e a ironia da fase realista se refletem em um saldo de sentimento mais negativo ou em maior volatilidade emocional entre capítulos?</li>
+</ol>
+<p>Avance para a aba <strong>Scraping &amp; Pipeline</strong> para acompanhar a arquitetura técnica de coleta e tratamento desses dados em <strong>R</strong>.</p>
+<hr>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Análise Léxica e Sentimentos em Obras de Machado de Assis</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
