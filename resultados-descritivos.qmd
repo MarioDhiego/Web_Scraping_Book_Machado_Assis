@@ -1,5 +1,5 @@
 ---
-title: "Resultados Descritivos e Análise Léxica"
+title: "Resultados Descritivos"
 subtitle: "Volumetria, complexidade vocabular, assinatura temática (TF-IDF) e dispersão narrativa"
 title-block-banner: FALSE
 ---
@@ -23,7 +23,7 @@ library(scales)
 theme_set(theme_minimal(base_size = 11))
 
 # Carrega a base já raspada e limpa
-df_livros <- readRDS("machado_wikisource_7livros.rds") %>%
+df_livros <- readRDS("machado_wikisource_completo.rds") %>%
   filter(!is.na(text)) %>%
   filter(!str_detect(text, "^(Índice|Anterior|Próximo|Wikisource|Obra editada)")) %>%
   mutate(
@@ -254,6 +254,8 @@ ggplot(top_palavras, aes(x = reorder_within(word, n, book_short), y = n, fill = 
   theme(strip.text = element_text(face = "bold", size = 9.5))
 ```
 
+---
+
 ### 3.2 Assinatura Vocabular Distintiva (TF-IDF)
 Enquanto a frequência bruta destaca vocábulos comuns a todo o corpus, a ponderação **TF-IDF** isola os termos exclusivos que caracterizam o universo de cada romance:
 
@@ -320,6 +322,9 @@ ggplot(freq_especificas, aes(x = word, y = book_short, fill = freq_por_10mil)) +
   )
 ```
 
+
+---
+
 ### 4.2 Dispersão Léxica ao Longo das Narrativas (Gráfico de Raio-X)
 ```{r}
 #| label: fig-xray
@@ -345,6 +350,9 @@ textplot_xray(kwic_busca, scale = "relative") +
   ) +
   theme(strip.text.y = element_text(angle = 0, hjust = 0, size = 9))
 ```
+
+
+---
 
 ### 4.3 Colocações e Expressões Recorrentes (Bigramas)
 ```{r}
@@ -380,7 +388,7 @@ ggplot(bigramas_machado, aes(x = fct_reorder(bigrama, n), y = n)) +
 
 Avance para a última aba, **Análise de Sentimentos**, para visualizar os arcos emocionais, a nuvem de polaridade e a clusterização estilística das obras.
 
-
+---
 
 
 

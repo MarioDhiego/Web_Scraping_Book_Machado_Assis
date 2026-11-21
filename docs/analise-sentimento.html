@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análise de Sentimentos e Clusterização – MINERAÇÃO DE TEXTOS EM R</title>
+<title>Análise de Sentimentos – Text Mining in R: Dataset(Machado)</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -137,10 +137,6 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles.css">
-<meta name="twitter:title" content="Análise de Sentimentos e Clusterização – MINERAÇÃO DE TEXTOS EM R">
-<meta name="twitter:description" content="Trajetória emocional longitudinal (OpLexicon v3.0), polaridade vocabular e agrupamento hierárquico">
-<meta name="twitter:image" content="analise-sentimento_files/figure-html/fig-arco-emocional-1.png">
-<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -151,7 +147,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">MINERAÇÃO DE TEXTOS EM R</span>
+    <span class="navbar-title">Text Mining in R: Dataset(Machado)</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -162,11 +158,11 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Machado de Assis</span></a>
+<span class="menu-text">Vida &amp; Obra</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./scraping-metodologia.html"> 
-<span class="menu-text">Web Scraping</span></a>
+<span class="menu-text">Scraping &amp; Pipeline</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./metricas-teoria.html"> 
@@ -180,21 +176,13 @@ window.Quarto = {
     <a class="nav-link active" href="./analise-sentimento.html" aria-current="page"> 
 <span class="menu-text">Análise de Sentimentos</span></a>
   </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./referencias.html"> 
+<span class="menu-text">Referências</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -205,7 +193,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Sumário</h2>
+    <h2 id="toc-title">Nesta página</h2>
    
   <ul>
   <li><a href="#estatística-da-polaridade-por-obra" id="toc-estatística-da-polaridade-por-obra" class="nav-link active" data-scroll-target="#estatística-da-polaridade-por-obra">1. Estatística da Polaridade por Obra</a></li>
@@ -228,7 +216,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Análise de Sentimentos e Clusterização</h1>
+<h1 class="title">Análise de Sentimentos</h1>
 <p class="subtitle lead">Trajetória emocional longitudinal (OpLexicon v3.0), polaridade vocabular e agrupamento hierárquico</p>
 </div>
 
@@ -297,23 +285,23 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
 </figcaption>
 <div aria-describedby="tbl-sentimentos-geral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="qsjzpkmshj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qsjzpkmshj table {
+<div id="znrimcxeiq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#znrimcxeiq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qsjzpkmshj thead, #qsjzpkmshj tbody, #qsjzpkmshj tfoot, #qsjzpkmshj tr, #qsjzpkmshj td, #qsjzpkmshj th {
+#znrimcxeiq thead, #znrimcxeiq tbody, #znrimcxeiq tfoot, #znrimcxeiq tr, #znrimcxeiq td, #znrimcxeiq th {
   border-style: none;
 }
 
-#qsjzpkmshj p {
+#znrimcxeiq p {
   margin: 0;
   padding: 0;
 }
 
-#qsjzpkmshj .gt_table {
+#znrimcxeiq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -339,12 +327,12 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-left-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_caption {
+#znrimcxeiq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qsjzpkmshj .gt_title {
+#znrimcxeiq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -356,7 +344,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-width: 0;
 }
 
-#qsjzpkmshj .gt_subtitle {
+#znrimcxeiq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -368,7 +356,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-top-width: 0;
 }
 
-#qsjzpkmshj .gt_heading {
+#znrimcxeiq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -380,13 +368,13 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_bottom_border {
+#znrimcxeiq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_col_headings {
+#znrimcxeiq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -401,7 +389,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_col_heading {
+#znrimcxeiq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -421,7 +409,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   overflow-x: hidden;
 }
 
-#qsjzpkmshj .gt_column_spanner_outer {
+#znrimcxeiq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -433,15 +421,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 4px;
 }
 
-#qsjzpkmshj .gt_column_spanner_outer:first-child {
+#znrimcxeiq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qsjzpkmshj .gt_column_spanner_outer:last-child {
+#znrimcxeiq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qsjzpkmshj .gt_column_spanner {
+#znrimcxeiq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -453,11 +441,11 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   width: 100%;
 }
 
-#qsjzpkmshj .gt_spanner_row {
+#znrimcxeiq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qsjzpkmshj .gt_group_heading {
+#znrimcxeiq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -483,7 +471,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   text-align: left;
 }
 
-#qsjzpkmshj .gt_empty_group_heading {
+#znrimcxeiq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -498,15 +486,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   vertical-align: middle;
 }
 
-#qsjzpkmshj .gt_from_md > :first-child {
+#znrimcxeiq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qsjzpkmshj .gt_from_md > :last-child {
+#znrimcxeiq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qsjzpkmshj .gt_row {
+#znrimcxeiq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -525,7 +513,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   overflow-x: hidden;
 }
 
-#qsjzpkmshj .gt_stub {
+#znrimcxeiq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -538,7 +526,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#qsjzpkmshj .gt_stub_row_group {
+#znrimcxeiq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -552,15 +540,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   vertical-align: top;
 }
 
-#qsjzpkmshj .gt_row_group_first td {
+#znrimcxeiq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qsjzpkmshj .gt_row_group_first th {
+#znrimcxeiq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qsjzpkmshj .gt_summary_row {
+#znrimcxeiq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -570,16 +558,16 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#qsjzpkmshj .gt_first_summary_row {
+#znrimcxeiq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_first_summary_row.thick {
+#znrimcxeiq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qsjzpkmshj .gt_last_summary_row {
+#znrimcxeiq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -589,7 +577,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_grand_summary_row {
+#znrimcxeiq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -599,7 +587,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#qsjzpkmshj .gt_first_grand_summary_row {
+#znrimcxeiq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -609,7 +597,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-top-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_last_grand_summary_row_top {
+#znrimcxeiq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -619,11 +607,11 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_striped {
+#znrimcxeiq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qsjzpkmshj .gt_table_body {
+#znrimcxeiq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -632,7 +620,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_footnotes {
+#znrimcxeiq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -646,7 +634,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_footnote {
+#znrimcxeiq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -655,7 +643,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#qsjzpkmshj .gt_sourcenotes {
+#znrimcxeiq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -669,7 +657,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#qsjzpkmshj .gt_sourcenote {
+#znrimcxeiq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -677,72 +665,72 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#qsjzpkmshj .gt_left {
+#znrimcxeiq .gt_left {
   text-align: left;
 }
 
-#qsjzpkmshj .gt_center {
+#znrimcxeiq .gt_center {
   text-align: center;
 }
 
-#qsjzpkmshj .gt_right {
+#znrimcxeiq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qsjzpkmshj .gt_font_normal {
+#znrimcxeiq .gt_font_normal {
   font-weight: normal;
 }
 
-#qsjzpkmshj .gt_font_bold {
+#znrimcxeiq .gt_font_bold {
   font-weight: bold;
 }
 
-#qsjzpkmshj .gt_font_italic {
+#znrimcxeiq .gt_font_italic {
   font-style: italic;
 }
 
-#qsjzpkmshj .gt_super {
+#znrimcxeiq .gt_super {
   font-size: 65%;
 }
 
-#qsjzpkmshj .gt_footnote_marks {
+#znrimcxeiq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qsjzpkmshj .gt_asterisk {
+#znrimcxeiq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qsjzpkmshj .gt_indent_1 {
+#znrimcxeiq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qsjzpkmshj .gt_indent_2 {
+#znrimcxeiq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qsjzpkmshj .gt_indent_3 {
+#znrimcxeiq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qsjzpkmshj .gt_indent_4 {
+#znrimcxeiq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qsjzpkmshj .gt_indent_5 {
+#znrimcxeiq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qsjzpkmshj .katex-display {
+#znrimcxeiq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qsjzpkmshj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#znrimcxeiq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1061,6 +1049,7 @@ Figura&nbsp;4: Top 12 termos positivos e negativos mais frequentes no corpus.
 <section id="similaridade-de-cosseno-e-agrupamento-hierárquico" class="level2">
 <h2 class="anchored" data-anchor-id="similaridade-de-cosseno-e-agrupamento-hierárquico">4. Similaridade de Cosseno e Agrupamento Hierárquico</h2>
 <p>Antes de construir o dendrograma, inspecionamos a <strong>Matriz de Similaridade de Cosseno (<span class="math inline">\(\cos \theta\)</span>)</strong> calculada sobre as proporções relativas do vocabulário completo de cada obra. Valores próximos de <span class="math inline">\(1{,}00\)</span> indicam alta convergência de perfil lexical entre os romances:</p>
+<hr>
 <section id="matriz-de-similaridade-de-cosseno-7-times-7" class="level3">
 <h3 class="anchored" data-anchor-id="matriz-de-similaridade-de-cosseno-7-times-7">4.1 Matriz de Similaridade de Cosseno (<span class="math inline">\(7 \times 7\)</span>)</h3>
 <div class="cell">
@@ -1086,23 +1075,23 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
 </figcaption>
 <div aria-describedby="tbl-matriz-cosseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="mxrapapxnu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mxrapapxnu table {
+<div id="rdzcxcgvlq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rdzcxcgvlq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mxrapapxnu thead, #mxrapapxnu tbody, #mxrapapxnu tfoot, #mxrapapxnu tr, #mxrapapxnu td, #mxrapapxnu th {
+#rdzcxcgvlq thead, #rdzcxcgvlq tbody, #rdzcxcgvlq tfoot, #rdzcxcgvlq tr, #rdzcxcgvlq td, #rdzcxcgvlq th {
   border-style: none;
 }
 
-#mxrapapxnu p {
+#rdzcxcgvlq p {
   margin: 0;
   padding: 0;
 }
 
-#mxrapapxnu .gt_table {
+#rdzcxcgvlq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1128,12 +1117,12 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-left-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_caption {
+#rdzcxcgvlq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mxrapapxnu .gt_title {
+#rdzcxcgvlq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1145,7 +1134,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-width: 0;
 }
 
-#mxrapapxnu .gt_subtitle {
+#rdzcxcgvlq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1157,7 +1146,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-width: 0;
 }
 
-#mxrapapxnu .gt_heading {
+#rdzcxcgvlq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1169,13 +1158,13 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_bottom_border {
+#rdzcxcgvlq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_col_headings {
+#rdzcxcgvlq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1190,7 +1179,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_col_heading {
+#rdzcxcgvlq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1210,7 +1199,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#mxrapapxnu .gt_column_spanner_outer {
+#rdzcxcgvlq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1222,15 +1211,15 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 4px;
 }
 
-#mxrapapxnu .gt_column_spanner_outer:first-child {
+#rdzcxcgvlq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mxrapapxnu .gt_column_spanner_outer:last-child {
+#rdzcxcgvlq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mxrapapxnu .gt_column_spanner {
+#rdzcxcgvlq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1242,11 +1231,11 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   width: 100%;
 }
 
-#mxrapapxnu .gt_spanner_row {
+#rdzcxcgvlq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mxrapapxnu .gt_group_heading {
+#rdzcxcgvlq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1272,7 +1261,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   text-align: left;
 }
 
-#mxrapapxnu .gt_empty_group_heading {
+#rdzcxcgvlq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1287,15 +1276,15 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: middle;
 }
 
-#mxrapapxnu .gt_from_md > :first-child {
+#rdzcxcgvlq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mxrapapxnu .gt_from_md > :last-child {
+#rdzcxcgvlq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mxrapapxnu .gt_row {
+#rdzcxcgvlq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1314,7 +1303,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#mxrapapxnu .gt_stub {
+#rdzcxcgvlq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1327,7 +1316,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#mxrapapxnu .gt_stub_row_group {
+#rdzcxcgvlq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1341,15 +1330,15 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: top;
 }
 
-#mxrapapxnu .gt_row_group_first td {
+#rdzcxcgvlq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mxrapapxnu .gt_row_group_first th {
+#rdzcxcgvlq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mxrapapxnu .gt_summary_row {
+#rdzcxcgvlq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1359,16 +1348,16 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#mxrapapxnu .gt_first_summary_row {
+#rdzcxcgvlq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_first_summary_row.thick {
+#rdzcxcgvlq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mxrapapxnu .gt_last_summary_row {
+#rdzcxcgvlq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1378,7 +1367,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_grand_summary_row {
+#rdzcxcgvlq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1388,7 +1377,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#mxrapapxnu .gt_first_grand_summary_row {
+#rdzcxcgvlq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1398,7 +1387,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_last_grand_summary_row_top {
+#rdzcxcgvlq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1408,11 +1397,11 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_striped {
+#rdzcxcgvlq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mxrapapxnu .gt_table_body {
+#rdzcxcgvlq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1421,7 +1410,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_footnotes {
+#rdzcxcgvlq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1435,7 +1424,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_footnote {
+#rdzcxcgvlq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1444,7 +1433,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#mxrapapxnu .gt_sourcenotes {
+#rdzcxcgvlq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1458,7 +1447,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#mxrapapxnu .gt_sourcenote {
+#rdzcxcgvlq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1466,72 +1455,72 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#mxrapapxnu .gt_left {
+#rdzcxcgvlq .gt_left {
   text-align: left;
 }
 
-#mxrapapxnu .gt_center {
+#rdzcxcgvlq .gt_center {
   text-align: center;
 }
 
-#mxrapapxnu .gt_right {
+#rdzcxcgvlq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mxrapapxnu .gt_font_normal {
+#rdzcxcgvlq .gt_font_normal {
   font-weight: normal;
 }
 
-#mxrapapxnu .gt_font_bold {
+#rdzcxcgvlq .gt_font_bold {
   font-weight: bold;
 }
 
-#mxrapapxnu .gt_font_italic {
+#rdzcxcgvlq .gt_font_italic {
   font-style: italic;
 }
 
-#mxrapapxnu .gt_super {
+#rdzcxcgvlq .gt_super {
   font-size: 65%;
 }
 
-#mxrapapxnu .gt_footnote_marks {
+#rdzcxcgvlq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mxrapapxnu .gt_asterisk {
+#rdzcxcgvlq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mxrapapxnu .gt_indent_1 {
+#rdzcxcgvlq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mxrapapxnu .gt_indent_2 {
+#rdzcxcgvlq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mxrapapxnu .gt_indent_3 {
+#rdzcxcgvlq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mxrapapxnu .gt_indent_4 {
+#rdzcxcgvlq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mxrapapxnu .gt_indent_5 {
+#rdzcxcgvlq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mxrapapxnu .katex-display {
+#rdzcxcgvlq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mxrapapxnu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#rdzcxcgvlq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1654,6 +1643,7 @@ Tabela&nbsp;2: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
 </figure>
 </div>
 </div>
+<hr>
 </section>
 <section id="agrupamento-hierárquico" class="level3">
 <h3 class="anchored" data-anchor-id="agrupamento-hierárquico">4.2 Agrupamento Hierárquico</h3>
@@ -1683,6 +1673,7 @@ Figura&nbsp;5: Dendrograma de agrupamento hierárquico das 7 obras baseado em di
 </div>
 </div>
 </div>
+<hr>
 
 
 </section>
@@ -2093,14 +2084,14 @@ Figura&nbsp;5: Dendrograma de agrupamento hierárquico das 7 obras baseado em di
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
+<p>© 2026 | Mário Diego</p>
+</div>   
     <div class="nav-footer-center">
-<p>Análise Léxica e Sentimentos em Obras de Machado de Assis</p>
-</div>
-    <div class="nav-footer-right">
       &nbsp;
     </div>
+    <div class="nav-footer-right">
+<p>Linguagem R</p>
+</div>
   </div>
 </footer>
 

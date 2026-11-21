@@ -5,40 +5,53 @@ title-block-banner: FALSE
 ---
 
 ::: {.callout-tip appearance="minimal"}
-**Reprodutibilidade:** Todo o fluxo de coleta e processamento foi desenvolvido em linguagem **R**. Para evitar requisições repetidas aos servidores da Wikimedia durante a compilação deste portfólio, os textos coletados foram persistidos localmente em formato binário nativo (`.rds`).
+**Reprodutibilidade:** Todo o fluxo de coleta e processamento foi desenvolvido em linguagem **R**[cite: 4]. Para evitar requisições repetidas aos servidores da Wikimedia durante a compilação deste portfólio, os textos coletados foram persistidos localmente em formato binário nativo (`.rds`)[cite: 4].
 :::
 
 ## 1. Ecossistema de Pacotes e Referências Técnicas
 
-O pipeline computacional deste projeto apoia-se em bibliotecas consolidadas da comunidade **R** para ciência de dados, raspagem web e linguística computacional. A tabela abaixo sistematiza cada pacote empregado, sua função na arquitetura do projeto e seus respectivos autores principais:
+O pipeline computacional deste projeto apoia-se em bibliotecas consolidadas da comunidade **R** para ciência de dados, raspagem web e linguística computacional[cite: 4]. A tabela abaixo sistematiza cada pacote empregado, sua função na arquitetura do projeto e seus respectivos autores principais[cite: 4]:
 
 | Pacote | Função no Pipeline | Autores / Mantenedores Principais |
 |:-----------------------|:-----------------------|:-----------------------|
-| **`rvest` & `xml2`** | Navegação na árvore DOM/HTML, seleção de nós via CSS (`#mw-content-text`) e extração de atributos e parágrafos. | Hadley Wickham, Jim Hester & Jeroen Ooms |
-| **`tidyverse`** | Manipulação tabular (`dplyr`, `tidyr`), expressões regulares (`stringr`), programação funcional (`purrr`) e visualização (`ggplot2`). | Hadley Wickham e equipe Posit |
-| **`tidytext`** | Tokenização em formato *tidy* (uma palavra ou n-grama por linha) e cálculo de ponderação estatística `TF-IDF`. | Julia Silge & David Robinson |
-| **`quanteda`** | Construção formal do `corpus`, limpeza de tokens e geração da Matriz Documento-Termo (`dfm`). | Kenneth Benoit, Kohei Watanabe e equipe |
-| **`quanteda.textstats`** | Cálculo de diversidade léxica (`TTR`, `CTTR`), legibilidade (`Flesch-Kincaid`) e similaridade de cosseno. | Kenneth Benoit & Kohei Watanabe |
-| **`quanteda.textplots`** | Visualização de dispersão léxica longitudinal ao longo das narrativas (`textplot_xray`). | Kenneth Benoit & Kohei Watanabe |
-| **`lexiconPT`** | Fornecimento do dicionário de polaridade em língua portuguesa *OpLexicon v3.0* e base metodológica inspirada no pacote `literaturaBR`. | Sillas Gonzaga |
-| **`gt` & `DT`** | Renderização de tabelas acadêmicas estáticas de alta precisão (`gt`) e tabelas interativas navegáveis (`DT`). | Richard Iannone (`gt`) & Yihui Xie (`DT`) |
+| **`rvest` & `xml2`** | Navegação na árvore DOM/HTML, seleção de nós via CSS (`#mw-content-text`) e extração de atributos e parágrafos[cite: 4]. | Hadley Wickham, Jim Hester & Jeroen Ooms[cite: 4] |
+| **`tidyverse`** | Manipulação tabular (`dplyr`, `tidyr`), expressões regulares (`stringr`), programação funcional (`purrr`) e visualização (`ggplot2`)[cite: 4]. | Hadley Wickham e equipe Posit[cite: 4] |
+| **`tidytext`** | Tokenização em formato *tidy* (uma palavra ou n-grama por linha) e cálculo de ponderação estatística `TF-IDF`[cite: 4]. | Julia Silge & David Robinson[cite: 4] |
+| **`quanteda`** | Construção formal do `corpus`, limpeza de tokens e geração da Matriz Documento-Termo (`dfm`)[cite: 4]. | Kenneth Benoit, Kohei Watanabe e equipe[cite: 4] |
+| **`quanteda.textstats`** | Cálculo de diversidade léxica (`TTR`, `CTTR`), legibilidade (`Flesch-Kincaid`) e similaridade de cosseno[cite: 4]. | Kenneth Benoit & Kohei Watanabe[cite: 4] |
+| **`quanteda.textplots`** | Visualização de dispersão léxica longitudinal ao longo das narrativas (`textplot_xray`)[cite: 4]. | Kenneth Benoit & Kohei Watanabe[cite: 4] |
+| **`lexiconPT`** | Fornecimento do dicionário de polaridade em língua portuguesa *OpLexicon v3.0* e base metodológica inspirada no pacote `literaturaBR`[cite: 4]. | Sillas Gonzaga[cite: 4] |
+| **`gt` & `DT`** | Renderização de tabelas acadêmicas estáticas de alta precisão (`gt`) e tabelas interativas navegáveis (`DT`)[cite: 4]. | Richard Iannone (`gt`) & Yihui Xie (`DT`)[cite: 4] |
 
 ------------------------------------------------------------------------
 
 ## 2. Estratégia de Web Scraping (`pt.wikisource.org`)
 
-O **Wikisource** é uma biblioteca digital livre mantida pela Fundação Wikimedia que hospeda obras em domínio público fielmente transcritas. Diferente de repositórios com arquivos únicos em `.txt`, os romances de Machado de Assis no Wikisource em português são organizados hierarquicamente:
+:::::: columns
+::: {.column width="60%"}
+O **Wikisource** é uma biblioteca digital livre mantida pela Fundação Wikimedia que hospeda obras em domínio público fielmente transcritas[cite: 4]. Diferente de repositórios com arquivos únicos em `.txt`, os romances de Machado de Assis no Wikisource em português são organizados hierarquicamente[cite: 4]:
 
-1.  **Página Índice da Obra:** Contém os metadados bibliográficos e uma lista de hiperlinks apontando para cada capítulo individual (ex.: `/wiki/Dom_Casmurro/I`, `/wiki/Dom_Casmurro/II`).
-2.  **Subpáginas de Capítulos:** Contêm o texto literário propriamente dito, encapsulado dentro do seletor HTML `#mw-content-text .mw-parser-output p`, acompanhado de elementos de navegação (*Anterior*, *Próximo*, *Índice*) e notas de rodapé numéricas (`[1]`, `[2]`).
+1.  **Página Índice da Obra:** Contém os metadados bibliográficos e uma lista de hiperlinks apontando para cada capítulo individual (ex.: `/wiki/Dom_Casmurro/I`, `/wiki/Dom_Casmurro/II`)[cite: 4].
+2.  **Subpáginas de Capítulos:** Contêm o texto literário propriamente dito, encapsulado dentro do seletor HTML `#mw-content-text .mw-parser-output p`, acompanhado de elementos de navegação (*Anterior*, *Próximo*, *Índice*) e notas de rodapé numéricas (`[1]`, `[2]`)[cite: 4].
+:::
+
+::: {.column width="3%"}
+:::
+
+::: {.column width="37%"}
+![Acervo das 7 obras de Machado de Assis raspadas integralmente do Wikisource.](images/obras-machado-corpus.jpg){#fig-corpus-scraping width="100%" fig-align="center"}
+:::
+::::::
 
 ### Contorno de Proxy e Leitura Nativa (`wininet`)
 
-Em ambientes Windows corporativos ou institucionais com restrições de proxy, requisições diretas via `curl` ou `httr` frequentemente sofrem bloqueio de certificado SSL ou *timeout*. Para garantir estabilidade, implementou-se uma função de leitura baseada no motor nativo de rede do Windows (`method = "wininet"` via `download.file`), combinada com:
+Em ambientes Windows corporativos ou institucionais com restrições de proxy, requisições diretas via `curl` ou `httr` frequentemente sofrem bloqueio de certificado SSL ou *timeout*[cite: 4]. Para garantir estabilidade, implementou-se uma função de leitura baseada no motor nativo de rede do Windows (`method = "wininet"` via `download.file`), combinada com[cite: 4]:
 
--   **Pausa ética (`Sys.sleep(0.25)`):** Intervalo de 250 milissegundos entre requisições para não sobrecarregar os servidores da Wikimedia.
--   **Decodificação de URLs (`URLdecode`):** Normalização de caracteres acentuados (como em *Memórias Póstumas* e *Esaú e Jacó*) para garantir o pareamento exato dos links de capítulos.
--   **Persistência em Cache (`.rds`):** Armazenamento local da base bruta após a primeira coleta.
+-   **Pausa ética (`Sys.sleep(0.25)`):** Intervalo de 250 milissegundos entre requisições para não sobrecarregar os servidores da Wikimedia[cite: 4].
+-   **Decodificação de URLs (`URLdecode`):** Normalização de caracteres acentuados (como em *Memórias Póstumas* e *Esaú e Jacó*) para garantir o pareamento exato dos links de capítulos[cite: 4].
+-   **Persistência em Cache (`.rds`):** Armazenamento local da base bruta após a primeira coleta[cite: 4].
+
+
 
 ```{r}
 #| label: code-scraping
@@ -48,10 +61,14 @@ Em ambientes Windows corporativos ou institucionais com restrições de proxy, r
 library(tidyverse)
 library(rvest)
 
-# Configuração automática de proxy do sistema Windows
-proxy_sistema <- tryCatch(curl::ie_get_proxy_for_url("[https://pt.wikisource.org](https://pt.wikisource.org)"), error = function(e) NA)
-if (!is.na(proxy_sistema) && proxy_sistema != "") {
-  Sys.setenv(https_proxy = proxy_sistema, http_proxy = proxy_sistema)
+# Configuração automática de proxy do sistema Windows (protegida contra NULL/vazio)
+proxy_sistema <- tryCatch(
+  curl::ie_get_proxy_for_url("https://pt.wikisource.org"),
+  error = function(e) NULL
+)
+
+if (length(proxy_sistema) > 0 && !is.na(proxy_sistema[1]) && nzchar(proxy_sistema[1])) {
+  Sys.setenv(https_proxy = proxy_sistema[1], http_proxy = proxy_sistema[1])
 }
 
 # Função de leitura HTML usando motor nativo wininet
@@ -82,18 +99,41 @@ extrair_texto_pagina <- function(url_pagina) {
   paragrafos <- paragrafos[paragrafos != "" & nchar(paragrafos) > 1]
   tibble(url = url_pagina, paragraph_number = seq_along(paragrafos), text = paragrafos)
 }
+
+# Execução da raspagem sobre as 7 obras completas e persistência em cache
+arquivo_cache <- "machado_wikisource_completo.rds"
+
+urls_machado <- c(
+  "https://pt.wikisource.org/wiki/Dom_Casmurro",
+  "https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas",
+  "https://pt.wikisource.org/wiki/Quincas_Borba",
+  "https://pt.wikisource.org/wiki/O_Alienista",
+  "https://pt.wikisource.org/wiki/Helena",
+  "https://pt.wikisource.org/wiki/Memorial_de_Aires",
+  "https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3"
+)
+
+if (file.exists(arquivo_cache)) {
+  df_livros_bruto <- readRDS(arquivo_cache)
+} else {
+  df_livros_bruto <- map_dfr(urls_machado, extrair_livro_wikisource)
+  saveRDS(df_livros_bruto, arquivo_cache)
+}
 ```
+
+
+
 
 ------------------------------------------------------------------------
 
 ## 3. Limpeza, Padronização e Estruturação do Banco de Dados
 
-Os textos brutos extraídos da web contêm ruídos estruturais que precisam ser removidos antes de qualquer cálculo estatístico. O fluxo de higienização segue quatro etapas:
+Os textos brutos extraídos da web contêm ruídos estruturais que precisam ser removidos antes de qualquer cálculo estatístico[cite: 4]. O fluxo de higienização segue quatro etapas[cite: 4]:
 
-1.  **Filtragem de Ruído Editorial:** Remoção de linhas vazias (`NA`) e de parágrafos administrativos capturados acidentalmente pelos seletores HTML (como cabeçalhos iniciados por *"Índice"*, *"Anterior"*, *"Próximo"*, *"Wikisource"* ou *"Obra editada"*).
-2.  **Padronização de Metadados:** Criação de identificadores curtos (`book_short`) para visualização gráfica e classificação das obras segundo a periodização crítica da literatura brasileira (**Fase Romântica** vs. **Fase Realista**).
-3.  **Estruturação Tabular (`Tidy Data`):** Organização do banco em quatro variáveis fundamentais: `book_short` (obra), `chapter_name` (capítulo), `paragraph_number` (ordem sequencial do parágrafo) e `text` (conteúdo textual limpo).
-4.  **Remoção de Stopwords e Arcaísmos:** Para a análise de frequência e modelagem temática, eliminam-se pontuações, algarismos, símbolos, *stopwords* padrão da língua portuguesa e termos auxiliares/arcaicos recorrentes na prosa oitocentista (como *"dous"*, *"cousa"*, *"havia"*, *"disse"*).
+1.  **Filtragem de Ruído Editorial:** Remoção de linhas vazias (`NA`) e de parágrafos administrativos capturados acidentalmente pelos seletores HTML (como cabeçalhos iniciados por *"Índice"*, *"Anterior"*, *"Próximo"*, *"Wikisource"* ou *"Obra editada"*)[cite: 4].
+2.  **Padronização de Metadados:** Criação de identificadores curtos (`book_short`) para visualização gráfica e classificação das obras segundo a periodização crítica da literatura brasileira (**Fase Romântica** vs. **Fase Realista**)[cite: 4].
+3.  **Estruturação Tabular (`Tidy Data`):** Organização do banco em quatro variáveis fundamentais: `book_short` (obra), `chapter_name` (capítulo), `paragraph_number` (ordem sequencial do parágrafo) e `text` (conteúdo textual limpo)[cite: 4].
+4.  **Remoção de Stopwords e Arcaísmos:** Para a análise de frequência e modelagem temática, eliminam-se pontuações, algarismos, símbolos, *stopwords* padrão da língua portuguesa e termos auxiliares/arcaicos recorrentes na prosa oitocentista (como *"dous"*, *"cousa"*, *"havia"*, *"disse"*)[cite: 4].
 
 ```{r}
 #| label: code-limpeza
@@ -137,15 +177,63 @@ matriz_dfm <- dfm(tokens_limpos)
 
 ## 4. Fluxo Completo da Arquitetura
 
-O diagrama abaixo resume a transformação dos dados desde o código-fonte HTML até os modelos analíticos apresentados nas próximas abas:
+O fluxograma e o quadro abaixo resumem a transformação dos dados desde o código-fonte HTML até os modelos analíticos apresentados nas próximas abas[cite: 4]:
+
+```{mermaid}
+%%| label: fig-workflow-scraping
+%%| fig-cap: "Arquitetura completa do pipeline de Web Scraping e Text Mining em R."
+%%| fig-width: 7.5
+
+%%{init: {'theme': 'base', 'flowchart': {'nodeSpacing': 25, 'rankSpacing': 35, 'padding': 10}, 'themeVariables': { 'fontSize': '13px', 'background': '#ffffff', 'primaryColor': '#ffffff', 'primaryTextColor': '#1f2937', 'primaryBorderColor': '#2780e3', 'lineColor': '#4b5563', 'clusterBkg': '#ffffff', 'clusterBorder': '#94a3b8'}}}%%
+flowchart TD
+    subgraph S1 ["1. Coleta (Web Scraping)"]
+        direction LR
+        A[("URLs Wikisource<br/>(7 Obras)")] --> B["ler_html_wininet()<br/>Proxy + download.file"]
+        B --> C["extrair_livro_wikisource()<br/>Links de Capítulos"]
+        C --> D["extrair_texto_pagina()<br/>CSS #mw-content-text p"]
+    end
+
+    subgraph S2 ["2. Persistência & Limpeza"]
+        direction LR
+        E[("Cache Local<br/>machado_wikisource_completo.rds")] --> F["Higienização (stringr)<br/>Regex + Metadados + Fases"]
+    end
+
+    subgraph S3 ["3. Estruturação NLP"]
+        direction LR
+        G["Corpus (quanteda)<br/>827 Capítulos / 7 Livros"] --> H["Tokenização & Filtros<br/>Stopwords + Arcaísmos"]
+        H --> I[("Matriz DFM<br/>Document-Feature Matrix")]
+    end
+
+    subgraph S4 ["4. Modelagem & Saídas"]
+        direction LR
+        J["Léxico & TF-IDF<br/>TTR, CTTR, X-Ray"]
+        K["Sentimentos<br/>OpLexicon v3.0"]
+        L["Inferência & Grafos<br/>Keyness, CA, LDA, Redes"]
+    end
+
+    D --> E
+    F --> G
+    I --> J
+    I --> K
+    I --> L
+
+    style S1 fill:#ffffff,stroke:#cbd5e1,stroke-width:1.5px
+    style S2 fill:#ffffff,stroke:#cbd5e1,stroke-width:1.5px
+    style S3 fill:#ffffff,stroke:#cbd5e1,stroke-width:1.5px
+    style S4 fill:#ffffff,stroke:#cbd5e1,stroke-width:1.5px
+
+    style A fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style E fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style I fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+```
 
 | Estágio | Entrada | Processamento | Saída Estruturada |
 |:-----------------|:-----------------|:-----------------|:-----------------|
-| **1. Coleta** | URLs do Wikisource (`HTML`) | Raspagem DOM via `rvest` + `wininet` | Arquivo local `.rds` bruto |
-| **2. Higienização** | Parágrafos brutos com ruído | Regex (`stringr`) + filtros de metadados | Tabela `df_livros` (827 capítulos) |
-| **3. Tokenização** | Texto corrido por obra | Normalização + remoção de *stopwords* | `corpus` e `dfm` (`quanteda`) |
-| **4. Modelagem** | `dfm` + `OpLexicon v3.0` | Estatística léxica, TF-IDF, sentimentos e clusters | Tabelas `gt` e gráficos `ggplot2` |
+| **1. Coleta** | URLs do Wikisource (`HTML`)[cite: 4] | Raspagem DOM via `rvest` + `wininet`[cite: 4] | Arquivo local `.rds` bruto[cite: 4] |
+| **2. Higienização** | Parágrafos brutos com ruído[cite: 4] | Regex (`stringr`) + filtros de metadados[cite: 4] | Tabela `df_livros` (827 capítulos)[cite: 4] |
+| **3. Tokenização** | Texto corrido por obra[cite: 4] | Normalização + remoção de *stopwords*[cite: 4] | `corpus` e `dfm` (`quanteda`)[cite: 4] |
+| **4. Modelagem** | `dfm` + `OpLexicon v3.0`[cite: 4] | Estatística léxica, TF-IDF, sentimentos e clusters[cite: 4] | Tabelas `gt` e gráficos `ggplot2`[cite: 4] |
 
-Avance para a aba **Métricas Estatísticas** para consultar a fundamentação matemática das medidas utilizadas neste estudo.
+Avance para a aba **Métricas Estatísticas** para consultar a fundamentação matemática das medidas utilizadas neste estudo[cite: 4].
 
 ------------------------------------------------------------------------

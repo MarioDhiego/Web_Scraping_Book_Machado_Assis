@@ -1,8 +1,12 @@
 ---
-title: "Vida, Contexto e Obra"
+title: "Vida e Obra"
 subtitle: "Perfil biográfico, trajetória e cronologia literária de Machado de Assis"
 title-block-banner: FALSE
 ---
+
+
+
+
 
 ::: {.callout-note appearance="minimal"}
 **Sobre este Portfólio:** Este projeto aplica técnicas de *Web Scraping* e *Text Mining* (Mineração de Textos) em linguagem **R** sobre obras completas de Machado de Assis extraídas do **Wikisource**. Esta primeira seção estabelece o lastro histórico, biográfico e literário necessário para interpretar os padrões léxicos, estilísticos e emocionais revelados nas análises computacionais das abas seguintes.

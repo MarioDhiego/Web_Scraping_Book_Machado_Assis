@@ -1,37 +1,38 @@
 project:
   type: website
   output-dir: docs
-  
+
 website:
-  reader-mode: true
-  twitter-card: true
-  title: "MINERAÇÃO DE TEXTOS EM R"
-  page-footer:
-    center: "Análise Léxica e Sentimentos em Obras de Machado de Assis"
+  title: "Text Mining in R: Dataset(Machado)"
   navbar:
     background: primary
-    search: true
     left:
       - href: index.qmd
-        text: "Machado de Assis"
+        text: "Vida & Obra"
       - href: scraping-metodologia.qmd
-        text: "Web Scraping"
+        text: "Scraping & Pipeline"
       - href: metricas-teoria.qmd
         text: "Métricas Estatísticas"
       - href: resultados-descritivos.qmd
-        text: "Resultados & Léxico"
+        text: "Análise Descritiva"
       - href: analise-sentimento.qmd
         text: "Análise de Sentimentos"
-    right:
-      - icon: github
-        href: https://github.com/MarioDhiego
-        
+      - href: referencias.qmd
+        text: "Referências"
+  page-footer:
+    left: "© 2026 | Mário Diego"
+    right: "Linguagem R"
+
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-    toc-title: "Sumário"
+    toc-title: "Nesta página"
     code-fold: true
     code-summary: "Ver código R"
     lang: pt
+    
+    
+    
+    

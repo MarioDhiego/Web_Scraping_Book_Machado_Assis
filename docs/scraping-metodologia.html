@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Arquitetura de Coleta e Pipeline de Text Mining – MINERAÇÃO DE TEXTOS EM R</title>
+<title>Arquitetura de Coleta e Pipeline de Text Mining – Text Mining in R: Dataset(Machado)</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -111,10 +111,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="styles.css">
-<meta name="twitter:title" content="Arquitetura de Coleta e Pipeline de Text Mining – MINERAÇÃO DE TEXTOS EM R">
-<meta name="twitter:description" content="Web Scraping no Wikisource, tratamento de dados não estruturados e ecossistema R">
-<meta name="twitter:image" content="images/obras-machado-corpus.jpg">
-<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -125,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">MINERAÇÃO DE TEXTOS EM R</span>
+    <span class="navbar-title">Text Mining in R: Dataset(Machado)</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -136,11 +132,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Machado de Assis</span></a>
+<span class="menu-text">Vida &amp; Obra</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./scraping-metodologia.html" aria-current="page"> 
-<span class="menu-text">Web Scraping</span></a>
+<span class="menu-text">Scraping &amp; Pipeline</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./metricas-teoria.html"> 
@@ -148,27 +144,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./resultados-descritivos.html"> 
-<span class="menu-text">Resultados &amp; Léxico</span></a>
+<span class="menu-text">Análise Descritiva</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./analise-sentimento.html"> 
 <span class="menu-text">Análise de Sentimentos</span></a>
   </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./referencias.html"> 
+<span class="menu-text">Referências</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -179,7 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Sumário</h2>
+    <h2 id="toc-title">Nesta página</h2>
    
   <ul>
   <li><a href="#ecossistema-de-pacotes-e-referências-técnicas" id="toc-ecossistema-de-pacotes-e-referências-técnicas" class="nav-link active" data-scroll-target="#ecossistema-de-pacotes-e-referências-técnicas">1. Ecossistema de Pacotes e Referências Técnicas</a></li>
@@ -324,60 +312,64 @@ Figura&nbsp;1: Acervo das 7 obras de Machado de Assis raspadas integralmente do 
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuração automática de proxy do sistema Windows</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>proxy_sistema <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(curl<span class="sc">::</span><span class="fu">ie_get_proxy_for_url</span>(<span class="st">"[https://pt.wikisource.org](https://pt.wikisource.org)"</span>), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NA</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.na</span>(proxy_sistema) <span class="sc">&amp;&amp;</span> proxy_sistema <span class="sc">!=</span> <span class="st">""</span>) {</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.setenv</span>(<span class="at">https_proxy =</span> proxy_sistema, <span class="at">http_proxy =</span> proxy_sistema)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuração automática de proxy do sistema Windows (protegida contra NULL/vazio)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>proxy_sistema <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  curl<span class="sc">::</span><span class="fu">ie_get_proxy_for_url</span>(<span class="st">"https://pt.wikisource.org"</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de leitura HTML usando motor nativo wininet</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ler_html_wininet <span class="ot">&lt;-</span> <span class="cf">function</span>(url) {</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  arquivo_temp <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".html"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  status <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">suppressWarnings</span>(<span class="fu">download.file</span>(url, <span class="at">destfile =</span> arquivo_temp, <span class="at">method =</span> <span class="st">"wininet"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">return</span>(<span class="dv">1</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (status <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">||</span> <span class="sc">!</span><span class="fu">file.exists</span>(arquivo_temp)) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  pagina <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">read_html</span>(arquivo_temp, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlink</span>(arquivo_temp)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(pagina)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Extração dos parágrafos de cada capítulo</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>extrair_texto_pagina <span class="ot">&lt;-</span> <span class="cf">function</span>(url_pagina) {</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.25</span>) <span class="co"># Pausa ética</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  pagina <span class="ot">&lt;-</span> <span class="fu">ler_html_wininet</span>(url_pagina)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(pagina)) <span class="fu">return</span>(<span class="fu">tibble</span>(<span class="at">url =</span> url_pagina, <span class="at">paragraph_number =</span> <span class="cn">NA_integer_</span>, <span class="at">text =</span> <span class="cn">NA_character_</span>))</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  paragrafos <span class="ot">&lt;-</span> pagina <span class="sc">%&gt;%</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">"#mw-content-text .mw-parser-output p"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text2</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">[</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">]"</span>) <span class="sc">%&gt;%</span> <span class="co"># Remove referências de notas de rodapé</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_squish</span>()</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  paragrafos <span class="ot">&lt;-</span> paragrafos[paragrafos <span class="sc">!=</span> <span class="st">""</span> <span class="sc">&amp;</span> <span class="fu">nchar</span>(paragrafos) <span class="sc">&gt;</span> <span class="dv">1</span>]</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">url =</span> url_pagina, <span class="at">paragraph_number =</span> <span class="fu">seq_along</span>(paragrafos), <span class="at">text =</span> paragrafos)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Execução da raspagem sobre as 7 obras completas e persistência em cache</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>arquivo_cache <span class="ot">&lt;-</span> <span class="st">"machado_wikisource_completo.rds"</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>urls_machado <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Dom_Casmurro](https://pt.wikisource.org/wiki/Dom_Casmurro)"</span>,</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas](https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas)"</span>,</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Quincas_Borba](https://pt.wikisource.org/wiki/Quincas_Borba)"</span>,</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/O_Alienista](https://pt.wikisource.org/wiki/O_Alienista)"</span>,</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Helena](https://pt.wikisource.org/wiki/Helena)"</span>,</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Memorial_de_Aires](https://pt.wikisource.org/wiki/Memorial_de_Aires)"</span>,</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3](https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3)"</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(arquivo_cache)) {</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  df_livros_bruto <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(arquivo_cache)</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  df_livros_bruto <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(urls_machado, extrair_livro_wikisource)</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(df_livros_bruto, arquivo_cache)</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(proxy_sistema) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(proxy_sistema[<span class="dv">1</span>]) <span class="sc">&amp;&amp;</span> <span class="fu">nzchar</span>(proxy_sistema[<span class="dv">1</span>])) {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.setenv</span>(<span class="at">https_proxy =</span> proxy_sistema[<span class="dv">1</span>], <span class="at">http_proxy =</span> proxy_sistema[<span class="dv">1</span>])</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de leitura HTML usando motor nativo wininet</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ler_html_wininet <span class="ot">&lt;-</span> <span class="cf">function</span>(url) {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  arquivo_temp <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".html"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  status <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">suppressWarnings</span>(<span class="fu">download.file</span>(url, <span class="at">destfile =</span> arquivo_temp, <span class="at">method =</span> <span class="st">"wininet"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">return</span>(<span class="dv">1</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (status <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">||</span> <span class="sc">!</span><span class="fu">file.exists</span>(arquivo_temp)) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  pagina <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">read_html</span>(arquivo_temp, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlink</span>(arquivo_temp)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(pagina)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Extração dos parágrafos de cada capítulo</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>extrair_texto_pagina <span class="ot">&lt;-</span> <span class="cf">function</span>(url_pagina) {</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.25</span>) <span class="co"># Pausa ética</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  pagina <span class="ot">&lt;-</span> <span class="fu">ler_html_wininet</span>(url_pagina)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(pagina)) <span class="fu">return</span>(<span class="fu">tibble</span>(<span class="at">url =</span> url_pagina, <span class="at">paragraph_number =</span> <span class="cn">NA_integer_</span>, <span class="at">text =</span> <span class="cn">NA_character_</span>))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  paragrafos <span class="ot">&lt;-</span> pagina <span class="sc">%&gt;%</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">"#mw-content-text .mw-parser-output p"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text2</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">[</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">]"</span>) <span class="sc">%&gt;%</span> <span class="co"># Remove referências de notas de rodapé</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_squish</span>()</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  paragrafos <span class="ot">&lt;-</span> paragrafos[paragrafos <span class="sc">!=</span> <span class="st">""</span> <span class="sc">&amp;</span> <span class="fu">nchar</span>(paragrafos) <span class="sc">&gt;</span> <span class="dv">1</span>]</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">url =</span> url_pagina, <span class="at">paragraph_number =</span> <span class="fu">seq_along</span>(paragrafos), <span class="at">text =</span> paragrafos)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Execução da raspagem sobre as 7 obras completas e persistência em cache</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>arquivo_cache <span class="ot">&lt;-</span> <span class="st">"machado_wikisource_completo.rds"</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>urls_machado <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://pt.wikisource.org/wiki/Dom_Casmurro"</span>,</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas"</span>,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://pt.wikisource.org/wiki/Quincas_Borba"</span>,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://pt.wikisource.org/wiki/O_Alienista"</span>,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://pt.wikisource.org/wiki/Helena"</span>,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://pt.wikisource.org/wiki/Memorial_de_Aires"</span>,</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3"</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(arquivo_cache)) {</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  df_livros_bruto <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(arquivo_cache)</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  df_livros_bruto <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(urls_machado, extrair_livro_wikisource)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(df_livros_bruto, arquivo_cache)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <hr>
@@ -943,14 +935,14 @@ Figura&nbsp;2: Arquitetura completa do pipeline de Web Scraping e Text Mining em
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
+<p>© 2026 | Mário Diego</p>
+</div>   
     <div class="nav-footer-center">
-<p>Análise Léxica e Sentimentos em Obras de Machado de Assis</p>
-</div>
-    <div class="nav-footer-right">
       &nbsp;
     </div>
+    <div class="nav-footer-right">
+<p>Linguagem R</p>
+</div>
   </div>
 </footer>
 

@@ -1,0 +1,65 @@
+---
+title: "Referências Bibliográficas"
+subtitle: "Fontes primárias, fundamentação estatística multivariada, linguística computacional e ecossistema R"
+title-block-banner: false
+---
+
+## 1. Corpus de Texto (Fontes Primárias — Wikisource)
+
+* ASSIS, Joaquim Maria Machado de. **Helena** [1876]. Rio de Janeiro: B. L. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Helena>.
+* ASSIS, Joaquim Maria Machado de. **Memórias Póstumas de Brás Cubas** [1881]. Rio de Janeiro: Tipografia Nacional. Edição digital disponível em: <https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas>.
+* ASSIS, Joaquim Maria Machado de. **O Alienista** [1882]. In: *Papéis Avulsos*. Rio de Janeiro: Lombaerts & C. Edição digital disponível em: <https://pt.wikisource.org/wiki/O_Alienista>.
+* ASSIS, Joaquim Maria Machado de. **Quincas Borba** [1891]. Rio de Janeiro: B. L. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Quincas_Borba>.
+* ASSIS, Joaquim Maria Machado de. **Dom Casmurro** [1899]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Dom_Casmurro>.
+* ASSIS, Joaquim Maria Machado de. **Esaú e Jacó** [1904]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3>.
+* ASSIS, Joaquim Maria Machado de. **Memorial de Aires** [1908]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Memorial_de_Aires>.
+
+---
+
+## 2. Fundamentação Estatística
+
+* BENZÉCRI, Jean-Paul. **L'Analyse des Données: Tome 2 — L'Analyse des Correspondances**. Paris: Dunod, 1973.
+* BLEI, David M.; NG, Andrew Y.; JORDAN, Michael I. Latent Dirichlet Allocation. **Journal of Machine Learning Research**, v. 3, p. 993–1022, 2003.
+* CARROLL, John B. **Language and Thought**. Englewood Cliffs: Prentice-Hall, 1964.
+* CLEVELAND, William S. Robust Locally Weighted Regression and Smoothing Scatterplots. **Journal of the American Statistical Association**, v. 74, n. 368, p. 829–836, 1979.
+* FÁVERO, Luiz Paulo; BELFIORE, Patrícia. **Manual de Análise de Dados: Estatística e Modelagem Multivariada com Excel, SPSS e Stata**. Rio de Janeiro: Elsevier, 2017.
+* GREENACRE, Michael J. **Theory and Applications of Correspondence Analysis**. London: Academic Press, 1984.
+* GRIFFITHS, Thomas L.; STEYVERS, Mark. Finding Scientific Topics. **Proceedings of the National Academy of Sciences (PNAS)**, v. 101, suppl. 1, p. 5228–5235, 2004.
+* HAIR JR., Joseph F.; BLACK, William C.; BABIN, Barry J.; ANDERSON, Rolph E. **Análise Multivariada de Dados**. 6. ed. Porto Alegre: Bookman, 2009.
+* KAUFMAN, Leonard; ROUSSEEUW, Peter J. **Finding Groups in Data: An Introduction to Cluster Analysis**. New York: John Wiley & Sons, 1990.
+* KINCAID, J. Peter; FISHBURNE JR., Robert P.; ROGERS, Richard L.; CHISSOM, Brad S. **Derivation of New Readability Formulas (Automated Readability Index, Fog Count and Flesch Reading Ease Formula) for Navy Enlisted Personnel**. Research Branch Report 8-75, Millington, TN: Naval Technical Training Command, 1975.
+* MACQUEEN, James. Some Methods for Classification and Analysis of Multivariate Observations. In: **Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability**, v. 1, p. 281–297, 1967.
+* MURTAGH, Fionn; LEGENDRE, Pierre. Ward's Hierarchical Agglomerative Clustering Method: Which Algorithms Implement Ward's Criterion? **Journal of Classification**, v. 31, n. 3, p. 274–295, 2014.
+* NEWMAN, Mark E. J. **Networks: An Introduction**. Oxford: Oxford University Press, 2010.
+* RAYSON, Paul; GARSIDE, Roger. Comparing Corpora Using Frequency Profiling. In: **Proceedings of the Workshop on Comparing Corpora (ACL)**, Hong Kong, p. 1–6, 2000.
+* SALTON, Gerard; MCGILL, Michael J. **Introduction to Modern Information Retrieval**. New York: McGraw-Hill, 1983.
+* SCOTT, Mike. PC Analysis of Key Words — and Key Key Words. **System**, v. 25, n. 2, p. 233–245, 1997.
+* SILGE, Julia; ROBINSON, David. **Text Mining with R: A Tidy Approach**. Sebastopol: O'Reilly Media, 2017.
+* SOKAL, Robert R.; ROHLF, F. James. The Comparison of Dendrograms by Objective Methods. **Taxon**, v. 11, n. 2, p. 33–40, 1962.
+* SOKAL, Robert R.; SNEATH, Peter H. A. **Principles of Numerical Taxonomy**. San Francisco: W. H. Freeman, 1963.
+* SOUZA, Marlo; VIEIRA, Renata; BUSETTI, Débora; CHISHMAN, Rove; ALVES, Isa Mara. Construction of a Portuguese Opinion Lexicon from Multiple Resources. In: **Proceedings of the 8th Brazilian Symposium in Information and Human Language Technology (STIL)**, Cuiabá, 2011.
+* SPÄRCK JONES, Karen. A Statistical Interpretation of Term Specificity and Its Application in Retrieval. **Journal of Documentation**, v. 28, n. 1, p. 11–21, 1972.
+* TRYON, Robert C. **Cluster Analysis: Correlation Profile and Orthometric (Factor) Analysis for the Isolation of Unities in Mind and Personality**. Ann Arbor: Edwards Brothers, 1939.
+* WARD JR., Joe H. Hierarchical Grouping to Optimize an Objective Function. **Journal of the American Statistical Association**, v. 58, n. 301, p. 236–244, 1963.
+* ZIPF, George Kingsley. **Human Behavior and the Principle of Least Effort: An Introduction to Human Ecology**. Cambridge, MA: Addison-Wesley, 1949.
+
+---
+
+## 3. Ecossistema Computacional (Linguagem R e Pacotes)
+
+* ALLAIRE, J. J.; TEAGUE, Charles; SCHEIDEGGER, Carlos; XIE, Yihui; DERVIEUX, Christophe. **Quarto** (Version 1.4+). Posit Software, PBC, 2024. Disponível em: <https://quarto.org>.
+* BENOIT, Kenneth et al. quanteda: An R package for the quantitative analysis of textual data. **Journal of Open Source Software**, v. 3, n. 30, p. 774, 2018.
+* CSÁRDI, Gábor; NEPUSZ, Tamás. The igraph software package for complex network research. **InterJournal, Complex Systems**, v. 1695, n. 5, p. 1–9, 2006.
+* FELLOWS, Ian. **wordcloud: Word Clouds**. R package version 2.6, 2018.
+* GONZAGA, Sillas. **lexiconPT: Lexicons for Portuguese Text Analysis**. R package version 0.1.0, 2017.
+* GRÜN, Bettina; HORNIK, Kurt. topicmodels: An R Package for Fitting Topic Models. **Journal of Statistical Software**, v. 40, n. 13, p. 1–30, 2011.
+* IANNONE, Richard; CHENG, Joe; SCHLOERKE, Barret; HUGHES, Ellis; LAUER, Alexandra; SEO, JooYoung. **gt: Easily Create Presentation-Ready Display Tables**. R package, 2024.
+* PEDERSEN, Thomas Lin. **ggraph: An Implementation of Grammar of Graphics for Graphs and Networks**. R package, 2024.
+* R CORE TEAM. **R: A Language and Environment for Statistical Computing**. Vienna, Austria: R Foundation for Statistical Computing, 2026. Disponível em: <https://www.R-project.org/>.
+* SILGE, Julia; ROBINSON, David. tidytext: Text Mining and Analysis Using Tidy Data Principles in R. **Journal of Open Source Software**, v. 1, n. 3, p. 37, 2016.
+* WICKHAM, Hadley et al. Welcome to the tidyverse. **Journal of Open Source Software**, v. 4, n. 43, p. 1686, 2019.
+* WICKHAM, Hadley. **rvest: Easily Harvest (Scrape) Web Pages**. R package, 2024.
+* XIE, Yihui; CHENG, Joe; TAN, Xianying. **DT: A Wrapper of the JavaScript Library 'DataTables'**. R package, 2024.
+
+
+---
