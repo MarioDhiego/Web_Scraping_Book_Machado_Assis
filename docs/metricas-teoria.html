@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Fundamentação Estatística e Linguística – MINERAÇÃO DE TEXTOS EM R</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -30,15 +33,16 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ff38ca5759cea8d2b4e40dc1c167d4da.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -81,7 +85,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -99,11 +103,11 @@ window.Quarto = {
 
 <link rel="stylesheet" href="styles.css">
 <meta name="twitter:title" content="Fundamentação Estatística e Linguística – MINERAÇÃO DE TEXTOS EM R">
-<meta name="twitter:description" content="Formulação matemática das métricas de riqueza léxica, legibilidade, relevância e polaridade">
+<meta name="twitter:description" content="Formulação matemática das métricas léxicas, legibilidade, polaridade, inferência multivariada e modelagem latente">
 <meta name="twitter:card" content="summary">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -122,11 +126,11 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Dataset(Machado)</span></a>
+<span class="menu-text">Machado de Assis</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./scraping-metodologia.html"> 
-<span class="menu-text">WebScraping</span></a>
+<span class="menu-text">Web Scraping</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./metricas-teoria.html" aria-current="page"> 
@@ -134,15 +138,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./resultados-descritivos.html"> 
-<span class="menu-text">Resultados Descritivos</span></a>
+<span class="menu-text">Resultados &amp; Léxico</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./analise-sentimento.html"> 
 <span class="menu-text">Análise de Sentimentos</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./modelagem-avancada.html"> 
-<span class="menu-text">Modelagem dos Dados</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -178,18 +178,35 @@ window.Quarto = {
   <li><a href="#corrected-type-token-ratio-cttr" id="toc-corrected-type-token-ratio-cttr" class="nav-link" data-scroll-target="#corrected-type-token-ratio-cttr">1.2 Corrected Type-Token Ratio (<span class="math inline">\(CTTR\)</span>)</a></li>
   </ul></li>
   <li><a href="#complexidade-sintática-e-legibilidade" id="toc-complexidade-sintática-e-legibilidade" class="nav-link" data-scroll-target="#complexidade-sintática-e-legibilidade">2. Complexidade Sintática e Legibilidade</a></li>
-  <li><a href="#frequência-normalizada-e-distintividade-vocabular" id="toc-frequência-normalizada-e-distintividade-vocabular" class="nav-link" data-scroll-target="#frequência-normalizada-e-distintividade-vocabular">3. Frequência Normalizada e Distintividade Vocabular</a>
+  <li><a href="#frequência-normalizada" id="toc-frequência-normalizada" class="nav-link" data-scroll-target="#frequência-normalizada">3. Frequência Normalizada</a>
   <ul class="collapse">
   <li><a href="#frequência-relativa-por-10.000-palavras" id="toc-frequência-relativa-por-10.000-palavras" class="nav-link" data-scroll-target="#frequência-relativa-por-10.000-palavras">3.1 Frequência Relativa por 10.000 Palavras</a></li>
   <li><a href="#term-frequency-inverse-document-frequency-tftext-idf" id="toc-term-frequency-inverse-document-frequency-tftext-idf" class="nav-link" data-scroll-target="#term-frequency-inverse-document-frequency-tftext-idf">3.2 Term Frequency – Inverse Document Frequency (<span class="math inline">\(TF\text{-}IDF\)</span>)</a></li>
   </ul></li>
-  <li><a href="#análise-de-sentimentos-e-volatilidade-emocional" id="toc-análise-de-sentimentos-e-volatilidade-emocional" class="nav-link" data-scroll-target="#análise-de-sentimentos-e-volatilidade-emocional">4. Análise de Sentimentos e Volatilidade Emocional</a>
+  <li><a href="#análise-de-sentimentos" id="toc-análise-de-sentimentos" class="nav-link" data-scroll-target="#análise-de-sentimentos">4. Análise de Sentimentos</a>
   <ul class="collapse">
   <li><a href="#saldo-de-polaridade-por-capítulo-s_c-e-progresso-relativo" id="toc-saldo-de-polaridade-por-capítulo-s_c-e-progresso-relativo" class="nav-link" data-scroll-target="#saldo-de-polaridade-por-capítulo-s_c-e-progresso-relativo">4.1 Saldo de Polaridade por Capítulo (<span class="math inline">\(S_c\)</span>) e Progresso Relativo</a></li>
   <li><a href="#volatilidade-emocional-sigma_s" id="toc-volatilidade-emocional-sigma_s" class="nav-link" data-scroll-target="#volatilidade-emocional-sigma_s">4.2 Volatilidade Emocional (<span class="math inline">\(\sigma_S\)</span>)</a></li>
   </ul></li>
-  <li><a href="#similaridade-de-cosseno-e-clusterização-hierárquica" id="toc-similaridade-de-cosseno-e-clusterização-hierárquica" class="nav-link" data-scroll-target="#similaridade-de-cosseno-e-clusterização-hierárquica">5. Similaridade de Cosseno e Clusterização Hierárquica</a></li>
-  <li><a href="#síntese-das-métricas-aplicadas" id="toc-síntese-das-métricas-aplicadas" class="nav-link" data-scroll-target="#síntese-das-métricas-aplicadas">6. Síntese das Métricas Aplicadas</a></li>
+  <li><a href="#análise-de-agrupamento-cluster-analysis" id="toc-análise-de-agrupamento-cluster-analysis" class="nav-link" data-scroll-target="#análise-de-agrupamento-cluster-analysis">5. Análise de Agrupamento (<em>Cluster Analysis</em>)</a>
+  <ul class="collapse">
+  <li><a href="#origem-histórica" id="toc-origem-histórica" class="nav-link" data-scroll-target="#origem-histórica">5.1 Origem Histórica</a></li>
+  <li><a href="#métodos-de-clusterização" id="toc-métodos-de-clusterização" class="nav-link" data-scroll-target="#métodos-de-clusterização">5.2 Métodos de Clusterização</a></li>
+  <li><a href="#medidas-de-distância-e-similaridade" id="toc-medidas-de-distância-e-similaridade" class="nav-link" data-scroll-target="#medidas-de-distância-e-similaridade">5.3 Medidas de Distância e Similaridade</a></li>
+  <li><a href="#critérios-de-ligação-linkage-e-método-de-ward" id="toc-critérios-de-ligação-linkage-e-método-de-ward" class="nav-link" data-scroll-target="#critérios-de-ligação-linkage-e-método-de-ward">5.4 Critérios de Ligação (<em>Linkage</em>) e Método de Ward</a></li>
+  <li><a href="#correlação-cofenética-ccc" id="toc-correlação-cofenética-ccc" class="nav-link" data-scroll-target="#correlação-cofenética-ccc">5.5 Correlação Cofenética (<span class="math inline">\(CCC\)</span>)</a></li>
+  </ul></li>
+  <li><a href="#linguística-quantitativa-lei-de-zipf" id="toc-linguística-quantitativa-lei-de-zipf" class="nav-link" data-scroll-target="#linguística-quantitativa-lei-de-zipf">6. Linguística Quantitativa (Lei de Zipf)</a></li>
+  <li><a href="#análise-de-keyness-chi2" id="toc-análise-de-keyness-chi2" class="nav-link" data-scroll-target="#análise-de-keyness-chi2">7. Análise de <em>Keyness</em> (<span class="math inline">\(\chi^2\)</span>)</a></li>
+  <li><a href="#análise-de-correspondência-simples-ca" id="toc-análise-de-correspondência-simples-ca" class="nav-link" data-scroll-target="#análise-de-correspondência-simples-ca">8. Análise de Correspondência Simples (CA)</a>
+  <ul class="collapse">
+  <li><a href="#origem-histórica-1" id="toc-origem-histórica-1" class="nav-link" data-scroll-target="#origem-histórica-1">8.1 Origem Histórica</a></li>
+  <li><a href="#formulação-geral-e-decomposição-svd" id="toc-formulação-geral-e-decomposição-svd" class="nav-link" data-scroll-target="#formulação-geral-e-decomposição-svd">8.2 Formulação Geral e Decomposição SVD</a></li>
+  <li><a href="#critérios-diagnósticos" id="toc-critérios-diagnósticos" class="nav-link" data-scroll-target="#critérios-diagnósticos">8.3 Critérios Diagnósticos</a></li>
+  </ul></li>
+  <li><a href="#modelagem-probabilística-de-tópicos-lda" id="toc-modelagem-probabilística-de-tópicos-lda" class="nav-link" data-scroll-target="#modelagem-probabilística-de-tópicos-lda">9. Modelagem Probabilística de Tópicos (LDA)</a></li>
+  <li><a href="#teoria-dos-grafos" id="toc-teoria-dos-grafos" class="nav-link" data-scroll-target="#teoria-dos-grafos">10. Teoria dos Grafos</a></li>
+  <li><a href="#síntese-geral-das-técnicas-e-métricas-aplicadas" id="toc-síntese-geral-das-técnicas-e-métricas-aplicadas" class="nav-link" data-scroll-target="#síntese-geral-das-técnicas-e-métricas-aplicadas">11. Síntese Geral das Técnicas e Métricas Aplicadas</a></li>
   </ul>
 </nav>
     </div>
@@ -199,7 +216,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Fundamentação Estatística e Linguística</h1>
-<p class="subtitle lead">Formulação matemática das métricas de riqueza léxica, legibilidade, relevância e polaridade</p>
+<p class="subtitle lead">Formulação matemática das métricas léxicas, legibilidade, polaridade, inferência multivariada e modelagem latente</p>
 </div>
 
 
@@ -222,7 +239,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Rigor Metodológico:</strong> A mineração de textos transforma fenômenos estilísticos e semânticos em variáveis quantitativas comparáveis. Esta seção detalha as equações matemáticas e os critérios estatísticos adotados nas etapas analíticas do estudo.</p>
+<p>A mineração de textos transforma fenômenos estilísticos e semânticos em variáveis quantitativas comparáveis. Esta seção reúne o formalismo matemático, os autores seminais e os critérios estatísticos de decisão de <strong>todas</strong> as técnicas empregadas ao longo do curso — desde os indicadores descritivos de vocabulário até os modelos inferenciais, multivariados e probabilísticos.</p>
 </div>
 </div>
 </div>
@@ -251,15 +268,15 @@ window.Quarto = {
 </section>
 <section id="complexidade-sintática-e-legibilidade" class="level2">
 <h2 class="anchored" data-anchor-id="complexidade-sintática-e-legibilidade">2. Complexidade Sintática e Legibilidade</h2>
-<p>Para avaliar a estrutura frasal e o esforço cognitivo exigido na leitura de cada obra, utiliza-se o índice de <strong>Flesch-Kincaid Grade Level</strong> (<span class="math inline">\(FK\)</span>), calculado sobre o texto integral não filtrado (preservando pontuação para delimitação exata de sentenças):</p>
+<p>Para avaliar a estrutura frasal e o esforço cognitivo exigido na leitura de cada obra, utiliza-se o índice de <strong>Flesch-Kincaid Grade Level</strong> (<span class="math inline">\(FK\)</span>), desenvolvido por J. Peter Kincaid e equipe (1975) e calculado sobre o texto integral não filtrado (preservando pontuação para delimitação exata de sentenças):</p>
 <p><span class="math display">\[FK = 0{,}39 \left( \frac{N_{\text{palavras}}}{N_{\text{sentenças}}} \right) + 11{,}8 \left( \frac{N_{\text{sílabas}}}{N_{\text{palavras}}} \right) - 15{,}59\]</span></p>
 <ul>
 <li><strong>Interpretação:</strong> O índice combina o comprimento médio das sentenças (complexidade sintática) com a extensão silábica média das palavras (complexidade morfológica). Valores mais elevados indicam períodos mais longos, subordinados e vocabulário mais erudito.</li>
 </ul>
 <hr>
 </section>
-<section id="frequência-normalizada-e-distintividade-vocabular" class="level2">
-<h2 class="anchored" data-anchor-id="frequência-normalizada-e-distintividade-vocabular">3. Frequência Normalizada e Distintividade Vocabular</h2>
+<section id="frequência-normalizada" class="level2">
+<h2 class="anchored" data-anchor-id="frequência-normalizada">3. Frequência Normalizada</h2>
 <section id="frequência-relativa-por-10.000-palavras" class="level3">
 <h3 class="anchored" data-anchor-id="frequência-relativa-por-10.000-palavras">3.1 Frequência Relativa por 10.000 Palavras</h3>
 <p>Comparar contagens brutas de palavras-chave (como <em>“olhos”</em>, <em>“morte”</em> ou <em>“alma”</em>) entre livros de tamanhos diferentes gera conclusões enviesadas. A normalização por base fixa de <span class="math inline">\(10.000\)</span> tokens estabelece uma taxa proporcional:</p>
@@ -269,7 +286,7 @@ window.Quarto = {
 </section>
 <section id="term-frequency-inverse-document-frequency-tftext-idf" class="level3">
 <h3 class="anchored" data-anchor-id="term-frequency-inverse-document-frequency-tftext-idf">3.2 Term Frequency – Inverse Document Frequency (<span class="math inline">\(TF\text{-}IDF\)</span>)</h3>
-<p>Enquanto a frequência simples destaca palavras muito comuns em toda a língua, o <strong>TF-IDF</strong> identifica os termos que funcionam como <strong>assinatura exclusiva</strong> de um livro específico dentro do conjunto das 7 obras (<span class="math inline">\(D\)</span>):</p>
+<p>Formulada a partir dos trabalhos seminais de Karen Spärck Jones (1972) e Gerard Salton, a ponderação <strong>TF-IDF</strong> identifica os termos que funcionam como <strong>assinatura exclusiva</strong> de um livro específico dentro do conjunto das 7 obras (<span class="math inline">\(D\)</span>):</p>
 <p><span class="math display">\[TF(t, d) = \frac{f_{t,d}}{\sum_{k \in d} f_{k,d}} \qquad \text{e} \qquad IDF(t, D) = \ln \left( \frac{|D|}{|\{d \in D : t \in d\}|} \right)\]</span></p>
 <p><span class="math display">\[TF\text{-}IDF(t, d, D) = TF(t, d) \times IDF(t, D)\]</span></p>
 <ul>
@@ -278,14 +295,14 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="análise-de-sentimentos-e-volatilidade-emocional" class="level2">
-<h2 class="anchored" data-anchor-id="análise-de-sentimentos-e-volatilidade-emocional">4. Análise de Sentimentos e Volatilidade Emocional</h2>
+<section id="análise-de-sentimentos" class="level2">
+<h2 class="anchored" data-anchor-id="análise-de-sentimentos">4. Análise de Sentimentos</h2>
 <p>A dimensão afetiva das narrativas é mensurada por meio de abordagem léxica utilizando o dicionário <strong>OpLexicon v3.0</strong> (Souza et al., 2011; disponibilizado via <code>lexiconPT</code>), que atribui a cada termo <span class="math inline">\(t\)</span> uma polaridade discreta <span class="math inline">\(p(t) \in \{-1, 0, +1\}\)</span> (negativo, neutro ou positivo).</p>
 <section id="saldo-de-polaridade-por-capítulo-s_c-e-progresso-relativo" class="level3">
 <h3 class="anchored" data-anchor-id="saldo-de-polaridade-por-capítulo-s_c-e-progresso-relativo">4.1 Saldo de Polaridade por Capítulo (<span class="math inline">\(S_c\)</span>) e Progresso Relativo</h3>
 <p>Para cada capítulo <span class="math inline">\(c\)</span> de uma obra com <span class="math inline">\(C\)</span> capítulos totais, calcula-se o saldo líquido de polaridade e sua posição normalizada na linha do tempo narrativa:</p>
 <p><span class="math display">\[S_c = \sum_{i=1}^{n_c} p(t_i) \qquad \text{e} \qquad \text{Posição Relativa}_c = \frac{c}{C} \in (0, 1]\]</span></p>
-<p>A normalização da posição em percentual (<span class="math inline">\(0\%\)</span> a <span class="math inline">\(100\%\)</span>) permite sobrepor e comparar os <strong>arcos emocionais</strong> de obras com estruturas capitulares muito distintas (como os 28 capítulos longos de <em>Helena</em> frente aos 198 capítulos curtos de <em>Quincas Borba</em>), suavizados por regressão local não paramétrica (<strong>LOESS</strong>).</p>
+<p>A normalização da posição em percentual (<span class="math inline">\(0\%\)</span> a <span class="math inline">\(100\%\)</span>) permite sobrepor e comparar os <strong>arcos emocionais</strong> de obras com estruturas capitulares muito distintas (como os 28 capítulos longos de <em>Helena</em> frente aos 198 capítulos curtos de <em>Quincas Borba</em>), suavizados por regressão local não paramétrica (<strong>LOESS</strong>, proposta por William S. Cleveland, 1979).</p>
 <hr>
 </section>
 <section id="volatilidade-emocional-sigma_s" class="level3">
@@ -298,304 +315,495 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="similaridade-de-cosseno-e-clusterização-hierárquica" class="level2">
-<h2 class="anchored" data-anchor-id="similaridade-de-cosseno-e-clusterização-hierárquica">5. Similaridade de Cosseno e Clusterização Hierárquica</h2>
-<p>Para medir a proximidade estilística entre dois livros <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>, cada obra é representada como um vetor de frequências relativas na Matriz Documento-Termo (<span class="math inline">\(\mathbf{v}_A\)</span> e <span class="math inline">\(\mathbf{v}_B\)</span>). A <strong>Similaridade de Cosseno</strong> calcula o cosseno do ângulo <span class="math inline">\(\theta\)</span> entre esses dois vetores no espaço multidimensional do vocabulário:</p>
-<p><span class="math display">\[\text{Similaridade}(A, B) = \cos(\theta) = \frac{\mathbf{v}_A \cdot \mathbf{v}_B}{\|\mathbf{v}_A\| \, \|\mathbf{v}_B\|} = \frac{\sum_{i=1}^{M} v_{A,i} \, v_{B,i}}{\sqrt{\sum_{i=1}^{M} v_{A,i}^2} \sqrt{\sum_{i=1}^{M} v_{B,i}^2}}\]</span></p>
-<p>A partir da matriz de dissimilaridade <span class="math inline">\(D(A, B) = 1 - \cos(\theta)\)</span>, aplica-se o algoritmo de <strong>Agrupamento Hierárquico Aglomerativo pelo método de Ward (<code>ward.D2</code>)</strong>, que minimiza a variância interna dos grupos a cada fusão, permitindo verificar empiricamente o distanciamento vocabular entre a <strong>Fase Romântica</strong> e a <strong>Fase Realista</strong> de Machado de Assis.</p>
+<section id="análise-de-agrupamento-cluster-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="análise-de-agrupamento-cluster-analysis">5. Análise de Agrupamento (<em>Cluster Analysis</em>)</h2>
+<section id="origem-histórica" class="level3">
+<h3 class="anchored" data-anchor-id="origem-histórica">5.1 Origem Histórica</h3>
+<p>A <strong>Análise de Agrupamento</strong> (<em>Cluster Analysis</em>) é uma técnica estatística multivariada de aprendizagem não supervisionada cujo objetivo é particionar um conjunto de <span class="math inline">\(n\)</span> observações (neste estudo, as 7 obras literárias) em <span class="math inline">\(g\)</span> grupos homogêneos internamente e heterogêneos entre si, com base exclusivamente na estrutura de suas variáveis observadas (frequências vocabulares), sem rótulos prévios de classificação.</p>
+<p>O termo e as bases da taxonomia numérica foram introduzidos por <strong>Robert C. Tryon</strong> (<em>Cluster Analysis</em>, 1939) e consolidados sistematicamente por <strong>Robert R. Sokal &amp; Peter H. A. Sneath</strong> (<em>Principles of Numerical Taxonomy</em>, 1963). Na estatística multivariada contemporânea, destacam-se as formulações de <strong>Joe H. Ward Jr.</strong> (1963) para agrupamento hierárquico por mínima variância, <strong>James MacQueen</strong> (1967) para partição por centróides (<span class="math inline">\(k\)</span>-means), <strong>Leonard Kaufman &amp; Peter J. Rousseeuw</strong> (<em>Finding Groups in Data</em>, 1990) para métodos baseados em medóides e silhueta, e <strong>Hair et al.</strong> / <strong>Fávero &amp; Belfiore</strong> na literatura aplicada.</p>
 <hr>
 </section>
-<section id="síntese-das-métricas-aplicadas" class="level2">
-<h2 class="anchored" data-anchor-id="síntese-das-métricas-aplicadas">6. Síntese das Métricas Aplicadas</h2>
+<section id="métodos-de-clusterização" class="level3">
+<h3 class="anchored" data-anchor-id="métodos-de-clusterização">5.2 Métodos de Clusterização</h3>
+<p>Na literatura estatística, os algoritmos de agrupamento dividem-se em duas grandes famílias:</p>
+<ol type="1">
+<li><strong>Métodos Hierárquicos (Aglomerativos ou Divisivos):</strong>
+<ul>
+<li><em>Aglomerativos (Bottom-Up):</em> Partem de <span class="math inline">\(n\)</span> clusters unitários (cada livro é um grupo isolado) e fundem sucessivamente os pares mais próximos em <span class="math inline">\(n - 1\)</span> passos até formar um único agrupamento global. O histórico das fusões é representado graficamente por uma árvore binária denominada <strong>dendrograma</strong>.</li>
+<li><em>Divisivos (Top-Down):</em> Partem de um único grupo contendo todas as observações e o subdividem recursivamente (ex.: algoritmo DIANA).</li>
+</ul></li>
+<li><strong>Métodos Não Hierárquicos (Particionais):</strong> Exigem a definição <em>a priori</em> do número <span class="math inline">\(k\)</span> de clusters e realocam iterativamente as observações para minimizar uma função de dispersão em torno de centróides (<span class="math inline">\(k\)</span>-means) ou medóides (<span class="math inline">\(k\)</span>-medoids / PAM). Para corpora com número reduzido de documentos (<span class="math inline">\(n = 7\)</span> obras), os <strong>métodos hierárquicos aglomerativos</strong> são estatisticamente superiores por revelarem toda a estrutura multiescala de proximidade sem exigir fixação arbitrária de <span class="math inline">\(k\)</span>.</li>
+</ol>
+<hr>
+</section>
+<section id="medidas-de-distância-e-similaridade" class="level3">
+<h3 class="anchored" data-anchor-id="medidas-de-distância-e-similaridade">5.3 Medidas de Distância e Similaridade</h3>
+<p>Em matrizes Documento-Termo (<span class="math inline">\(\mathbf{X}_{n \times M}\)</span>), cada livro <span class="math inline">\(A\)</span> é representado como um vetor de frequências relativas no espaço de alta dimensionalidade <span class="math inline">\(\mathbb{R}^M\)</span> (<span class="math inline">\(M\)</span> vocábulos únicos): <span class="math inline">\(\mathbf{v}_A = (v_{A,1}, v_{A,2}, \dots, v_{A,M})\)</span>. A escolha da métrica de proximidade determina a geometria do agrupamento:</p>
+<ul>
+<li><p><strong>Distância Euclidiana (<span class="math inline">\(d_E\)</span>):</strong> Mede a distância geométrica direta entre dois pontos no espaço: <span class="math display">\[d_E(A, B) = \sqrt{\sum_{i=1}^{M} (v_{A,i} - v_{B,i})^2}\]</span> <em>Limitação em Text Mining:</em> É altamente sensível à magnitude dos vetores (extensão do livro) e sofre com a esparsidade (excesso de zeros na matriz DFM).</p></li>
+<li><p><strong>Distância de Manhattan ou <em>City-Block</em> (<span class="math inline">\(d_M\)</span>):</strong> Soma das diferenças absolutas ao longo de cada dimensão lexical: <span class="math display">\[d_M(A, B) = \sum_{i=1}^{M} |v_{A,i} - v_{B,i}|\]</span></p></li>
+<li><p><strong>Similaridade de Cosseno (<span class="math inline">\(\cos \theta\)</span>) e Dissimilaridade Angular (<span class="math inline">\(D_{\cos}\)</span>):</strong> Padrão-ouro em linguística computacional e recuperação da informação (Salton &amp; McGill, 1983). Mede o cosseno do ângulo <span class="math inline">\(\theta\)</span> formado entre os vetores <span class="math inline">\(\mathbf{v}_A\)</span> e <span class="math inline">\(\mathbf{v}_B\)</span>, capturando a <strong>proporcionalidade do perfil vocabular</strong> independentemente do tamanho absoluto dos romances: <span class="math display">\[\text{Similaridade}(A, B) = \cos(\theta) = \frac{\mathbf{v}_A \cdot \mathbf{v}_B}{\|\mathbf{v}_A\| \, \|\mathbf{v}_B\|} = \frac{\sum_{i=1}^{M} v_{A,i} \, v_{B,i}}{\sqrt{\sum_{i=1}^{M} v_{A,i}^2} \sqrt{\sum_{i=1}^{M} v_{B,i}^2}}\]</span> Como <span class="math inline">\(v_{A,i}, v_{B,i} \ge 0\)</span>, tem-se <span class="math inline">\(\cos(\theta) \in [0, 1]\)</span>, onde <span class="math inline">\(1\)</span> indica identidade proporcional absoluta e <span class="math inline">\(0\)</span> indica ortogonalidade total (ausência de palavras em comum). A <strong>distância (dissimilaridade) de cosseno</strong> utilizada como entrada no algoritmo de agrupamento é definida por: <span class="math display">\[D_{\cos}(A, B) = 1 - \cos(\theta) \in [0, 1]\]</span></p></li>
+</ul>
+<hr>
+</section>
+<section id="critérios-de-ligação-linkage-e-método-de-ward" class="level3">
+<h3 class="anchored" data-anchor-id="critérios-de-ligação-linkage-e-método-de-ward">5.4 Critérios de Ligação (<em>Linkage</em>) e Método de Ward</h3>
+<p>Definida a matriz de dissimilaridades <span class="math inline">\(\mathbf{D} = [D_{\cos}(A, B)]\)</span>, o algoritmo hierárquico necessita de uma regra de atualização para calcular a distância entre um cluster recém-formado <span class="math inline">\((C_1 \cup C_2)\)</span> e qualquer outro cluster <span class="math inline">\(C_3\)</span>:</p>
+<ul>
+<li><strong>Ligação Simples (<em>Single Linkage</em> — Vizinho Mais Próximo):</strong> <span class="math inline">\(d(C_1 \cup C_2, C_3) = \min\{d(C_1, C_3), d(C_2, C_3)\}\)</span> (tende a produzir efeito de encadeamento).</li>
+<li><strong>Ligação Completa (<em>Complete Linkage</em> — Vizinho Mais Distante):</strong> <span class="math inline">\(d(C_1 \cup C_2, C_3) = \max\{d(C_1, C_3), d(C_2, C_3)\}\)</span> (gera grupos compactos, mas sensíveis a <em>outliers</em>).</li>
+<li><strong>Ligação Média (<em>Average Linkage</em> / UPGMA):</strong> Média ponderada das distâncias entre todos os pares dos dois grupos.</li>
+<li><strong>Método de Mínima Variância de Ward (<code>ward.D2</code>):</strong> Proposto por <strong>Joe H. Ward Jr.</strong> (1963) e implementado com dissimilaridades ao quadrado por Murtagh &amp; Legendre (2014). A cada passo, o algoritmo funde o par de clusters <span class="math inline">\((C_1, C_2)\)</span> que minimiza o incremento na <strong>Soma dos Quadrados Dentro dos Grupos</strong> (<span class="math inline">\(ESS\)</span> — <em>Error Sum of Squares</em>): <span class="math display">\[\Delta ESS(C_1, C_2) = \frac{n_{C_1} \, n_{C_2}}{n_{C_1} + n_{C_2}} \, d^2(\bar{\mathbf{v}}_{C_1}, \bar{\mathbf{v}}_{C_2})\]</span> Onde <span class="math inline">\(n_{C_1}\)</span> e <span class="math inline">\(n_{C_2}\)</span> são os números de documentos nos respectivos clusters e <span class="math inline">\(\bar{\mathbf{v}}_{C_1}, \bar{\mathbf{v}}_{C_2}\)</span> são seus centróides. O método <code>ward.D2</code> tende a formar grupos equilibrados, esféricos e de alta coesão interna.</li>
+</ul>
+<hr>
+</section>
+<section id="correlação-cofenética-ccc" class="level3">
+<h3 class="anchored" data-anchor-id="correlação-cofenética-ccc">5.5 Correlação Cofenética (<span class="math inline">\(CCC\)</span>)</h3>
+<p>Para avaliar o grau de fidelidade com que o dendrograma bidimensional preserva as distâncias originais da matriz <span class="math inline">\(\mathbf{D}\)</span>, calcula-se o <strong>Coeficiente de Correlação Cofenética</strong> (Sokal &amp; Rohlf, 1962), definido como a correlação linear de Pearson entre as dissimilaridades originais <span class="math inline">\(d_{ij}\)</span> e as distâncias cofenéticas <span class="math inline">\(c_{ij}\)</span> (altura do nó em que os livros <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span> são fundidos pela primeira vez na árvore):</p>
+<p><span class="math display">\[CCC = \frac{\sum_{i &lt; j} (d_{ij} - \bar{d})(c_{ij} - \bar{c})}{\sqrt{\sum_{i &lt; j} (d_{ij} - \bar{d})^2 \sum_{i &lt; j} (c_{ij} - \bar{c})^2}}\]</span></p>
+<ul>
+<li><strong>Critério de Decisão Estatística:</strong> Valores de <span class="math inline">\(CCC &gt; 0{,}70\)</span> (e idealmente <span class="math inline">\(CCC &gt; 0{,}80\)</span>) indicam que a estrutura hierárquica representada no dendrograma reflete com alta precisão as distâncias estilísticas reais do corpus, sem distorções severas de projeção.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="linguística-quantitativa-lei-de-zipf" class="level2">
+<h2 class="anchored" data-anchor-id="linguística-quantitativa-lei-de-zipf">6. Linguística Quantitativa (Lei de Zipf)</h2>
+<p>Formulada pelo linguista de Harvard <strong>George Kingsley Zipf</strong> (1935, 1949), a <strong>Lei de Zipf</strong> descreve uma regularidade estatística universal nas línguas naturais: quando as palavras de um corpus são ordenadas da mais frequente para a menos frequente, a frequência <span class="math inline">\(f(r)\)</span> de um vocábulo é inversamente proporcional ao seu posto <span class="math inline">\(r\)</span> (<em>rank</em>):</p>
+<p><span class="math display">\[f(r) = \frac{C}{r^{\alpha}}\]</span></p>
+<p>Aplicando a transformação logarítmica em ambos os lados, obtém-se uma relação linear estimável por Mínimos Quadrados Ordinários (OLS):</p>
+<p><span class="math display">\[\log_{10} f(r) = \log_{10} C - \alpha \log_{10} r\]</span></p>
+<ul>
+<li><strong>Critério de Interpretação:</strong> Em corpora literários bem formados, o expoente angular <span class="math inline">\(\alpha\)</span> situa-se tipicamente próximo de <span class="math inline">\(1{,}0\)</span> (<span class="math inline">\(\alpha \approx 1\)</span>), com coeficiente de determinação <span class="math inline">\(R^2 &gt; 0{,}95\)</span>, evidenciando o princípio do “mínimo esforço” na comunicação humana (poucas palavras estruturais muito repetidas e uma longa cauda de vocábulos raros).</li>
+</ul>
+<hr>
+</section>
+<section id="análise-de-keyness-chi2" class="level2">
+<h2 class="anchored" data-anchor-id="análise-de-keyness-chi2">7. Análise de <em>Keyness</em> (<span class="math inline">\(\chi^2\)</span>)</h2>
+<p>Consolidada na linguística de corpus por <strong>Mike Scott</strong> (1997) e formalizada estatisticamente por <strong>Paul Rayson &amp; Roger Garside</strong> (2000), a análise de <strong>Keyness</strong> (palavras-chave estatísticas) testa formalmente se a frequência de um termo <span class="math inline">\(t\)</span> difere significativamente entre um <strong>corpus alvo</strong> (ex.: <em>Fase Romântica</em>) e um <strong>corpus de referência</strong> (ex.: <em>Fase Realista</em>).</p>
+<p>Para cada termo <span class="math inline">\(t\)</span>, constrói-se uma tabela de contingência <span class="math inline">\(2 \times 2\)</span> com as contagens observadas (<span class="math inline">\(O_{ij}\)</span>) e esperadas (<span class="math inline">\(E_{ij}\)</span>):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Grupo</th>
+<th style="text-align: center;">Ocorrências do Termo <span class="math inline">\(t\)</span></th>
+<th style="text-align: center;">Demais Tokens</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Corpus Alvo</strong></td>
+<td style="text-align: center;"><span class="math inline">\(O_{11}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O_{12}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R_1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Corpus de Referência</strong></td>
+<td style="text-align: center;"><span class="math inline">\(O_{21}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O_{22}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R_2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: center;"><span class="math inline">\(C_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(C_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Calcula-se a estatística <strong>Qui-Quadrado de Pearson com correção de continuidade de Yates</strong>:</p>
+<p><span class="math display">\[\chi^2 = \sum_{i=1}^{2} \sum_{j=1}^{2} \frac{\left( |O_{ij} - E_{ij}| - 0{,}5 \right)^2}{E_{ij}}, \qquad \text{onde } E_{ij} = \frac{R_i \cdot C_j}{N}\]</span></p>
+<ul>
+<li><strong>Critério de Decisão Estatística:</strong> Sob a hipótese nula <span class="math inline">\(H_0\)</span> de independência lexical (<span class="math inline">\(1\)</span> grau de liberdade), valores de <span class="math inline">\(|\chi^2| &gt; 3{,}84\)</span> correspondem a <span class="math inline">\(p &lt; 0{,}05\)</span> e <span class="math inline">\(|\chi^2| &gt; 10{,}83\)</span> correspondem a <span class="math inline">\(p &lt; 0{,}001\)</span>. Valores positivos indicam termos super-representados no grupo alvo; valores negativos indicam termos característicos do grupo de referência.</li>
+</ul>
+<hr>
+</section>
+<section id="análise-de-correspondência-simples-ca" class="level2">
+<h2 class="anchored" data-anchor-id="análise-de-correspondência-simples-ca">8. Análise de Correspondência Simples (CA)</h2>
+<section id="origem-histórica-1" class="level3">
+<h3 class="anchored" data-anchor-id="origem-histórica-1">8.1 Origem Histórica</h3>
+<p>A <strong>Análise de Correspondência</strong> (<em>Correspondence Analysis</em> — CA) foi desenvolvida na década de 1960 pelo matemático e estatístico francês <strong>Jean-Paul Benzécri</strong> (<em>Analyse des Données</em>, 1973), inicialmente concebida justamente para analisar tabelas de contingência linguísticas e textuais. Posteriormente, foi difundida na literatura estatística anglo-saxônica por <strong>Michael Greenacre</strong> (<em>Theory and Applications of Correspondence Analysis</em>, 1984) e no Brasil por autores como <strong>Luiz Paulo Fávero &amp; Patrícia Belfiore</strong> (<em>Manual de Análise de Dados</em>).</p>
+</section>
+<section id="formulação-geral-e-decomposição-svd" class="level3">
+<h3 class="anchored" data-anchor-id="formulação-geral-e-decomposição-svd">8.2 Formulação Geral e Decomposição SVD</h3>
+<p>Dada uma matriz de contingência <span class="math inline">\(\mathbf{N}\)</span> de dimensão <span class="math inline">\(I \times J\)</span> (onde <span class="math inline">\(I\)</span> representa os livros e <span class="math inline">\(J\)</span> representa os termos do vocabulário), define-se a <strong>matriz de correspondência</strong> (frequências relativas conjuntas) <span class="math inline">\(\mathbf{P} = \frac{1}{n}\mathbf{N}\)</span>, com massas marginais das linhas <span class="math inline">\(\mathbf{r} = \mathbf{P}\mathbf{1}\)</span> e das colunas <span class="math inline">\(\mathbf{c} = \mathbf{P}^\top\mathbf{1}\)</span>.</p>
+<p>A matriz de <strong>resíduos padronizados</strong> <span class="math inline">\(\mathbf{S}\)</span> mede os desvios relativos entre as proporções observadas e as esperadas sob independência:</p>
+<p><span class="math display">\[s_{ij} = \frac{p_{ij} - r_i c_j}{\sqrt{r_i c_j}} \qquad \Longleftrightarrow \qquad \mathbf{S} = \mathbf{D}_r^{-1/2} \left( \mathbf{P} - \mathbf{r}\mathbf{c}^\top \right) \mathbf{D}_c^{-1/2}\]</span></p>
+<p>Aplica-se a <strong>Decomposição em Valores Singulares (SVD)</strong> sobre <span class="math inline">\(\mathbf{S}\)</span>:</p>
+<p><span class="math display">\[\mathbf{S} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\top\]</span></p>
+<p>Onde <span class="math inline">\(\mathbf{\Sigma} = \text{diag}(\sigma_1, \sigma_2, \dots, \sigma_K)\)</span> contém os valores singulares ordenados (<span class="math inline">\(\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_K\)</span>), e os autovalores (inércias principais) são dados por <span class="math inline">\(\lambda_k = \sigma_k^2\)</span>. As coordenadas principais das obras (<span class="math inline">\(\mathbf{F}\)</span>) e dos termos (<span class="math inline">\(\mathbf{G}\)</span>) no espaço fatorial são obtidas por:</p>
+<p><span class="math display">\[\mathbf{F} = \mathbf{D}_r^{-1/2} \mathbf{U} \mathbf{\Sigma} \qquad \text{e} \qquad \mathbf{G} = \mathbf{D}_c^{-1/2} \mathbf{V} \mathbf{\Sigma}\]</span></p>
+</section>
+<section id="critérios-diagnósticos" class="level3">
+<h3 class="anchored" data-anchor-id="critérios-diagnósticos">8.3 Critérios Diagnósticos</h3>
+<p>Para validar e interpretar adequadamente uma Análise de Correspondência em pesquisa acadêmica, avaliam-se quatro elementos fundamentais:</p>
+<ol type="1">
+<li><strong>Inércia Total e Percentual de Inércia Explicada:</strong> A inércia total (<span class="math inline">\(\Lambda\)</span>) é a soma de todos os autovalores e equivale à estatística qui-quadrado dividida pelo total de ocorrências (<span class="math inline">\(\Lambda = \sum_{k=1}^K \lambda_k = \frac{\chi^2}{n}\)</span>). O percentual de variância capturado pelo eixo <span class="math inline">\(k\)</span> é: <span class="math display">\[\%\text{Inércia}_k = \left( \frac{\lambda_k}{\sum_{m=1}^K \lambda_m} \right) \times 100\]</span></li>
+<li><strong>Critério <span class="math inline">\(\beta\)</span> de Associação Significativa (<span class="math inline">\(\beta &gt; 3\)</span>):</strong> Conforme formulado por Fávero &amp; Belfiore, para verificar globalmente se existe associação estatisticamente significativa entre as categorias das linhas e das colunas antes de interpretar o mapa, calcula-se o indicador padronizado <span class="math inline">\(\beta\)</span>: <span class="math display">\[\beta = \frac{\chi^2 - (I - 1)(J - 1)}{\sqrt{(I - 1)(J - 1)}} &gt; 3\]</span> Quando <span class="math inline">\(\beta &gt; 3\)</span>, rejeita-se a independência entre obras e vocabulário ao nível de significância usual, legitimando a extração das dimensões latentes.</li>
+<li><strong>Análise dos Resíduos Padronizados Ajustados:</strong> Permitem identificar localmente quais pares específicos <em>(obra <span class="math inline">\(\times\)</span> palavra)</em> contribuem com excesso positivo ou negativo para a estatística <span class="math inline">\(\chi^2\)</span>.</li>
+<li><strong>Mapa Perceptual de Correspondência:</strong> Representação gráfica bidimensional simultânea (ou por subespaço) das coordenadas principais (<span class="math inline">\(\text{Dim}_1 \times \text{Dim}_2\)</span>), onde a proximidade geométrica entre pontos indica afinidade de perfil lexical e o afastamento da origem <span class="math inline">\((0,0)\)</span> indica maior especificidade estilística.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="modelagem-probabilística-de-tópicos-lda" class="level2">
+<h2 class="anchored" data-anchor-id="modelagem-probabilística-de-tópicos-lda">9. Modelagem Probabilística de Tópicos (LDA)</h2>
+<p>Proposta por <strong>David M. Blei, Andrew Y. Ng &amp; Michael I. Jordan</strong> (2003), a <strong>Alocação Latente de Dirichlet (<em>Latent Dirichlet Allocation</em> — LDA)</strong> é um modelo generativo bayesiano hierárquico não supervisionado que representa cada documento (capítulo) como uma mistura probabilística sobre <span class="math inline">\(K\)</span> tópicos latentes, e cada tópico como uma distribuição multinomial sobre o vocabulário:</p>
+<p><span class="math display">\[P(w_i \mid d) = \sum_{k=1}^{K} P(w_i \mid z_i = k) \, P(z_i = k \mid d) = \sum_{k=1}^{K} \beta_{k, w_i} \, \gamma_{d, k}\]</span></p>
+<ul>
+<li><strong>Parâmetros Estimados (via Amostragem de Gibbs, Griffiths &amp; Steyvers, 2004):</strong>
+<ul>
+<li><span class="math inline">\(\boldsymbol{\gamma}_d \sim \text{Dirichlet}(\alpha)\)</span>: vetor de proporções dos <span class="math inline">\(K\)</span> tópicos dentro do capítulo <span class="math inline">\(d\)</span>.</li>
+<li><span class="math inline">\(\boldsymbol{\beta}_k \sim \text{Dirichlet}(\eta)\)</span>: distribuição de probabilidade das palavras pertencentes ao tópico latente <span class="math inline">\(k\)</span>.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="teoria-dos-grafos" class="level2">
+<h2 class="anchored" data-anchor-id="teoria-dos-grafos">10. Teoria dos Grafos</h2>
+<p>Baseada na <strong>Teoria dos Grafos</strong> (Euler; Erdős &amp; Rényi; Newman, 2010), uma rede semântica modela o texto como um grafo <span class="math inline">\(G = (V, E)\)</span>, onde <span class="math inline">\(V\)</span> é o conjunto de vértices (palavras) e <span class="math inline">\(E\)</span> é o conjunto de arestas direcionadas e ponderadas pela frequência de coocorrência consecutiva (bigramas).</p>
+<p>Para identificar os núcleos articuladores do vocabulário, calcula-se a <strong>Centralidade de Grau (<em>Degree Centrality</em>)</strong> de cada vértice <span class="math inline">\(v_i\)</span>:</p>
+<p><span class="math display">\[C_D(v_i) = \deg^-(v_i) + \deg^+(v_i) = \sum_{j} a_{ji} + \sum_{j} a_{ij}\]</span></p>
+<p>Onde <span class="math inline">\(a_{ij} = 1\)</span> se existe aresta direcionada de <span class="math inline">\(v_i\)</span> para <span class="math inline">\(v_j\)</span> (e <span class="math inline">\(0\)</span> caso contrário). Palavras com alto grau atuam como <em>hubs</em> semânticos que conectam diferentes expressões e motivos narrativos ao longo da obra.</p>
+<hr>
+</section>
+<section id="síntese-geral-das-técnicas-e-métricas-aplicadas" class="level2">
+<h2 class="anchored" data-anchor-id="síntese-geral-das-técnicas-e-métricas-aplicadas">11. Síntese Geral das Técnicas e Métricas Aplicadas</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Dimensão Analítica</th>
-<th style="text-align: left;">Métrica</th>
+<th style="text-align: left;">Técnica / Métrica</th>
+<th style="text-align: left;">Autores Seminais</th>
 <th style="text-align: left;">Pacote R</th>
-<th style="text-align: left;">Objetivo Principal</th>
+<th style="text-align: left;">Objetivo na Pesquisa</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Riqueza Vocabular</strong></td>
 <td style="text-align: left;"><span class="math inline">\(TTR\)</span> e <span class="math inline">\(CTTR\)</span></td>
+<td style="text-align: left;">Carroll (1964)</td>
 <td style="text-align: left;"><code>quanteda.textstats</code></td>
 <td style="text-align: left;">Avaliar variedade lexical com e sem controle de extensão.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Sintaxe / Estilo</strong></td>
 <td style="text-align: left;">Flesch-Kincaid (<span class="math inline">\(FK\)</span>)</td>
+<td style="text-align: left;">Kincaid et al.&nbsp;(1975)</td>
 <td style="text-align: left;"><code>quanteda.textstats</code></td>
 <td style="text-align: left;">Medir densidade frasal e complexidade de leitura.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Relevância Temática</strong></td>
 <td style="text-align: left;"><span class="math inline">\(TF\text{-}IDF\)</span> e Freq/10k</td>
+<td style="text-align: left;">Spärck Jones (1972)</td>
 <td style="text-align: left;"><code>tidytext</code> / <code>dplyr</code></td>
-<td style="text-align: left;">Identificar palavras exclusivas e densidade de motivos literários.</td>
+<td style="text-align: left;">Identificar assinatura exclusiva de cada romance.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Arco Emocional</strong></td>
 <td style="text-align: left;">Polaridade (<span class="math inline">\(S_c\)</span>) e <span class="math inline">\(\sigma_S\)</span></td>
+<td style="text-align: left;">Souza et al.&nbsp;(2011)</td>
 <td style="text-align: left;"><code>lexiconPT</code></td>
-<td style="text-align: left;">Mapear a trajetória afetiva e a volatilidade dramática.</td>
+<td style="text-align: left;">Mapear trajetória afetiva e volatilidade dramática.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Estilometria</strong></td>
 <td style="text-align: left;">Cosseno + Ward.D2</td>
+<td style="text-align: left;">Ward (1963)</td>
 <td style="text-align: left;"><code>quanteda.textstats</code></td>
-<td style="text-align: left;">Agrupar obras por afinidade vocabular e fase literária.</td>
+<td style="text-align: left;">Agrupar obras por distância vetorial de vocabulário.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Leis de Potência</strong></td>
+<td style="text-align: left;">Lei de Zipf (<span class="math inline">\(\alpha\)</span>)</td>
+<td style="text-align: left;">Zipf (1935, 1949)</td>
+<td style="text-align: left;"><code>stats</code> (<code>lm</code>)</td>
+<td style="text-align: left;">Verificar aderência do léxico à distribuição de potência.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Teste de Hipótese</strong></td>
+<td style="text-align: left;"><em>Keyness</em> (<span class="math inline">\(\chi^2\)</span>)</td>
+<td style="text-align: left;">Scott (1997); Rayson (2000)</td>
+<td style="text-align: left;"><code>quanteda.textstats</code></td>
+<td style="text-align: left;">Testar diferenças significativas entre Romantismo e Realismo.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Multivariada</strong></td>
+<td style="text-align: left;">Correspondência (CA / <span class="math inline">\(\beta\)</span>)</td>
+<td style="text-align: left;">Benzécri (1973); Greenacre</td>
+<td style="text-align: left;"><code>base</code> (<code>svd</code>)</td>
+<td style="text-align: left;">Projetar mapa perceptual e medir inércia explicada.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Tópicos Latentes</strong></td>
+<td style="text-align: left;">LDA (Gibbs)</td>
+<td style="text-align: left;">Blei, Ng &amp; Jordan (2003)</td>
+<td style="text-align: left;"><code>topicmodels</code></td>
+<td style="text-align: left;">Descobrir núcleos temáticos latentes nos 827 capítulos.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Redes Semânticas</strong></td>
+<td style="text-align: left;">Grafos / Grau (<span class="math inline">\(C_D\)</span>)</td>
+<td style="text-align: left;">Newman (2010)</td>
+<td style="text-align: left;"><code>igraph</code> / <code>ggraph</code></td>
+<td style="text-align: left;">Mapear conectividade e <em>hubs</em> de colocações lexicais.</td>
 </tr>
 </tbody>
 </table>
 <p>Avance para a aba <strong>Resultados &amp; Léxico</strong> para explorar as tabelas descritivas e os gráficos gerados a partir das 7 obras completas.</p>
-<hr>
 
 
 </section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiada");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copiada");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -603,185 +811,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
