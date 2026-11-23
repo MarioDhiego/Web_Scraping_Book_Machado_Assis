@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Modelagem Inferência Textual – MINERAÇÃO DE TEXTOS EM R</title>
+<title>Modelagem Inferencial e Multivariada – Text Mining in R: Dataset(Machado)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,9 +132,6 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles.css">
-<meta name="twitter:title" content="Modelagem Inferência Textual – MINERAÇÃO DE TEXTOS EM R">
-<meta name="twitter:description" content="Leis de Potência, testes de hipótese vocabular (Keyness), Análise de Correspondência, LDA e Redes Semânticas">
-<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -145,7 +142,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">MINERAÇÃO DE TEXTOS EM R</span>
+    <span class="navbar-title">Text Mining in R: Dataset(Machado)</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -156,11 +153,11 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Dataset(Machado)</span></a>
+<span class="menu-text">Vida &amp; Obra</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./scraping-metodologia.html"> 
-<span class="menu-text">WebScraping</span></a>
+<span class="menu-text">Scraping &amp; Pipeline</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./metricas-teoria.html"> 
@@ -168,7 +165,7 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./resultados-descritivos.html"> 
-<span class="menu-text">Resultados Descritivos</span></a>
+<span class="menu-text">Análise Descritiva</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./analise-sentimento.html"> 
@@ -176,23 +173,15 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./modelagem-avancada.html" aria-current="page"> 
-<span class="menu-text">Modelagem dos Dados</span></a>
+<span class="menu-text">Análise Inferencial</span></a>
   </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./referencias.html"> 
+<span class="menu-text">Referências</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -203,14 +192,28 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Sumário</h2>
+    <h2 id="toc-title">Nesta página</h2>
    
   <ul>
   <li><a href="#leis-empíricas-da-linguística-quantitativa-lei-de-zipf" id="toc-leis-empíricas-da-linguística-quantitativa-lei-de-zipf" class="nav-link active" data-scroll-target="#leis-empíricas-da-linguística-quantitativa-lei-de-zipf">1. Leis Empíricas da Linguística Quantitativa (Lei de Zipf)</a></li>
   <li><a href="#análise-de-keyness-chi2" id="toc-análise-de-keyness-chi2" class="nav-link" data-scroll-target="#análise-de-keyness-chi2">2. Análise de <em>Keyness</em> (<span class="math inline">\(\chi^2\)</span>)</a></li>
-  <li><a href="#análise-de-correspondência-ca" id="toc-análise-de-correspondência-ca" class="nav-link" data-scroll-target="#análise-de-correspondência-ca">3. Análise de Correspondência (CA)</a></li>
-  <li><a href="#modelagem-probabilística-de-tópicos-lda" id="toc-modelagem-probabilística-de-tópicos-lda" class="nav-link" data-scroll-target="#modelagem-probabilística-de-tópicos-lda">4. Modelagem Probabilística de Tópicos (LDA)</a></li>
-  <li><a href="#teoria-dos-grafos" id="toc-teoria-dos-grafos" class="nav-link" data-scroll-target="#teoria-dos-grafos">5. Teoria dos Grafos</a></li>
+  <li><a href="#similaridade-de-cosseno-e-cluster" id="toc-similaridade-de-cosseno-e-cluster" class="nav-link" data-scroll-target="#similaridade-de-cosseno-e-cluster">3. Similaridade de Cosseno e Cluster</a>
+  <ul class="collapse">
+  <li><a href="#matriz-de-similaridade-de-cosseno" id="toc-matriz-de-similaridade-de-cosseno" class="nav-link" data-scroll-target="#matriz-de-similaridade-de-cosseno">3.1 Matriz de Similaridade de Cosseno</a></li>
+  <li><a href="#agrupamento-hierárquico" id="toc-agrupamento-hierárquico" class="nav-link" data-scroll-target="#agrupamento-hierárquico">3.2 Agrupamento Hierárquico</a></li>
+  </ul></li>
+  <li><a href="#análise-de-correspondência-ca" id="toc-análise-de-correspondência-ca" class="nav-link" data-scroll-target="#análise-de-correspondência-ca">4. Análise de Correspondência (CA)</a>
+  <ul class="collapse">
+  <li><a href="#critério-beta-e-decomposição-da-inércia" id="toc-critério-beta-e-decomposição-da-inércia" class="nav-link" data-scroll-target="#critério-beta-e-decomposição-da-inércia">4.1 Critério <span class="math inline">\(\beta\)</span> e Decomposição da Inércia</a></li>
+  <li><a href="#resíduos-padronizados-maiores-associações-obra-times-palavra" id="toc-resíduos-padronizados-maiores-associações-obra-times-palavra" class="nav-link" data-scroll-target="#resíduos-padronizados-maiores-associações-obra-times-palavra">4.2 Resíduos Padronizados: Maiores Associações Obra <span class="math inline">\(\times\)</span> Palavra</a></li>
+  <li><a href="#mapa-perceptual-de-correspondência" id="toc-mapa-perceptual-de-correspondência" class="nav-link" data-scroll-target="#mapa-perceptual-de-correspondência">4.3 Mapa Perceptual de Correspondência</a></li>
+  </ul></li>
+  <li><a href="#modelagem-probabilística-de-tópicos-lda" id="toc-modelagem-probabilística-de-tópicos-lda" class="nav-link" data-scroll-target="#modelagem-probabilística-de-tópicos-lda">5. Modelagem Probabilística de Tópicos (LDA)</a></li>
+  <li><a href="#teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical" id="toc-teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical" class="nav-link" data-scroll-target="#teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical">6. Teoria dos Grafos: Arquitetura Semântica e <em>Storytelling</em> Lexical</a>
+  <ul class="collapse">
+  <li><a href="#como-ler-o-grafo-semântico-narrativa-estrutural" id="toc-como-ler-o-grafo-semântico-narrativa-estrutural" class="nav-link" data-scroll-target="#como-ler-o-grafo-semântico-narrativa-estrutural">6.1 Como Ler o Grafo Semântico (Narrativa Estrutural)</a></li>
+  <li><a href="#tabela-dos-principais-hubs-vocabulares-da-rede" id="toc-tabela-dos-principais-hubs-vocabulares-da-rede" class="nav-link" data-scroll-target="#tabela-dos-principais-hubs-vocabulares-da-rede">6.2 Tabela dos Principais <em>Hubs</em> Vocabulares da Rede</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -219,8 +222,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Modelagem Inferência Textual</h1>
-<p class="subtitle lead">Leis de Potência, testes de hipótese vocabular (Keyness), Análise de Correspondência, LDA e Redes Semânticas</p>
+<h1 class="title">Modelagem Inferencial e Multivariada</h1>
+<p class="subtitle lead">Leis de Potência, Keyness (χ²), Clusterização, Análise de Correspondência, LDA e Redes Semânticas</p>
 </div>
 
 
@@ -243,7 +246,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Nível Pós-Graduação (Mestrado &amp; Doutorado):</strong> Esta seção avança da estatística descritiva para a <strong>modelagem inferencial e multivariada</strong>, testando formalmente hipóteses estilométricas, leis empíricas de distribuição vocabular, redução de dimensionalidade, tópicos latentes bayesianos (LDA) e topologia de redes semânticas.</p>
+<p><strong>Nível Pós-Graduação (Mestrado &amp; Doutorado):</strong> Esta seção avança da estatística descritiva para a <strong>modelagem inferencial e multivariada</strong>, testando formalmente leis empíricas de distribuição vocabular, hipóteses estilométricas, agrupamento hierárquico, redução de dimensionalidade, tópicos latentes bayesianos (LDA) e topologia de redes semânticas.</p>
 </div>
 </div>
 </div>
@@ -264,31 +267,30 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq_rel =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Regressão linear na faixa central da distribuição (ranks 10 a 5000) para evitar distorção nas caudas</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>modelo_zipf <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(freq_rel) <span class="sc">~</span> <span class="fu">log10</span>(rank), <span class="at">data =</span> <span class="fu">filter</span>(freq_zipf, rank <span class="sc">&gt;=</span> <span class="dv">10</span>, rank <span class="sc">&lt;=</span> <span class="dv">5000</span>))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>alpha_est <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="sc">-</span><span class="fu">coef</span>(modelo_zipf)[<span class="dv">2</span>], <span class="dv">3</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>r2_est <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(modelo_zipf)<span class="sc">$</span>r.squared, <span class="dv">4</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(freq_zipf, <span class="fu">aes</span>(<span class="at">x =</span> rank, <span class="at">y =</span> freq_rel)) <span class="sc">+</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#2171b5"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">coef</span>(modelo_zipf)[<span class="dv">1</span>],</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">coef</span>(modelo_zipf)[<span class="dv">2</span>],</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#d95f02"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>scientific) <span class="sc">+</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">80</span>, <span class="at">y =</span> <span class="fl">0.015</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Expoente estimado: α = "</span>, alpha_est, <span class="st">"</span><span class="sc">\n</span><span class="st">R² = "</span>, r2_est),</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#d95f02"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição Empírica de Frequências (Lei de Zipf)"</span>,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Escala log-log com ajuste linear tracejado (ranks 10 a 5.000)"</span>,</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Posto no Ranking Vocabular (log10)"</span>,</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequência Relativa (log10)"</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>modelo_zipf <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(freq_rel) <span class="sc">~</span> <span class="fu">log10</span>(rank), <span class="at">data =</span> <span class="fu">filter</span>(freq_zipf, rank <span class="sc">&gt;=</span> <span class="dv">10</span>, rank <span class="sc">&lt;=</span> <span class="dv">5000</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>alpha_est <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="sc">-</span><span class="fu">coef</span>(modelo_zipf)[<span class="dv">2</span>], <span class="dv">3</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>r2_est <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(modelo_zipf)<span class="sc">$</span>r.squared, <span class="dv">4</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(freq_zipf, <span class="fu">aes</span>(<span class="at">x =</span> rank, <span class="at">y =</span> freq_rel)) <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#2171b5"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">coef</span>(modelo_zipf)[<span class="dv">1</span>],</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">coef</span>(modelo_zipf)[<span class="dv">2</span>],</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#d95f02"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>scientific) <span class="sc">+</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">80</span>, <span class="at">y =</span> <span class="fl">0.015</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Expoente estimado: α = "</span>, alpha_est, <span class="st">"</span><span class="sc">\n</span><span class="st">R² = "</span>, r2_est),</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#d95f02"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição Empírica de Frequências (Lei de Zipf)"</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Escala log-log com ajuste linear tracejado (ranks 10 a 5.000)"</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Posto no Ranking Vocabular (log10)"</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequência Relativa (log10)"</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-lei-zipf" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -307,7 +309,7 @@ Figura&nbsp;1: Ajuste log-log da Lei de Zipf sobre o vocabulário integral das 7
 </section>
 <section id="análise-de-keyness-chi2" class="level2">
 <h2 class="anchored" data-anchor-id="análise-de-keyness-chi2">2. Análise de <em>Keyness</em> (<span class="math inline">\(\chi^2\)</span>)</h2>
-<p>Para testar se a transição estética entre a <strong>Fase Romântica</strong> (<em>Helena</em>, 1876) e a <strong>Fase Realista</strong> (1881–1908) produz alterações estatisticamente significativas no vocabulário, aplicamos o teste de qui-quadrado (<span class="math inline">\(\chi^2\)</span>) de <strong>Keyness</strong> com correção de Yates, comparando as frequências observadas contra as esperadas sob a hipótese nula de homogeneidade lexical:</p>
+<p>Para testar se a transição estética entre a <strong>Fase Romântica</strong> (<em>Helena</em>, 1876) e a <strong>Fase Realista</strong> (1881–1908) produz alterações estatisticamente significativas no vocabulário, aplicamos o teste de qui-quadrado (<span class="math inline">\(\chi^2\)</span>) de <strong>Keyness</strong> com correção de Yates:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver código R</summary>
@@ -322,15 +324,14 @@ Figura&nbsp;1: Ajuste log-log da Lei de Zipf sobre o vocabulário integral das 7
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>()</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Grupo alvo: Fase Romântica (Helena) vs Referência: Fase Realista</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>resultado_keyness <span class="ot">&lt;-</span> <span class="fu">textstat_keyness</span>(dfm_fases, <span class="at">target =</span> <span class="st">"Fase Romântica"</span>, <span class="at">measure =</span> <span class="st">"chi2"</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_keyness</span>(resultado_keyness, <span class="at">n =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#d95f02"</span>, <span class="st">"#1b9e77"</span>)) <span class="sc">+</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Teste de Hipótese Vocabular (Keyness χ²): Romantismo vs. Realismo"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Termos com maior desvio significativo entre Helena (alvo) e os romances realistas (referência)"</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Estatística Qui-Quadrado (χ²)"</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>resultado_keyness <span class="ot">&lt;-</span> <span class="fu">textstat_keyness</span>(dfm_fases, <span class="at">target =</span> <span class="st">"Fase Romântica"</span>, <span class="at">measure =</span> <span class="st">"chi2"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_keyness</span>(resultado_keyness, <span class="at">n =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#d95f02"</span>, <span class="st">"#1b9e77"</span>)) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Teste de Hipótese Vocabular (Keyness χ²): Romantismo vs. Realismo"</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Termos com maior desvio significativo entre Helena (alvo) e os romances realistas (referência)"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Estatística Qui-Quadrado (χ²)"</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-keyness" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -347,64 +348,1792 @@ Figura&nbsp;2: Estatística Qui-Quadrado (χ²) dos termos significativamente as
 </div>
 <hr>
 </section>
-<section id="análise-de-correspondência-ca" class="level2">
-<h2 class="anchored" data-anchor-id="análise-de-correspondência-ca">3. Análise de Correspondência (CA)</h2>
-<p>A <strong>Análise de Correspondência (CA)</strong> decompõe a tabela de contingência Documento-Termo via Decomposição em Valores Singulares (SVD), projetando os 7 livros em um espaço euclidiano bidimensional de menor variância perdida. Diferente do dendrograma, a CA revela eixos contínuos de proximidade estilística:</p>
+<section id="similaridade-de-cosseno-e-cluster" class="level2">
+<h2 class="anchored" data-anchor-id="similaridade-de-cosseno-e-cluster">3. Similaridade de Cosseno e Cluster</h2>
+<p>Calculamos a <strong>Matriz de Similaridade de Cosseno (<span class="math inline">\(\cos \theta\)</span>)</strong> sobre as frequências relativas do vocabulário completo de cada obra. Valores próximos de <span class="math inline">\(1{,}00\)</span> indicam alta convergência lexical entre os romances:</p>
+<section id="matriz-de-similaridade-de-cosseno" class="level3">
+<h3 class="anchored" data-anchor-id="matriz-de-similaridade-de-cosseno">3.1 Matriz de Similaridade de Cosseno</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver código R</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_corpus_agregado <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book_short, fase) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>corp_obras <span class="ot">&lt;-</span> <span class="fu">corpus</span>(df_corpus_agregado<span class="sc">$</span>text, <span class="at">docnames =</span> df_corpus_agregado<span class="sc">$</span>book_short)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(corp_obras, <span class="st">"fase"</span>) <span class="ot">&lt;-</span> df_corpus_agregado<span class="sc">$</span>fase</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtra termos que aparecem em pelo menos 3 obras e no mínimo 40 vezes (estilometria robusta)</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>dfm_ca <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_obras, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">40</span>, <span class="at">min_docfreq =</span> <span class="dv">3</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Decomposição via Matriz de Perfis Relativos (Correspondência Simples)</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dfm_ca) <span class="sc">/</span> <span class="fu">sum</span>(dfm_ca)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(P)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>c_mass <span class="ot">&lt;-</span> <span class="fu">colSums</span>(P)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(r)) <span class="sc">%*%</span> (P <span class="sc">-</span> r <span class="sc">%o%</span> c_mass) <span class="sc">%*%</span> <span class="fu">diag</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(c_mass))</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>svd_res <span class="ot">&lt;-</span> <span class="fu">svd</span>(S)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>inercia <span class="ot">&lt;-</span> <span class="fu">round</span>((svd_res<span class="sc">$</span>d<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="fu">sum</span>(svd_res<span class="sc">$</span>d<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>coord_docs <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(r)) <span class="sc">%*%</span> svd_res<span class="sc">$</span>u[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="sc">%*%</span> <span class="fu">diag</span>(svd_res<span class="sc">$</span>d[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>df_ca_plot <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">Livro =</span> <span class="fu">docnames</span>(dfm_ca),</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">Fase =</span> <span class="fu">docvars</span>(corp_obras, <span class="st">"fase"</span>),</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dim1 =</span> coord_docs[, <span class="dv">1</span>],</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dim2 =</span> coord_docs[, <span class="dv">2</span>]</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_ca_plot, <span class="fu">aes</span>(<span class="at">x =</span> Dim1, <span class="at">y =</span> Dim2, <span class="at">color =</span> Fase, <span class="at">label =</span> Livro)) <span class="sc">+</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Fase Romântica"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>, <span class="st">"Fase Realista"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>)) <span class="sc">+</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mapa de Correspondência"</span>,</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Projeção das distâncias qui-quadrado entre as obras nos dois primeiros eixos latentes"</span>,</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 1 ("</span>, inercia[<span class="dv">1</span>], <span class="st">"% da inércia)"</span>),</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 2 ("</span>, inercia[<span class="dv">2</span>], <span class="st">"% da inércia)"</span>)</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(mat_simil, <span class="at">rownames =</span> <span class="st">"Obra"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="sc">-</span>Obra, <span class="at">decimals =</span> <span class="dv">3</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="sc">-</span>Obra,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#f7fbff"</span>, <span class="st">"#2171b5"</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(mat_simil), <span class="dv">1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Matriz de Similaridade Estilística (Cosseno)**"</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Calculada sobre frequências relativas na DFM após remoção de stopwords"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Some values were outside the color scale and will be treated as NA
+Some values were outside the color scale and will be treated as NA
+Some values were outside the color scale and will be treated as NA</code></pre>
+</div>
+<div id="tbl-matriz-cosseno" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-matriz-cosseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de Assis
+</figcaption>
+<div aria-describedby="tbl-matriz-cosseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="rrihqrusoj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rrihqrusoj table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#rrihqrusoj thead, #rrihqrusoj tbody, #rrihqrusoj tfoot, #rrihqrusoj tr, #rrihqrusoj td, #rrihqrusoj th {
+  border-style: none;
+}
+
+#rrihqrusoj p {
+  margin: 0;
+  padding: 0;
+}
+
+#rrihqrusoj .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#rrihqrusoj .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rrihqrusoj .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rrihqrusoj .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rrihqrusoj .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rrihqrusoj .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rrihqrusoj .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rrihqrusoj .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rrihqrusoj .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#rrihqrusoj .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#rrihqrusoj .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rrihqrusoj .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rrihqrusoj .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rrihqrusoj .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rrihqrusoj .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rrihqrusoj .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#rrihqrusoj .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#rrihqrusoj .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#rrihqrusoj .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rrihqrusoj .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#rrihqrusoj .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rrihqrusoj .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rrihqrusoj .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rrihqrusoj .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rrihqrusoj .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rrihqrusoj .gt_left {
+  text-align: left;
+}
+
+#rrihqrusoj .gt_center {
+  text-align: center;
+}
+
+#rrihqrusoj .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rrihqrusoj .gt_font_normal {
+  font-weight: normal;
+}
+
+#rrihqrusoj .gt_font_bold {
+  font-weight: bold;
+}
+
+#rrihqrusoj .gt_font_italic {
+  font-style: italic;
+}
+
+#rrihqrusoj .gt_super {
+  font-size: 65%;
+}
+
+#rrihqrusoj .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#rrihqrusoj .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#rrihqrusoj .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#rrihqrusoj .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#rrihqrusoj .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#rrihqrusoj .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#rrihqrusoj .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#rrihqrusoj .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#rrihqrusoj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="9" class="gt_heading gt_title gt_font_normal"><strong>Matriz de Similaridade Estilística (Cosseno)</strong></th>
+</tr>
+<tr class="odd gt_heading">
+<th colspan="9" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Calculada sobre frequências relativas na DFM após remoção de stopwords</th>
+</tr>
+<tr class="header gt_col_headings">
+<th id="Obra" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Obra</th>
+<th id="Dom-Casmurro" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Dom Casmurro</th>
+<th id="Esaú-e-Jacó" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Esaú e Jacó</th>
+<th id="Helena" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Helena</th>
+<th id="Memorial-de-Aires" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Memorial de Aires</th>
+<th id="Memórias-Póstumas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Memórias Póstumas</th>
+<th id="O-Alienista" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">O Alienista</th>
+<th id="Papéis-avulsos" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Papéis avulsos</th>
+<th id="Quincas-Borba" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Quincas Borba</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Dom Casmurro</td>
+<td class="gt_row gt_right" headers="Dom-Casmurro" style="background-color: #808080; color: #FFFFFF">1,000</td>
+<td class="gt_row gt_right" headers="Esaú-e-Jacó" style="background-color: #93AED8; color: #000000">0,545</td>
+<td class="gt_row gt_right" headers="Helena" style="background-color: #B1C5E3; color: #000000">0,390</td>
+<td class="gt_row gt_right" headers="Memorial-de-Aires" style="background-color: #5E8CC5; color: #FFFFFF">0,796</td>
+<td class="gt_row gt_right" headers="Memórias-Póstumas" style="background-color: #8EABD6; color: #000000">0,570</td>
+<td class="gt_row gt_right" headers="O-Alienista" style="background-color: #B4C7E4; color: #000000">0,375</td>
+<td class="gt_row gt_right" headers="Papéis-avulsos" style="background-color: #F7FBFF; color: #000000">0,022</td>
+<td class="gt_row gt_right" headers="Quincas-Borba" style="background-color: #648FC7; color: #FFFFFF">0,770</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Esaú e Jacó</td>
+<td class="gt_row gt_right" headers="Dom-Casmurro" style="background-color: #93AED8; color: #000000">0,545</td>
+<td class="gt_row gt_right" headers="Esaú-e-Jacó" style="background-color: #2171B5; color: #FFFFFF">1,000</td>
+<td class="gt_row gt_right" headers="Helena" style="background-color: #9CB4DB; color: #000000">0,501</td>
+<td class="gt_row gt_right" headers="Memorial-de-Aires" style="background-color: #B1C4E3; color: #000000">0,391</td>
+<td class="gt_row gt_right" headers="Memórias-Póstumas" style="background-color: #86A5D3; color: #000000">0,610</td>
+<td class="gt_row gt_right" headers="O-Alienista" style="background-color: #9FB7DC; color: #000000">0,485</td>
+<td class="gt_row gt_right" headers="Papéis-avulsos" style="background-color: #F3F8FD; color: #000000">0,044</td>
+<td class="gt_row gt_right" headers="Quincas-Borba" style="background-color: #A9BFE0; color: #000000">0,431</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Helena</td>
+<td class="gt_row gt_right" headers="Dom-Casmurro" style="background-color: #B1C5E3; color: #000000">0,390</td>
+<td class="gt_row gt_right" headers="Esaú-e-Jacó" style="background-color: #9CB4DB; color: #000000">0,501</td>
+<td class="gt_row gt_right" headers="Helena" style="background-color: #2171B5; color: #FFFFFF">1,000</td>
+<td class="gt_row gt_right" headers="Memorial-de-Aires" style="background-color: #C6D4EB; color: #000000">0,282</td>
+<td class="gt_row gt_right" headers="Memórias-Póstumas" style="background-color: #A1B9DD; color: #000000">0,473</td>
+<td class="gt_row gt_right" headers="O-Alienista" style="background-color: #B3C6E4; color: #000000">0,378</td>
+<td class="gt_row gt_right" headers="Papéis-avulsos" style="background-color: #F4F9FE; color: #000000">0,036</td>
+<td class="gt_row gt_right" headers="Quincas-Borba" style="background-color: #BFCFE9; color: #000000">0,320</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Memorial de Aires</td>
+<td class="gt_row gt_right" headers="Dom-Casmurro" style="background-color: #5E8CC5; color: #FFFFFF">0,796</td>
+<td class="gt_row gt_right" headers="Esaú-e-Jacó" style="background-color: #B1C4E3; color: #000000">0,391</td>
+<td class="gt_row gt_right" headers="Helena" style="background-color: #C6D4EB; color: #000000">0,282</td>
+<td class="gt_row gt_right" headers="Memorial-de-Aires" style="background-color: #2171B5; color: #FFFFFF">1,000</td>
+<td class="gt_row gt_right" headers="Memórias-Póstumas" style="background-color: #BBCCE7; color: #000000">0,338</td>
+<td class="gt_row gt_right" headers="O-Alienista" style="background-color: #C9D7ED; color: #000000">0,265</td>
+<td class="gt_row gt_right" headers="Papéis-avulsos" style="background-color: #F6FAFF; color: #000000">0,029</td>
+<td class="gt_row gt_right" headers="Quincas-Borba" style="background-color: #5989C3; color: #FFFFFF">0,818</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Memórias Póstumas</td>
+<td class="gt_row gt_right" headers="Dom-Casmurro" style="background-color: #8EABD6; color: #000000">0,570</td>
+<td class="gt_row gt_right" headers="Esaú-e-Jacó" style="background-color: #86A5D3; color: #000000">0,610</td>
+<td class="gt_row gt_right" headers="Helena" style="background-color: #A1B9DD; color: #000000">0,473</td>
+<td class="gt_row gt_right" headers="Memorial-de-Aires" style="background-color: #BBCCE7; color: #000000">0,338</td>
+<td class="gt_row gt_right" headers="Memórias-Póstumas" style="background-color: #808080; color: #FFFFFF">1,000</td>
+<td class="gt_row gt_right" headers="O-Alienista" style="background-color: #A3BADE; color: #000000">0,462</td>
+<td class="gt_row gt_right" headers="Papéis-avulsos" style="background-color: #F5F9FE; color: #000000">0,032</td>
+<td class="gt_row gt_right" headers="Quincas-Borba" style="background-color: #AFC3E3; color: #000000">0,400</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">O Alienista</td>
+<td class="gt_row gt_right" headers="Dom-Casmurro" style="background-color: #B4C7E4; color: #000000">0,375</td>
+<td class="gt_row gt_right" headers="Esaú-e-Jacó" style="background-color: #9FB7DC; color: #000000">0,485</td>
+<td class="gt_row gt_right" headers="Helena" style="background-color: #B3C6E4; color: #000000">0,378</td>
+<td class="gt_row gt_right" headers="Memorial-de-Aires" style="background-color: #C9D7ED; color: #000000">0,265</td>
+<td class="gt_row gt_right" headers="Memórias-Póstumas" style="background-color: #A3BADE; color: #000000">0,462</td>
+<td class="gt_row gt_right" headers="O-Alienista" style="background-color: #808080; color: #FFFFFF">1,000</td>
+<td class="gt_row gt_right" headers="Papéis-avulsos" style="background-color: #E6EEF8; color: #000000">0,111</td>
+<td class="gt_row gt_right" headers="Quincas-Borba" style="background-color: #BFCFE9; color: #000000">0,317</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Papéis avulsos</td>
+<td class="gt_row gt_right" headers="Dom-Casmurro" style="background-color: #F7FBFF; color: #000000">0,022</td>
+<td class="gt_row gt_right" headers="Esaú-e-Jacó" style="background-color: #F3F8FD; color: #000000">0,044</td>
+<td class="gt_row gt_right" headers="Helena" style="background-color: #F4F9FE; color: #000000">0,036</td>
+<td class="gt_row gt_right" headers="Memorial-de-Aires" style="background-color: #F6FAFF; color: #000000">0,029</td>
+<td class="gt_row gt_right" headers="Memórias-Póstumas" style="background-color: #F5F9FE; color: #000000">0,032</td>
+<td class="gt_row gt_right" headers="O-Alienista" style="background-color: #E6EEF8; color: #000000">0,111</td>
+<td class="gt_row gt_right" headers="Papéis-avulsos" style="background-color: #2171B5; color: #FFFFFF">1,000</td>
+<td class="gt_row gt_right" headers="Quincas-Borba" style="background-color: #F6FAFE; color: #000000">0,029</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Quincas Borba</td>
+<td class="gt_row gt_right" headers="Dom-Casmurro" style="background-color: #648FC7; color: #FFFFFF">0,770</td>
+<td class="gt_row gt_right" headers="Esaú-e-Jacó" style="background-color: #A9BFE0; color: #000000">0,431</td>
+<td class="gt_row gt_right" headers="Helena" style="background-color: #BFCFE9; color: #000000">0,320</td>
+<td class="gt_row gt_right" headers="Memorial-de-Aires" style="background-color: #5989C3; color: #FFFFFF">0,818</td>
+<td class="gt_row gt_right" headers="Memórias-Póstumas" style="background-color: #AFC3E3; color: #000000">0,400</td>
+<td class="gt_row gt_right" headers="O-Alienista" style="background-color: #BFCFE9; color: #000000">0,317</td>
+<td class="gt_row gt_right" headers="Papéis-avulsos" style="background-color: #F6FAFE; color: #000000">0,029</td>
+<td class="gt_row gt_right" headers="Quincas-Borba" style="background-color: #2171B5; color: #FFFFFF">1,000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="agrupamento-hierárquico" class="level3">
+<h3 class="anchored" data-anchor-id="agrupamento-hierárquico">3.2 Agrupamento Hierárquico</h3>
+<p>A partir da matriz de dissimilaridade angular (<span class="math inline">\(D_{\cos} = 1 - \cos \theta\)</span>), aplica-se o algoritmo hierárquico aglomerativo de <strong>Ward (<code>ward.D2</code>)</strong>. O <strong>Coeficiente de Correlação Cofenética (<span class="math inline">\(CCC = 0.879\)</span>)</strong> atesta a fidelidade com que a árvore bidimensional preserva as distâncias originais do espaço vetorial:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código R</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="fl">3.5</span>, <span class="dv">2</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  cluster_livros,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Clusterização Hierárquica dos 7 Livros de Machado de Assis"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sub =</span> <span class="fu">paste0</span>(<span class="st">"Distância de Cosseno (Método Ward.D2) | Correlação Cofenética (CCC) = "</span>, cofenetica),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Distância Estilística (1 - Cosseno)"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"#08519c"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-dendrograma" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dendrograma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="modelagem-avancada_files/figure-html/fig-dendrograma-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dendrograma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Dendrograma de agrupamento hierárquico das 7 obras baseado em distância de cosseno (Método Ward.D2).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="análise-de-correspondência-ca" class="level2">
+<h2 class="anchored" data-anchor-id="análise-de-correspondência-ca">4. Análise de Correspondência (CA)</h2>
+<p>Enquanto o dendrograma força partições discretas, a <strong>Análise de Correspondência (CA)</strong> decompõe a tabela de contingência Documento-Termo via Decomposição em Valores Singulares (SVD), projetando os 7 livros em um espaço euclidiano contínuo.</p>
+<section id="critério-beta-e-decomposição-da-inércia" class="level3">
+<h3 class="anchored" data-anchor-id="critério-beta-e-decomposição-da-inércia">4.1 Critério <span class="math inline">\(\beta\)</span> e Decomposição da Inércia</h3>
+<p>A tabela abaixo apresenta o teste global de associação entre livros e vocabulário (<strong>Critério <span class="math inline">\(\beta = 707.51 &gt; 3\)</span></strong>, rejeitando independência com <span class="math inline">\(p &lt; 0{,}001\)</span>) e a distribuição da inércia explicada pelos eixos fatoriais extraídos via SVD:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código R</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  Dimensão <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">"Dimensão "</span>, <span class="fu">seq_along</span>(autovalores)),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Autovalor =</span> autovalores,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Inércia Explicada (%)</span><span class="st">`</span> <span class="ot">=</span> inercia_pct,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Inércia Acumulada (%)</span><span class="st">`</span> <span class="ot">=</span> inercia_acum</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> Autovalor, <span class="at">decimals =</span> <span class="dv">4</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">Inércia Explicada (%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">Inércia Acumulada (%)</span><span class="st">`</span>), <span class="at">decimals =</span> <span class="dv">2</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Decomposição da Inércia Principal (SVD)**"</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"χ² = "</span>, <span class="fu">format</span>(<span class="fu">round</span>(chi2_ca, <span class="dv">1</span>), <span class="at">big.mark =</span> <span class="st">"."</span>), </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                      <span class="st">" | gl = "</span>, gl_ca, </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                      <span class="st">" | Critério β = "</span>, <span class="fu">round</span>(criterio_beta, <span class="dv">2</span>), <span class="st">" (&gt; 3: associação significativa)"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-diagnostico-ca" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-diagnostico-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autovalores, Inércia e Critério Beta)
+</figcaption>
+<div aria-describedby="tbl-diagnostico-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="tvkvpjlkvc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tvkvpjlkvc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#tvkvpjlkvc thead, #tvkvpjlkvc tbody, #tvkvpjlkvc tfoot, #tvkvpjlkvc tr, #tvkvpjlkvc td, #tvkvpjlkvc th {
+  border-style: none;
+}
+
+#tvkvpjlkvc p {
+  margin: 0;
+  padding: 0;
+}
+
+#tvkvpjlkvc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#tvkvpjlkvc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#tvkvpjlkvc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#tvkvpjlkvc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#tvkvpjlkvc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#tvkvpjlkvc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#tvkvpjlkvc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#tvkvpjlkvc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#tvkvpjlkvc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#tvkvpjlkvc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#tvkvpjlkvc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#tvkvpjlkvc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#tvkvpjlkvc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#tvkvpjlkvc .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#tvkvpjlkvc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tvkvpjlkvc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#tvkvpjlkvc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#tvkvpjlkvc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#tvkvpjlkvc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tvkvpjlkvc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#tvkvpjlkvc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tvkvpjlkvc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#tvkvpjlkvc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tvkvpjlkvc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tvkvpjlkvc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tvkvpjlkvc .gt_left {
+  text-align: left;
+}
+
+#tvkvpjlkvc .gt_center {
+  text-align: center;
+}
+
+#tvkvpjlkvc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#tvkvpjlkvc .gt_font_normal {
+  font-weight: normal;
+}
+
+#tvkvpjlkvc .gt_font_bold {
+  font-weight: bold;
+}
+
+#tvkvpjlkvc .gt_font_italic {
+  font-style: italic;
+}
+
+#tvkvpjlkvc .gt_super {
+  font-size: 65%;
+}
+
+#tvkvpjlkvc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#tvkvpjlkvc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#tvkvpjlkvc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#tvkvpjlkvc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#tvkvpjlkvc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#tvkvpjlkvc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#tvkvpjlkvc .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#tvkvpjlkvc .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#tvkvpjlkvc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="4" class="gt_heading gt_title gt_font_normal"><strong>Decomposição da Inércia Principal (SVD)</strong></th>
+</tr>
+<tr class="odd gt_heading">
+<th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">χ² = 62.112.5 | gl = 6237 | Critério β = 707.51 (&gt; 3: associação significativa)</th>
+</tr>
+<tr class="header gt_col_headings">
+<th id="Dimensão" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Dimensão</th>
+<th id="Autovalor" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Autovalor</th>
+<th id="Inércia-Explicada-(%)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Inércia Explicada (%)</th>
+<th id="Inércia-Acumulada-(%)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Inércia Acumulada (%)</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Dimensão">Dimensão 1</td>
+<td class="gt_row gt_right" headers="Autovalor">0,1859</td>
+<td class="gt_row gt_right" headers="Inércia-Explicada-(%)">35,87</td>
+<td class="gt_row gt_right" headers="Inércia-Acumulada-(%)">35,87</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Dimensão">Dimensão 2</td>
+<td class="gt_row gt_right" headers="Autovalor">0,0896</td>
+<td class="gt_row gt_right" headers="Inércia-Explicada-(%)">17,29</td>
+<td class="gt_row gt_right" headers="Inércia-Acumulada-(%)">53,16</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Dimensão">Dimensão 3</td>
+<td class="gt_row gt_right" headers="Autovalor">0,0786</td>
+<td class="gt_row gt_right" headers="Inércia-Explicada-(%)">15,17</td>
+<td class="gt_row gt_right" headers="Inércia-Acumulada-(%)">68,33</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Dimensão">Dimensão 4</td>
+<td class="gt_row gt_right" headers="Autovalor">0,0666</td>
+<td class="gt_row gt_right" headers="Inércia-Explicada-(%)">12,85</td>
+<td class="gt_row gt_right" headers="Inércia-Acumulada-(%)">81,17</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Dimensão">Dimensão 5</td>
+<td class="gt_row gt_right" headers="Autovalor">0,0527</td>
+<td class="gt_row gt_right" headers="Inércia-Explicada-(%)">10,16</td>
+<td class="gt_row gt_right" headers="Inércia-Acumulada-(%)">91,34</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Dimensão">Dimensão 6</td>
+<td class="gt_row gt_right" headers="Autovalor">0,0356</td>
+<td class="gt_row gt_right" headers="Inércia-Explicada-(%)">6,87</td>
+<td class="gt_row gt_right" headers="Inércia-Acumulada-(%)">98,21</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="resíduos-padronizados-maiores-associações-obra-times-palavra" class="level3">
+<h3 class="anchored" data-anchor-id="resíduos-padronizados-maiores-associações-obra-times-palavra">4.2 Resíduos Padronizados: Maiores Associações Obra <span class="math inline">\(\times\)</span> Palavra</h3>
+<p>Para interpretar o que atrai cada romance para seu quadrante no mapa perceptual, listamos os pares <em>(Obra <span class="math inline">\(\times\)</span> Termo)</em> com os maiores <strong>resíduos padronizados positivos</strong> (<span class="math inline">\(s_{ij}\)</span>):</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código R</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(S, <span class="at">rownames =</span> <span class="st">"Obra"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Obra, <span class="at">names_to =</span> <span class="st">"Termo"</span>, <span class="at">values_to =</span> <span class="st">"Residuo_Padronizado"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Obra) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(Residuo_Padronizado, <span class="at">n =</span> <span class="dv">2</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Residuo_Padronizado)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> Residuo_Padronizado, <span class="at">decimals =</span> <span class="dv">3</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> Residuo_Padronizado, <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#e5f5e0"</span>, <span class="st">"#1b9e77"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Principais Atrações Vocabulares por Obra (Resíduos Padronizados)**"</span>),</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Os dois termos com maior excesso relativo em cada romance dentro da matriz CA"</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-residuos-ca" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-residuos-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Correspondência
+</figcaption>
+<div aria-describedby="tbl-residuos-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="gsmvomdqqo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gsmvomdqqo table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#gsmvomdqqo thead, #gsmvomdqqo tbody, #gsmvomdqqo tfoot, #gsmvomdqqo tr, #gsmvomdqqo td, #gsmvomdqqo th {
+  border-style: none;
+}
+
+#gsmvomdqqo p {
+  margin: 0;
+  padding: 0;
+}
+
+#gsmvomdqqo .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#gsmvomdqqo .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#gsmvomdqqo .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#gsmvomdqqo .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#gsmvomdqqo .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#gsmvomdqqo .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#gsmvomdqqo .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#gsmvomdqqo .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#gsmvomdqqo .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#gsmvomdqqo .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#gsmvomdqqo .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#gsmvomdqqo .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#gsmvomdqqo .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#gsmvomdqqo .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#gsmvomdqqo .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gsmvomdqqo .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#gsmvomdqqo .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#gsmvomdqqo .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#gsmvomdqqo .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gsmvomdqqo .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#gsmvomdqqo .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gsmvomdqqo .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#gsmvomdqqo .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gsmvomdqqo .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gsmvomdqqo .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gsmvomdqqo .gt_left {
+  text-align: left;
+}
+
+#gsmvomdqqo .gt_center {
+  text-align: center;
+}
+
+#gsmvomdqqo .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#gsmvomdqqo .gt_font_normal {
+  font-weight: normal;
+}
+
+#gsmvomdqqo .gt_font_bold {
+  font-weight: bold;
+}
+
+#gsmvomdqqo .gt_font_italic {
+  font-style: italic;
+}
+
+#gsmvomdqqo .gt_super {
+  font-size: 65%;
+}
+
+#gsmvomdqqo .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#gsmvomdqqo .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#gsmvomdqqo .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#gsmvomdqqo .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#gsmvomdqqo .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#gsmvomdqqo .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#gsmvomdqqo .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#gsmvomdqqo .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#gsmvomdqqo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="3" class="gt_heading gt_title gt_font_normal"><strong>Principais Atrações Vocabulares por Obra (Resíduos Padronizados)</strong></th>
+</tr>
+<tr class="odd gt_heading">
+<th colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Os dois termos com maior excesso relativo em cada romance dentro da matriz CA</th>
+</tr>
+<tr class="header gt_col_headings">
+<th id="Obra" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Obra</th>
+<th id="Termo" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Termo</th>
+<th id="Residuo_Padronizado" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Residuo_Padronizado</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">O Alienista</td>
+<td class="gt_row gt_left" headers="Termo">alienista</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #1B9E77; color: #FFFFFF">0,153</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">O Alienista</td>
+<td class="gt_row gt_left" headers="Termo">verde</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #61B591; color: #000000">0,124</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Memórias Póstumas</td>
+<td class="gt_row gt_left" headers="Termo">á</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #A1D3B6; color: #000000">0,085</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Esaú e Jacó</td>
+<td class="gt_row gt_left" headers="Termo">paulo</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #A7D6B9; color: #000000">0,081</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Esaú e Jacó</td>
+<td class="gt_row gt_left" headers="Termo">pedro</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #A8D7BA; color: #000000">0,080</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Memórias Póstumas</td>
+<td class="gt_row gt_left" headers="Termo">elle</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #AFDABE; color: #000000">0,076</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Memorial de Aires</td>
+<td class="gt_row gt_left" headers="Termo">carmo</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #B5DDC2; color: #000000">0,072</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Quincas Borba</td>
+<td class="gt_row gt_left" headers="Termo">maria</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #BDE1C7; color: #000000">0,068</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Helena</td>
+<td class="gt_row gt_left" headers="Termo">eugênia</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #C0E3C9; color: #000000">0,065</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Dom Casmurro</td>
+<td class="gt_row gt_left" headers="Termo">josé</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #C3E4CA; color: #000000">0,064</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Quincas Borba</td>
+<td class="gt_row gt_left" headers="Termo">palha</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #CDE9D1; color: #000000">0,057</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Papéis avulsos</td>
+<td class="gt_row gt_left" headers="Termo">segredo</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #CDE9D1; color: #000000">0,057</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Memorial de Aires</td>
+<td class="gt_row gt_left" headers="Termo">viúva</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #D3ECD4; color: #000000">0,053</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Helena</td>
+<td class="gt_row gt_left" headers="Termo">família</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #DBF0DA; color: #000000">0,048</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Obra">Papéis avulsos</td>
+<td class="gt_row gt_left" headers="Termo">visita</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #DFF2DC; color: #000000">0,045</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Obra">Dom Casmurro</td>
+<td class="gt_row gt_left" headers="Termo">ideia</td>
+<td class="gt_row gt_right" headers="Residuo_Padronizado" style="background-color: #E5F5E0; color: #000000">0,042</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="mapa-perceptual-de-correspondência" class="level3">
+<h3 class="anchored" data-anchor-id="mapa-perceptual-de-correspondência">4.3 Mapa Perceptual de Correspondência</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código R</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_ca_plot, <span class="fu">aes</span>(<span class="at">x =</span> Dim1, <span class="at">y =</span> Dim2, <span class="at">color =</span> Fase, <span class="at">label =</span> Livro)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">4.5</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">box.padding =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Fase Romântica"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>, <span class="st">"Fase Realista"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mapa Perceptual de Correspondência (CA)"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Inércia acumulada nos 2 eixos: "</span>, <span class="fu">round</span>(inercia_acum[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"% | Critério β = "</span>, <span class="fu">round</span>(criterio_beta, <span class="dv">2</span>)),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 1 ("</span>, <span class="fu">round</span>(inercia_pct[<span class="dv">1</span>], <span class="dv">1</span>), <span class="st">"% da inércia)"</span>),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 2 ("</span>, <span class="fu">round</span>(inercia_pct[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"% da inércia)"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-correspondencia" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-correspondencia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="modelagem-avancada_files/figure-html/fig-correspondencia-1.png" class="img-fluid figure-img" width="864">
+<img src="modelagem-avancada_files/figure-html/fig-correspondencia-1.png" class="img-fluid figure-img" width="912">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correspondencia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3: Projeção bidimensional dos 7 livros via Análise de Correspondência sobre termos recorrentes.
+Figura&nbsp;4: Mapa Perceptual da Análise de Correspondência projetando as 7 obras nos dois primeiros eixos latentes.
 </figcaption>
 </figure>
 </div>
@@ -412,119 +2141,785 @@ Figura&nbsp;3: Projeção bidimensional dos 7 livros via Análise de Correspond�
 </div>
 <hr>
 </section>
+</section>
 <section id="modelagem-probabilística-de-tópicos-lda" class="level2">
-<h2 class="anchored" data-anchor-id="modelagem-probabilística-de-tópicos-lda">4. Modelagem Probabilística de Tópicos (LDA)</h2>
-<p>Utilizando a <strong>Alocação Latente de Dirichlet (LDA)</strong> sobre a matriz dos <strong>827 capítulos</strong>, estimamos <span class="math inline">\(K = 4\)</span> tópicos latentes via amostragem de Gibbs (<code>topicmodels</code>), identificando os vocábulos de maior probabilidade condicional <span class="math inline">\(\beta = P(\text{palavra} \mid \text{tópico})\)</span> e a distribuição média <span class="math inline">\(\gamma\)</span> de cada tópico por romance:</p>
+<h2 class="anchored" data-anchor-id="modelagem-probabilística-de-tópicos-lda">5. Modelagem Probabilística de Tópicos (LDA)</h2>
+<p>Utilizando a <strong>Alocação Latente de Dirichlet (LDA)</strong> sobre a matriz dos <strong>827 capítulos</strong>, estimamos <span class="math inline">\(K = 4\)</span> tópicos latentes via amostragem de Gibbs (<code>topicmodels</code>). A análise desdobra-se em duas matrizes probabilísticas complementares:</p>
+<ol type="1">
+<li><strong>Matriz <span class="math inline">\(\beta = P(\text{palavra} \mid \text{tópico})\)</span>:</strong> Define o campo semântico de cada tópico latente;</li>
+<li><strong>Matriz <span class="math inline">\(\gamma = P(\text{tópico} \mid \text{documento})\)</span>:</strong> Revela a composição temática predominante de cada romance.</li>
+</ol>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver código R</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"topicmodels"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(topicmodels)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  df_caps <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">paste</span>(book_short, chapter_name, <span class="at">sep =</span> <span class="st">" :: "</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(doc_id, book_short) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  dfm_caps <span class="ot">&lt;-</span> <span class="fu">corpus</span>(df_caps<span class="sc">$</span>text, <span class="at">docnames =</span> df_caps<span class="sc">$</span>doc_id) <span class="sc">%&gt;%</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tokens_tolower</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dfm</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">15</span>, <span class="at">min_docfreq =</span> <span class="dv">5</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove capítulos vazios após trim</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  dfm_caps <span class="ot">&lt;-</span> <span class="fu">dfm_subset</span>(dfm_caps, <span class="fu">ntoken</span>(dfm_caps) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  dtm_lda <span class="ot">&lt;-</span> <span class="fu">convert</span>(dfm_caps, <span class="at">to =</span> <span class="st">"topicmodels"</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  modelo_lda <span class="ot">&lt;-</span> <span class="fu">LDA</span>(dtm_lda, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">method =</span> <span class="st">"Gibbs"</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter =</span> <span class="dv">500</span>, <span class="at">burnin =</span> <span class="dv">100</span>))</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  topicos_beta <span class="ot">&lt;-</span> <span class="fu">tidy</span>(modelo_lda, <span class="at">matrix =</span> <span class="st">"beta"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(topic) <span class="sc">%&gt;%</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_max</span>(beta, <span class="at">n =</span> <span class="dv">8</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">topic_label =</span> <span class="fu">paste</span>(<span class="st">"Tópico Latente"</span>, topic))</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(topicos_beta, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder_within</span>(term, beta, topic_label), <span class="at">y =</span> beta, <span class="at">fill =</span> topic_label)) <span class="sc">+</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> topic_label, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_reordered</span>() <span class="sc">+</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Decomposição Temática Não Supervisionada (Modelo LDA, K = 4)"</span>,</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">"Termos com maior probabilidade de geração (β) dentro de cada tópico latente"</span>,</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Probabilidade Condicional (β)"</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">""</span>)</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(topicmodels)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>df_caps <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">paste</span>(book_short, chapter_name, <span class="at">sep =</span> <span class="st">" :: "</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(doc_id, book_short) <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>dfm_caps <span class="ot">&lt;-</span> <span class="fu">corpus</span>(df_caps<span class="sc">$</span>text, <span class="at">docnames =</span> df_caps<span class="sc">$</span>doc_id) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">15</span>, <span class="at">min_docfreq =</span> <span class="dv">5</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>dfm_caps <span class="ot">&lt;-</span> <span class="fu">dfm_subset</span>(dfm_caps, <span class="fu">ntoken</span>(dfm_caps) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>dtm_lda <span class="ot">&lt;-</span> <span class="fu">convert</span>(dfm_caps, <span class="at">to =</span> <span class="st">"topicmodels"</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>modelo_lda <span class="ot">&lt;-</span> <span class="fu">LDA</span>(dtm_lda, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">method =</span> <span class="st">"Gibbs"</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter =</span> <span class="dv">600</span>, <span class="at">burnin =</span> <span class="dv">150</span>))</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotulação semântica interpretativa (Topic Labeling) baseada nos termos dominantes (β)</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>rotulos_topicos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"Tópico 1: Família &amp; Casamento"</span>,</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"Tópico 2: Império &amp; Sociedade Carioca"</span>,</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"Tópico 3: Filosofia &amp; Crítica Psicológica"</span>,</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"Tópico 4: Afeto &amp; Relações Interpessoais"</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Painel A: Matriz Beta (Termos por Tópico Rotulado)</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>topicos_beta <span class="ot">&lt;-</span> <span class="fu">tidy</span>(modelo_lda, <span class="at">matrix =</span> <span class="st">"beta"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(topic) <span class="sc">%&gt;%</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(beta, <span class="at">n =</span> <span class="dv">8</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">topic_label =</span> <span class="fu">recode</span>(<span class="fu">as.character</span>(topic), <span class="sc">!!!</span>rotulos_topicos))</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>p_beta <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(topicos_beta, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder_within</span>(term, beta, topic_label), <span class="at">y =</span> beta, <span class="at">fill =</span> topic_label)) <span class="sc">+</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> topic_label, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reordered</span>() <span class="sc">+</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"A. Assinatura Vocabular de Cada Tema Latente (Matriz β)"</span>,</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Top 8 palavras com maior probabilidade de geração dentro de cada núcleo temático"</span>,</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Probabilidade Condicional (β)"</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">9.5</span>))</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Painel B: Matriz Gamma (Proporção de Tópicos por Livro)</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>topicos_gamma <span class="ot">&lt;-</span> <span class="fu">tidy</span>(modelo_lda, <span class="at">matrix =</span> <span class="st">"gamma"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(document, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Livro"</span>, <span class="st">"Capitulo"</span>), <span class="at">sep =</span> <span class="st">" :: "</span>, <span class="at">extra =</span> <span class="st">"merge"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Livro, topic) <span class="sc">%&gt;%</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">gamma_medio =</span> <span class="fu">mean</span>(gamma), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">topic_label =</span> <span class="fu">recode</span>(<span class="fu">as.character</span>(topic), <span class="sc">!!!</span>rotulos_topicos))</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>p_gamma <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(topicos_gamma, <span class="fu">aes</span>(<span class="at">x =</span> Livro, <span class="at">y =</span> gamma_medio, <span class="at">fill =</span> topic_label)) <span class="sc">+</span></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">width =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>, <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">ncol =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"B. Composição Temática por Romance (Matriz γ Média)"</span>,</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Proporção média de cada tema latente ao longo dos capítulos de cada obra"</span>,</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Proporção Média nos Capítulos (γ)"</span></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>p_beta <span class="sc">/</span> p_gamma <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="fl">1.35</span>, <span class="dv">1</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output-display">
+<div id="fig-lda-topicos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lda-topicos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="modelagem-avancada_files/figure-html/fig-lda-topicos-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lda-topicos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Decomposição temática via LDA (K = 4): (A) Probabilidade condicional β dos termos por tópico rotulado e (B) Proporção média γ de cada tema por romance.
+</figcaption>
+</figure>
+</div>
+</div>
 </div>
 <hr>
 </section>
-<section id="teoria-dos-grafos" class="level2">
-<h2 class="anchored" data-anchor-id="teoria-dos-grafos">5. Teoria dos Grafos</h2>
-<p>Para modelar a estrutura relacional do vocabulário, construímos uma <strong>rede de coocorrência</strong> a partir dos bigramas mais frequentes, calculando a <strong>Centralidade de Grau (<em>Degree</em>)</strong> para identificar os núcleos articuladores do discurso machadiano:</p>
+<section id="teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical" class="level2">
+<h2 class="anchored" data-anchor-id="teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical">6. Teoria dos Grafos: Arquitetura Semântica e <em>Storytelling</em> Lexical</h2>
+<p>Para contar uma história clara sobre como o discurso machadiano se organiza — sem poluição de pares soltos —, extraímos o <strong>Componente Conexo Gigante (LCC)</strong> da rede de bigramas (onde todas as palavras estão interligadas por algum caminho) e aplicamos o algoritmo de <strong>modularidade de Louvain</strong> (Blondel et al., 2008) para revelar os <strong>3 macro-eixos temáticos</strong> que sustentam a narrativa:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver código R</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"igraph"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>) <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"ggraph"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(igraph)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(ggraph)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  arestas_rede <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_tokens</span>(bigrama, text, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bigrama)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">separate</span>(bigrama, <span class="fu">c</span>(<span class="st">"from"</span>, <span class="st">"to"</span>), <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span>from <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra),</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span>to <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra),</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">nchar</span>(from) <span class="sc">&gt;</span> <span class="dv">2</span>, <span class="fu">nchar</span>(to) <span class="sc">&gt;</span> <span class="dv">2</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(from, to, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">18</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  grafo <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(arestas_rede, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">V</span>(grafo)<span class="sc">$</span>grau <span class="ot">&lt;-</span> <span class="fu">degree</span>(grafo, <span class="at">mode =</span> <span class="st">"all"</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggraph</span>(grafo, <span class="at">layout =</span> <span class="st">"fr"</span>) <span class="sc">+</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_edge_link</span>(<span class="fu">aes</span>(<span class="at">edge_alpha =</span> n, <span class="at">edge_width =</span> n), <span class="at">edge_colour =</span> <span class="st">"#6baed6"</span>,</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                   <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">2.5</span>, <span class="st">"mm"</span>)), <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">3</span>, <span class="st">"mm"</span>)) <span class="sc">+</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> grau), <span class="at">color =</span> <span class="st">"#08519c"</span>) <span class="sc">+</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_node_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> name), <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_edge_width</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">2.2</span>), <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_edge_alpha</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.85</span>), <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">9</span>), <span class="at">name =</span> <span class="st">"Grau (Conexões)"</span>) <span class="sc">+</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Rede Semântica (Machado de Assis)"</span>,</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">"Grafo direcionado de bigramas (frequência ≥ 18) com tamanho proporcional à centralidade de grau"</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"gray30"</span>))</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Instale os pacotes 'igraph' e 'ggraph' para visualizar o grafo de coocorrência."</span>)</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-grafo</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>arestas_rede <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigrama, text, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bigrama)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigrama, <span class="fu">c</span>(<span class="st">"from"</span>, <span class="st">"to"</span>), <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span>from <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span>to <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nchar</span>(from) <span class="sc">&gt;</span> <span class="dv">2</span>, <span class="fu">nchar</span>(to) <span class="sc">&gt;</span> <span class="dv">2</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(from, to, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">15</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>grafo_bruto <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(arestas_rede, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extrai APENAS o Componente Conexo Gigante (elimina ilhas isoladas e poluição visual)</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">components</span>(grafo_bruto)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>id_gigante <span class="ot">&lt;-</span> <span class="fu">which.max</span>(comp<span class="sc">$</span>csize)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>nos_gigante <span class="ot">&lt;-</span> <span class="fu">names</span>(comp<span class="sc">$</span>membership[comp<span class="sc">$</span>membership <span class="sc">==</span> id_gigante])</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>grafo <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(grafo_bruto, nos_gigante)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Métricas formais de centralidade</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(grafo)<span class="sc">$</span>grau <span class="ot">&lt;-</span> <span class="fu">degree</span>(grafo, <span class="at">mode =</span> <span class="st">"all"</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(grafo)<span class="sc">$</span>intermediacao <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">betweenness</span>(grafo, <span class="at">directed =</span> <span class="cn">FALSE</span>), <span class="dv">1</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(grafo)<span class="sc">$</span>is_hub <span class="ot">&lt;-</span> <span class="fu">rank</span>(<span class="sc">-</span><span class="fu">V</span>(grafo)<span class="sc">$</span>grau, <span class="at">ties.method =</span> <span class="st">"min"</span>) <span class="sc">&lt;=</span> <span class="dv">10</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Detecção de comunidades (Louvain) consolidada nos 3 principais macro-eixos</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>comunidades <span class="ot">&lt;-</span> <span class="fu">cluster_louvain</span>(<span class="fu">as_undirected</span>(grafo))</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>membros <span class="ot">&lt;-</span> <span class="fu">membership</span>(comunidades)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>top3_com <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">sort</span>(<span class="fu">table</span>(membros), <span class="at">decreasing =</span> <span class="cn">TRUE</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(grafo)<span class="sc">$</span>eixo_narrativo <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>(membros) <span class="sc">==</span> top3_com[<span class="dv">1</span>] <span class="sc">~</span> <span class="st">"Eixo 1: Espaço Doméstico &amp; Social"</span>,</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>(membros) <span class="sc">==</span> top3_com[<span class="dv">2</span>] <span class="sc">~</span> <span class="st">"Eixo 2: Afeto, Corpo &amp; Subjetividade"</span>,</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>(membros) <span class="sc">==</span> top3_com[<span class="dv">3</span>] <span class="sc">~</span> <span class="st">"Eixo 3: Tempo, Vida &amp; Existência"</span>,</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Eixo 4: Conexões Periféricas"</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="como-ler-o-grafo-semântico-narrativa-estrutural" class="level3">
+<h3 class="anchored" data-anchor-id="como-ler-o-grafo-semântico-narrativa-estrutural">6.1 Como Ler o Grafo Semântico (Narrativa Estrutural)</h3>
+<ul>
+<li><strong>Tamanho dos Círculos (Centralidade de Grau):</strong> Indica quantas expressões diferentes gravitam em torno daquela palavra. Vocábulos grandes funcionam como <strong>ímãs semânticos</strong> (ex.: <em>casa</em>, <em>olhos</em>, <em>tempo</em>, <em>amor</em>, <em>vida</em>).</li>
+<li><strong>Cores (Comunidades de Louvain):</strong> Agrupam automaticamente palavras que coocorrem densamente entre si, revelando <strong>microcampos narrativos</strong> (o campo doméstico/familiar em torno de <em>casa/pai/mãe</em>, o campo afetivo/corporal em torno de <em>olhos/coração/alma</em>, e o campo temporal/existencial em torno de <em>tempo/dia/anos</em>).</li>
+<li><strong>Espessura e Seta das Linhas:</strong> Mostram a direção de leitura (<code>palavra 1 -&gt; palavra 2</code>) e a força de repetição da expressão no corpus.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código R</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(grafo, <span class="at">layout =</span> <span class="st">"stress"</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">edge_width =</span> n),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">edge_colour =</span> <span class="st">"gray80"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"mm"</span>)), <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="fl">3.5</span>, <span class="st">"mm"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> grau, <span class="at">color =</span> eixo_narrativo), <span class="at">alpha =</span> <span class="fl">0.92</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rótulos discretos para nós secundários</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_text</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(<span class="sc">!</span>is_hub, name, <span class="st">""</span>)),</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="fl">3.1</span>, <span class="at">color =</span> <span class="st">"gray35"</span>, <span class="at">max.overlaps =</span> <span class="dv">15</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Etiquetas destacadas apenas para os Top 10 Hubs (hierarquia visual)</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_label</span>(</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(is_hub, name, <span class="st">""</span>), <span class="at">color =</span> eixo_narrativo),</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="fl">3.6</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">label.size =</span> <span class="fl">0.35</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_edge_width</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">2.2</span>), <span class="at">name =</span> <span class="st">"Freq. Bigrama"</span>) <span class="sc">+</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="dv">11</span>), <span class="at">name =</span> <span class="st">"Conexões (Grau)"</span>) <span class="sc">+</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 1: Espaço Doméstico &amp; Social"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>,</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 2: Afeto, Corpo &amp; Subjetividade"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>,</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 3: Tempo, Vida &amp; Existência"</span> <span class="ot">=</span> <span class="st">"#7570b3"</span>,</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 4: Conexões Periféricas"</span> <span class="ot">=</span> <span class="st">"#666666"</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Macro-Eixo Narrativo"</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Componente Semântica"</span>,</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Caixas destacadas = Top 10 Hubs Centrais | Cores = Comunidades de Louvain | Setas = Direção do Bigrama"</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">13.5</span>),</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">9.8</span>, <span class="at">color =</span> <span class="st">"gray35"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">8</span>)),</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-rede-semantica" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rede-semantica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="modelagem-avancada_files/figure-html/fig-rede-semantica-1.png" class="img-fluid figure-img" width="960">
+<img src="modelagem-avancada_files/figure-html/fig-rede-semantica-1.png" class="img-fluid figure-img" width="1008">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rede-semantica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4: Grafo de coocorrência lexical entre termos consecutivos (frequência &gt;= 18) nos 7 livros.
+Figura&nbsp;6: Componente Conexo Gigante da rede semântica de Machado de Assis, organizado nos macro-eixos narrativos de Louvain.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+</section>
+<section id="tabela-dos-principais-hubs-vocabulares-da-rede" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-dos-principais-hubs-vocabulares-da-rede">6.2 Tabela dos Principais <em>Hubs</em> Vocabulares da Rede</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver código R</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Palavra =</span> <span class="fu">V</span>(grafo)<span class="sc">$</span>name,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Macro-Eixo Narrativo</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">V</span>(grafo)<span class="sc">$</span>eixo_narrativo,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Grau Total (Conexões)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">V</span>(grafo)<span class="sc">$</span>grau,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Intermediação (Ponte)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">V</span>(grafo)<span class="sc">$</span>intermediacao</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Grau Total (Conexões)</span><span class="st">`</span>), <span class="fu">desc</span>(<span class="st">`</span><span class="at">Intermediação (Ponte)</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="st">`</span><span class="at">Intermediação (Ponte)</span><span class="st">`</span>, <span class="at">decimals =</span> <span class="dv">1</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">`</span><span class="at">Grau Total (Conexões)</span><span class="st">`</span>, <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#f7fbff"</span>, <span class="st">"#08519c"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Núcleos Articuladores e Pontes do Discurso Machadiano**"</span>),</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Ranking estatístico baseado no Componente Conexo Gigante"</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-centralidade-rede" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-centralidade-rede-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;4: Top 10 Palavras Centrais (Hubs) do Componente Gigante por Grau e Intermediação
+</figcaption>
+<div aria-describedby="tbl-centralidade-rede-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="dpelzbxson" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dpelzbxson table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#dpelzbxson thead, #dpelzbxson tbody, #dpelzbxson tfoot, #dpelzbxson tr, #dpelzbxson td, #dpelzbxson th {
+  border-style: none;
+}
+
+#dpelzbxson p {
+  margin: 0;
+  padding: 0;
+}
+
+#dpelzbxson .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dpelzbxson .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dpelzbxson .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dpelzbxson .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dpelzbxson .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dpelzbxson .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dpelzbxson .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dpelzbxson .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dpelzbxson .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#dpelzbxson .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dpelzbxson .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dpelzbxson .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dpelzbxson .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dpelzbxson .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dpelzbxson .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpelzbxson .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dpelzbxson .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dpelzbxson .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#dpelzbxson .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpelzbxson .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dpelzbxson .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpelzbxson .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dpelzbxson .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpelzbxson .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dpelzbxson .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpelzbxson .gt_left {
+  text-align: left;
+}
+
+#dpelzbxson .gt_center {
+  text-align: center;
+}
+
+#dpelzbxson .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dpelzbxson .gt_font_normal {
+  font-weight: normal;
+}
+
+#dpelzbxson .gt_font_bold {
+  font-weight: bold;
+}
+
+#dpelzbxson .gt_font_italic {
+  font-style: italic;
+}
+
+#dpelzbxson .gt_super {
+  font-size: 65%;
+}
+
+#dpelzbxson .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#dpelzbxson .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dpelzbxson .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dpelzbxson .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dpelzbxson .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dpelzbxson .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dpelzbxson .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#dpelzbxson .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#dpelzbxson div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="4" class="gt_heading gt_title gt_font_normal"><strong>Núcleos Articuladores e Pontes do Discurso Machadiano</strong></th>
+</tr>
+<tr class="odd gt_heading">
+<th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Ranking estatístico baseado no Componente Conexo Gigante</th>
+</tr>
+<tr class="header gt_col_headings">
+<th id="Palavra" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Palavra</th>
+<th id="Macro-Eixo-Narrativo" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Macro-Eixo Narrativo</th>
+<th id="Grau-Total-(Conexões)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Grau Total (Conexões)</th>
+<th id="Intermediação-(Ponte)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Intermediação (Ponte)</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Palavra">dias</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 4: Conexões Periféricas</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #08519C; color: #FFFFFF">6</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">326,0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Palavra">dois</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 1: Espaço Doméstico &amp; Social</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #08519C; color: #FFFFFF">6</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">176,0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Palavra">alguns</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 2: Afeto, Corpo &amp; Subjetividade</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #5C78B5; color: #FFFFFF">5</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">314,0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Palavra">vezes</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 3: Tempo, Vida &amp; Existência</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #5C78B5; color: #FFFFFF">5</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">262,0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Palavra">duas</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 4: Conexões Periféricas</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #92A1CD; color: #FFFFFF">4</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">121,0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Palavra">minutos</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 2: Afeto, Corpo &amp; Subjetividade</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #C4CDE6; color: #000000">3</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">263,0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Palavra">cinco</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 2: Afeto, Corpo &amp; Subjetividade</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #C4CDE6; color: #000000">3</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">239,0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Palavra">anos</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 1: Espaço Doméstico &amp; Social</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #C4CDE6; color: #000000">3</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">207,0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Palavra">algumas</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 3: Tempo, Vida &amp; Existência</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #C4CDE6; color: #000000">3</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">63,0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Palavra">três</td>
+<td class="gt_row gt_left" headers="Macro-Eixo-Narrativo">Eixo 3: Tempo, Vida &amp; Existência</td>
+<td class="gt_row gt_right" headers="Grau-Total-(Conexões)" style="background-color: #F7FBFF; color: #000000">2</td>
+<td class="gt_row gt_right" headers="Intermediação-(Ponte)">242,0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
 <hr>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -952,14 +3347,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
+<p>© 2026 | Mário Diego</p>
+</div>   
     <div class="nav-footer-center">
-<p>Análise Léxica e Sentimentos em Obras de Machado de Assis</p>
-</div>
-    <div class="nav-footer-right">
       &nbsp;
     </div>
+    <div class="nav-footer-right">
+<p>Linguagem R</p>
+</div>
   </div>
 </footer>
 
