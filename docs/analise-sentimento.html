@@ -69,10 +69,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -186,9 +188,15 @@ window.Quarto = {
 </i> 
 <span class="menu-text"></span></a>
   </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://instagram.com/Dhiego_Valente"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -199,7 +207,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Nesta página</h2>
+    <h2 id="toc-title">SUMÁRIO</h2>
    
   <ul>
   <li><a href="#estatística-da-polaridade-por-obra" id="toc-estatística-da-polaridade-por-obra" class="nav-link active" data-scroll-target="#estatística-da-polaridade-por-obra">1. Estatística da Polaridade por Obra</a></li>
@@ -235,12 +243,13 @@ window.Quarto = {
 </header>
 
 
+<hr>
 <section id="estatística-da-polaridade-por-obra" class="level2">
 <h2 class="anchored" data-anchor-id="estatística-da-polaridade-por-obra">1. Estatística da Polaridade por Obra</h2>
-<p>A tabela a seguir consolida o comportamento afetivo de cada romance segundo o léxico <strong>OpLexicon v3.0</strong>, apresentando a proporção de termos positivos, a média e a mediana de saldo emocional por capítulo, a volatilidade dramática (desvio padrão) e os capítulos extremos de cada narrativa. O teste não paramétrico de <strong>Kruskal-Wallis</strong> (<span class="math inline">\(\chi^2 = 95.5\)</span>, <span class="math inline">\(p = &lt;2e-16\)</span>) confirma diferenças estatisticamente significativas na distribuição de polaridade entre as obras.</p>
+<p>A tabela a seguir — formatada com o pacote gt (IANNONE et al., 2024) — consolida o comportamento afetivo de cada romance segundo o léxico OpLexicon v3.0 (SOUZA et al., 2011; disponibilizado em R via pacote lexiconPT, GONZAGA, 2017), apresentando a proporção de termos positivos, a média e a mediana de saldo emocional por capítulo, a volatilidade dramática (desvio padrão) e os capítulos extremos de cada narrativa. O teste não paramétrico de Kruskal-Wallis (KRUSKAL; WALLIS, 1952; R CORE TEAM, 2026) (<span class="math inline">\(\chi^2 = 95.5\)</span>, <span class="math inline">\(p = &lt;2e-16\)</span>) confirma diferenças estatisticamente significativas na distribuição de polaridade entre as obras.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Ver código R</summary>
+<summary>Script R</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tabela_sentimentos <span class="ot">&lt;-</span> df_sentimento <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fase, book_short) <span class="sc">%&gt;%</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
@@ -282,27 +291,27 @@ window.Quarto = {
 <div id="tbl-sentimentos-geral" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sentimentos-geral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v3.0)
+Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v3.0 — SOUZA et al., 2011)
 </figcaption>
 <div aria-describedby="tbl-sentimentos-geral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="ptkxcbtpxy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ptkxcbtpxy table {
+<div id="zynfcyckie" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zynfcyckie table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ptkxcbtpxy thead, #ptkxcbtpxy tbody, #ptkxcbtpxy tfoot, #ptkxcbtpxy tr, #ptkxcbtpxy td, #ptkxcbtpxy th {
+#zynfcyckie thead, #zynfcyckie tbody, #zynfcyckie tfoot, #zynfcyckie tr, #zynfcyckie td, #zynfcyckie th {
   border-style: none;
 }
 
-#ptkxcbtpxy p {
+#zynfcyckie p {
   margin: 0;
   padding: 0;
 }
 
-#ptkxcbtpxy .gt_table {
+#zynfcyckie .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -328,12 +337,12 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-left-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_caption {
+#zynfcyckie .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ptkxcbtpxy .gt_title {
+#zynfcyckie .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -345,7 +354,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-width: 0;
 }
 
-#ptkxcbtpxy .gt_subtitle {
+#zynfcyckie .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -357,7 +366,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-top-width: 0;
 }
 
-#ptkxcbtpxy .gt_heading {
+#zynfcyckie .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -369,13 +378,13 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_bottom_border {
+#zynfcyckie .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_col_headings {
+#zynfcyckie .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -390,7 +399,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_col_heading {
+#zynfcyckie .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -410,7 +419,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   overflow-x: hidden;
 }
 
-#ptkxcbtpxy .gt_column_spanner_outer {
+#zynfcyckie .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -422,15 +431,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 4px;
 }
 
-#ptkxcbtpxy .gt_column_spanner_outer:first-child {
+#zynfcyckie .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ptkxcbtpxy .gt_column_spanner_outer:last-child {
+#zynfcyckie .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ptkxcbtpxy .gt_column_spanner {
+#zynfcyckie .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -442,11 +451,11 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   width: 100%;
 }
 
-#ptkxcbtpxy .gt_spanner_row {
+#zynfcyckie .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ptkxcbtpxy .gt_group_heading {
+#zynfcyckie .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -472,7 +481,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   text-align: left;
 }
 
-#ptkxcbtpxy .gt_empty_group_heading {
+#zynfcyckie .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -487,15 +496,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   vertical-align: middle;
 }
 
-#ptkxcbtpxy .gt_from_md > :first-child {
+#zynfcyckie .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ptkxcbtpxy .gt_from_md > :last-child {
+#zynfcyckie .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ptkxcbtpxy .gt_row {
+#zynfcyckie .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -514,7 +523,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   overflow-x: hidden;
 }
 
-#ptkxcbtpxy .gt_stub {
+#zynfcyckie .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -527,7 +536,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ptkxcbtpxy .gt_stub_row_group {
+#zynfcyckie .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -541,15 +550,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   vertical-align: top;
 }
 
-#ptkxcbtpxy .gt_row_group_first td {
+#zynfcyckie .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ptkxcbtpxy .gt_row_group_first th {
+#zynfcyckie .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ptkxcbtpxy .gt_summary_row {
+#zynfcyckie .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -559,16 +568,16 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ptkxcbtpxy .gt_first_summary_row {
+#zynfcyckie .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_first_summary_row.thick {
+#zynfcyckie .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ptkxcbtpxy .gt_last_summary_row {
+#zynfcyckie .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -578,7 +587,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_grand_summary_row {
+#zynfcyckie .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -588,7 +597,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ptkxcbtpxy .gt_first_grand_summary_row {
+#zynfcyckie .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -598,7 +607,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-top-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_last_grand_summary_row_top {
+#zynfcyckie .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -608,11 +617,11 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_striped {
+#zynfcyckie .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ptkxcbtpxy .gt_table_body {
+#zynfcyckie .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -621,7 +630,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_footnotes {
+#zynfcyckie .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -635,7 +644,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_footnote {
+#zynfcyckie .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -644,7 +653,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ptkxcbtpxy .gt_sourcenotes {
+#zynfcyckie .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -658,7 +667,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#ptkxcbtpxy .gt_sourcenote {
+#zynfcyckie .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -666,72 +675,72 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ptkxcbtpxy .gt_left {
+#zynfcyckie .gt_left {
   text-align: left;
 }
 
-#ptkxcbtpxy .gt_center {
+#zynfcyckie .gt_center {
   text-align: center;
 }
 
-#ptkxcbtpxy .gt_right {
+#zynfcyckie .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ptkxcbtpxy .gt_font_normal {
+#zynfcyckie .gt_font_normal {
   font-weight: normal;
 }
 
-#ptkxcbtpxy .gt_font_bold {
+#zynfcyckie .gt_font_bold {
   font-weight: bold;
 }
 
-#ptkxcbtpxy .gt_font_italic {
+#zynfcyckie .gt_font_italic {
   font-style: italic;
 }
 
-#ptkxcbtpxy .gt_super {
+#zynfcyckie .gt_super {
   font-size: 65%;
 }
 
-#ptkxcbtpxy .gt_footnote_marks {
+#zynfcyckie .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ptkxcbtpxy .gt_asterisk {
+#zynfcyckie .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ptkxcbtpxy .gt_indent_1 {
+#zynfcyckie .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ptkxcbtpxy .gt_indent_2 {
+#zynfcyckie .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ptkxcbtpxy .gt_indent_3 {
+#zynfcyckie .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ptkxcbtpxy .gt_indent_4 {
+#zynfcyckie .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ptkxcbtpxy .gt_indent_5 {
+#zynfcyckie .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ptkxcbtpxy .katex-display {
+#zynfcyckie .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ptkxcbtpxy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zynfcyckie div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -869,10 +878,10 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
 <h2 class="anchored" data-anchor-id="trajetória-emocional-longitudinal">2. Trajetória Emocional Longitudinal</h2>
 <section id="arcos-emocionais-ao-longo-da-leitura" class="level3">
 <h3 class="anchored" data-anchor-id="arcos-emocionais-ao-longo-da-leitura">2.1 Arcos Emocionais ao Longo da Leitura</h3>
-<p>O gráfico abaixo acompanha a evolução capítulo a capítulo do saldo líquido de polaridade de cada romance, normalizado pelo progresso relativo da narrativa (<span class="math inline">\(0\%\)</span> a <span class="math inline">\(100\%\)</span>), com curva de tendência suavizada (<strong>LOESS</strong>):</p>
+<p>O gráfico abaixo — produzido com ggplot2 (WICKHAM et al., 2019) — acompanha a evolução capítulo a capítulo do saldo líquido de polaridade de cada romance, normalizado pelo progresso relativo da narrativa (<span class="math inline">\(0\%\)</span> a <span class="math inline">\(100\%\)</span>), com curva de tendência suavizada por regressão local não paramétrica LOESS (CLEVELAND, 1979):</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Ver código R</summary>
+<summary>Script R</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>g_sent1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_sentimento, <span class="fu">aes</span>(<span class="at">x =</span> posicao_relativa, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">y =</span> polaridade_soma, </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">color =</span> book_short)) <span class="sc">+</span></span>
@@ -887,9 +896,8 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Posição Relativa no Livro"</span>,</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Saldo de Sentimento"</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">9.5</span>))</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(g_sent1)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">12</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(g_sent1)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-arco-emocional" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -898,7 +906,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
 <img src="analise-sentimento_files/figure-html/fig-arco-emocional-1.png" class="img-fluid figure-img" width="1152">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-arco-emocional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Evolução do saldo de polaridade ao longo do progresso relativo (0% a 100%) de cada obra, com curva de tendência LOESS.
+Figura&nbsp;1: Evolução do saldo de polaridade ao longo do progresso relativo (0% a 100%) de cada obra, com curva de tendência LOESS (CLEVELAND, 1979).
 </figcaption>
 </figure>
 </div>
@@ -910,7 +918,7 @@ Figura&nbsp;1: Evolução do saldo de polaridade ao longo do progresso relativo 
 <p>Enquanto o arco longitudinal revela os picos e vales internos de cada história, os gráficos a seguir sintetizam o <strong>tom emocional médio</strong> (saldo médio por capítulo) e a <strong>volatilidade</strong> (desvio padrão) de cada obra:</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Ver código R</summary>
+<summary>Script R</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_resumo_plot <span class="ot">&lt;-</span> df_sentimento <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book_short) <span class="sc">%&gt;%</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
@@ -957,12 +965,12 @@ Figura&nbsp;2: Comparativo entre o saldo médio de polaridade por capítulo e a 
 </section>
 <section id="polaridade-vocabular-nuvem-comparativa-vs.-frequências" class="level2">
 <h2 class="anchored" data-anchor-id="polaridade-vocabular-nuvem-comparativa-vs.-frequências">3. Polaridade Vocabular: Nuvem Comparativa vs.&nbsp;Frequências</h2>
-<p>A nuvem comparativa e o gráfico de barras divergentes abaixo contrastam os termos positivos (verde) e negativos (laranja) mais recorrentes no conjunto das obras, evidenciando o léxico afetivo característico de Machado de Assis:</p>
+<p>A nuvem comparativa — gerada pelos pacotes wordcloud (FELLOWS, 2018) e reshape2 (WICKHAM, 2007) — e o gráfico de barras divergentes — estruturado com tidytext (SILGE; ROBINSON, 2016, 2017) — contrastam os termos positivos (verde) e negativos (laranja) mais recorrentes no conjunto das obras, evidenciando o léxico afetivo característico de Machado de Assis:</p>
 <div class="columns">
 <div class="column" style="width:52%;">
 <div class="cell">
 <details class="code-fold">
-<summary>Ver código R</summary>
+<summary>Script R</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>matriz_nuvem_sent <span class="ot">&lt;-</span> df_tokens_sent <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(polarity <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sentimento =</span> <span class="fu">ifelse</span>(polarity <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">"Positivas"</span>, <span class="st">"Negativas"</span>)) <span class="sc">%&gt;%</span></span>
@@ -988,7 +996,7 @@ Figura&nbsp;2: Comparativo entre o saldo médio de polaridade por capítulo e a 
 <img src="analise-sentimento_files/figure-html/fig-nuvem-sentimento-1.png" class="img-fluid figure-img" width="576">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nuvem-sentimento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3: Nuvem de comparação entre termos positivos e negativos.
+Figura&nbsp;3: Nuvem de comparação entre termos positivos e negativos (pacote wordcloud — FELLOWS, 2018).
 </figcaption>
 </figure>
 </div>
@@ -997,7 +1005,7 @@ Figura&nbsp;3: Nuvem de comparação entre termos positivos e negativos.
 </div><div class="column" style="width:48%;">
 <div class="cell">
 <details class="code-fold">
-<summary>Ver código R</summary>
+<summary>Script R</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>top_sent_palavras <span class="ot">&lt;-</span> df_tokens_sent <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(polarity <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sentimento =</span> <span class="fu">ifelse</span>(polarity <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">"Positivas (+1)"</span>, <span class="st">"Negativas (-1)"</span>)) <span class="sc">%&gt;%</span></span>
@@ -1029,7 +1037,7 @@ Figura&nbsp;3: Nuvem de comparação entre termos positivos e negativos.
 <img src="analise-sentimento_files/figure-html/fig-top-sentimentos-barras-1.png" class="img-fluid figure-img" width="576">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-top-sentimentos-barras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4: Top 12 termos positivos e negativos mais frequentes no corpus.
+Figura&nbsp;4: Top 12 termos positivos e negativos mais frequentes no corpus (OpLexicon v3.0).
 </figcaption>
 </figure>
 </div>
@@ -1043,10 +1051,11 @@ Figura&nbsp;4: Top 12 termos positivos e negativos mais frequentes no corpus.
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Síntese Interpretativa:</strong> Embora romances como <em>Helena</em> e <em>Memorial de Aires</em> apresentem saldos médios mais elevados devido à polidez social e cortesia dos diálogos, a curva LOESS revela a <strong>queda sistemática da polaridade no terço final</strong> das narrativas realistas (<em>Dom Casmurro</em>, <em>Quincas Borba</em> e <em>Memórias Póstumas</em>), refletindo a desilusão psicológica, o ciúme e a degradação trágica dos protagonistas. Avance para <strong>Modelagem Inferencial</strong> para explorar a estrutura multivariada e latente do corpus.</p>
+<p>Síntese Interpretativa e Nota Bibliográfica: Embora romances como Helena e Memorial de Aires apresentem saldos médios mais elevados devido à polidez social e cortesia dos diálogos, a curva LOESS (CLEVELAND, 1979) revela a queda sistemática da polaridade no terço final das narrativas realistas (Dom Casmurro, Quincas Borba e Memórias Póstumas), refletindo a desilusão psicológica, o ciúme e a degradação trágica dos protagonistas. Todas as obras literárias, métodos estatísticos e pacotes R citados encontram-se referenciados na aba Referências. Avance para Modelagem &amp; Inferência para explorar a estrutura multivariada e latente do corpus.</p>
 </div>
 </div>
 </div>
+<hr>
 
 
 </section>
@@ -1072,6 +1081,150 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1476,13 +1629,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 | VALENTE</p>
+<p>VALENTE © 2026</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Desenvolvido em R &amp; Quarto</p>
+<p>Framework <span class="math inline">\(Quarto_{1.5.1}\)</span></p>
 </div>
   </div>
 </footer>

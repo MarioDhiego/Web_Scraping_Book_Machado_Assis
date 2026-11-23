@@ -8,3 +8,20 @@ hr {
   margin-bottom: 2.5rem;
   border-radius: 2px;
 }
+
+
+/* Justificação acadêmica dos parágrafos e itens de lista no corpo do texto */
+main p,
+main li {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+/* Mantém títulos, legendas de figuras e células de tabelas alinhados adequadamente */
+main h1, main h2, main h3, main h4,
+.figure-caption, figcaption,
+table p, th, td {
+  text-align: left;
+  hyphens: none;
+}

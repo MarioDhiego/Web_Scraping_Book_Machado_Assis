@@ -35,10 +35,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -67,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -123,9 +154,15 @@ ul.task-list li input[type="checkbox"] {
 </i> 
 <span class="menu-text"></span></a>
   </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://instagram.com/Dhiego_Valente"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -136,12 +173,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Nesta página</h2>
+    <h2 id="toc-title">SUMÁRIO</h2>
    
   <ul>
   <li><a href="#corpus-de-texto-fontes-primárias-wikisource" id="toc-corpus-de-texto-fontes-primárias-wikisource" class="nav-link active" data-scroll-target="#corpus-de-texto-fontes-primárias-wikisource">1. Corpus de Texto (Fontes Primárias — Wikisource)</a></li>
-  <li><a href="#fundamentação-estatística" id="toc-fundamentação-estatística" class="nav-link" data-scroll-target="#fundamentação-estatística">2. Fundamentação Estatística</a></li>
-  <li><a href="#ecossistema-computacional-linguagem-r-e-pacotes" id="toc-ecossistema-computacional-linguagem-r-e-pacotes" class="nav-link" data-scroll-target="#ecossistema-computacional-linguagem-r-e-pacotes">3. Ecossistema Computacional (Linguagem R e Pacotes)</a></li>
+  <li><a href="#biografia-história-e-crítica-literária" id="toc-biografia-história-e-crítica-literária" class="nav-link" data-scroll-target="#biografia-história-e-crítica-literária">2. Biografia, História e Crítica Literária</a></li>
+  <li><a href="#fundamentação-estatística-linguística-e-ciência-de-dados" id="toc-fundamentação-estatística-linguística-e-ciência-de-dados" class="nav-link" data-scroll-target="#fundamentação-estatística-linguística-e-ciência-de-dados">3. Fundamentação Estatística, Linguística e Ciência de Dados</a></li>
+  <li><a href="#ecossistema-computacional-linguagem-r-quarto-e-pacotes" id="toc-ecossistema-computacional-linguagem-r-quarto-e-pacotes" class="nav-link" data-scroll-target="#ecossistema-computacional-linguagem-r-quarto-e-pacotes">4. Ecossistema Computacional (Linguagem R, Quarto e Pacotes)</a></li>
   </ul>
 </nav>
     </div>
@@ -151,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Referências Bibliográficas</h1>
-<p class="subtitle lead">Fontes primárias, fundamentação estatística multivariada, linguística computacional e ecossistema R</p>
+<p class="subtitle lead">Fontes primárias, crítica literária, fundamentação estatística e ecossistema R (ABNT NBR 6023)</p>
 </div>
 
 
@@ -168,33 +206,68 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Como citar este material didático (ABNT NBR 6023):</strong><br>
+VALENTE, Mario Diego Rocha. <strong>Curso Básico de Mineração de Texto: Estudo de Caso nas Obras Completas de Machado de Assis em Linguagem R</strong>. Belém: DETRAN-PA / RENAEST, 2026. Disponível em: <a href="https://github.com/MarioDhiego" class="uri">https://github.com/MarioDhiego</a>. Acesso em: 23 nov. 2026.</p>
+</div>
+</div>
+</div>
+<hr>
 <section id="corpus-de-texto-fontes-primárias-wikisource" class="level2">
 <h2 class="anchored" data-anchor-id="corpus-de-texto-fontes-primárias-wikisource">1. Corpus de Texto (Fontes Primárias — Wikisource)</h2>
 <ul>
-<li>ASSIS, Joaquim Maria Machado de. <strong>Helena</strong> [1876]. Rio de Janeiro: B. L. Garnier. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Helena" class="uri">https://pt.wikisource.org/wiki/Helena</a>.</li>
-<li>ASSIS, Joaquim Maria Machado de. <strong>Memórias Póstumas de Brás Cubas</strong> [1881]. Rio de Janeiro: Tipografia Nacional. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas" class="uri">https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas</a>.</li>
-<li>ASSIS, Joaquim Maria Machado de. <strong>O Alienista</strong> [1882]. In: <em>Papéis Avulsos</em>. Rio de Janeiro: Lombaerts &amp; C. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/O_Alienista" class="uri">https://pt.wikisource.org/wiki/O_Alienista</a>.</li>
-<li>ASSIS, Joaquim Maria Machado de. <strong>Quincas Borba</strong> [1891]. Rio de Janeiro: B. L. Garnier. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Quincas_Borba" class="uri">https://pt.wikisource.org/wiki/Quincas_Borba</a>.</li>
-<li>ASSIS, Joaquim Maria Machado de. <strong>Dom Casmurro</strong> [1899]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Dom_Casmurro" class="uri">https://pt.wikisource.org/wiki/Dom_Casmurro</a>.</li>
-<li>ASSIS, Joaquim Maria Machado de. <strong>Esaú e Jacó</strong> [1904]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3" class="uri">https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3</a>.</li>
-<li>ASSIS, Joaquim Maria Machado de. <strong>Memorial de Aires</strong> [1908]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Memorial_de_Aires" class="uri">https://pt.wikisource.org/wiki/Memorial_de_Aires</a>.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Ressurreição</strong> [1872]. Rio de Janeiro: B. L. Garnier, 1872.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>A Mão e a Luva</strong> [1874]. Rio de Janeiro: Gomes de Oliveira &amp; C., 1874.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Helena</strong> [1876]. Rio de Janeiro: B. L. Garnier, 1876. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Helena" class="uri">https://pt.wikisource.org/wiki/Helena</a>. Acesso em: 23 nov. 2026.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Iaiá Garcia</strong> [1878]. Rio de Janeiro: G. Viana &amp; C., 1878.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Memórias Póstumas de Brás Cubas</strong> [1881]. Rio de Janeiro: Tipografia Nacional, 1881. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas" class="uri">https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas</a>. Acesso em: 23 nov. 2026.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>O Alienista</strong> [1882]. In: ASSIS, Machado de. <em>Papéis Avulsos</em>. Rio de Janeiro: Lombaerts &amp; C., 1882. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/O_Alienista" class="uri">https://pt.wikisource.org/wiki/O_Alienista</a>. Acesso em: 23 nov. 2026.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Bons Dias!</strong> [Crônica de 19 de maio de 1888]. <em>Gazeta de Notícias</em>, Rio de Janeiro, 19 maio 1888.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Quincas Borba</strong> [1891]. Rio de Janeiro: B. L. Garnier, 1891. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Quincas_Borba" class="uri">https://pt.wikisource.org/wiki/Quincas_Borba</a>. Acesso em: 23 nov. 2026.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Dom Casmurro</strong> [1899]. Rio de Janeiro: H. Garnier, 1899. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Dom_Casmurro" class="uri">https://pt.wikisource.org/wiki/Dom_Casmurro</a>. Acesso em: 23 nov. 2026.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Esaú e Jacó</strong> [1904]. Rio de Janeiro: H. Garnier, 1904. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3" class="uri">https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3</a>. Acesso em: 23 nov. 2026.</li>
+<li>ASSIS, Joaquim Maria Machado de. <strong>Memorial de Aires</strong> [1908]. Rio de Janeiro: H. Garnier, 1908. Edição digital disponível em: <a href="https://pt.wikisource.org/wiki/Memorial_de_Aires" class="uri">https://pt.wikisource.org/wiki/Memorial_de_Aires</a>. Acesso em: 23 nov. 2026.</li>
+<li>FUNDAÇÃO WIKIMEDIA. <strong>Wikisource</strong>: a biblioteca livre. São Francisco: Wikimedia Foundation, 2026. Disponível em: <a href="https://pt.wikisource.org" class="uri">https://pt.wikisource.org</a>. Acesso em: 23 nov. 2026.</li>
 </ul>
 <hr>
 </section>
-<section id="fundamentação-estatística" class="level2">
-<h2 class="anchored" data-anchor-id="fundamentação-estatística">2. Fundamentação Estatística</h2>
+<section id="biografia-história-e-crítica-literária" class="level2">
+<h2 class="anchored" data-anchor-id="biografia-história-e-crítica-literária">2. Biografia, História e Crítica Literária</h2>
+<ul>
+<li>ANDRADE, Carlos Drummond de. A um bruxo, com amor. In: ANDRADE, Carlos Drummond de. <strong>A Vida Passada a Limpo</strong>. Rio de Janeiro: José Olympio, 1958.</li>
+<li>BOSI, Alfredo. <strong>História Concisa da Literatura Brasileira</strong>. 32. ed.&nbsp;São Paulo: Cultrix, 1994.</li>
+<li>CANDIDO, Antonio. Esquema de Machado de Assis. In: CANDIDO, Antonio. <strong>Vários Escritos</strong>. São Paulo: Duas Cidades, 1970. p.&nbsp;15–32.</li>
+<li>CHALHOUB, Sidney. <strong>Machado de Assis, Historiador</strong>. São Paulo: Companhia das Letras, 2003.</li>
+<li>MASSA, Jean-Michel. <strong>A Juventude de Machado de Assis (1839–1870)</strong>: ensaio de biografia intelectual. 2. ed.&nbsp;São Paulo: Editora UNESP, 2009.</li>
+<li>SCHWARZ, Roberto. <strong>Ao Vencedor as Batatas</strong>: forma literária e processo social nos inícios do romance brasileiro. 5. ed.&nbsp;São Paulo: Duas Cidades; Editora 34, 2000.</li>
+</ul>
+<hr>
+</section>
+<section id="fundamentação-estatística-linguística-e-ciência-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="fundamentação-estatística-linguística-e-ciência-de-dados">3. Fundamentação Estatística, Linguística e Ciência de Dados</h2>
 <ul>
 <li>BENZÉCRI, Jean-Paul. <strong>L’Analyse des Données: Tome 2 — L’Analyse des Correspondances</strong>. Paris: Dunod, 1973.</li>
 <li>BLEI, David M.; NG, Andrew Y.; JORDAN, Michael I. Latent Dirichlet Allocation. <strong>Journal of Machine Learning Research</strong>, v. 3, p.&nbsp;993–1022, 2003.</li>
+<li>BLONDEL, Vincent D.; GUILLAUME, Jean-Loup; LAMBIOTTE, Renaud; LEFEBVRE, Etienne. Fast unfolding of communities in large networks. <strong>Journal of Statistical Mechanics: Theory and Experiment</strong>, v. 2008, n.&nbsp;10, p.&nbsp;P10008, 2008.</li>
 <li>CARROLL, John B. <strong>Language and Thought</strong>. Englewood Cliffs: Prentice-Hall, 1964.</li>
 <li>CLEVELAND, William S. Robust Locally Weighted Regression and Smoothing Scatterplots. <strong>Journal of the American Statistical Association</strong>, v. 74, n.&nbsp;368, p.&nbsp;829–836, 1979.</li>
+<li>ERDŐS, Paul; RÉNYI, Alfréd. On random graphs I. <strong>Publicationes Mathematicae Debrecen</strong>, v. 6, p.&nbsp;290–297, 1959.</li>
+<li>EULER, Leonhard. Solutio problematis ad geometriam situs pertinentis. <strong>Commentarii Academiae Scientiarum Imperialis Petropolitanae</strong>, v. 8, p.&nbsp;128–140, 1736.</li>
 <li>FÁVERO, Luiz Paulo; BELFIORE, Patrícia. <strong>Manual de Análise de Dados: Estatística e Modelagem Multivariada com Excel, SPSS e Stata</strong>. Rio de Janeiro: Elsevier, 2017.</li>
+<li>FREEMAN, Linton C. A set of measures of centrality based on betweenness. <strong>Sociometry</strong>, v. 40, n.&nbsp;1, p.&nbsp;35–41, 1977.</li>
 <li>GREENACRE, Michael J. <strong>Theory and Applications of Correspondence Analysis</strong>. London: Academic Press, 1984.</li>
 <li>GRIFFITHS, Thomas L.; STEYVERS, Mark. Finding Scientific Topics. <strong>Proceedings of the National Academy of Sciences (PNAS)</strong>, v. 101, suppl. 1, p.&nbsp;5228–5235, 2004.</li>
 <li>HAIR JR., Joseph F.; BLACK, William C.; BABIN, Barry J.; ANDERSON, Rolph E. <strong>Análise Multivariada de Dados</strong>. 6. ed.&nbsp;Porto Alegre: Bookman, 2009.</li>
 <li>KAUFMAN, Leonard; ROUSSEEUW, Peter J. <strong>Finding Groups in Data: An Introduction to Cluster Analysis</strong>. New York: John Wiley &amp; Sons, 1990.</li>
-<li>KINCAID, J. Peter; FISHBURNE JR., Robert P.; ROGERS, Richard L.; CHISSOM, Brad S. <strong>Derivation of New Readability Formulas (Automated Readability Index, Fog Count and Flesch Reading Ease Formula) for Navy Enlisted Personnel</strong>. Research Branch Report 8-75, Millington, TN: Naval Technical Training Command, 1975.</li>
+<li>KINCAID, J. Peter; FISHBURNE JR., Robert P.; ROGERS, Richard L.; CHISSOM, Brad S. <strong>Derivation of New Readability Formulas (Automated Readability Index, Fog Count and Flesch Reading Ease Formula) for Navy Enlisted Personnel</strong>. Research Branch Report 8-75. Millington, TN: Naval Technical Training Command, 1975.</li>
+<li>KRUSKAL, William H.; WALLIS, W. Allen. Use of ranks in one-criterion variance analysis. <strong>Journal of the American Statistical Association</strong>, v. 47, n.&nbsp;260, p.&nbsp;583–621, 1952.</li>
 <li>MACQUEEN, James. Some Methods for Classification and Analysis of Multivariate Observations. In: <strong>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</strong>, v. 1, p.&nbsp;281–297, 1967.</li>
+<li>MITCHELL, Ryan. <strong>Web Scraping with Python</strong>: Collecting More Data from the Modern Web. 2. ed.&nbsp;Sebastopol: O’Reilly Media, 2018.</li>
 <li>MURTAGH, Fionn; LEGENDRE, Pierre. Ward’s Hierarchical Agglomerative Clustering Method: Which Algorithms Implement Ward’s Criterion? <strong>Journal of Classification</strong>, v. 31, n.&nbsp;3, p.&nbsp;274–295, 2014.</li>
 <li>NEWMAN, Mark E. J. <strong>Networks: An Introduction</strong>. Oxford: Oxford University Press, 2010.</li>
 <li>RAYSON, Paul; GARSIDE, Roger. Comparing Corpora Using Frequency Profiling. In: <strong>Proceedings of the Workshop on Comparing Corpora (ACL)</strong>, Hong Kong, p.&nbsp;1–6, 2000.</li>
@@ -203,32 +276,52 @@ ul.task-list li input[type="checkbox"] {
 <li>SILGE, Julia; ROBINSON, David. <strong>Text Mining with R: A Tidy Approach</strong>. Sebastopol: O’Reilly Media, 2017.</li>
 <li>SOKAL, Robert R.; ROHLF, F. James. The Comparison of Dendrograms by Objective Methods. <strong>Taxon</strong>, v. 11, n.&nbsp;2, p.&nbsp;33–40, 1962.</li>
 <li>SOKAL, Robert R.; SNEATH, Peter H. A. <strong>Principles of Numerical Taxonomy</strong>. San Francisco: W. H. Freeman, 1963.</li>
-<li>SOUZA, Marlo; VIEIRA, Renata; BUSETTI, Débora; CHISHMAN, Rove; ALVES, Isa Mara. Construction of a Portuguese Opinion Lexicon from Multiple Resources. In: <strong>Proceedings of the 8th Brazilian Symposium in Information and Human Language Technology (STIL)</strong>, Cuiabá, 2011.</li>
+<li>SOUZA, Marlo; VIEIRA, Renata; BUSETTI, Débora; CHISHMAN, Rove; ALVES, Isa Mara. Construction of a Portuguese Opinion Lexicon from Multiple Resources. In: <strong>Proceedings of the 8th Brazilian Symposium in Information and Human Language Technology (STIL)</strong>, Cuiabá, p.&nbsp;59–66, 2011.</li>
 <li>SPÄRCK JONES, Karen. A Statistical Interpretation of Term Specificity and Its Application in Retrieval. <strong>Journal of Documentation</strong>, v. 28, n.&nbsp;1, p.&nbsp;11–21, 1972.</li>
 <li>TRYON, Robert C. <strong>Cluster Analysis: Correlation Profile and Orthometric (Factor) Analysis for the Isolation of Unities in Mind and Personality</strong>. Ann Arbor: Edwards Brothers, 1939.</li>
 <li>WARD JR., Joe H. Hierarchical Grouping to Optimize an Objective Function. <strong>Journal of the American Statistical Association</strong>, v. 58, n.&nbsp;301, p.&nbsp;236–244, 1963.</li>
+<li>WICKHAM, Hadley. Tidy Data. <strong>Journal of Statistical Software</strong>, v. 59, n.&nbsp;10, p.&nbsp;1–23, 2014.</li>
+<li>ZIPF, George Kingsley. <strong>The Psycho-Biology of Language</strong>: An Introduction to Dynamic Philology. Boston: Houghton Mifflin, 1935.</li>
 <li>ZIPF, George Kingsley. <strong>Human Behavior and the Principle of Least Effort: An Introduction to Human Ecology</strong>. Cambridge, MA: Addison-Wesley, 1949.</li>
 </ul>
 <hr>
 </section>
-<section id="ecossistema-computacional-linguagem-r-e-pacotes" class="level2">
-<h2 class="anchored" data-anchor-id="ecossistema-computacional-linguagem-r-e-pacotes">3. Ecossistema Computacional (Linguagem R e Pacotes)</h2>
+<section id="ecossistema-computacional-linguagem-r-quarto-e-pacotes" class="level2">
+<h2 class="anchored" data-anchor-id="ecossistema-computacional-linguagem-r-quarto-e-pacotes">4. Ecossistema Computacional (Linguagem R, Quarto e Pacotes)</h2>
 <ul>
-<li>ALLAIRE, J. J.; TEAGUE, Charles; SCHEIDEGGER, Carlos; XIE, Yihui; DERVIEUX, Christophe. <strong>Quarto</strong> (Version 1.4+). Posit Software, PBC, 2024. Disponível em: <a href="https://quarto.org" class="uri">https://quarto.org</a>.</li>
-<li>BENOIT, Kenneth et al.&nbsp;quanteda: An R package for the quantitative analysis of textual data. <strong>Journal of Open Source Software</strong>, v. 3, n.&nbsp;30, p.&nbsp;774, 2018.</li>
+<li>ALLAIRE, J. J.; TEAGUE, Charles; SCHEIDEGGER, Carlos; XIE, Yihui; DERVIEUX, Christophe. <strong>Quarto</strong>: an open-source scientific and technical publishing system. Version 1.4. Boston: Posit Software, PBC, 2024. Disponível em: <a href="https://quarto.org" class="uri">https://quarto.org</a>. Acesso em: 23 nov. 2026.</li>
+<li>BENOIT, Kenneth; WATANABE, Kohei; WANG, Haiyan; NULTY, Paul; OBENG, Adam; MÜLLER, Stefan; MATSUO, Akitaka. quanteda: An R package for the quantitative analysis of textual data. <strong>Journal of Open Source Software</strong>, v. 3, n.&nbsp;30, p.&nbsp;774, 2018. Disponível em: <a href="https://doi.org/10.21105/joss.00774" class="uri">https://doi.org/10.21105/joss.00774</a>. Acesso em: 23 nov. 2026.</li>
+<li>CHENG, Joe; KARAMBELKAR, Bhaskar; XIE, Yihui. <strong>leaflet</strong>: Create Interactive Web Maps with the JavaScript ‘Leaflet’ Library. R package version 2.2.2, 2024. Disponível em: <a href="https://CRAN.R-project.org/package=leaflet" class="uri">https://CRAN.R-project.org/package=leaflet</a>. Acesso em: 23 nov. 2026.</li>
 <li>CSÁRDI, Gábor; NEPUSZ, Tamás. The igraph software package for complex network research. <strong>InterJournal, Complex Systems</strong>, v. 1695, n.&nbsp;5, p.&nbsp;1–9, 2006.</li>
-<li>FELLOWS, Ian. <strong>wordcloud: Word Clouds</strong>. R package version 2.6, 2018.</li>
-<li>GONZAGA, Sillas. <strong>lexiconPT: Lexicons for Portuguese Text Analysis</strong>. R package version 0.1.0, 2017.</li>
-<li>GRÜN, Bettina; HORNIK, Kurt. topicmodels: An R Package for Fitting Topic Models. <strong>Journal of Statistical Software</strong>, v. 40, n.&nbsp;13, p.&nbsp;1–30, 2011.</li>
-<li>IANNONE, Richard; CHENG, Joe; SCHLOERKE, Barret; HUGHES, Ellis; LAUER, Alexandra; SEO, JooYoung. <strong>gt: Easily Create Presentation-Ready Display Tables</strong>. R package, 2024.</li>
-<li>PEDERSEN, Thomas Lin. <strong>ggraph: An Implementation of Grammar of Graphics for Graphs and Networks</strong>. R package, 2024.</li>
-<li>R CORE TEAM. <strong>R: A Language and Environment for Statistical Computing</strong>. Vienna, Austria: R Foundation for Statistical Computing, 2026. Disponível em: <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</li>
-<li>SILGE, Julia; ROBINSON, David. tidytext: Text Mining and Analysis Using Tidy Data Principles in R. <strong>Journal of Open Source Software</strong>, v. 1, n.&nbsp;3, p.&nbsp;37, 2016.</li>
-<li>WICKHAM, Hadley et al.&nbsp;Welcome to the tidyverse. <strong>Journal of Open Source Software</strong>, v. 4, n.&nbsp;43, p.&nbsp;1686, 2019.</li>
-<li>WICKHAM, Hadley. <strong>rvest: Easily Harvest (Scrape) Web Pages</strong>. R package, 2024.</li>
-<li>XIE, Yihui; CHENG, Joe; TAN, Xianying. <strong>DT: A Wrapper of the JavaScript Library ‘DataTables’</strong>. R package, 2024.</li>
+<li>FELLOWS, Ian. <strong>wordcloud</strong>: Word Clouds. R package version 2.6, 2018. Disponível em: <a href="https://CRAN.R-project.org/package=wordcloud" class="uri">https://CRAN.R-project.org/package=wordcloud</a>. Acesso em: 23 nov. 2026.</li>
+<li>GONZAGA, Sillas. <strong>lexiconPT</strong>: Lexicons for Portuguese Text Analysis. R package version 0.1.0, 2017. Disponível em: <a href="https://CRAN.R-project.org/package=lexiconPT" class="uri">https://CRAN.R-project.org/package=lexiconPT</a>. Acesso em: 23 nov. 2026.</li>
+<li>GRÜN, Bettina; HORNIK, Kurt. topicmodels: An R Package for Fitting Topic Models. <strong>Journal of Statistical Software</strong>, v. 40, n.&nbsp;13, p.&nbsp;1–30, 2011. Disponível em: <a href="https://doi.org/10.18637/jss.v040.i13" class="uri">https://doi.org/10.18637/jss.v040.i13</a>. Acesso em: 23 nov. 2026.</li>
+<li>IANNONE, Richard; CHENG, Joe; SCHLOERKE, Barret; HUGHES, Ellis; LAUER, Alexandra; SEO, JooYoung. <strong>gt</strong>: Easily Create Presentation-Ready Display Tables. R package, 2024. Disponível em: <a href="https://CRAN.R-project.org/package=gt" class="uri">https://CRAN.R-project.org/package=gt</a>. Acesso em: 23 nov. 2026.</li>
+<li>MÜLLER, Kirill; WICKHAM, Hadley. <strong>tibble</strong>: Simple Data Frames. R package version 3.2.1, 2023. Disponível em: <a href="https://CRAN.R-project.org/package=tibble" class="uri">https://CRAN.R-project.org/package=tibble</a>. Acesso em: 23 nov. 2026.</li>
+<li>OOMS, Jeroen. <strong>curl</strong>: A Modern and Flexible Web Client for R. R package, 2024. Disponível em: <a href="https://CRAN.R-project.org/package=curl" class="uri">https://CRAN.R-project.org/package=curl</a>. Acesso em: 23 nov. 2026.</li>
+<li>PEDERSEN, Thomas Lin. <strong>ggraph</strong>: An Implementation of Grammar of Graphics for Graphs and Networks. R package, 2024. Disponível em: <a href="https://CRAN.R-project.org/package=ggraph" class="uri">https://CRAN.R-project.org/package=ggraph</a>. Acesso em: 23 nov. 2026.</li>
+<li>PEDERSEN, Thomas Lin. <strong>patchwork</strong>: The Composer of Plots. R package, 2024b. Disponível em: <a href="https://CRAN.R-project.org/package=patchwork" class="uri">https://CRAN.R-project.org/package=patchwork</a>. Acesso em: 23 nov. 2026.</li>
+<li>R CORE TEAM. <strong>R</strong>: A Language and Environment for Statistical Computing. Vienna: R Foundation for Statistical Computing, 2026. Disponível em: <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>. Acesso em: 23 nov. 2026.</li>
+<li>SILGE, Julia; ROBINSON, David. tidytext: Text Mining and Analysis Using Tidy Data Principles in R. <strong>Journal of Open Source Software</strong>, v. 1, n.&nbsp;3, p.&nbsp;37, 2016. Disponível em: <a href="https://doi.org/10.21105/joss.00037" class="uri">https://doi.org/10.21105/joss.00037</a>. Acesso em: 23 nov. 2026.</li>
+<li>SLOWIKOWSKI, Kamil. <strong>ggrepel</strong>: Automatically Position Non-Overlapping Text Labels with ‘ggplot2’. R package, 2024. Disponível em: <a href="https://CRAN.R-project.org/package=ggrepel" class="uri">https://CRAN.R-project.org/package=ggrepel</a>. Acesso em: 23 nov. 2026.</li>
+<li>WICKHAM, Hadley. Reshaping Data with the reshape Package. <strong>Journal of Statistical Software</strong>, v. 21, n.&nbsp;12, p.&nbsp;1–20, 2007. Disponível em: <a href="https://doi.org/10.18637/jss.v021.i12" class="uri">https://doi.org/10.18637/jss.v021.i12</a>. Acesso em: 23 nov. 2026.</li>
+<li>WICKHAM, Hadley et al.&nbsp;Welcome to the tidyverse. <strong>Journal of Open Source Software</strong>, v. 4, n.&nbsp;43, p.&nbsp;1686, 2019. Disponível em: <a href="https://doi.org/10.21105/joss.01686" class="uri">https://doi.org/10.21105/joss.01686</a>. Acesso em: 23 nov. 2026.</li>
+<li>WICKHAM, Hadley. <strong>rvest</strong>: Easily Harvest (Scrape) Web Pages. R package, 2024. Disponível em: <a href="https://CRAN.R-project.org/package=rvest" class="uri">https://CRAN.R-project.org/package=rvest</a>. Acesso em: 23 nov. 2026.</li>
+<li>WICKHAM, Hadley; HESTER, Jim; OOMS, Jeroen. <strong>xml2</strong>: Parse XML. R package, 2023. Disponível em: <a href="https://CRAN.R-project.org/package=xml2" class="uri">https://CRAN.R-project.org/package=xml2</a>. Acesso em: 23 nov. 2026.</li>
+<li>WICKHAM, Hadley; SEIDEL, Dana. <strong>scales</strong>: Scale Functions for Visualization. R package, 2023. Disponível em: <a href="https://CRAN.R-project.org/package=scales" class="uri">https://CRAN.R-project.org/package=scales</a>. Acesso em: 23 nov. 2026.</li>
+<li>XIE, Yihui; CHENG, Joe; TAN, Xianying. <strong>DT</strong>: A Wrapper of the JavaScript Library ‘DataTables’. R package, 2024. Disponível em: <a href="https://CRAN.R-project.org/package=DT" class="uri">https://CRAN.R-project.org/package=DT</a>. Acesso em: 23 nov. 2026.</li>
 </ul>
 <hr>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Nota de Reprodutibilidade:</strong> Todos os scripts, bases tratadas e o código-fonte deste portfólio estão disponíveis no repositório aberto de <strong>Mario Diego Rocha Valente</strong> no GitHub (<a href="https://github.com/MarioDhiego" class="uri">https://github.com/MarioDhiego</a>).</p>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -254,6 +347,150 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -658,13 +895,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 | VALENTE</p>
+<p>VALENTE © 2026</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Desenvolvido em R &amp; Quarto</p>
+<p>Framework <span class="math inline">\(Quarto_{1.5.1}\)</span></p>
 </div>
   </div>
 </footer>
