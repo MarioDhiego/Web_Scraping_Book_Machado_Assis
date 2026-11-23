@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Modelagem Inferencial e Multivariada – Text Mining in R: Dataset(Machado)</title>
+<title>Modelagem Inferencial – Text Mining in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,7 +142,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Text Mining in R: Dataset(Machado)</span>
+    <span class="navbar-title">Text Mining in R</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -153,11 +153,11 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Vida &amp; Obra</span></a>
+<span class="menu-text">Dataset</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./scraping-metodologia.html"> 
-<span class="menu-text">Scraping &amp; Pipeline</span></a>
+<span class="menu-text">Web Scraping</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./metricas-teoria.html"> 
@@ -178,6 +178,13 @@ window.Quarto = {
   <li class="nav-item">
     <a class="nav-link" href="./referencias.html"> 
 <span class="menu-text">Referências</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -222,7 +229,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Modelagem Inferencial e Multivariada</h1>
+<h1 class="title">Modelagem Inferencial</h1>
 <p class="subtitle lead">Leis de Potência, Keyness (χ²), Clusterização, Análise de Correspondência, LDA e Redes Semânticas</p>
 </div>
 
@@ -381,23 +388,23 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
 </figcaption>
 <div aria-describedby="tbl-matriz-cosseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="rrihqrusoj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rrihqrusoj table {
+<div id="dmowmlfugr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dmowmlfugr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rrihqrusoj thead, #rrihqrusoj tbody, #rrihqrusoj tfoot, #rrihqrusoj tr, #rrihqrusoj td, #rrihqrusoj th {
+#dmowmlfugr thead, #dmowmlfugr tbody, #dmowmlfugr tfoot, #dmowmlfugr tr, #dmowmlfugr td, #dmowmlfugr th {
   border-style: none;
 }
 
-#rrihqrusoj p {
+#dmowmlfugr p {
   margin: 0;
   padding: 0;
 }
 
-#rrihqrusoj .gt_table {
+#dmowmlfugr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -423,12 +430,12 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-left-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_caption {
+#dmowmlfugr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rrihqrusoj .gt_title {
+#dmowmlfugr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -440,7 +447,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-width: 0;
 }
 
-#rrihqrusoj .gt_subtitle {
+#dmowmlfugr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -452,7 +459,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-width: 0;
 }
 
-#rrihqrusoj .gt_heading {
+#dmowmlfugr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -464,13 +471,13 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_bottom_border {
+#dmowmlfugr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_col_headings {
+#dmowmlfugr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -485,7 +492,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_col_heading {
+#dmowmlfugr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -505,7 +512,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#rrihqrusoj .gt_column_spanner_outer {
+#dmowmlfugr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -517,15 +524,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 4px;
 }
 
-#rrihqrusoj .gt_column_spanner_outer:first-child {
+#dmowmlfugr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rrihqrusoj .gt_column_spanner_outer:last-child {
+#dmowmlfugr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rrihqrusoj .gt_column_spanner {
+#dmowmlfugr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -537,11 +544,11 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   width: 100%;
 }
 
-#rrihqrusoj .gt_spanner_row {
+#dmowmlfugr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rrihqrusoj .gt_group_heading {
+#dmowmlfugr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -567,7 +574,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   text-align: left;
 }
 
-#rrihqrusoj .gt_empty_group_heading {
+#dmowmlfugr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -582,15 +589,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: middle;
 }
 
-#rrihqrusoj .gt_from_md > :first-child {
+#dmowmlfugr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rrihqrusoj .gt_from_md > :last-child {
+#dmowmlfugr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rrihqrusoj .gt_row {
+#dmowmlfugr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -609,7 +616,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#rrihqrusoj .gt_stub {
+#dmowmlfugr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -622,7 +629,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rrihqrusoj .gt_stub_row_group {
+#dmowmlfugr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -636,15 +643,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: top;
 }
 
-#rrihqrusoj .gt_row_group_first td {
+#dmowmlfugr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rrihqrusoj .gt_row_group_first th {
+#dmowmlfugr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rrihqrusoj .gt_summary_row {
+#dmowmlfugr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -654,16 +661,16 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rrihqrusoj .gt_first_summary_row {
+#dmowmlfugr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_first_summary_row.thick {
+#dmowmlfugr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rrihqrusoj .gt_last_summary_row {
+#dmowmlfugr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -673,7 +680,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_grand_summary_row {
+#dmowmlfugr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -683,7 +690,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rrihqrusoj .gt_first_grand_summary_row {
+#dmowmlfugr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -693,7 +700,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_last_grand_summary_row_top {
+#dmowmlfugr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -703,11 +710,11 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_striped {
+#dmowmlfugr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rrihqrusoj .gt_table_body {
+#dmowmlfugr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -716,7 +723,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_footnotes {
+#dmowmlfugr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -730,7 +737,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_footnote {
+#dmowmlfugr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -739,7 +746,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rrihqrusoj .gt_sourcenotes {
+#dmowmlfugr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -753,7 +760,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#rrihqrusoj .gt_sourcenote {
+#dmowmlfugr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -761,72 +768,72 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rrihqrusoj .gt_left {
+#dmowmlfugr .gt_left {
   text-align: left;
 }
 
-#rrihqrusoj .gt_center {
+#dmowmlfugr .gt_center {
   text-align: center;
 }
 
-#rrihqrusoj .gt_right {
+#dmowmlfugr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rrihqrusoj .gt_font_normal {
+#dmowmlfugr .gt_font_normal {
   font-weight: normal;
 }
 
-#rrihqrusoj .gt_font_bold {
+#dmowmlfugr .gt_font_bold {
   font-weight: bold;
 }
 
-#rrihqrusoj .gt_font_italic {
+#dmowmlfugr .gt_font_italic {
   font-style: italic;
 }
 
-#rrihqrusoj .gt_super {
+#dmowmlfugr .gt_super {
   font-size: 65%;
 }
 
-#rrihqrusoj .gt_footnote_marks {
+#dmowmlfugr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rrihqrusoj .gt_asterisk {
+#dmowmlfugr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rrihqrusoj .gt_indent_1 {
+#dmowmlfugr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rrihqrusoj .gt_indent_2 {
+#dmowmlfugr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rrihqrusoj .gt_indent_3 {
+#dmowmlfugr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rrihqrusoj .gt_indent_4 {
+#dmowmlfugr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rrihqrusoj .gt_indent_5 {
+#dmowmlfugr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rrihqrusoj .katex-display {
+#dmowmlfugr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rrihqrusoj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#dmowmlfugr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1014,23 +1021,23 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
 </figcaption>
 <div aria-describedby="tbl-diagnostico-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tvkvpjlkvc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tvkvpjlkvc table {
+<div id="cvqomiwsxm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cvqomiwsxm table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#tvkvpjlkvc thead, #tvkvpjlkvc tbody, #tvkvpjlkvc tfoot, #tvkvpjlkvc tr, #tvkvpjlkvc td, #tvkvpjlkvc th {
+#cvqomiwsxm thead, #cvqomiwsxm tbody, #cvqomiwsxm tfoot, #cvqomiwsxm tr, #cvqomiwsxm td, #cvqomiwsxm th {
   border-style: none;
 }
 
-#tvkvpjlkvc p {
+#cvqomiwsxm p {
   margin: 0;
   padding: 0;
 }
 
-#tvkvpjlkvc .gt_table {
+#cvqomiwsxm .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1056,12 +1063,12 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-left-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_caption {
+#cvqomiwsxm .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#tvkvpjlkvc .gt_title {
+#cvqomiwsxm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1073,7 +1080,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-width: 0;
 }
 
-#tvkvpjlkvc .gt_subtitle {
+#cvqomiwsxm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1085,7 +1092,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-top-width: 0;
 }
 
-#tvkvpjlkvc .gt_heading {
+#cvqomiwsxm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1097,13 +1104,13 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_bottom_border {
+#cvqomiwsxm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_col_headings {
+#cvqomiwsxm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1118,7 +1125,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_col_heading {
+#cvqomiwsxm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1138,7 +1145,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   overflow-x: hidden;
 }
 
-#tvkvpjlkvc .gt_column_spanner_outer {
+#cvqomiwsxm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1150,15 +1157,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 4px;
 }
 
-#tvkvpjlkvc .gt_column_spanner_outer:first-child {
+#cvqomiwsxm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tvkvpjlkvc .gt_column_spanner_outer:last-child {
+#cvqomiwsxm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tvkvpjlkvc .gt_column_spanner {
+#cvqomiwsxm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1170,11 +1177,11 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   width: 100%;
 }
 
-#tvkvpjlkvc .gt_spanner_row {
+#cvqomiwsxm .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#tvkvpjlkvc .gt_group_heading {
+#cvqomiwsxm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1200,7 +1207,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   text-align: left;
 }
 
-#tvkvpjlkvc .gt_empty_group_heading {
+#cvqomiwsxm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1215,15 +1222,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   vertical-align: middle;
 }
 
-#tvkvpjlkvc .gt_from_md > :first-child {
+#cvqomiwsxm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tvkvpjlkvc .gt_from_md > :last-child {
+#cvqomiwsxm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tvkvpjlkvc .gt_row {
+#cvqomiwsxm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1242,7 +1249,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   overflow-x: hidden;
 }
 
-#tvkvpjlkvc .gt_stub {
+#cvqomiwsxm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1255,7 +1262,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#tvkvpjlkvc .gt_stub_row_group {
+#cvqomiwsxm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1269,15 +1276,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   vertical-align: top;
 }
 
-#tvkvpjlkvc .gt_row_group_first td {
+#cvqomiwsxm .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#tvkvpjlkvc .gt_row_group_first th {
+#cvqomiwsxm .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#tvkvpjlkvc .gt_summary_row {
+#cvqomiwsxm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1287,16 +1294,16 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#tvkvpjlkvc .gt_first_summary_row {
+#cvqomiwsxm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_first_summary_row.thick {
+#cvqomiwsxm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#tvkvpjlkvc .gt_last_summary_row {
+#cvqomiwsxm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1306,7 +1313,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_grand_summary_row {
+#cvqomiwsxm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1316,7 +1323,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#tvkvpjlkvc .gt_first_grand_summary_row {
+#cvqomiwsxm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1326,7 +1333,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-top-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_last_grand_summary_row_top {
+#cvqomiwsxm .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1336,11 +1343,11 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_striped {
+#cvqomiwsxm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tvkvpjlkvc .gt_table_body {
+#cvqomiwsxm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1349,7 +1356,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_footnotes {
+#cvqomiwsxm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1363,7 +1370,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_footnote {
+#cvqomiwsxm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1372,7 +1379,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#tvkvpjlkvc .gt_sourcenotes {
+#cvqomiwsxm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1386,7 +1393,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#tvkvpjlkvc .gt_sourcenote {
+#cvqomiwsxm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1394,72 +1401,72 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#tvkvpjlkvc .gt_left {
+#cvqomiwsxm .gt_left {
   text-align: left;
 }
 
-#tvkvpjlkvc .gt_center {
+#cvqomiwsxm .gt_center {
   text-align: center;
 }
 
-#tvkvpjlkvc .gt_right {
+#cvqomiwsxm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tvkvpjlkvc .gt_font_normal {
+#cvqomiwsxm .gt_font_normal {
   font-weight: normal;
 }
 
-#tvkvpjlkvc .gt_font_bold {
+#cvqomiwsxm .gt_font_bold {
   font-weight: bold;
 }
 
-#tvkvpjlkvc .gt_font_italic {
+#cvqomiwsxm .gt_font_italic {
   font-style: italic;
 }
 
-#tvkvpjlkvc .gt_super {
+#cvqomiwsxm .gt_super {
   font-size: 65%;
 }
 
-#tvkvpjlkvc .gt_footnote_marks {
+#cvqomiwsxm .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#tvkvpjlkvc .gt_asterisk {
+#cvqomiwsxm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#tvkvpjlkvc .gt_indent_1 {
+#cvqomiwsxm .gt_indent_1 {
   text-indent: 5px;
 }
 
-#tvkvpjlkvc .gt_indent_2 {
+#cvqomiwsxm .gt_indent_2 {
   text-indent: 10px;
 }
 
-#tvkvpjlkvc .gt_indent_3 {
+#cvqomiwsxm .gt_indent_3 {
   text-indent: 15px;
 }
 
-#tvkvpjlkvc .gt_indent_4 {
+#cvqomiwsxm .gt_indent_4 {
   text-indent: 20px;
 }
 
-#tvkvpjlkvc .gt_indent_5 {
+#cvqomiwsxm .gt_indent_5 {
   text-indent: 25px;
 }
 
-#tvkvpjlkvc .katex-display {
+#cvqomiwsxm .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#tvkvpjlkvc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#cvqomiwsxm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1553,23 +1560,23 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
 </figcaption>
 <div aria-describedby="tbl-residuos-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="gsmvomdqqo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gsmvomdqqo table {
+<div id="bixdifkveu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bixdifkveu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gsmvomdqqo thead, #gsmvomdqqo tbody, #gsmvomdqqo tfoot, #gsmvomdqqo tr, #gsmvomdqqo td, #gsmvomdqqo th {
+#bixdifkveu thead, #bixdifkveu tbody, #bixdifkveu tfoot, #bixdifkveu tr, #bixdifkveu td, #bixdifkveu th {
   border-style: none;
 }
 
-#gsmvomdqqo p {
+#bixdifkveu p {
   margin: 0;
   padding: 0;
 }
 
-#gsmvomdqqo .gt_table {
+#bixdifkveu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1595,12 +1602,12 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-left-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_caption {
+#bixdifkveu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gsmvomdqqo .gt_title {
+#bixdifkveu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1612,7 +1619,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-bottom-width: 0;
 }
 
-#gsmvomdqqo .gt_subtitle {
+#bixdifkveu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1624,7 +1631,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-top-width: 0;
 }
 
-#gsmvomdqqo .gt_heading {
+#bixdifkveu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1636,13 +1643,13 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-right-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_bottom_border {
+#bixdifkveu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_col_headings {
+#bixdifkveu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1657,7 +1664,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-right-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_col_heading {
+#bixdifkveu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1677,7 +1684,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   overflow-x: hidden;
 }
 
-#gsmvomdqqo .gt_column_spanner_outer {
+#bixdifkveu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1689,15 +1696,15 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   padding-right: 4px;
 }
 
-#gsmvomdqqo .gt_column_spanner_outer:first-child {
+#bixdifkveu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gsmvomdqqo .gt_column_spanner_outer:last-child {
+#bixdifkveu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gsmvomdqqo .gt_column_spanner {
+#bixdifkveu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1709,11 +1716,11 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   width: 100%;
 }
 
-#gsmvomdqqo .gt_spanner_row {
+#bixdifkveu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gsmvomdqqo .gt_group_heading {
+#bixdifkveu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1739,7 +1746,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   text-align: left;
 }
 
-#gsmvomdqqo .gt_empty_group_heading {
+#bixdifkveu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1754,15 +1761,15 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   vertical-align: middle;
 }
 
-#gsmvomdqqo .gt_from_md > :first-child {
+#bixdifkveu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gsmvomdqqo .gt_from_md > :last-child {
+#bixdifkveu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gsmvomdqqo .gt_row {
+#bixdifkveu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1781,7 +1788,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   overflow-x: hidden;
 }
 
-#gsmvomdqqo .gt_stub {
+#bixdifkveu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1794,7 +1801,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   padding-right: 5px;
 }
 
-#gsmvomdqqo .gt_stub_row_group {
+#bixdifkveu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1808,15 +1815,15 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   vertical-align: top;
 }
 
-#gsmvomdqqo .gt_row_group_first td {
+#bixdifkveu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gsmvomdqqo .gt_row_group_first th {
+#bixdifkveu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gsmvomdqqo .gt_summary_row {
+#bixdifkveu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1826,16 +1833,16 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   padding-right: 5px;
 }
 
-#gsmvomdqqo .gt_first_summary_row {
+#bixdifkveu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_first_summary_row.thick {
+#bixdifkveu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gsmvomdqqo .gt_last_summary_row {
+#bixdifkveu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1845,7 +1852,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-bottom-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_grand_summary_row {
+#bixdifkveu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1855,7 +1862,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   padding-right: 5px;
 }
 
-#gsmvomdqqo .gt_first_grand_summary_row {
+#bixdifkveu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1865,7 +1872,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-top-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_last_grand_summary_row_top {
+#bixdifkveu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1875,11 +1882,11 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-bottom-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_striped {
+#bixdifkveu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gsmvomdqqo .gt_table_body {
+#bixdifkveu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1888,7 +1895,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-bottom-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_footnotes {
+#bixdifkveu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1902,7 +1909,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-right-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_footnote {
+#bixdifkveu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1911,7 +1918,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   padding-right: 5px;
 }
 
-#gsmvomdqqo .gt_sourcenotes {
+#bixdifkveu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1925,7 +1932,7 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   border-right-color: #D3D3D3;
 }
 
-#gsmvomdqqo .gt_sourcenote {
+#bixdifkveu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1933,72 +1940,72 @@ Tabela&nbsp;3: Top 10 Maiores Resíduos Padronizados Positivos na Matriz de Corr
   padding-right: 5px;
 }
 
-#gsmvomdqqo .gt_left {
+#bixdifkveu .gt_left {
   text-align: left;
 }
 
-#gsmvomdqqo .gt_center {
+#bixdifkveu .gt_center {
   text-align: center;
 }
 
-#gsmvomdqqo .gt_right {
+#bixdifkveu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gsmvomdqqo .gt_font_normal {
+#bixdifkveu .gt_font_normal {
   font-weight: normal;
 }
 
-#gsmvomdqqo .gt_font_bold {
+#bixdifkveu .gt_font_bold {
   font-weight: bold;
 }
 
-#gsmvomdqqo .gt_font_italic {
+#bixdifkveu .gt_font_italic {
   font-style: italic;
 }
 
-#gsmvomdqqo .gt_super {
+#bixdifkveu .gt_super {
   font-size: 65%;
 }
 
-#gsmvomdqqo .gt_footnote_marks {
+#bixdifkveu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gsmvomdqqo .gt_asterisk {
+#bixdifkveu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gsmvomdqqo .gt_indent_1 {
+#bixdifkveu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gsmvomdqqo .gt_indent_2 {
+#bixdifkveu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gsmvomdqqo .gt_indent_3 {
+#bixdifkveu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gsmvomdqqo .gt_indent_4 {
+#bixdifkveu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gsmvomdqqo .gt_indent_5 {
+#bixdifkveu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gsmvomdqqo .katex-display {
+#bixdifkveu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gsmvomdqqo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#bixdifkveu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3347,13 +3354,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 | Mário Diego</p>
+<p>© 2026 | VALENTE</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Linguagem R</p>
+<p>Desenvolvido em R &amp; Quarto</p>
 </div>
   </div>
 </footer>
