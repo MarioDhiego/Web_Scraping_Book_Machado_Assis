@@ -3,35 +3,77 @@ project:
   output-dir: docs
 
 website:
-  title: "Text Mining in R: Dataset(Machado)"
+  title: "Curso Básico de Mineração de Texto em R"
+  site-url: "https://mariodhiego.github.io/Web_Scraping_Book_Machado_Assis/"
+  repo-actions: [source, issue]
+  open-graph: true
+  search: true
+  page-navigation: true
+  back-to-top-navigation: true
   navbar:
     background: primary
-    left:
+    right:
+      - icon: github
+        href: https://github.com/MarioDhiego
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/mário-diego/
+        aria-label: LinkedIn
+      - icon: instagram
+        href: https://instagram.com/Dhiego_Valente
+        aria-label: Instagram
+      - icon: envelope
+        href: mailto:mario.valente@detran.pa.gov.br
+        aria-label: E-mail
+  sidebar:
+    style: "docked"
+    search: true
+    collapse-level: 2
+    contents:
       - href: index.qmd
-        text: "Vida & Obra"
+        text: "1. Dataset"
       - href: scraping-metodologia.qmd
-        text: "Scraping & Pipeline"
+        text: "2. Web Scraping"
       - href: metricas-teoria.qmd
-        text: "Métricas Estatísticas"
+        text: "3. Métricas Estatísticas"
       - href: resultados-descritivos.qmd
-        text: "Análise Descritiva"
+        text: "4. Análise Descritiva"
       - href: analise-sentimento.qmd
-        text: "Análise de Sentimentos"
+        text: "5. Análise de Sentimentos"
+      - href: modelagem-avancada.qmd
+        text: "6. Análise Inferencial"
       - href: referencias.qmd
-        text: "Referências"
+        text: "7. Referências"
   page-footer:
-    left: "© 2026 | Mário Diego"
-    right: "Linguagem R"
+    left: "© 2026 VALENTE, M. D. R."
+    right: 'Desenvolvido com [<i class="bi bi-github"></i> GitHub](https://github.com){target=_blank}, [<i class="bi bi-code-slash"></i> R](https://www.r-project.org/about.html){target=_blank} e [Quarto](https://quarto.org/){target=_blank}'
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: cosmo
+      dark: darkly
     css: styles.css
     toc: true
-    toc-title: "Nesta página"
+    toc-title: "SUMÁRIO"
+    toc-depth: 3
+    smooth-scroll: true
+    lightbox: true
     code-fold: true
-    code-summary: "Ver código R"
-    lang: pt
+    code-summary: "Script R"
+    code-tools: false
+    code-copy: true
+    code-overflow: wrap
+    link-external-newwindow: true
+    lang: pt-BR
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

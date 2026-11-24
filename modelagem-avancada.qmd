@@ -1,0 +1,623 @@
+---
+title: "Modelagem Inferencial"
+subtitle: "Leis de Potência, Keyness (χ²), Clusterização, Análise de Correspondência, LDA e Redes Semânticas"
+title-block-banner: false
+---
+
+
+
+
+```{r}
+#| label: setup-avancado
+#| include: false
+
+library(tidyverse)
+library(tidytext)
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(gt)
+library(scales)
+library(topicmodels)
+library(igraph)
+library(ggrepel)
+library(ggraph)
+
+theme_set(theme_minimal(base_size = 11))
+
+df_livros <- readRDS("machado_wikisource_completo.rds") %>%
+  filter(!is.na(text)) %>%
+  filter(!str_detect(text, "^(Índice|Anterior|Próximo|Wikisource|Obra editada)")) %>%
+  mutate(
+    book_short = case_when(
+      str_detect(book_name, "Dom Casmurro") ~ "Dom Casmurro",
+      str_detect(book_name, "Brás Cubas") ~ "Memórias Póstumas",
+      str_detect(book_name, "Quincas Borba") ~ "Quincas Borba",
+      str_detect(book_name, "Alienista") ~ "O Alienista",
+      str_detect(book_name, "Helena") ~ "Helena",
+      str_detect(book_name, "Memorial de Aires") ~ "Memorial de Aires",
+      str_detect(book_name, "Esaú") ~ "Esaú e Jacó",
+      TRUE ~ book_name
+    ),
+    fase = ifelse(book_short == "Helena", "Fase Romântica", "Fase Realista")
+  )
+
+sw_extra <- c("é", "era", "disse", "ia", "ser", "ter", "havia", "ainda", 
+              "assim", "tudo", "nada", "outro", "outra", "dous", "cousa")
+
+# Corpus e DFM agregados por obra (base compartilhada entre Cluster e CA)
+df_corpus_agregado <- df_livros %>%
+  group_by(book_short, fase) %>%
+  summarise(text = paste(text, collapse = " "), .groups = "drop")
+
+corp_obras <- corpus(df_corpus_agregado$text, docnames = df_corpus_agregado$book_short)
+docvars(corp_obras, "fase") <- df_corpus_agregado$fase
+
+matriz_dfm <- tokens(corp_obras, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra)) %>%
+  dfm()
+```
+
+
+
+::: {.callout-important appearance="minimal"}
+Nível Pós-Graduação (Mestrado & Doutorado): Esta seção avança da estatística descritiva para a modelagem inferencial e multivariada, testando formalmente leis empíricas de distribuição vocabular, hipóteses estilométricas, agrupamento hierárquico, redução de dimensionalidade, tópicos latentes bayesianos (LDA) e topologia de redes semânticas.
+:::
+
+
+
+## 1. Leis Empíricas da Linguística Quantitativa (Lei de Zipf)
+
+A **Lei de Zipf** postula que, em qualquer corpus natural suficientemente extenso, a frequência $f(r)$ de uma palavra é inversamente proporcional ao seu posto $r$ na tabela de frequências ordenadas:
+
+$$f(r) = \frac{C}{r^{\alpha}} \implies \log_{10} f(r) = \log_{10} C - \alpha \log_{10} r$$
+
+Aplicando uma regressão linear ordinária (OLS) via stats::lm() (R CORE TEAM, 2026) sobre os logaritmos da frequência e do posto (rank) no conjunto integral das 7 obras, estimamos o expoente empírico $\alpha$ do léxico machadiano:
+
+
+
+
+
+```{r}
+#| label: fig-lei-zipf
+#| fig-cap: "Ajuste log-log da Lei de Zipf (ZIPF, 1949) sobre o vocabulário integral das 7 obras de Machado de Assis."
+#| fig-width: 9.5
+#| fig-height: 4.8
+
+freq_zipf <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  filter(!str_detect(word, "^[0-9]+$")) %>%
+  count(word, sort = TRUE) %>%
+  mutate(
+    rank = row_number(),
+    freq_rel = n / sum(n)
+  )
+
+modelo_zipf <- lm(log10(freq_rel) ~ log10(rank), data = filter(freq_zipf, rank >= 10, rank <= 5000))
+alpha_est <- round(-coef(modelo_zipf)[2], 3)
+r2_est <- round(summary(modelo_zipf)$r.squared, 4)
+
+ggplot(freq_zipf, aes(x = rank, y = freq_rel)) +
+  geom_line(color = "#2171b5", linewidth = 1) +
+  geom_abline(
+    intercept = coef(modelo_zipf)[1],
+    slope = coef(modelo_zipf)[2],
+    linetype = "dashed", color = "#d95f02", linewidth = 0.9
+  ) +
+  scale_x_log10(labels = scales::comma) +
+  scale_y_log10(labels = scales::scientific) +
+  annotate(
+    "text", x = 80, y = 0.015,
+    label = paste0("Expoente estimado: α = ", alpha_est, "\nR² = ", r2_est),
+    hjust = 0, fontface = "bold", color = "#d95f02", size = 4
+  ) +
+  labs(
+    title = "Distribuição Empírica de Frequências (Lei de Zipf)",
+    subtitle = "Escala log-log com ajuste linear tracejado (ranks 10 a 5.000)",
+    x = "Posto no Ranking Vocabular (log10)",
+    y = "Frequência Relativa (log10)"
+  )
+```
+
+---
+
+## 2. Análise de *Keyness* ($\chi^2$)
+
+Para testar se a transição estética entre a Fase Romântica (Helena, 1876) e a Fase Realista (1881–1908) (CANDIDO, 1970; BOSI, 1994) produz alterações estatisticamente significativas no vocabulário, aplicamos o teste de qui-quadrado ($\chi^2$) de Keyness (SCOTT, 1997; RAYSON; GARSIDE, 2000) com correção de Yates por meio dos pacotes quanteda.textstats e quanteda.textplots (BENOIT et al., 2018):
+
+
+
+```{r}
+#| label: fig-keyness
+#| fig-cap: "Estatística Qui-Quadrado (χ²) dos termos significativamente associados à Fase Romântica vs. Fase Realista (RAYSON; GARSIDE, 2000; BENOIT et al., 2018)."
+#| fig-width: 10
+#| fig-height: 5.5
+
+df_fases <- df_livros %>%
+  group_by(fase) %>%
+  summarise(text = paste(text, collapse = " "), .groups = "drop")
+
+corp_fases <- corpus(df_fases$text, docnames = df_fases$fase)
+
+dfm_fases <- tokens(corp_fases, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra)) %>%
+  dfm()
+
+resultado_keyness <- textstat_keyness(dfm_fases, target = "Fase Romântica", measure = "chi2")
+
+textplot_keyness(resultado_keyness, n = 15, color = c("#d95f02", "#1b9e77")) +
+  labs(
+    title = "Teste de Hipótese Vocabular (Keyness χ²): Romantismo vs. Realismo",
+    subtitle = "Termos com maior desvio significativo entre Helena (alvo) e os romances realistas (referência)",
+    x = "Estatística Qui-Quadrado (χ²)"
+  )
+```
+
+---
+
+## 3. Similaridade de Cosseno e Cluster
+
+Calculamos a Matriz de Similaridade de Cosseno ($\cos \theta$) (SALTON; MCGILL, 1983) sobre as frequências relativas do vocabulário completo de cada obra via quanteda.textstats (BENOIT et al., 2018). Valores próximos de $1{,}00$ indicam alta convergência lexical entre os romances:
+
+
+```{r}
+#| label: setup-cluster
+#| include: false
+
+dfm_relativa <- dfm_weight(matriz_dfm, scheme = "prop")
+simil_livros <- textstat_simil(dfm_relativa, margin = "documents", method = "cosine")
+mat_simil <- as.matrix(simil_livros)
+
+dist_livros <- as.dist(1 - mat_simil)
+cluster_livros <- hclust(dist_livros, method = "ward.D2")
+cofenetica <- round(cor(dist_livros, cophenetic(cluster_livros)), 3)
+```
+
+
+### 3.1 Matriz de Similaridade de Cosseno
+
+```{r}
+#| label: tbl-matriz-cosseno
+#| tbl-cap: "Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de Assis (SALTON; MCGILL, 1983)"
+
+as_tibble(mat_simil, rownames = "Obra") %>%
+  gt() %>%
+  fmt_number(columns = -Obra, decimals = 3, dec_mark = ",") %>%
+  data_color(
+    columns = -Obra,
+    palette = c("#f7fbff", "#2171b5"),
+    domain = c(min(mat_simil), 1)
+  ) %>%
+  tab_header(
+    title = md("**Matriz de Similaridade Estilística (Cosseno)**"),
+    subtitle = "Calculada sobre frequências relativas na DFM após remoção de stopwords"
+  )
+```
+
+
+### 3.2 Agrupamento Hierárquico
+
+A partir da matriz de dissimilaridade angular ($D_{\cos} = 1 - \cos \theta$), aplica-se o algoritmo hierárquico aglomerativo de mínima variância de Ward (ward.D2) (WARD JR., 1963; MURTAGH; LEGENDRE, 2014). O Coeficiente de Correlação Cofenética ($CCC = `r cofenetica`$) (SOKAL; ROHLF, 1962) atesta a fidelidade com que a árvore bidimensional preserva as distâncias originais do espaço vetorial:
+
+
+
+```{r}
+#| label: fig-dendrograma
+#| fig-cap: "Dendrograma de agrupamento hierárquico das 7 obras baseado em distância de cosseno (Método Ward.D2 — WARD JR., 1963)."
+#| fig-width: 9
+#| fig-height: 4.8
+
+par(mar = c(3, 4, 3.5, 2))
+plot(
+  cluster_livros,
+  main = "Clusterização Hierárquica dos 7 Livros de Machado de Assis",
+  sub = paste0("Distância de Cosseno (Método Ward.D2) | Correlação Cofenética (CCC) = ", cofenetica),
+  xlab = "", ylab = "Distância Estilística (1 - Cosseno)",
+  hang = -1, lwd = 3, col = "#08519c"
+)
+```
+
+---
+
+
+## 4. Análise de Correspondência (CA)
+
+Enquanto o dendrograma força partições discretas, a Análise de Correspondência (CA) (BENZÉCRI, 1973; GREENACRE, 1984) decompõe a tabela de contingência Documento-Termo via Decomposição em Valores Singulares (base::svd(), R CORE TEAM, 2026), projetando os 7 livros em um espaço euclidiano contínuo.
+
+
+
+
+```{r}
+#| label: calc-ca
+#| include: false
+
+# Filtra termos recorrentes em pelo menos 3 obras e mínimo de 40 ocorrências
+dfm_ca <- dfm_trim(matriz_dfm, min_termfreq = 40, min_docfreq = 3)
+N_ca <- as.matrix(dfm_ca)
+n_total_ca <- sum(N_ca)
+
+P <- N_ca / n_total_ca
+r <- rowSums(P)
+c_mass <- colSums(P)
+
+E <- outer(r, c_mass)
+S <- (P - E) / sqrt(E)
+svd_res <- svd(S)
+
+# Diagnósticos globais (Qui-Quadrado, Critério Beta e Inércia)
+chi2_ca <- n_total_ca * sum(S^2)
+gl_ca <- (nrow(N_ca) - 1) * (ncol(N_ca) - 1)
+criterio_beta <- (chi2_ca - gl_ca) / sqrt(gl_ca)
+p_valor_ca <- pchisq(chi2_ca, df = gl_ca, lower.tail = FALSE)
+
+autovalores <- svd_res$d^2
+inercia_pct <- (autovalores / sum(autovalores)) * 100
+inercia_acum <- cumsum(inercia_pct)
+
+# Coordenadas principais das obras
+coord_docs <- sweep(svd_res$u[, 1:2], 1, sqrt(r), "/")
+coord_docs <- sweep(coord_docs, 2, svd_res$d[1:2], "*")
+
+df_ca_plot <- tibble(
+  Livro = docnames(dfm_ca),
+  Fase = docvars(corp_obras, "fase"),
+  Dim1 = coord_docs[, 1],
+  Dim2 = coord_docs[, 2]
+)
+```
+
+
+
+
+### 4.1 Critério $\beta$ e Decomposição da Inércia
+
+A tabela abaixo — formatada com o pacote gt (IANNONE et al., 2024) — apresenta o teste global de associação entre livros e vocabulário (Critério $\beta = `r round(criterio_beta, 2)` > 3$, conforme FÁVERO; BELFIORE, 2017, rejeitando independência com $p < 0{,}001$) e a distribuição da inércia explicada pelos eixos fatoriais extraídos via SVD:
+
+
+
+```{r}
+#| label: tbl-diagnostico-ca
+#| tbl-cap: "Diagnóstico Estatístico da Análise de Correspondência (Autovalores, Inércia e Critério Beta — FÁVERO; BELFIORE, 2017)"
+#| warning: false
+
+tibble(
+  Dimensão = paste0("Dimensão ", seq_along(autovalores)),
+  Autovalor = autovalores,
+  `Inércia Explicada (%)` = inercia_pct,
+  `Inércia Acumulada (%)` = inercia_acum
+) %>%
+  slice(1:6) %>%
+  gt() %>%
+  fmt_number(columns = Autovalor, decimals = 4, dec_mark = ",") %>%
+  fmt_number(columns = c(`Inércia Explicada (%)`, `Inércia Acumulada (%)`), decimals = 2, dec_mark = ",") %>%
+  tab_header(
+    title = md("**Decomposição da Inércia Principal (SVD)**"),
+    subtitle = paste0("χ² = ", format(round(chi2_ca, 1), big.mark = "."), 
+                      " | gl = ", gl_ca, 
+                      " | Critério β = ", round(criterio_beta, 2), " (> 3: associação significativa)")
+  )
+```
+
+
+
+### 4.2 Resíduos Padronizados: Maiores Associações Obra $\times$ Palavra
+
+Para interpretar o que atrai cada romance para seu quadrante no mapa perceptual, listamos os pares (Obra $\times$ Termo) com os maiores resíduos padronizados positivos ($s_{ij}$) (GREENACRE, 1984):
+
+
+
+```{r}
+#| label: tbl-residuos-ca
+#| tbl-cap: "Maiores Resíduos Padronizados Positivos por Obra na Matriz de Correspondência"
+#| warning: false
+
+as_tibble(S, rownames = "Obra") %>%
+  pivot_longer(cols = -Obra, names_to = "Termo", values_to = "Residuo_Padronizado") %>%
+  group_by(Obra) %>%
+  slice_max(Residuo_Padronizado, n = 2, with_ties = FALSE) %>%
+  ungroup() %>%
+  arrange(desc(Residuo_Padronizado)) %>%
+  gt() %>%
+  fmt_number(columns = Residuo_Padronizado, decimals = 3, dec_mark = ",") %>%
+  data_color(columns = Residuo_Padronizado, palette = c("#e5f5e0", "#1b9e77")) %>%
+  tab_header(
+    title = md("**Principais Atrações Vocabulares por Obra (Resíduos Padronizados)**"),
+    subtitle = "Os dois termos com maior excesso relativo em cada romance dentro da matriz CA"
+  )
+```
+
+
+
+
+### 4.3 Mapa Perceptual de Correspondência
+
+
+```{r}
+#| label: fig-correspondencia
+#| fig-cap: "Mapa Perceptual da Análise de Correspondência projetando as 7 obras nos dois primeiros eixos latentes (ggrepel — SLOWIKOWSKI, 2024)."
+#| fig-width: 9.5
+#| fig-height: 5.5
+#| warning: false
+
+ggplot(df_ca_plot, aes(x = Dim1, y = Dim2, color = Fase, label = Livro)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray60") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray60") +
+  geom_point(size = 4.5) +
+  geom_text_repel(size = 4, fontface = "bold", box.padding = 0.6) +
+  scale_color_manual(values = c("Fase Romântica" = "#d95f02", "Fase Realista" = "#1b9e77")) +
+  labs(
+    title = "Mapa Perceptual de Correspondência (CA)",
+    subtitle = paste0("Inércia acumulada nos 2 eixos: ", round(inercia_acum[2], 1), "% | Critério β = ", round(criterio_beta, 2)),
+    x = paste0("Dimensão 1 (", round(inercia_pct[1], 1), "% da inércia)"),
+    y = paste0("Dimensão 2 (", round(inercia_pct[2], 1), "% da inércia)")
+  )
+```
+
+---
+
+
+
+
+## 5. Modelagem Probabilística de Tópicos (LDA)
+
+Utilizando a Alocação Latente de Dirichlet (LDA) (BLEI; NG; JORDAN, 2003) sobre a matriz dos 827 capítulos, estimamos $K = 4$ tópicos latentes via amostragem de Gibbs (GRIFFITHS; STEYVERS, 2004) por meio do pacote topicmodels (GRÜN; HORNIK, 2011), compondo os painéis com patchwork (PEDERSEN, 2024b). A análise desdobra-se em duas matrizes probabilísticas complementares:
+
+1. **Matriz $\beta = P(\text{palavra} \mid \text{tópico})$:** Define o campo semântico de cada tópico latente;
+2. **Matriz $\gamma = P(\text{tópico} \mid \text{documento})$:** Revela a composição temática predominante de cada romance.
+
+
+
+
+```{r}
+#| label: fig-lda-topicos
+#| fig-cap: "Decomposição temática via LDA (K = 4): (A) Probabilidade condicional β dos termos por tópico rotulado e (B) Proporção média γ de cada tema por romance (BLEI; NG; JORDAN, 2003; GRÜN; HORNIK, 2011)."
+#| fig-width: 12
+#| fig-height: 8.8
+#| warning: false
+#| message: false
+
+library(topicmodels)
+library(patchwork)
+
+df_caps <- df_livros %>%
+  mutate(doc_id = paste(book_short, chapter_name, sep = " :: ")) %>%
+  group_by(doc_id, book_short) %>%
+  summarise(text = paste(text, collapse = " "), .groups = "drop")
+
+dfm_caps <- corpus(df_caps$text, docnames = df_caps$doc_id) %>%
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra)) %>%
+  dfm() %>%
+  dfm_trim(min_termfreq = 15, min_docfreq = 5)
+
+dfm_caps <- dfm_subset(dfm_caps, ntoken(dfm_caps) > 0)
+dtm_lda <- convert(dfm_caps, to = "topicmodels")
+
+set.seed(2026)
+modelo_lda <- LDA(dtm_lda, k = 4, method = "Gibbs", control = list(iter = 600, burnin = 150))
+
+# Rotulação semântica interpretativa (Topic Labeling) baseada nos termos dominantes (β)
+rotulos_topicos <- c(
+  "1" = "Tópico 1: Família & Casamento",
+  "2" = "Tópico 2: Império & Sociedade Carioca",
+  "3" = "Tópico 3: Filosofia & Crítica Psicológica",
+  "4" = "Tópico 4: Afeto & Relações Interpessoais"
+)
+
+# Painel A: Matriz Beta (Termos por Tópico Rotulado)
+topicos_beta <- tidy(modelo_lda, matrix = "beta") %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 8, with_ties = FALSE) %>%
+  ungroup() %>%
+  mutate(topic_label = recode(as.character(topic), !!!rotulos_topicos))
+
+p_beta <- ggplot(topicos_beta, aes(x = reorder_within(term, beta, topic_label), y = beta, fill = topic_label)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic_label, scales = "free", ncol = 2) +
+  coord_flip() +
+  scale_x_reordered() +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    title = "A. Assinatura Vocabular de Cada Tema Latente (Matriz β)",
+    subtitle = "Top 8 palavras com maior probabilidade de geração dentro de cada núcleo temático",
+    x = NULL, y = "Probabilidade Condicional (β)"
+  ) +
+  theme(strip.text = element_text(face = "bold", size = 9.5))
+
+# Painel B: Matriz Gamma (Proporção de Tópicos por Livro)
+topicos_gamma <- tidy(modelo_lda, matrix = "gamma") %>%
+  separate(document, into = c("Livro", "Capitulo"), sep = " :: ", extra = "merge") %>%
+  group_by(Livro, topic) %>%
+  summarise(gamma_medio = mean(gamma), .groups = "drop") %>%
+  mutate(topic_label = recode(as.character(topic), !!!rotulos_topicos))
+
+p_gamma <- ggplot(topicos_gamma, aes(x = Livro, y = gamma_medio, fill = topic_label)) +
+  geom_col(position = "fill", width = 0.65) +
+  coord_flip() +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Set2", name = NULL) +
+  guides(fill = guide_legend(ncol = 2)) +
+  labs(
+    title = "B. Composição Temática por Romance (Matriz γ Média)",
+    subtitle = "Proporção média de cada tema latente ao longo dos capítulos de cada obra",
+    x = NULL, y = "Proporção Média nos Capítulos (γ)"
+  ) +
+  theme(legend.position = "bottom", legend.text = element_text(size = 9))
+
+p_beta / p_gamma + plot_layout(heights = c(1.35, 1))
+
+
+```
+
+---
+
+
+## 6. Teoria dos Grafos: Arquitetura Semântica e *Storytelling* Lexical
+
+Para contar uma história clara sobre como o discurso machadiano se organiza — sem poluição de pares soltos —, extraímos o Componente Conexo Gigante (LCC) (NEWMAN, 2010) da rede de bigramas por meio do pacote igraph (CSÁRDI; NEPUSZ, 2006) e aplicamos o algoritmo de modularidade de Louvain (BLONDEL et al., 2008) com visualização via ggraph (PEDERSEN, 2024) para revelar os 3 macro-eixos temáticos que sustentam a narrativa:
+
+
+
+
+```{r}
+#| label: setup-grafo
+#| include: false
+
+library(igraph)
+library(ggraph)
+
+arestas_rede <- df_livros %>%
+  unnest_tokens(bigrama, text, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigrama)) %>%
+  separate(bigrama, c("from", "to"), sep = " ") %>%
+  filter(
+    !from %in% c(stopwords("portuguese"), sw_extra),
+    !to %in% c(stopwords("portuguese"), sw_extra),
+    nchar(from) > 2, nchar(to) > 2
+  ) %>%
+  count(from, to, sort = TRUE) %>%
+  filter(n >= 15)
+
+grafo_bruto <- graph_from_data_frame(arestas_rede, directed = TRUE)
+
+# 1. Extrai APENAS o Componente Conexo Gigante (elimina ilhas isoladas e poluição visual)
+comp <- components(grafo_bruto)
+id_gigante <- which.max(comp$csize)
+nos_gigante <- names(comp$membership[comp$membership == id_gigante])
+grafo <- induced_subgraph(grafo_bruto, nos_gigante)
+
+# 2. Métricas formais de centralidade
+V(grafo)$grau <- degree(grafo, mode = "all")
+V(grafo)$intermediacao <- round(betweenness(grafo, directed = FALSE), 1)
+V(grafo)$is_hub <- rank(-V(grafo)$grau, ties.method = "min") <= 10
+
+# 3. Detecção de comunidades (Louvain) consolidada nos 3 principais macro-eixos
+comunidades <- cluster_louvain(as.undirected(grafo))
+membros <- membership(comunidades)
+top3_com <- names(sort(table(membros), decreasing = TRUE))[1:3]
+
+V(grafo)$eixo_narrativo <- case_when(
+  as.character(membros) == top3_com[1] ~ "Eixo 1: Espaço Doméstico & Social",
+  as.character(membros) == top3_com[2] ~ "Eixo 2: Afeto, Corpo & Subjetividade",
+  as.character(membros) == top3_com[3] ~ "Eixo 3: Tempo, Vida & Existência",
+  TRUE ~ "Eixo 4: Conexões Periféricas"
+)
+```
+
+
+
+
+### 6.1 Como Ler o Grafo Semântico (Narrativa Estrutural)
+
+* **Tamanho dos Círculos (Centralidade de Grau):** Indica quantas expressões diferentes gravitam em torno daquela palavra (NEWMAN, 2010). Vocábulos grandes funcionam como ímãs semânticos (ex.: casa, olhos, tempo, amor, vida).
+* **Cores (Comunidades de Louvain):** Agrupam automaticamente palavras que coocorrem densamente entre si (BLONDEL et al., 2008), revelando microcampos narrativos (o campo doméstico/familiar em torno de casa/pai/mãe, o campo afetivo/corporal em torno de olhos/coração/alma, e o campo temporal/existencial em torno de tempo/dia/anos).
+* **Espessura e Seta das Linhas:** Mostram a direção de leitura (`palavra 1 -> palavra 2`) e a força de repetição da expressão no corpus.
+
+
+
+
+```{r}
+#| label: fig-rede-semantica
+#| fig-cap: "Componente Conexo Gigante da rede semântica de Machado de Assis, organizado nos macro-eixos narrativos de Louvain (BLONDEL et al., 2008; PEDERSEN, 2024)."
+#| fig-width: 10.5
+#| fig-height: 6.5
+#| warning: false
+#| message: false
+
+set.seed(2026)
+ggraph(grafo, layout = "stress") +
+  geom_edge_link(
+    aes(edge_width = n),
+    edge_colour = "gray80", alpha = 0.7,
+    arrow = arrow(length = unit(2, "mm")), end_cap = circle(3.5, "mm")
+  ) +
+  geom_node_point(aes(size = grau, color = eixo_narrativo), alpha = 0.92) +
+  # Rótulos discretos para nós secundários
+  geom_node_text(
+    aes(label = ifelse(!is_hub, name, "")),
+    repel = TRUE, size = 3.1, color = "gray35", max.overlaps = 15
+  ) +
+  # Etiquetas destacadas apenas para os Top 10 Hubs (hierarquia visual)
+  geom_node_label(
+    aes(label = ifelse(is_hub, name, ""), color = eixo_narrativo),
+    repel = TRUE, size = 3.6, fontface = "bold",
+    fill = "white", label.size = 0.35, show.legend = FALSE
+  ) +
+  scale_edge_width(range = c(0.4, 2.2), name = "Freq. Bigrama") +
+  scale_size(range = c(3.5, 11), name = "Conexões (Grau)") +
+  scale_color_manual(
+    values = c(
+      "Eixo 1: Espaço Doméstico & Social" = "#1b9e77",
+      "Eixo 2: Afeto, Corpo & Subjetividade" = "#d95f02",
+      "Eixo 3: Tempo, Vida & Existência" = "#7570b3",
+      "Eixo 4: Conexões Periféricas" = "#666666"
+    ),
+    name = "Macro-Eixo Narrativo"
+  ) +
+  labs(
+    title = "Componente Semântica",
+    subtitle = "Caixas destacadas = Top 10 Hubs Centrais | Cores = Comunidades de Louvain | Setas = Direção do Bigrama"
+  ) +
+  theme_void() +
+  theme(
+    plot.title = element_text(face = "bold", size = 13.5),
+    plot.subtitle = element_text(size = 9.8, color = "gray35", margin = margin(b = 8)),
+    legend.position = "right"
+  )
+
+```
+
+
+
+### 6.2 Tabela dos Principais *Hubs* Vocabulares da Rede
+
+```{r}
+#| label: tbl-centralidade-rede
+#| tbl-cap: "Top 10 Palavras Centrais (Hubs) do Componente Gigante por Grau e Intermediação (FREEMAN, 1977; NEWMAN, 2010)"
+
+tibble(
+  Palavra = V(grafo)$name,
+  `Macro-Eixo Narrativo` = V(grafo)$eixo_narrativo,
+  `Grau Total (Conexões)` = V(grafo)$grau,
+  `Intermediação (Ponte)` = V(grafo)$intermediacao
+) %>%
+  arrange(desc(`Grau Total (Conexões)`), desc(`Intermediação (Ponte)`)) %>%
+  slice(1:10) %>%
+  gt() %>%
+  fmt_number(columns = `Intermediação (Ponte)`, decimals = 1, dec_mark = ",") %>%
+  data_color(columns = `Grau Total (Conexões)`, palette = c("#f7fbff", "#08519c")) %>%
+  tab_header(
+    title = md("**Núcleos Articuladores e Pontes do Discurso Machadiano**"),
+    subtitle = "Ranking estatístico baseado no Componente Conexo Gigante"
+  )
+```
+
+
+
+::: {.callout-note appearance="minimal"}
+Síntese Inferencial e Nota Bibliográfica: A triangulação dos modelos confirma a coerência estética e estatística do corpus machadiano: a Lei de Zipf valida a regularidade macroestrutural do léxico; o teste de Keyness ($\chi^2$), o dendrograma de Ward (ward.D2) e o mapa perceptual da Análise de Correspondência ($\beta > 3$) isolam consistentemente a transição estilística entre a prosa romântica de Helena e a maturidade realista; por fim, o modelo LDA e a topologia de comunidades de Louvain revelam como o autor entrelaça o espaço doméstico, a subjetividade afetiva e a reflexão temporal. Todas as obras, metodologias e pacotes R citados encontram-se listados na aba Referências.
+:::
+
+
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

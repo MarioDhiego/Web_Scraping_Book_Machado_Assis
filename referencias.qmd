@@ -1,34 +1,63 @@
 ---
 title: "Referências Bibliográficas"
-subtitle: "Fontes primárias, fundamentação estatística multivariada, linguística computacional e ecossistema R"
+subtitle: "Fontes primárias, crítica literária, fundamentação estatística e ecossistema R (ABNT NBR 6023)"
 title-block-banner: false
 ---
 
+::: {.callout-tip appearance="minimal"}
+**Como citar este material didático (ABNT NBR 6023):**  
+VALENTE, Mario Diego Rocha. **Curso Básico de Mineração de Texto: Estudo de Caso nas Obras Completas de Machado de Assis em Linguagem R**. Belém: DETRAN-PA / RENAEST, 2026. Disponível em: <https://github.com/MarioDhiego>. Acesso em: 23 nov. 2026.
+:::
+
+------------------------------------------------------------------------
+
 ## 1. Corpus de Texto (Fontes Primárias — Wikisource)
 
-* ASSIS, Joaquim Maria Machado de. **Helena** [1876]. Rio de Janeiro: B. L. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Helena>.
-* ASSIS, Joaquim Maria Machado de. **Memórias Póstumas de Brás Cubas** [1881]. Rio de Janeiro: Tipografia Nacional. Edição digital disponível em: <https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas>.
-* ASSIS, Joaquim Maria Machado de. **O Alienista** [1882]. In: *Papéis Avulsos*. Rio de Janeiro: Lombaerts & C. Edição digital disponível em: <https://pt.wikisource.org/wiki/O_Alienista>.
-* ASSIS, Joaquim Maria Machado de. **Quincas Borba** [1891]. Rio de Janeiro: B. L. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Quincas_Borba>.
-* ASSIS, Joaquim Maria Machado de. **Dom Casmurro** [1899]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Dom_Casmurro>.
-* ASSIS, Joaquim Maria Machado de. **Esaú e Jacó** [1904]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3>.
-* ASSIS, Joaquim Maria Machado de. **Memorial de Aires** [1908]. Rio de Janeiro: H. Garnier. Edição digital disponível em: <https://pt.wikisource.org/wiki/Memorial_de_Aires>.
+* ASSIS, Joaquim Maria Machado de. **Ressurreição** [1872]. Rio de Janeiro: B. L. Garnier, 1872.
+* ASSIS, Joaquim Maria Machado de. **A Mão e a Luva** [1874]. Rio de Janeiro: Gomes de Oliveira & C., 1874.
+* ASSIS, Joaquim Maria Machado de. **Helena** [1876]. Rio de Janeiro: B. L. Garnier, 1876. Edição digital disponível em: <https://pt.wikisource.org/wiki/Helena>. Acesso em: 23 nov. 2026.
+* ASSIS, Joaquim Maria Machado de. **Iaiá Garcia** [1878]. Rio de Janeiro: G. Viana & C., 1878.
+* ASSIS, Joaquim Maria Machado de. **Memórias Póstumas de Brás Cubas** [1881]. Rio de Janeiro: Tipografia Nacional, 1881. Edição digital disponível em: <https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas>. Acesso em: 23 nov. 2026.
+* ASSIS, Joaquim Maria Machado de. **O Alienista** [1882]. In: ASSIS, Machado de. *Papéis Avulsos*. Rio de Janeiro: Lombaerts & C., 1882. Edição digital disponível em: <https://pt.wikisource.org/wiki/O_Alienista>. Acesso em: 23 nov. 2026.
+* ASSIS, Joaquim Maria Machado de. **Bons Dias!** [Crônica de 19 de maio de 1888]. *Gazeta de Notícias*, Rio de Janeiro, 19 maio 1888.
+* ASSIS, Joaquim Maria Machado de. **Quincas Borba** [1891]. Rio de Janeiro: B. L. Garnier, 1891. Edição digital disponível em: <https://pt.wikisource.org/wiki/Quincas_Borba>. Acesso em: 23 nov. 2026.
+* ASSIS, Joaquim Maria Machado de. **Dom Casmurro** [1899]. Rio de Janeiro: H. Garnier, 1899. Edição digital disponível em: <https://pt.wikisource.org/wiki/Dom_Casmurro>. Acesso em: 23 nov. 2026.
+* ASSIS, Joaquim Maria Machado de. **Esaú e Jacó** [1904]. Rio de Janeiro: H. Garnier, 1904. Edição digital disponível em: <https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3>. Acesso em: 23 nov. 2026.
+* ASSIS, Joaquim Maria Machado de. **Memorial de Aires** [1908]. Rio de Janeiro: H. Garnier, 1908. Edição digital disponível em: <https://pt.wikisource.org/wiki/Memorial_de_Aires>. Acesso em: 23 nov. 2026.
+* FUNDAÇÃO WIKIMEDIA. **Wikisource**: a biblioteca livre. São Francisco: Wikimedia Foundation, 2026. Disponível em: <https://pt.wikisource.org>. Acesso em: 23 nov. 2026.
 
----
+------------------------------------------------------------------------
 
-## 2. Fundamentação Estatística
+## 2. Biografia, História e Crítica Literária
+
+* ANDRADE, Carlos Drummond de. A um bruxo, com amor. In: ANDRADE, Carlos Drummond de. **A Vida Passada a Limpo**. Rio de Janeiro: José Olympio, 1958.
+* BOSI, Alfredo. **História Concisa da Literatura Brasileira**. 32. ed. São Paulo: Cultrix, 1994.
+* CANDIDO, Antonio. Esquema de Machado de Assis. In: CANDIDO, Antonio. **Vários Escritos**. São Paulo: Duas Cidades, 1970. p. 15–32.
+* CHALHOUB, Sidney. **Machado de Assis, Historiador**. São Paulo: Companhia das Letras, 2003.
+* MASSA, Jean-Michel. **A Juventude de Machado de Assis (1839–1870)**: ensaio de biografia intelectual. 2. ed. São Paulo: Editora UNESP, 2009.
+* SCHWARZ, Roberto. **Ao Vencedor as Batatas**: forma literária e processo social nos inícios do romance brasileiro. 5. ed. São Paulo: Duas Cidades; Editora 34, 2000.
+
+------------------------------------------------------------------------
+
+## 3. Fundamentação Estatística, Linguística e Ciência de Dados
 
 * BENZÉCRI, Jean-Paul. **L'Analyse des Données: Tome 2 — L'Analyse des Correspondances**. Paris: Dunod, 1973.
 * BLEI, David M.; NG, Andrew Y.; JORDAN, Michael I. Latent Dirichlet Allocation. **Journal of Machine Learning Research**, v. 3, p. 993–1022, 2003.
+* BLONDEL, Vincent D.; GUILLAUME, Jean-Loup; LAMBIOTTE, Renaud; LEFEBVRE, Etienne. Fast unfolding of communities in large networks. **Journal of Statistical Mechanics: Theory and Experiment**, v. 2008, n. 10, p. P10008, 2008.
 * CARROLL, John B. **Language and Thought**. Englewood Cliffs: Prentice-Hall, 1964.
 * CLEVELAND, William S. Robust Locally Weighted Regression and Smoothing Scatterplots. **Journal of the American Statistical Association**, v. 74, n. 368, p. 829–836, 1979.
+* ERDŐS, Paul; RÉNYI, Alfréd. On random graphs I. **Publicationes Mathematicae Debrecen**, v. 6, p. 290–297, 1959.
+* EULER, Leonhard. Solutio problematis ad geometriam situs pertinentis. **Commentarii Academiae Scientiarum Imperialis Petropolitanae**, v. 8, p. 128–140, 1736.
 * FÁVERO, Luiz Paulo; BELFIORE, Patrícia. **Manual de Análise de Dados: Estatística e Modelagem Multivariada com Excel, SPSS e Stata**. Rio de Janeiro: Elsevier, 2017.
+* FREEMAN, Linton C. A set of measures of centrality based on betweenness. **Sociometry**, v. 40, n. 1, p. 35–41, 1977.
 * GREENACRE, Michael J. **Theory and Applications of Correspondence Analysis**. London: Academic Press, 1984.
 * GRIFFITHS, Thomas L.; STEYVERS, Mark. Finding Scientific Topics. **Proceedings of the National Academy of Sciences (PNAS)**, v. 101, suppl. 1, p. 5228–5235, 2004.
 * HAIR JR., Joseph F.; BLACK, William C.; BABIN, Barry J.; ANDERSON, Rolph E. **Análise Multivariada de Dados**. 6. ed. Porto Alegre: Bookman, 2009.
 * KAUFMAN, Leonard; ROUSSEEUW, Peter J. **Finding Groups in Data: An Introduction to Cluster Analysis**. New York: John Wiley & Sons, 1990.
-* KINCAID, J. Peter; FISHBURNE JR., Robert P.; ROGERS, Richard L.; CHISSOM, Brad S. **Derivation of New Readability Formulas (Automated Readability Index, Fog Count and Flesch Reading Ease Formula) for Navy Enlisted Personnel**. Research Branch Report 8-75, Millington, TN: Naval Technical Training Command, 1975.
+* KINCAID, J. Peter; FISHBURNE JR., Robert P.; ROGERS, Richard L.; CHISSOM, Brad S. **Derivation of New Readability Formulas (Automated Readability Index, Fog Count and Flesch Reading Ease Formula) for Navy Enlisted Personnel**. Research Branch Report 8-75. Millington, TN: Naval Technical Training Command, 1975.
+* KRUSKAL, William H.; WALLIS, W. Allen. Use of ranks in one-criterion variance analysis. **Journal of the American Statistical Association**, v. 47, n. 260, p. 583–621, 1952.
 * MACQUEEN, James. Some Methods for Classification and Analysis of Multivariate Observations. In: **Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability**, v. 1, p. 281–297, 1967.
+* MITCHELL, Ryan. **Web Scraping with Python**: Collecting More Data from the Modern Web. 2. ed. Sebastopol: O'Reilly Media, 2018.
 * MURTAGH, Fionn; LEGENDRE, Pierre. Ward's Hierarchical Agglomerative Clustering Method: Which Algorithms Implement Ward's Criterion? **Journal of Classification**, v. 31, n. 3, p. 274–295, 2014.
 * NEWMAN, Mark E. J. **Networks: An Introduction**. Oxford: Oxford University Press, 2010.
 * RAYSON, Paul; GARSIDE, Roger. Comparing Corpora Using Frequency Profiling. In: **Proceedings of the Workshop on Comparing Corpora (ACL)**, Hong Kong, p. 1–6, 2000.
@@ -37,29 +66,48 @@ title-block-banner: false
 * SILGE, Julia; ROBINSON, David. **Text Mining with R: A Tidy Approach**. Sebastopol: O'Reilly Media, 2017.
 * SOKAL, Robert R.; ROHLF, F. James. The Comparison of Dendrograms by Objective Methods. **Taxon**, v. 11, n. 2, p. 33–40, 1962.
 * SOKAL, Robert R.; SNEATH, Peter H. A. **Principles of Numerical Taxonomy**. San Francisco: W. H. Freeman, 1963.
-* SOUZA, Marlo; VIEIRA, Renata; BUSETTI, Débora; CHISHMAN, Rove; ALVES, Isa Mara. Construction of a Portuguese Opinion Lexicon from Multiple Resources. In: **Proceedings of the 8th Brazilian Symposium in Information and Human Language Technology (STIL)**, Cuiabá, 2011.
+* SOUZA, Marlo; VIEIRA, Renata; BUSETTI, Débora; CHISHMAN, Rove; ALVES, Isa Mara. Construction of a Portuguese Opinion Lexicon from Multiple Resources. In: **Proceedings of the 8th Brazilian Symposium in Information and Human Language Technology (STIL)**, Cuiabá, p. 59–66, 2011.
 * SPÄRCK JONES, Karen. A Statistical Interpretation of Term Specificity and Its Application in Retrieval. **Journal of Documentation**, v. 28, n. 1, p. 11–21, 1972.
 * TRYON, Robert C. **Cluster Analysis: Correlation Profile and Orthometric (Factor) Analysis for the Isolation of Unities in Mind and Personality**. Ann Arbor: Edwards Brothers, 1939.
 * WARD JR., Joe H. Hierarchical Grouping to Optimize an Objective Function. **Journal of the American Statistical Association**, v. 58, n. 301, p. 236–244, 1963.
+* WICKHAM, Hadley. Tidy Data. **Journal of Statistical Software**, v. 59, n. 10, p. 1–23, 2014.
+* ZIPF, George Kingsley. **The Psycho-Biology of Language**: An Introduction to Dynamic Philology. Boston: Houghton Mifflin, 1935.
 * ZIPF, George Kingsley. **Human Behavior and the Principle of Least Effort: An Introduction to Human Ecology**. Cambridge, MA: Addison-Wesley, 1949.
 
----
+------------------------------------------------------------------------
 
-## 3. Ecossistema Computacional (Linguagem R e Pacotes)
+## 4. Ecossistema Computacional (Linguagem R, Quarto e Pacotes)
 
-* ALLAIRE, J. J.; TEAGUE, Charles; SCHEIDEGGER, Carlos; XIE, Yihui; DERVIEUX, Christophe. **Quarto** (Version 1.4+). Posit Software, PBC, 2024. Disponível em: <https://quarto.org>.
-* BENOIT, Kenneth et al. quanteda: An R package for the quantitative analysis of textual data. **Journal of Open Source Software**, v. 3, n. 30, p. 774, 2018.
+* ALLAIRE, J. J.; TEAGUE, Charles; SCHEIDEGGER, Carlos; XIE, Yihui; DERVIEUX, Christophe. **Quarto**: an open-source scientific and technical publishing system. Version 1.4. Boston: Posit Software, PBC, 2024. Disponível em: <https://quarto.org>. Acesso em: 23 nov. 2026.
+* BENOIT, Kenneth; WATANABE, Kohei; WANG, Haiyan; NULTY, Paul; OBENG, Adam; MÜLLER, Stefan; MATSUO, Akitaka. quanteda: An R package for the quantitative analysis of textual data. **Journal of Open Source Software**, v. 3, n. 30, p. 774, 2018. Disponível em: <https://doi.org/10.21105/joss.00774>. Acesso em: 23 nov. 2026.
+* CHENG, Joe; KARAMBELKAR, Bhaskar; XIE, Yihui. **leaflet**: Create Interactive Web Maps with the JavaScript 'Leaflet' Library. R package version 2.2.2, 2024. Disponível em: <https://CRAN.R-project.org/package=leaflet>. Acesso em: 23 nov. 2026.
 * CSÁRDI, Gábor; NEPUSZ, Tamás. The igraph software package for complex network research. **InterJournal, Complex Systems**, v. 1695, n. 5, p. 1–9, 2006.
-* FELLOWS, Ian. **wordcloud: Word Clouds**. R package version 2.6, 2018.
-* GONZAGA, Sillas. **lexiconPT: Lexicons for Portuguese Text Analysis**. R package version 0.1.0, 2017.
-* GRÜN, Bettina; HORNIK, Kurt. topicmodels: An R Package for Fitting Topic Models. **Journal of Statistical Software**, v. 40, n. 13, p. 1–30, 2011.
-* IANNONE, Richard; CHENG, Joe; SCHLOERKE, Barret; HUGHES, Ellis; LAUER, Alexandra; SEO, JooYoung. **gt: Easily Create Presentation-Ready Display Tables**. R package, 2024.
-* PEDERSEN, Thomas Lin. **ggraph: An Implementation of Grammar of Graphics for Graphs and Networks**. R package, 2024.
-* R CORE TEAM. **R: A Language and Environment for Statistical Computing**. Vienna, Austria: R Foundation for Statistical Computing, 2026. Disponível em: <https://www.R-project.org/>.
-* SILGE, Julia; ROBINSON, David. tidytext: Text Mining and Analysis Using Tidy Data Principles in R. **Journal of Open Source Software**, v. 1, n. 3, p. 37, 2016.
-* WICKHAM, Hadley et al. Welcome to the tidyverse. **Journal of Open Source Software**, v. 4, n. 43, p. 1686, 2019.
-* WICKHAM, Hadley. **rvest: Easily Harvest (Scrape) Web Pages**. R package, 2024.
-* XIE, Yihui; CHENG, Joe; TAN, Xianying. **DT: A Wrapper of the JavaScript Library 'DataTables'**. R package, 2024.
+* FELLOWS, Ian. **wordcloud**: Word Clouds. R package version 2.6, 2018. Disponível em: <https://CRAN.R-project.org/package=wordcloud>. Acesso em: 23 nov. 2026.
+* GONZAGA, Sillas. **lexiconPT**: Lexicons for Portuguese Text Analysis. R package version 0.1.0, 2017. Disponível em: <https://CRAN.R-project.org/package=lexiconPT>. Acesso em: 23 nov. 2026.
+* GRÜN, Bettina; HORNIK, Kurt. topicmodels: An R Package for Fitting Topic Models. **Journal of Statistical Software**, v. 40, n. 13, p. 1–30, 2011. Disponível em: <https://doi.org/10.18637/jss.v040.i13>. Acesso em: 23 nov. 2026.
+* IANNONE, Richard; CHENG, Joe; SCHLOERKE, Barret; HUGHES, Ellis; LAUER, Alexandra; SEO, JooYoung. **gt**: Easily Create Presentation-Ready Display Tables. R package, 2024. Disponível em: <https://CRAN.R-project.org/package=gt>. Acesso em: 23 nov. 2026.
+* MÜLLER, Kirill; WICKHAM, Hadley. **tibble**: Simple Data Frames. R package version 3.2.1, 2023. Disponível em: <https://CRAN.R-project.org/package=tibble>. Acesso em: 23 nov. 2026.
+* OOMS, Jeroen. **curl**: A Modern and Flexible Web Client for R. R package, 2024. Disponível em: <https://CRAN.R-project.org/package=curl>. Acesso em: 23 nov. 2026.
+* PEDERSEN, Thomas Lin. **ggraph**: An Implementation of Grammar of Graphics for Graphs and Networks. R package, 2024. Disponível em: <https://CRAN.R-project.org/package=ggraph>. Acesso em: 23 nov. 2026.
+* PEDERSEN, Thomas Lin. **patchwork**: The Composer of Plots. R package, 2024b. Disponível em: <https://CRAN.R-project.org/package=patchwork>. Acesso em: 23 nov. 2026.
+* R CORE TEAM. **R**: A Language and Environment for Statistical Computing. Vienna: R Foundation for Statistical Computing, 2026. Disponível em: <https://www.R-project.org/>. Acesso em: 23 nov. 2026.
+* SILGE, Julia; ROBINSON, David. tidytext: Text Mining and Analysis Using Tidy Data Principles in R. **Journal of Open Source Software**, v. 1, n. 3, p. 37, 2016. Disponível em: <https://doi.org/10.21105/joss.00037>. Acesso em: 23 nov. 2026.
+* SLOWIKOWSKI, Kamil. **ggrepel**: Automatically Position Non-Overlapping Text Labels with 'ggplot2'. R package, 2024. Disponível em: <https://CRAN.R-project.org/package=ggrepel>. Acesso em: 23 nov. 2026.
+* WICKHAM, Hadley. Reshaping Data with the reshape Package. **Journal of Statistical Software**, v. 21, n. 12, p. 1–20, 2007. Disponível em: <https://doi.org/10.18637/jss.v021.i12>. Acesso em: 23 nov. 2026.
+* WICKHAM, Hadley et al. Welcome to the tidyverse. **Journal of Open Source Software**, v. 4, n. 43, p. 1686, 2019. Disponível em: <https://doi.org/10.21105/joss.01686>. Acesso em: 23 nov. 2026.
+* WICKHAM, Hadley. **rvest**: Easily Harvest (Scrape) Web Pages. R package, 2024. Disponível em: <https://CRAN.R-project.org/package=rvest>. Acesso em: 23 nov. 2026.
+* WICKHAM, Hadley; HESTER, Jim; OOMS, Jeroen. **xml2**: Parse XML. R package, 2023. Disponível em: <https://CRAN.R-project.org/package=xml2>. Acesso em: 23 nov. 2026.
+* WICKHAM, Hadley; SEIDEL, Dana. **scales**: Scale Functions for Visualization. R package, 2023. Disponível em: <https://CRAN.R-project.org/package=scales>. Acesso em: 23 nov. 2026.
+* XIE, Yihui; CHENG, Joe; TAN, Xianying. **DT**: A Wrapper of the JavaScript Library 'DataTables'. R package, 2024. Disponível em: <https://CRAN.R-project.org/package=DT>. Acesso em: 23 nov. 2026.
+
+------------------------------------------------------------------------
+
+::: {.callout-note appearance="minimal"}
+**Nota de Reprodutibilidade:** Todos os scripts, bases tratadas e o código-fonte deste portfólio estão disponíveis no repositório aberto de **Mario Diego Rocha Valente** no GitHub (<https://github.com/MarioDhiego>).
+:::
 
 
----
+
+
+
+

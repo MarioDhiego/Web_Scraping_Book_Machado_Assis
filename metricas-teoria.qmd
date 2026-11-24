@@ -1,16 +1,17 @@
 ---
 title: "Fundamentação Estatística e Linguística"
 subtitle: "Formulação matemática das métricas léxicas, legibilidade, polaridade, inferência multivariada e modelagem latente"
-title-block-banner: FALSE
+title-block-banner: false
 ---
 
+
 ::: {.callout-note appearance="minimal"}
-A mineração de textos transforma fenômenos estilísticos e semânticos em variáveis quantitativas comparáveis. Esta seção reúne o formalismo matemático, os autores seminais e os critérios estatísticos de decisão de **todas** as técnicas empregadas ao longo do curso — desde os indicadores descritivos de vocabulário até os modelos inferenciais, multivariados e probabilísticos.
+A mineração de textos transforma fenômenos estilísticos e semânticos em variáveis quantitativas comparáveis (SILGE; ROBINSON, 2017; BENOIT et al., 2018). Esta seção reúne o formalismo matemático, os autores seminais e os critérios estatísticos de decisão de **todas** as técnicas empregadas ao longo do curso — desde os indicadores descritivos de vocabulário até os modelos inferenciais, multivariados, probabilísticos e topológicos.
 :::
 
 ## 1. Diversidade e Riqueza Léxica
 
-A riqueza vocabular mede o grau de variedade lexical de um autor, avaliando o equilíbrio entre a introdução de palavras novas (*Types*) e a repetição de palavras já utilizadas (*Tokens*).
+A riqueza vocabular mede o grau de variedade lexical de um autor, avaliando o equilíbrio entre a introdução de palavras novas (*Types*) e a repetição de palavras já utilizadas (*Tokens*) (CARROLL, 1964; BENOIT et al., 2018).
 
 ### 1.1 Type-Token Ratio ($TTR$)
 O índice **TTR** expressa a razão simples entre o número de vocábulos únicos ($V$) e o total de palavras ocorridas ($N$) em um documento:
@@ -22,24 +23,27 @@ $$TTR = \frac{V}{N}$$
 
 ---
 
+
 ### 1.2 Corrected Type-Token Ratio ($CTTR$)
 Proposto por John B. Carroll (1964), o **CTTR** corrige o efeito da extensão textual aplicando uma transformação de raiz quadrada no denominador:
 
 $$CTTR = \frac{V}{\sqrt{2N}}$$
 
-* **Interpretação:** Ao amortecer o crescimento linear de $N$, o $CTTR$ permite comparar diretamente obras de extensões muito distintas (como uma novela de 16 mil palavras e um romance de 90 mil palavras) sem distorção de escala.
+* **Interpretação:** Ao amortecer o crescimento linear de $N$, o $CTTR$ permite comparar diretamente obras de extensões muito distintas (como uma novela de 16 mil palavras e um romance de 90 mil palavras) sem distorção de escala (CARROLL, 1964).
 
 ---
+
 
 ## 2. Complexidade Sintática e Legibilidade
 
-Para avaliar a estrutura frasal e o esforço cognitivo exigido na leitura de cada obra, utiliza-se o índice de **Flesch-Kincaid Grade Level** ($FK$), desenvolvido por J. Peter Kincaid e equipe (1975) e calculado sobre o texto integral não filtrado (preservando pontuação para delimitação exata de sentenças):
+Para avaliar a estrutura frasal e o esforço cognitivo exigido na leitura de cada obra, utiliza-se o índice de **Flesch-Kincaid Grade Level** ($FK$), desenvolvido por J. Peter Kincaid e colaboradores (KINCAID et al., 1975) e calculado sobre o texto integral não filtrado (preservando pontuação para delimitação exata de sentenças):
 
 $$FK = 0{,}39 \left( \frac{N_{\text{palavras}}}{N_{\text{sentenças}}} \right) + 11{,}8 \left( \frac{N_{\text{sílabas}}}{N_{\text{palavras}}} \right) - 15{,}59$$
 
-* **Interpretação:** O índice combina o comprimento médio das sentenças (complexidade sintática) com a extensão silábica média das palavras (complexidade morfológica). Valores mais elevados indicam períodos mais longos, subordinados e vocabulário mais erudito.
+* **Interpretação:** O índice combina o comprimento médio das sentenças (complexidade sintática) com a extensão silábica média das palavras (complexidade morfológica). Valores mais elevados indicam períodos mais longos, subordinados e vocabulário mais erudito (KINCAID et al., 1975).
 
 ---
+
 
 ## 3. Frequência Normalizada
 
@@ -52,27 +56,29 @@ Onde $f_{t,d}$ é a frequência absoluta do termo $t$ no livro $d$, e $N_d$ é o
 
 ---
 
+
 ### 3.2 Term Frequency – Inverse Document Frequency ($TF\text{-}IDF$)
-Formulada a partir dos trabalhos seminais de Karen Spärck Jones (1972) e Gerard Salton, a ponderação **TF-IDF** identifica os termos que funcionam como **assinatura exclusiva** de um livro específico dentro do conjunto das 7 obras ($D$):
+Formulada a partir dos trabalhos seminais de Karen Spärck Jones (1972) e Gerard Salton (SALTON; MCGILL, 1983), a ponderação **TF-IDF** identifica os termos que funcionam como **assinatura exclusiva** de um livro específico dentro do conjunto das 7 obras ($D$):
 
 $$TF(t, d) = \frac{f_{t,d}}{\sum_{k \in d} f_{k,d}} \qquad \text{e} \qquad IDF(t, D) = \ln \left( \frac{|D|}{|\{d \in D : t \in d\}|} \right)$$
 
 $$TF\text{-}IDF(t, d, D) = TF(t, d) \times IDF(t, D)$$
 
-* **Interpretação:** Um termo recebe pontuação máxima quando aparece com alta frequência em um único romance ($TF$ alto), mas é raro ou ausente nos demais romances do autor ($IDF$ alto), revelando personagens centrais, cenários e obsessões temáticas específicas de cada narrativa.
+* **Interpretação:** Um termo recebe pontuação máxima quando aparece com alta frequência em um único romance ($TF$ alto), mas é raro ou ausente nos demais romances do autor ($IDF$ alto), revelando personagens centrais, cenários e obsessões temáticas específicas de cada narrativa (SPÄRCK JONES, 1972; SILGE; ROBINSON, 2017).
 
 ---
 
-## 4. Análise de Sentimentos 
 
-A dimensão afetiva das narrativas é mensurada por meio de abordagem léxica utilizando o dicionário **OpLexicon v3.0** (Souza et al., 2011; disponibilizado via `lexiconPT`), que atribui a cada termo $t$ uma polaridade discreta $p(t) \in \{-1, 0, +1\}$ (negativo, neutro ou positivo).
+## 4. Análise de Sentimentos
+
+A dimensão afetiva das narrativas é mensurada por meio de abordagem léxica utilizando o dicionário **OpLexicon v3.0** (SOUZA et al., 2011; disponibilizado em R via pacote `lexiconPT` por GONZAGA, 2017), que atribui a cada termo $t$ uma polaridade discreta $p(t) \in \{-1, 0, +1\}$ (negativo, neutro ou positivo).
 
 ### 4.1 Saldo de Polaridade por Capítulo ($S_c$) e Progresso Relativo
 Para cada capítulo $c$ de uma obra com $C$ capítulos totais, calcula-se o saldo líquido de polaridade e sua posição normalizada na linha do tempo narrativa:
 
 $$S_c = \sum_{i=1}^{n_c} p(t_i) \qquad \text{e} \qquad \text{Posição Relativa}_c = \frac{c}{C} \in (0, 1]$$
 
-A normalização da posição em percentual ($0\%$ a $100\%$) permite sobrepor e comparar os **arcos emocionais** de obras com estruturas capitulares muito distintas (como os 28 capítulos longos de *Helena* frente aos 198 capítulos curtos de *Quincas Borba*), suavizados por regressão local não paramétrica (**LOESS**, proposta por William S. Cleveland, 1979).
+A normalização da posição em percentual ($0\%$ a $100\%$) permite sobrepor e comparar os **arcos emocionais** de obras com estruturas capitulares muito distintas (como os 28 capítulos longos de *Helena* frente aos 198 capítulos curtos de *Quincas Borba*), suavizados por regressão local não paramétrica (**LOESS**, proposta por CLEVELAND, 1979).
 
 ---
 
@@ -81,32 +87,31 @@ Mede a instabilidade dramática de cada obra por meio do desvio padrão amostral
 
 $$\sigma_S = \sqrt{\frac{1}{C - 1} \sum_{c=1}^{C} \left( S_c - \bar{S} \right)^2}$$
 
-* **Interpretação:** Obras com $\sigma_S$ elevado alternam bruscamente capítulos de euforia/ironia positiva com capítulos de crise, luto ou pessimismo; obras com $\sigma_S$ baixo mantêm um tom emocional mais homogêneo e contido.
+* **Interpretação:** Obras com $\sigma_S$ elevado alternam bruscamente capítulos de euforia ou ironia positiva com capítulos de crise, luto ou pessimismo; obras com $\sigma_S$ baixo mantêm um tom emocional mais homogêneo e contido.
 
 ---
 
-
-## 5. Análise de Agrupamento (*Cluster Analysis*) 
+## 5. Análise de Agrupamento (*Cluster Analysis*)
 
 ### 5.1 Origem Histórica
-A **Análise de Agrupamento** (*Cluster Analysis*) é uma técnica estatística multivariada de aprendizagem não supervisionada cujo objetivo é particionar um conjunto de $n$ observações (neste estudo, as 7 obras literárias) em $g$ grupos homogêneos internamente e heterogêneos entre si, com base exclusivamente na estrutura de suas variáveis observadas (frequências vocabulares), sem rótulos prévios de classificação.
+A **Análise de Agrupamento** (*Cluster Analysis*) é uma técnica estatística multivariada de aprendizagem não supervisionada cujo objetivo é particionar um conjunto de $n$ observações (neste estudo, as 7 obras literárias) em $g$ grupos homogêneos internamente e heterogêneos entre si, com base exclusivamente na estrutura de suas variáveis observadas (frequências vocabulares), sem rótulos prévios de classificação (HAIR JR. et al., 2009; FÁVERO; BELFIORE, 2017).
 
-O termo e as bases da taxonomia numérica foram introduzidos por **Robert C. Tryon** (*Cluster Analysis*, 1939) e consolidados sistematicamente por **Robert R. Sokal & Peter H. A. Sneath** (*Principles of Numerical Taxonomy*, 1963). Na estatística multivariada contemporânea, destacam-se as formulações de **Joe H. Ward Jr.** (1963) para agrupamento hierárquico por mínima variância, **James MacQueen** (1967) para partição por centróides ($k$-means), **Leonard Kaufman & Peter J. Rousseeuw** (*Finding Groups in Data*, 1990) para métodos baseados em medóides e silhueta, e **Hair et al.** / **Fávero & Belfiore** na literatura aplicada.
+O termo e as bases da taxonomia numérica foram introduzidos por **Robert C. Tryon** (1939) e consolidados sistematicamente por **Robert R. Sokal e Peter H. A. Sneath** (1963). Na estatística multivariada contemporânea, destacam-se as formulações de **Joe H. Ward Jr.** (1963) para agrupamento hierárquico por mínima variância, **James MacQueen** (1967) para partição por centróides ($k$-means), **Leonard Kaufman e Peter J. Rousseeuw** (1990) para métodos baseados em medóides e silhueta, além de **Hair Jr. et al.** (2009) e **Fávero e Belfiore** (2017) na literatura aplicada.
 
 ---
 
 ### 5.2 Métodos de Clusterização
 
-Na literatura estatística, os algoritmos de agrupamento dividem-se em duas grandes famílias:
+Na literatura estatística, os algoritmos de agrupamento dividem-se em duas grandes famílias (KAUFMAN; ROUSSEEUW, 1990; FÁVERO; BELFIORE, 2017):
 
 1. **Métodos Hierárquicos (Aglomerativos ou Divisivos):**
    * *Aglomerativos (Bottom-Up):* Partem de $n$ clusters unitários (cada livro é um grupo isolado) e fundem sucessivamente os pares mais próximos em $n - 1$ passos até formar um único agrupamento global. O histórico das fusões é representado graficamente por uma árvore binária denominada **dendrograma**.
    * *Divisivos (Top-Down):* Partem de um único grupo contendo todas as observações e o subdividem recursivamente (ex.: algoritmo DIANA).
-2. **Métodos Não Hierárquicos (Particionais):** Exigem a definição *a priori* do número $k$ de clusters e realocam iterativamente as observações para minimizar uma função de dispersão em torno de centróides ($k$-means) ou medóides ($k$-medoids / PAM). Para corpora com número reduzido de documentos ($n = 7$ obras), os **métodos hierárquicos aglomerativos** são estatisticamente superiores por revelarem toda a estrutura multiescala de proximidade sem exigir fixação arbitrária de $k$.
+2. **Métodos Não Hierárquicos (Particionais):** Exigem a definição *a priori* do número $k$ de clusters e realocam iterativamente as observações para minimizar uma função de dispersão em torno de centróides ($k$-means) ou medóides ($k$-medoids / PAM) (MACQUEEN, 1967). Para corpora com número reduzido de documentos ($n = 7$ obras), os **métodos hierárquicos aglomerativos** são estatisticamente superiores por revelarem toda a estrutura multiescala de proximidade sem exigir fixação arbitrária de $k$.
 
 ---
 
-### 5.3 Medidas de Distância e Similaridade 
+### 5.3 Medidas de Distância e Similaridade
 Em matrizes Documento-Termo ($\mathbf{X}_{n \times M}$), cada livro $A$ é representado como um vetor de frequências relativas no espaço de alta dimensionalidade $\mathbb{R}^M$ ($M$ vocábulos únicos): $\mathbf{v}_A = (v_{A,1}, v_{A,2}, \dots, v_{A,M})$. A escolha da métrica de proximidade determina a geometria do agrupamento:
 
 * **Distância Euclidiana ($d_E$):** Mede a distância geométrica direta entre dois pontos no espaço:
@@ -116,34 +121,32 @@ Em matrizes Documento-Termo ($\mathbf{X}_{n \times M}$), cada livro $A$ é repre
 * **Distância de Manhattan ou *City-Block* ($d_M$):** Soma das diferenças absolutas ao longo de cada dimensão lexical:
   $$d_M(A, B) = \sum_{i=1}^{M} |v_{A,i} - v_{B,i}|$$
 
-* **Similaridade de Cosseno ($\cos \theta$) e Dissimilaridade Angular ($D_{\cos}$):** Padrão-ouro em linguística computacional e recuperação da informação (Salton & McGill, 1983). Mede o cosseno do ângulo $\theta$ formado entre os vetores $\mathbf{v}_A$ e $\mathbf{v}_B$, capturando a **proporcionalidade do perfil vocabular** independentemente do tamanho absoluto dos romances:
+* **Similaridade de Cosseno ($\cos \theta$) e Dissimilaridade Angular ($D_{\cos}$):** Padrão-ouro em linguística computacional e recuperação da informação (SALTON; MCGILL, 1983). Mede o cosseno do ângulo $\theta$ formado entre os vetores $\mathbf{v}_A$ e $\mathbf{v}_B$, capturando a **proporcionalidade do perfil vocabular** independentemente do tamanho absoluto dos romances:
   $$\text{Similaridade}(A, B) = \cos(\theta) = \frac{\mathbf{v}_A \cdot \mathbf{v}_B}{\|\mathbf{v}_A\| \, \|\mathbf{v}_B\|} = \frac{\sum_{i=1}^{M} v_{A,i} \, v_{B,i}}{\sqrt{\sum_{i=1}^{M} v_{A,i}^2} \sqrt{\sum_{i=1}^{M} v_{B,i}^2}}$$
   Como $v_{A,i}, v_{B,i} \ge 0$, tem-se $\cos(\theta) \in [0, 1]$, onde $1$ indica identidade proporcional absoluta e $0$ indica ortogonalidade total (ausência de palavras em comum). A **distância (dissimilaridade) de cosseno** utilizada como entrada no algoritmo de agrupamento é definida por:
   $$D_{\cos}(A, B) = 1 - \cos(\theta) \in [0, 1]$$
 
 ---
 
-### 5.4 Critérios de Ligação (*Linkage*) e Método de Ward 
+### 5.4 Critérios de Ligação (*Linkage*) e Método de Ward
 
-Definida a matriz de dissimilaridades $\mathbf{D} = [D_{\cos}(A, B)]$, o algoritmo hierárquico necessita de uma regra de atualização para calcular a distância entre um cluster recém-formado $(C_1 \cup C_2)$ e qualquer outro cluster $C_3$:
+Definida a matriz de dissimilaridades $\mathbf{D} = [D_{\cos}(A, B)]$, o algoritmo hierárquico necessita de uma regra de atualização para calcular a distância entre um cluster recém-formado $(C_1 \cup C_2)$ e qualquer outro cluster $C_3$ (HAIR JR. et al., 2009):
 
 * **Ligação Simples (*Single Linkage* — Vizinho Mais Próximo):** $d(C_1 \cup C_2, C_3) = \min\{d(C_1, C_3), d(C_2, C_3)\}$ (tende a produzir efeito de encadeamento).
 * **Ligação Completa (*Complete Linkage* — Vizinho Mais Distante):** $d(C_1 \cup C_2, C_3) = \max\{d(C_1, C_3), d(C_2, C_3)\}$ (gera grupos compactos, mas sensíveis a *outliers*).
-* **Ligação Média (*Average Linkage* / UPGMA):** Média ponderada das distâncias entre todos os pares dos dois grupos.
-* **Método de Mínima Variância de Ward (`ward.D2`):** Proposto por **Joe H. Ward Jr.** (1963) e implementado com dissimilaridades ao quadrado por Murtagh & Legendre (2014). A cada passo, o algoritmo funde o par de clusters $(C_1, C_2)$ que minimiza o incremento na **Soma dos Quadrados Dentro dos Grupos** ($ESS$ — *Error Sum of Squares*):
+* **Ligação Média (*Average Linkage* / UPGMA):** Média ponderada das distâncias entre todos os pares dos dois grupos (SOKAL; SNEATH, 1963).
+* **Método de Mínima Variância de Ward (`ward.D2`):** Proposto por **Joe H. Ward Jr.** (1963) e implementado com dissimilaridades ao quadrado por Murtagh e Legendre (2014). A cada passo, o algoritmo funde o par de clusters $(C_1, C_2)$ que minimiza o incremento na **Soma dos Quadrados Dentro dos Grupos** ($ESS$ — *Error Sum of Squares*):
   $$\Delta ESS(C_1, C_2) = \frac{n_{C_1} \, n_{C_2}}{n_{C_1} + n_{C_2}} \, d^2(\bar{\mathbf{v}}_{C_1}, \bar{\mathbf{v}}_{C_2})$$
-  Onde $n_{C_1}$ e $n_{C_2}$ são os números de documentos nos respectivos clusters e $\bar{\mathbf{v}}_{C_1}, \bar{\mathbf{v}}_{C_2}$ são seus centróides. O método `ward.D2` tende a formar grupos equilibrados, esféricos e de alta coesão interna.
+  Onde $n_{C_1}$ e $n_{C_2}$ são os números de documentos nos respectivos clusters e $\bar{\mathbf{v}}_{C_1}, \bar{\mathbf{v}}_{C_2}$ são seus centróides. O método `ward.D2` tende a formar grupos equilibrados, esféricos e de alta coesão interna (WARD JR., 1963; MURTAGH; LEGENDRE, 2014).
 
 ---
 
 ### 5.5 Correlação Cofenética ($CCC$)
-Para avaliar o grau de fidelidade com que o dendrograma bidimensional preserva as distâncias originais da matriz $\mathbf{D}$, calcula-se o **Coeficiente de Correlação Cofenética** (Sokal & Rohlf, 1962), definido como a correlação linear de Pearson entre as dissimilaridades originais $d_{ij}$ e as distâncias cofenéticas $c_{ij}$ (altura do nó em que os livros $i$ e $j$ são fundidos pela primeira vez na árvore):
+Para avaliar o grau de fidelidade com que o dendrograma bidimensional preserva as distâncias originais da matriz $\mathbf{D}$, calcula-se o **Coeficiente de Correlação Cofenética** (SOKAL; ROHLF, 1962), definido como a correlação linear de Pearson entre as dissimilaridades originais $d_{ij}$ e as distâncias cofenéticas $c_{ij}$ (altura do nó em que os livros $i$ e $j$ são fundidos pela primeira vez na árvore):
 
 $$CCC = \frac{\sum_{i < j} (d_{ij} - \bar{d})(c_{ij} - \bar{c})}{\sqrt{\sum_{i < j} (d_{ij} - \bar{d})^2 \sum_{i < j} (c_{ij} - \bar{c})^2}}$$
 
-* **Critério de Decisão Estatística:** Valores de $CCC > 0{,}70$ (e idealmente $CCC > 0{,}80$) indicam que a estrutura hierárquica representada no dendrograma reflete com alta precisão as distâncias estilísticas reais do corpus, sem distorções severas de projeção.
-
-
+* **Critério de Decisão Estatística:** Valores de $CCC > 0{,}70$ (e idealmente $CCC > 0{,}80$) indicam que a estrutura hierárquica representada no dendrograma reflete com alta precisão as distâncias estilísticas reais do corpus, sem distorções severas de projeção (SOKAL; ROHLF, 1962; FÁVERO; BELFIORE, 2017).
 
 ---
 
@@ -157,13 +160,13 @@ Aplicando a transformação logarítmica em ambos os lados, obtém-se uma relaç
 
 $$\log_{10} f(r) = \log_{10} C - \alpha \log_{10} r$$
 
-* **Critério de Interpretação:** Em corpora literários bem formados, o expoente angular $\alpha$ situa-se tipicamente próximo de $1{,}0$ ($\alpha \approx 1$), com coeficiente de determinação $R^2 > 0{,}95$, evidenciando o princípio do "mínimo esforço" na comunicação humana (poucas palavras estruturais muito repetidas e uma longa cauda de vocábulos raros).
+* **Critério de Interpretação:** Em corpora literários bem formados, o expoente angular $\alpha$ situa-se tipicamente próximo de $1{,}0$ ($\alpha \approx 1$), com coeficiente de determinação $R^2 > 0{,}95$, evidenciando o princípio do "mínimo esforço" na comunicação humana (poucas palavras estruturais muito repetidas e uma longa cauda de vocábulos raros) (ZIPF, 1949).
 
 ---
 
 ## 7. Análise de *Keyness* ($\chi^2$)
 
-Consolidada na linguística de corpus por **Mike Scott** (1997) e formalizada estatisticamente por **Paul Rayson & Roger Garside** (2000), a análise de **Keyness** (palavras-chave estatísticas) testa formalmente se a frequência de um termo $t$ difere significativamente entre um **corpus alvo** (ex.: *Fase Romântica*) e um **corpus de referência** (ex.: *Fase Realista*).
+Consolidada na linguística de corpus por **Mike Scott** (1997) e formalizada estatisticamente por **Paul Rayson e Roger Garside** (2000), a análise de **Keyness** (palavras-chave estatísticas) testa formalmente se a frequência de um termo $t$ difere significativamente entre um **corpus alvo** (ex.: *Fase Romântica*) e um **corpus de referência** (ex.: *Fase Realista*).
 
 Para cada termo $t$, constrói-se uma tabela de contingência $2 \times 2$ com as contagens observadas ($O_{ij}$) e esperadas ($E_{ij}$):
 
@@ -177,17 +180,17 @@ Calcula-se a estatística **Qui-Quadrado de Pearson com correção de continuida
 
 $$\chi^2 = \sum_{i=1}^{2} \sum_{j=1}^{2} \frac{\left( |O_{ij} - E_{ij}| - 0{,}5 \right)^2}{E_{ij}}, \qquad \text{onde } E_{ij} = \frac{R_i \cdot C_j}{N}$$
 
-* **Critério de Decisão Estatística:** Sob a hipótese nula $H_0$ de independência lexical ($1$ grau de liberdade), valores de $|\chi^2| > 3{,}84$ correspondem a $p < 0{,}05$ e $|\chi^2| > 10{,}83$ correspondem a $p < 0{,}001$. Valores positivos indicam termos super-representados no grupo alvo; valores negativos indicam termos característicos do grupo de referência.
+* **Critério de Decisão Estatística:** Sob a hipótese nula $H_0$ de independência lexical ($1$ grau de liberdade), valores de $|\chi^2| > 3{,}84$ correspondem a $p < 0{,}05$ e $|\chi^2| > 10{,}83$ correspondem a $p < 0{,}001$. Valores positivos indicam termos super-representados no grupo alvo; valores negativos indicam termos característicos do grupo de referência (SCOTT, 1997; RAYSON; GARSIDE, 2000).
 
 ---
 
 ## 8. Análise de Correspondência Simples (CA)
 
 ### 8.1 Origem Histórica
-A **Análise de Correspondência** (*Correspondence Analysis* — CA) foi desenvolvida na década de 1960 pelo matemático e estatístico francês **Jean-Paul Benzécri** (*Analyse des Données*, 1973), inicialmente concebida justamente para analisar tabelas de contingência linguísticas e textuais. Posteriormente, foi difundida na literatura estatística anglo-saxônica por **Michael Greenacre** (*Theory and Applications of Correspondence Analysis*, 1984) e no Brasil por autores como **Luiz Paulo Fávero & Patrícia Belfiore** (*Manual de Análise de Dados*).
+A **Análise de Correspondência** (*Correspondence Analysis* — CA) foi desenvolvida na década de 1960 pelo matemático e estatístico francês **Jean-Paul Benzécri** (1973), inicialmente concebida justamente para analisar tabelas de contingência linguísticas e textuais. Posteriormente, foi difundida na literatura estatística anglo-saxônica por **Michael J. Greenacre** (1984) e na literatura brasileira por autores como **Luiz Paulo Fávero e Patrícia Belfiore** (2017).
 
 ### 8.2 Formulação Geral e Decomposição SVD
-Dada uma matriz de contingência $\mathbf{N}$ de dimensão $I \times J$ (onde $I$ representa os livros e $J$ representa os termos do vocabulário), define-se a **matriz de correspondência** (frequências relativas conjuntas) $\mathbf{P} = \frac{1}{n}\mathbf{N}$, com massas marginais das linhas $\mathbf{r} = \mathbf{P}\mathbf{1}$ e das colunas $\mathbf{c} = \mathbf{P}^\top\mathbf{1}$.
+Dada uma matriz de contingência $\mathbf{N}$ de dimensão $I \times J$ (onde $I$ representa os livros e $J$ representa os termos do vocabulário), define-se a **matriz de correspondência** (frequências relativas conjuntas) $\mathbf{P} = \frac{1}{n}\mathbf{N}$, com massas marginais das linhas $\mathbf{r} = \mathbf{P}\mathbf{1}$ e das colunas $\mathbf{c} = \mathbf{P}^\top\mathbf{1}$ (GREENACRE, 1984).
 
 A matriz de **resíduos padronizados** $\mathbf{S}$ mede os desvios relativos entre as proporções observadas e as esperadas sob independência:
 
@@ -197,60 +200,89 @@ Aplica-se a **Decomposição em Valores Singulares (SVD)** sobre $\mathbf{S}$:
 
 $$\mathbf{S} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\top$$
 
-Onde $\mathbf{\Sigma} = \text{diag}(\sigma_1, \sigma_2, \dots, \sigma_K)$ contém os valores singulares ordenados ($\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_K$), e os autovalores (inércias principais) são dados por $\lambda_k = \sigma_k^2$. As coordenadas principais das obras ($\mathbf{F}$) e dos termos ($\mathbf{G}$) no espaço fatorial são obtidas por:
+Onde $\mathbf{\Sigma} = \text{diag}(\sigma_1, \sigma_2, \dots, \sigma_K)$ contém os valores singulares ordenados ($\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_K$), e os autovalores (inércias principais) são dados por $\lambda_k = \sigma_k^2$. As coordenadas principais das obras ($\mathbf{F}$) e dos termos ($\mathbf{G}$) no espaço fatorial são obtidas por (BENZÉCRI, 1973; GREENACRE, 1984):
 
 $$\mathbf{F} = \mathbf{D}_r^{-1/2} \mathbf{U} \mathbf{\Sigma} \qquad \text{e} \qquad \mathbf{G} = \mathbf{D}_c^{-1/2} \mathbf{V} \mathbf{\Sigma}$$
 
-### 8.3 Critérios Diagnósticos 
-Para validar e interpretar adequadamente uma Análise de Correspondência em pesquisa acadêmica, avaliam-se quatro elementos fundamentais:
+### 8.3 Critérios Diagnósticos
+Para validar e interpretar adequadamente uma Análise de Correspondência em pesquisa acadêmica, avaliam-se quatro elementos fundamentais (GREENACRE, 1984; FÁVERO; BELFIORE, 2017):
 
 1. **Inércia Total e Percentual de Inércia Explicada:** A inércia total ($\Lambda$) é a soma de todos os autovalores e equivale à estatística qui-quadrado dividida pelo total de ocorrências ($\Lambda = \sum_{k=1}^K \lambda_k = \frac{\chi^2}{n}$). O percentual de variância capturado pelo eixo $k$ é:
    $$\%\text{Inércia}_k = \left( \frac{\lambda_k}{\sum_{m=1}^K \lambda_m} \right) \times 100$$
-2. **Critério $\beta$ de Associação Significativa ($\beta > 3$):** Conforme formulado por Fávero & Belfiore, para verificar globalmente se existe associação estatisticamente significativa entre as categorias das linhas e das colunas antes de interpretar o mapa, calcula-se o indicador padronizado $\beta$:
+2. **Critério $\beta$ de Associação Significativa ($\beta > 3$):** Conforme sistematizado por Fávero e Belfiore (2017), para verificar globalmente se existe associação estatisticamente significativa entre as categorias das linhas e das colunas antes de interpretar o mapa, calcula-se o indicador padronizado $\beta$:
    $$\beta = \frac{\chi^2 - (I - 1)(J - 1)}{\sqrt{(I - 1)(J - 1)}} > 3$$
    Quando $\beta > 3$, rejeita-se a independência entre obras e vocabulário ao nível de significância usual, legitimando a extração das dimensões latentes.
-3. **Análise dos Resíduos Padronizados Ajustados:** Permitem identificar localmente quais pares específicos *(obra $\times$ palavra)* contribuem com excesso positivo ou negativo para a estatística $\chi^2$.
-4. **Mapa Perceptual de Correspondência:** Representação gráfica bidimensional simultânea (ou por subespaço) das coordenadas principais ($\text{Dim}_1 \times \text{Dim}_2$), onde a proximidade geométrica entre pontos indica afinidade de perfil lexical e o afastamento da origem $(0,0)$ indica maior especificidade estilística.
+3. **Análise dos Resíduos Padronizados:** Permitem identificar localmente quais pares específicos *(obra $\times$ palavra)* contribuem com excesso positivo ou negativo para a estatística $\chi^2$.
+4. **Mapa Perceptual de Correspondência:** Representação gráfica bidimensional das coordenadas principais ($\text{Dim}_1 \times \text{Dim}_2$), onde a proximidade geométrica entre pontos indica afinidade de perfil lexical e o afastamento da origem $(0,0)$ indica maior especificidade estilística (FÁVERO; BELFIORE, 2017).
 
 ---
 
 ## 9. Modelagem Probabilística de Tópicos (LDA)
 
-Proposta por **David M. Blei, Andrew Y. Ng & Michael I. Jordan** (2003), a **Alocação Latente de Dirichlet (*Latent Dirichlet Allocation* — LDA)** é um modelo generativo bayesiano hierárquico não supervisionado que representa cada documento (capítulo) como uma mistura probabilística sobre $K$ tópicos latentes, e cada tópico como uma distribuição multinomial sobre o vocabulário:
+Proposta por **David M. Blei, Andrew Y. Ng e Michael I. Jordan** (2003), a **Alocação Latente de Dirichlet (*Latent Dirichlet Allocation* — LDA)** é um modelo generativo bayesiano hierárquico não supervisionado que representa cada documento (capítulo) como uma mistura probabilística sobre $K$ tópicos latentes, e cada tópico como uma distribuição multinomial sobre o vocabulário:
 
 $$P(w_i \mid d) = \sum_{k=1}^{K} P(w_i \mid z_i = k) \, P(z_i = k \mid d) = \sum_{k=1}^{K} \beta_{k, w_i} \, \gamma_{d, k}$$
 
-* **Parâmetros Estimados (via Amostragem de Gibbs, Griffiths & Steyvers, 2004):**
+* **Parâmetros Estimados (via Amostragem de Gibbs, GRIFFITHS; STEYVERS, 2004; implementado no pacote `topicmodels` por GRÜN; HORNIK, 2011):**
   * $\boldsymbol{\gamma}_d \sim \text{Dirichlet}(\alpha)$: vetor de proporções dos $K$ tópicos dentro do capítulo $d$.
   * $\boldsymbol{\beta}_k \sim \text{Dirichlet}(\eta)$: distribuição de probabilidade das palavras pertencentes ao tópico latente $k$.
 
 ---
 
-## 10. Teoria dos Grafos 
+## 10. Teoria dos Grafos e Redes Semânticas
 
-Baseada na **Teoria dos Grafos** (Euler; Erdős & Rényi; Newman, 2010), uma rede semântica modela o texto como um grafo $G = (V, E)$, onde $V$ é o conjunto de vértices (palavras) e $E$ é o conjunto de arestas direcionadas e ponderadas pela frequência de coocorrência consecutiva (bigramas).
+Fundamentada na **Teoria dos Grafos** (EULER, 1736; ERDŐS; RÉNYI, 1959; NEWMAN, 2010), uma rede semântica modela o texto como um grafo $G = (V, E)$, onde $V$ é o conjunto de vértices (palavras) e $E$ é o conjunto de arestas direcionadas e ponderadas pela frequência de coocorrência consecutiva (bigramas).
 
-Para identificar os núcleos articuladores do vocabulário, calcula-se a **Centralidade de Grau (*Degree Centrality*)** de cada vértice $v_i$:
+Para identificar os núcleos articuladores e as comunidades temáticas do vocabulário, empregam-se três métricas estruturais (FREEMAN, 1977; BLONDEL et al., 2008; NEWMAN, 2010):
 
-$$C_D(v_i) = \deg^-(v_i) + \deg^+(v_i) = \sum_{j} a_{ji} + \sum_{j} a_{ij}$$
-
-Onde $a_{ij} = 1$ se existe aresta direcionada de $v_i$ para $v_j$ (e $0$ caso contrário). Palavras com alto grau atuam como *hubs* semânticos que conectam diferentes expressões e motivos narrativos ao longo da obra.
+1. **Centralidade de Grau (*Degree Centrality*):** Mede o total de conexões incidentes e emergentes de cada vértice $v_i$:
+   $$C_D(v_i) = \deg^-(v_i) + \deg^+(v_i) = \sum_{j} a_{ji} + \sum_{j} a_{ij}$$
+   Onde $a_{ij} = 1$ se existe aresta direcionada de $v_i$ para $v_j$ (e $0$ caso contrário). Palavras com alto grau atuam como *hubs* semânticos.
+2. **Centralidade de Intermediação (*Betweenness Centrality*):** Proposta por Linton C. Freeman (1977), quantifica com que frequência um vocábulo $v_i$ atua como "ponte" nos caminhos geodésicos mais curtos ($\sigma_{st}$) entre outros dois pares de palavras $(s, t)$:
+   $$C_B(v_i) = \sum_{s \neq v_i \neq t} \frac{\sigma_{st}(v_i)}{\sigma_{st}}$$
+3. **Detecção de Comunidades por Modularidade (Algoritmo de Louvain):** Proposto por Blondel et al. (2008), particiona a rede maximizando o índice de modularidade $Q$, agrupando termos que coocorrem densamente entre si em macro-eixos temáticos:
+   $$Q = \frac{1}{2m} \sum_{i,j} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(c_i, c_j)$$
 
 ---
 
-## 11. Síntese Geral das Técnicas e Métricas Aplicadas
+## 11. Síntese Geral das Técnicas, Autores e Pacotes R
 
-| Dimensão Analítica | Técnica / Métrica | Autores Seminais | Pacote R | Objetivo na Pesquisa |
+| Dimensão Analítica | Técnica / Métrica | Autores Seminais (ABNT) | Pacote R e Autores | Objetivo na Pesquisa |
 | :--- | :--- | :--- | :--- | :--- |
-| **Riqueza Vocabular** | $TTR$ e $CTTR$ | Carroll (1964) | `quanteda.textstats` | Avaliar variedade lexical com e sem controle de extensão. |
-| **Sintaxe / Estilo** | Flesch-Kincaid ($FK$) | Kincaid et al. (1975) | `quanteda.textstats` | Medir densidade frasal e complexidade de leitura. |
-| **Relevância Temática** | $TF\text{-}IDF$ e Freq/10k | Spärck Jones (1972) | `tidytext` / `dplyr` | Identificar assinatura exclusiva de cada romance. |
-| **Arco Emocional** | Polaridade ($S_c$) e $\sigma_S$ | Souza et al. (2011) | `lexiconPT` | Mapear trajetória afetiva e volatilidade dramática. |
-| **Estilometria** | Cosseno + Ward.D2 | Ward (1963) | `quanteda.textstats` | Agrupar obras por distância vetorial de vocabulário. |
-| **Leis de Potência** | Lei de Zipf ($\alpha$) | Zipf (1935, 1949) | `stats` (`lm`) | Verificar aderência do léxico à distribuição de potência. |
-| **Teste de Hipótese** | *Keyness* ($\chi^2$) | Scott (1997); Rayson (2000) | `quanteda.textstats` | Testar diferenças significativas entre Romantismo e Realismo. |
-| **Multivariada** | Correspondência (CA / $\beta$) | Benzécri (1973); Greenacre | `base` (`svd`) | Projetar mapa perceptual e medir inércia explicada. |
-| **Tópicos Latentes** | LDA (Gibbs) | Blei, Ng & Jordan (2003) | `topicmodels` | Descobrir núcleos temáticos latentes nos 827 capítulos. |
-| **Redes Semânticas** | Grafos / Grau ($C_D$) | Newman (2010) | `igraph` / `ggraph` | Mapear conectividade e *hubs* de colocações lexicais. |
+| **Riqueza Vocabular** | $TTR$ e $CTTR$ | CARROLL (1964) | `quanteda.textstats` (BENOIT et al., 2018) | Avaliar variedade lexical com e sem controle de extensão. |
+| **Sintaxe / Estilo** | Flesch-Kincaid ($FK$) | KINCAID et al. (1975) | `quanteda.textstats` (BENOIT et al., 2018) | Medir densidade frasal e complexidade de leitura. |
+| **Relevância Temática** | $TF\text{-}IDF$ e Freq/10k | SPÄRCK JONES (1972); SALTON; MCGILL (1983) | `tidytext` (SILGE; ROBINSON, 2016) | Identificar assinatura exclusiva de cada romance. |
+| **Arco Emocional** | Polaridade ($S_c$), $\sigma_S$ e LOESS | SOUZA et al. (2011); CLEVELAND (1979) | `lexiconPT` (GONZAGA, 2017) | Mapear trajetória afetiva e volatilidade dramática. |
+| **Estilometria** | Cosseno + Ward.D2 ($CCC$) | WARD JR. (1963); SOKAL; ROHLF (1962) | `quanteda.textstats` & `stats` (R CORE TEAM, 2026) | Agrupar obras por distância vetorial de vocabulário. |
+| **Leis de Potência** | Lei de Zipf ($\alpha$) | ZIPF (1935, 1949) | `stats` (`lm`) (R CORE TEAM, 2026) | Verificar aderência do léxico à distribuição de potência. |
+| **Teste de Hipótese** | *Keyness* ($\chi^2$) | SCOTT (1997); RAYSON; GARSIDE (2000) | `quanteda.textstats` (BENOIT et al., 2018) | Testar diferenças significativas entre Romantismo e Realismo. |
+| **Multivariada** | Correspondência (CA / $\beta$) | BENZÉCRI (1973); GREENACRE (1984); FÁVERO; BELFIORE (2017) | `base` (`svd`) (R CORE TEAM, 2026) | Projetar mapa perceptual e medir inércia explicada. |
+| **Tópicos Latentes** | LDA (Gibbs) | BLEI; NG; JORDAN (2003); GRIFFITHS; STEYVERS (2004) | `topicmodels` (GRÜN; HORNIK, 2011) | Descobrir núcleos temáticos latentes nos 827 capítulos. |
+| **Redes Semânticas** | Grafos / Grau, Intermediação e Louvain | FREEMAN (1977); BLONDEL et al. (2008); NEWMAN (2010) | `igraph` (CSÁRDI; NEPUSZ, 2006) & `ggraph` (PEDERSEN, 2024) | Mapear conectividade, pontes e comunidades lexicais. |
 
-Avance para a aba **Resultados & Léxico** para explorar as tabelas descritivas e os gráficos gerados a partir das 7 obras completas.
+::: {.callout-note appearance="minimal"}
+**Nota Bibliográfica:** Todas as obras metodológicas, artigos seminais e pacotes **R** citados nesta seção encontram-se referenciados integralmente na aba [**Referências**](referencias.qmd) conforme as normas da ABNT (NBR 6023). Avance para **Resultados & Léxico** para explorar as tabelas descritivas e os gráficos gerados a partir das 7 obras completas.
+:::
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

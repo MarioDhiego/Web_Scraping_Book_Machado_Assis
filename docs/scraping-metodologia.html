@@ -77,6 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -140,6 +143,9 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Arquitetura de Coleta e Pipeline de Text Mining – Curso Básico de Mineração de Texto em R">
+<meta property="og:description" content="Web Scraping no Wikisource, tratamento de dados não estruturados e ecossistema R">
+<meta property="og:site_name" content="Curso Básico de Mineração de Texto em R">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -165,7 +171,17 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/mário-diego/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
     <a class="nav-link" href="https://instagram.com/Dhiego_Valente"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:mario.valente@detran.pa.gov.br"> <i class="bi bi-envelope" role="img" aria-label="E-mail">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -268,7 +284,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Arquitetura de Coleta e Pipeline de Text Mining</h1>
+<div class="quarto-title-block"><div><h1 class="title">Arquitetura de Coleta e Pipeline de Text Mining</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Código</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Mostrar o código</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Esconder o código</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">Ver o código fonte</a></li></ul></div></div>
 <p class="subtitle lead">Web Scraping no Wikisource, tratamento de dados não estruturados e ecossistema R</p>
 </div>
 
@@ -457,7 +473,7 @@ window.Quarto = {
 <div id="fig-corpus-scraping" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-corpus-scraping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/obras-machado-corpus.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+<a href="images/obras-machado-corpus.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figura&nbsp;1: Acervo das 7 obras de Machado de Assis raspadas integralmente do Wikisource."><img src="images/obras-machado-corpus.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-corpus-scraping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1: Acervo das 7 obras de Machado de Assis raspadas integralmente do Wikisource.
@@ -749,6 +765,8 @@ Figura&nbsp;2: Arquitetura completa do pipeline de Web Scraping e Text Mining em
 <hr>
 
 
+<!-- -->
+
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> De volta ao topo</a></main> <!-- /main -->
@@ -986,9 +1004,60 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     });
     clipboardModal.on('success', onCopySuccess);
   }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/mariodhiego\.github\.io\/Web_Scraping_Book_Machado_Assis\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1002,6 +1071,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1327,21 +1401,395 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text">3. Métricas Estatísticas</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Arquitetura de Coleta e Pipeline de Text Mining"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Web Scraping no Wikisource, tratamento de dados não estruturados e ecossistema R"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">title-block-banner:</span><span class="co"> false</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>:::::: {.columns}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>::: {.column width="24%"}</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" icon=false}</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### **7 Obras**</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>Wikisource (1876–1908)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>::: {.column width="24%"}</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" icon=false}</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### **827 Capítulos**</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>Segmentados</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>::: {.column width="24%"}</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" icon=false}</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### **8.915 Parágrafos**</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>Higienizados via Regex</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>::: {.column width="24%"}</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" icon=false}</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="fu">### **+428 mil Tokens**</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>Base empírica</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>::::::</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal"}</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>**Reprodutibilidade:** Todo o fluxo de coleta e processamento foi desenvolvido em linguagem **$R_{4.5.5}$** (R CORE TEAM, 2026). Para evitar requisições repetidas aos servidores da Fundação Wikimedia durante a compilação deste portfólio, os textos coletados foram persistidos localmente em formato binário nativo (<span class="in">`.rds`</span>).</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Ecossistema de Pacotes e Referências Técnicas</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>O pipeline computacional deste projeto apoia-se em bibliotecas consolidadas da comunidade **R** para ciência de dados, raspagem web (*web scraping*), linguística computacional, modelagem probabilística e teoria de grafos (SILGE; ROBINSON, 2017; BENOIT et al., 2018). A tabela abaixo sistematiza cada pacote empregado ao longo das abas do curso, sua função na arquitetura do projeto e seus respectivos autores principais no padrão ABNT:</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>| Pacote | Função no Pipeline | Autores Originais e Citação (ABNT) |</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>|:-----------------------|:-----------------------|:-----------------------|</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>| **`rvest` &amp; `xml2`** | Navegação na árvore DOM/HTML, seleção de nós via CSS (<span class="in">`#mw-content-text`</span>) e extração de atributos e parágrafos. | Hadley Wickham, Jim Hester &amp; Jeroen Ooms (WICKHAM, 2024; WICKHAM; HESTER; OOMS, 2023) |</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>| **`curl`** | Detecção automática de configurações de proxy do sistema operacional Windows (<span class="in">`ie_get_proxy_for_url`</span>). | Jeroen Ooms (OOMS, 2024) |</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>| **`tidyverse`** | Manipulação tabular (<span class="in">`dplyr`</span>, <span class="in">`tidyr`</span>), expressões regulares (<span class="in">`stringr`</span>), programação funcional (<span class="in">`purrr`</span>) e visualização (<span class="in">`ggplot2`</span>). | Hadley Wickham e equipe Posit (WICKHAM et al., 2019; WICKHAM, 2014) |</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>| **`tidytext`** | Tokenização em formato *tidy* (uma palavra ou *n*-grama por linha) e cálculo de ponderação estatística <span class="in">`TF-IDF`</span>. | Julia Silge &amp; David Robinson (SILGE; ROBINSON, 2016, 2017) |</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>| **`quanteda`** | Construção formal do <span class="in">`corpus`</span>, limpeza de tokens e geração da Matriz Documento-Termo (<span class="in">`dfm`</span>). | Kenneth Benoit, Kohei Watanabe e equipe (BENOIT et al., 2018) |</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>| **`quanteda.textstats`** | Cálculo de diversidade léxica (<span class="in">`TTR`</span>, <span class="in">`CTTR`</span>), legibilidade (<span class="in">`Flesch-Kincaid`</span>), *Keyness* ($\chi^2$) e similaridade de cosseno. | Kenneth Benoit &amp; Kohei Watanabe (BENOIT et al., 2018) |</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>| **`quanteda.textplots`** | Visualização de dispersão léxica longitudinal (<span class="in">`textplot_xray`</span>) e gráficos de desvios significativos (<span class="in">`textplot_keyness`</span>). | Kenneth Benoit &amp; Kohei Watanabe (BENOIT et al., 2018) |</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>| **`lexiconPT`** | Fornecimento do dicionário de polaridade em língua portuguesa *OpLexicon v3.0* e base metodológica inspirada no pacote <span class="in">`literaturaBR`</span>. | Sillas Gonzaga (GONZAGA, 2017; SOUZA et al., 2011) |</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>| **`topicmodels`** | Estimação bayesiana não supervisionada de tópicos latentes via Alocação Latente de Dirichlet (LDA / Gibbs). | Bettina Grün &amp; Kurt Hornik (GRÜN; HORNIK, 2011; BLEI; NG; JORDAN, 2003) |</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>| **`igraph` &amp; `ggraph`** | Modelagem de redes semânticas, métricas de centralidade, comunidades de Louvain e visualização topológica. | Gábor Csárdi, Tamás Nepusz &amp; Thomas Lin Pedersen (CSÁRDI; NEPUSZ, 2006; PEDERSEN, 2024) |</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>| **`wordcloud` &amp; `reshape2`** | Construção de nuvens comparativas de polaridade vocabular e reestruturação de matrizes de contingência. | Ian Fellows &amp; Hadley Wickham (FELLOWS, 2018; WICKHAM, 2007) |</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>| **`ggrepel`, `patchwork` &amp; `scales`** | Posicionamento inteligente de rótulos sem sobreposição, composição de painéis e formatação numérica. | Kamil Slowikowski, Thomas Lin Pedersen &amp; Hadley Wickham (SLOWIKOWSKI, 2024; PEDERSEN, 2024b; WICKHAM; SEIDEL, 2023) |</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>| **`gt` &amp; `DT`** | Renderização de tabelas acadêmicas estáticas de alta precisão (<span class="in">`gt`</span>) e tabelas interativas navegáveis (<span class="in">`DT`</span>). | Richard Iannone (<span class="in">`gt`</span>) &amp; Yihui Xie (<span class="in">`DT`</span>) (IANNONE et al., 2024; XIE; CHENG; TAN, 2024) |</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Estratégia de Web Scraping (`pt.wikisource.org`)</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>:::::: columns</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>::: {.column width="60%"}</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>O **Wikisource** (FUNDAÇÃO WIKIMEDIA, 2026) é uma biblioteca digital livre mantida pela Fundação Wikimedia que hospeda obras em domínio público fielmente transcritas. Diferente de repositórios com arquivos únicos em <span class="in">`.txt`</span>, os romances de Machado de Assis no Wikisource em português são organizados hierarquicamente na árvore DOM/HTML (MITCHELL, 2018):</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Página Índice da Obra:** Contém os metadados bibliográficos e uma lista de hiperlinks apontando para cada capítulo individual (ex.: <span class="in">`/wiki/Dom_Casmurro/I`</span>, <span class="in">`/wiki/Dom_Casmurro/II`</span>).</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Subpáginas de Capítulos:** Contêm o texto literário propriamente dito, encapsulado dentro do seletor HTML <span class="in">`#mw-content-text .mw-parser-output p`</span>, acompanhado de elementos de navegação (*Anterior*, *Próximo*, *Índice*) e notas de rodapé numéricas (<span class="in">`[1]`</span>, <span class="in">`[2]`</span>).</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>::: {.column width="3%"}</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>::: {.column width="37%"}</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="al">![Acervo das 7 obras de Machado de Assis raspadas integralmente do Wikisource.](images/obras-machado-corpus.jpg)</span>{#fig-corpus-scraping width="100%" fig-align="center"}</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>::::::</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### Contorno de Proxy e Leitura Nativa (`wininet`)</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>Em ambientes Windows corporativos ou institucionais com restrições de proxy, requisições diretas via <span class="in">`curl`</span> ou <span class="in">`httr`</span> frequentemente sofrem bloqueio de certificado SSL ou *timeout*. Para garantir estabilidade, implementou-se uma função de leitura baseada no motor nativo de rede do Windows (<span class="in">`method = "wininet"`</span> via <span class="in">`download.file`</span>), combinada com detecção automática de proxy via <span class="in">`curl::ie_get_proxy_for_url()`</span> (OOMS, 2024) e três boas práticas de raspagem ética (MITCHELL, 2018):</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Pausa ética (`Sys.sleep(0.25)`):** Intervalo de 250 milissegundos entre requisições para não sobrecarregar os servidores da Wikimedia.</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Decodificação de URLs (`URLdecode`):** Normalização de caracteres acentuados (como em *Memórias Póstumas* e *Esaú e Jacó*) para garantir o pareamento exato dos links de capítulos.</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Persistência em Cache (`.rds`):** Armazenamento local da base bruta após a primeira coleta, garantindo reprodutibilidade offline.</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: code-scraping</span></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuração automática de proxy do sistema Windows (protegida contra NULL/vazio)</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>proxy_sistema <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>  curl<span class="sc">::</span><span class="fu">ie_get_proxy_for_url</span>(<span class="st">"[https://pt.wikisource.org](https://pt.wikisource.org)"</span>),</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(proxy_sistema) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(proxy_sistema[<span class="dv">1</span>]) <span class="sc">&amp;&amp;</span> <span class="fu">nzchar</span>(proxy_sistema[<span class="dv">1</span>])) {</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.setenv</span>(<span class="at">https_proxy =</span> proxy_sistema[<span class="dv">1</span>], <span class="at">http_proxy =</span> proxy_sistema[<span class="dv">1</span>])</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de leitura HTML usando motor nativo wininet</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>ler_html_wininet <span class="ot">&lt;-</span> <span class="cf">function</span>(url) {</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>  arquivo_temp <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".html"</span>)</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>  status <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>    <span class="fu">suppressWarnings</span>(<span class="fu">download.file</span>(url, <span class="at">destfile =</span> arquivo_temp, <span class="at">method =</span> <span class="st">"wininet"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">return</span>(<span class="dv">1</span>)</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (status <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">||</span> <span class="sc">!</span><span class="fu">file.exists</span>(arquivo_temp)) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>  pagina <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">read_html</span>(arquivo_temp, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlink</span>(arquivo_temp)</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(pagina)</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="co"># Extração dos parágrafos de cada capítulo</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>extrair_texto_pagina <span class="ot">&lt;-</span> <span class="cf">function</span>(url_pagina) {</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.25</span>) <span class="co"># Pausa ética</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>  pagina <span class="ot">&lt;-</span> <span class="fu">ler_html_wininet</span>(url_pagina)</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(pagina)) <span class="fu">return</span>(<span class="fu">tibble</span>(<span class="at">url =</span> url_pagina, <span class="at">paragraph_number =</span> <span class="cn">NA_integer_</span>, <span class="at">text =</span> <span class="cn">NA_character_</span>))</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>  paragrafos <span class="ot">&lt;-</span> pagina <span class="sc">%&gt;%</span></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">"#mw-content-text .mw-parser-output p"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text2</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">[</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">]"</span>) <span class="sc">%&gt;%</span> <span class="co"># Remove referências de notas de rodapé</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_squish</span>()</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>  paragrafos <span class="ot">&lt;-</span> paragrafos[paragrafos <span class="sc">!=</span> <span class="st">""</span> <span class="sc">&amp;</span> <span class="fu">nchar</span>(paragrafos) <span class="sc">&gt;</span> <span class="dv">1</span>]</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">url =</span> url_pagina, <span class="at">paragraph_number =</span> <span class="fu">seq_along</span>(paragrafos), <span class="at">text =</span> paragrafos)</span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="co"># Navegação na página índice da obra e coleta sequencial dos capítulos</span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>extrair_livro_wikisource <span class="ot">&lt;-</span> <span class="cf">function</span>(url_livro) {</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>  pagina_indice <span class="ot">&lt;-</span> <span class="fu">ler_html_wininet</span>(url_livro)</span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(pagina_indice)) <span class="fu">return</span>(<span class="fu">tibble</span>())</span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>  titulo_livro <span class="ot">&lt;-</span> pagina_indice <span class="sc">%&gt;%</span></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_element</span>(<span class="st">"#firstHeading"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text2</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_squish</span>()</span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>  prefixo_obra <span class="ot">&lt;-</span> <span class="fu">str_remove</span>(<span class="fu">URLdecode</span>(url_livro), <span class="st">"^https://pt</span><span class="sc">\\</span><span class="st">.wikisource</span><span class="sc">\\</span><span class="st">.org"</span>)</span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>  links_caps <span class="ot">&lt;-</span> pagina_indice <span class="sc">%&gt;%</span></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">"#mw-content-text .mw-parser-output a"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_attr</span>(<span class="st">"href"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>    <span class="fu">discard</span>(is.na) <span class="sc">%&gt;%</span></span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>    <span class="fu">URLdecode</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>    <span class="fu">keep</span>(<span class="sc">~</span> <span class="fu">str_starts</span>(.x, <span class="fu">paste0</span>(prefixo_obra, <span class="st">"/"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove</span>(<span class="st">"#.*$"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>()</span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>  urls_caps <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"[https://pt.wikisource.org](https://pt.wikisource.org)"</span>, links_caps)</span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(urls_caps, <span class="cf">function</span>(u) {</span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>    <span class="fu">extrair_texto_pagina</span>(u) <span class="sc">%&gt;%</span></span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>        <span class="at">book_name =</span> titulo_livro,</span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>        <span class="at">chapter_name =</span> <span class="fu">str_remove</span>(<span class="fu">URLdecode</span>(u), <span class="st">"^.*/"</span>),</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>        <span class="at">.before =</span> <span class="dv">1</span></span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a><span class="co"># Execução da raspagem sobre as 7 obras completas e persistência em cache</span></span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>arquivo_cache <span class="ot">&lt;-</span> <span class="st">"machado_wikisource_completo.rds"</span></span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>urls_machado <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Dom_Casmurro](https://pt.wikisource.org/wiki/Dom_Casmurro)"</span>,</span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas](https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas)"</span>,</span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Quincas_Borba](https://pt.wikisource.org/wiki/Quincas_Borba)"</span>,</span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/O_Alienista](https://pt.wikisource.org/wiki/O_Alienista)"</span>,</span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Helena](https://pt.wikisource.org/wiki/Helena)"</span>,</span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Memorial_de_Aires](https://pt.wikisource.org/wiki/Memorial_de_Aires)"</span>,</span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a>  <span class="st">"[https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3](https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3)"</span></span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(arquivo_cache)) {</span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a>  df_livros_bruto <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(arquivo_cache)</span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a>  df_livros_bruto <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(urls_machado, extrair_livro_wikisource)</span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(df_livros_bruto, arquivo_cache)</span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Limpeza, Padronização e Estruturação do Banco de Dados</span></span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a>Os textos brutos extraídos da web contêm ruídos estruturais que precisam ser removidos antes de qualquer cálculo estatístico (SILGE; ROBINSON, 2017). O fluxo de higienização segue quatro etapas:</span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Filtragem de Ruído Editorial:** Remoção de linhas vazias (<span class="in">`NA`</span>) e de parágrafos administrativos capturados acidentalmente pelos seletores HTML (como cabeçalhos iniciados por *"Índice"*, *"Anterior"*, *"Próximo"*, *"Wikisource"* ou *"Obra editada"*).</span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Padronização de Metadados:** Criação de identificadores curtos (`book_short`) para visualização gráfica e classificação das obras segundo a periodização crítica da literatura brasileira (**Fase Romântica** vs. **Fase Realista**) (CANDIDO, 1970; BOSI, 1994).</span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Estruturação Tabular (`Tidy Data`):** Organização do banco em quatro variáveis fundamentais segundo os princípios de dados arrumados de Wickham (2014): <span class="in">`book_short`</span> (obra), <span class="in">`chapter_name`</span> (capítulo), <span class="in">`paragraph_number`</span> (ordem sequencial do parágrafo) e <span class="in">`text`</span> (conteúdo textual limpo).</span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Remoção de Stopwords e Arcaísmos:** Para a análise de frequência e modelagem temática, eliminam-se pontuações, algarismos, símbolos, *stopwords* padrão da língua portuguesa e termos auxiliares/arcaicos recorrentes na prosa oitocentista (como *"dous"*, *"cousa"*, *"havia"*, *"disse"*), construindo a Matriz Documento-Termo (<span class="in">`dfm`</span>) no pacote <span class="in">`quanteda`</span> (BENOIT et al., 2018).</span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: code-limpeza</span></span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="co"># Higienização e enriquecimento de metadados</span></span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a>df_livros <span class="ot">&lt;-</span> df_livros_bruto <span class="sc">%&gt;%</span></span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(text)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(text, <span class="st">"^(Índice|Anterior|Próximo|Wikisource|Obra editada)"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a>    <span class="at">author =</span> <span class="st">"Machado de Assis"</span>,</span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">book_short =</span> <span class="fu">case_when</span>(</span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Dom Casmurro"</span>) <span class="sc">~</span> <span class="st">"Dom Casmurro"</span>,</span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Brás Cubas"</span>) <span class="sc">~</span> <span class="st">"Memórias Póstumas"</span>,</span>
+<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Quincas Borba"</span>) <span class="sc">~</span> <span class="st">"Quincas Borba"</span>,</span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Alienista"</span>) <span class="sc">~</span> <span class="st">"O Alienista"</span>,</span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Helena"</span>) <span class="sc">~</span> <span class="st">"Helena"</span>,</span>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Memorial de Aires"</span>) <span class="sc">~</span> <span class="st">"Memorial de Aires"</span>,</span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Esaú"</span>) <span class="sc">~</span> <span class="st">"Esaú e Jacó"</span>,</span>
+<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> book_name</span>
+<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a>    <span class="at">fase =</span> <span class="fu">ifelse</span>(book_short <span class="sc">==</span> <span class="st">"Helena"</span>, <span class="st">"Fase Romântica"</span>, <span class="st">"Fase Realista"</span>)</span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregação por obra para construção do Corpus e da Matriz Documento-Termo (DFM)</span></span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a>df_corpus_agregado <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book_short) <span class="sc">%&gt;%</span></span>
+<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a>meu_corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(df_corpus_agregado<span class="sc">$</span>text, <span class="at">docnames =</span> df_corpus_agregado<span class="sc">$</span>book_short)</span>
+<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a>sw_extra <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"é"</span>, <span class="st">"era"</span>, <span class="st">"disse"</span>, <span class="st">"ia"</span>, <span class="st">"ser"</span>, <span class="st">"ter"</span>, <span class="st">"havia"</span>, <span class="st">"ainda"</span>, </span>
+<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a>              <span class="st">"assim"</span>, <span class="st">"tudo"</span>, <span class="st">"nada"</span>, <span class="st">"outro"</span>, <span class="st">"outra"</span>, <span class="st">"dous"</span>, <span class="st">"cousa"</span>)</span>
+<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a>tokens_limpos <span class="ot">&lt;-</span> <span class="fu">tokens</span>(</span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a>  meu_corpus,</span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a>  <span class="at">remove_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a>  <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a>  <span class="at">remove_symbols =</span> <span class="cn">TRUE</span></span>
+<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra))</span>
+<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a>matriz_dfm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_limpos)</span>
+<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Fluxo Completo da Arquitetura</span></span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a>O fluxograma e o quadro abaixo resumem a transformação dos dados desde o código-fonte HTML até os modelos analíticos apresentados nas próximas abas:</span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="in">%%| label: fig-workflow-scraping</span></span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a><span class="in">%%| fig-cap: "Arquitetura completa do pipeline de Web Scraping e Text Mining em R."</span></span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a><span class="in">%%| fig-width: 7.5</span></span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a><span class="in">%%{init: {'theme': 'base', 'flowchart': {'nodeSpacing': 25, 'rankSpacing': 35, 'padding': 10}, 'themeVariables': { 'fontSize': '13px', 'background': '#ffffff', 'primaryColor': '#ffffff', 'primaryTextColor': '#1f2937', 'primaryBorderColor': '#2780e3', 'lineColor': '#4b5563', 'clusterBkg': '#ffffff', 'clusterBorder': '#94a3b8'}}}%%</span></span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a><span class="in">    subgraph S1 ["1. Coleta (Web Scraping)"]</span></span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a><span class="in">        direction LR</span></span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a><span class="in">        A[("URLs Wikisource&lt;br/&gt;(7 Obras)")] --&gt; B["ler_html_wininet()&lt;br/&gt;Proxy + download.file"]</span></span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a><span class="in">        B --&gt; C["extrair_livro_wikisource()&lt;br/&gt;Links de Capítulos"]</span></span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a><span class="in">        C --&gt; D["extrair_texto_pagina()&lt;br/&gt;CSS #mw-content-text p"]</span></span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a><span class="in">    end</span></span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a><span class="in">    subgraph S2 ["2. Persistência &amp; Limpeza"]</span></span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a><span class="in">        direction LR</span></span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a><span class="in">        E[("Cache Local&lt;br/&gt;machado_wikisource_completo.rds")] --&gt; F["Higienização (stringr)&lt;br/&gt;Regex + Metadados + Fases"]</span></span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a><span class="in">    end</span></span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a><span class="in">    subgraph S3 ["3. Estruturação NLP"]</span></span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a><span class="in">        direction LR</span></span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a><span class="in">        G["Corpus (quanteda)&lt;br/&gt;827 Capítulos / 7 Livros"] --&gt; H["Tokenização &amp; Filtros&lt;br/&gt;Stopwords + Arcaísmos"]</span></span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a><span class="in">        H --&gt; I[("Matriz DFM&lt;br/&gt;Document-Feature Matrix")]</span></span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a><span class="in">    end</span></span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a><span class="in">    subgraph S4 ["4. Modelagem &amp; Saídas"]</span></span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a><span class="in">        direction LR</span></span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a><span class="in">        J["Léxico &amp; TF-IDF&lt;br/&gt;TTR, CTTR, X-Ray"]</span></span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a><span class="in">        K["Sentimentos&lt;br/&gt;OpLexicon v3.0"]</span></span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a><span class="in">        L["Inferência &amp; Grafos&lt;br/&gt;Keyness, CA, LDA, Redes"]</span></span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a><span class="in">    end</span></span>
+<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a><span class="in">    D --&gt; E</span></span>
+<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a><span class="in">    F --&gt; G</span></span>
+<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a><span class="in">    I --&gt; J</span></span>
+<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a><span class="in">    I --&gt; K</span></span>
+<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a><span class="in">    I --&gt; L</span></span>
+<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a><span class="in">    style S1 fill:#ffffff,stroke:#cbd5e1,stroke-width:1.5px</span></span>
+<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a><span class="in">    style S2 fill:#ffffff,stroke:#cbd5e1,stroke-width:1.5px</span></span>
+<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a><span class="in">    style S3 fill:#ffffff,stroke:#cbd5e1,stroke-width:1.5px</span></span>
+<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a><span class="in">    style S4 fill:#ffffff,stroke:#cbd5e1,stroke-width:1.5px</span></span>
+<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a><span class="in">    style A fill:#e3f2fd,stroke:#1565c0,stroke-width:2px</span></span>
+<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a><span class="in">    style E fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px</span></span>
+<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a><span class="in">    style I fill:#fff3e0,stroke:#ef6c00,stroke-width:2px</span></span>
+<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a>| Estágio | Entrada | Processamento | Saída Estruturada |</span>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a>|:-----------------|:-----------------|:-----------------|:-----------------|</span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>| **1. Coleta** | URLs do Wikisource (<span class="in">`HTML`</span>) | Raspagem DOM via <span class="in">`rvest`</span> + <span class="in">`wininet`</span> (WICKHAM, 2024) | Arquivo local <span class="in">`.rds`</span> bruto |</span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a>| **2. Higienização** | Parágrafos brutos com ruído | Regex (<span class="in">`stringr`</span>) + filtros de metadados (WICKHAM, 2014) | Tabela <span class="in">`df_livros`</span> (827 capítulos) |</span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a>| **3. Tokenização** | Texto corrido por obra | Normalização + remoção de *stopwords* (BENOIT et al., 2018) | <span class="in">`corpus`</span> e <span class="in">`dfm`</span> (<span class="in">`quanteda`</span>) |</span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a>| **4. Modelagem** | <span class="in">`dfm`</span> + <span class="in">`OpLexicon v3.0`</span> | Estatística léxica, TF-IDF, sentimentos e clusters (SILGE; ROBINSON, 2017) | Tabelas <span class="in">`gt`</span> e gráficos <span class="in">`ggplot2`</span> |</span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal"}</span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a>**Nota Bibliográfica:** Todas as bibliotecas computacionais, obras literárias e referências técnicas citadas nesta seção encontram-se listadas integralmente na aba [**Referências**](referencias.qmd) conforme as normas da ABNT (NBR 6023). Avance para **Métricas Estatísticas** para consultar a fundamentação matemática das medidas utilizadas neste estudo.</span>
+<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+</code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>VALENTE © 2026 • DETRAN-PA / RENAEST</p>
+<p>© 2026 VALENTE, M. D. R.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Desenvolvido em R &amp; Framework Quarto<sub>1.5.1</sub></p>
+<p>Desenvolvido com <a href="https://github.com" target="_blank"><i class="bi bi-github"></i> GitHub</a>, <a href="https://www.r-project.org/about.html" target="_blank"><i class="bi bi-code-slash"></i> R</a> e <a href="https://quarto.org/" target="_blank">Quarto</a></p>
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

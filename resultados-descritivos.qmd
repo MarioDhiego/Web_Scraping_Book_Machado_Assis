@@ -1,7 +1,7 @@
 ---
 title: "Resultados Descritivos"
 subtitle: "Volumetria, complexidade vocabular, assinatura temática (TF-IDF) e dispersão narrativa"
-title-block-banner: FALSE
+title-block-banner: false
 ---
 
 
@@ -20,7 +20,7 @@ library(gt)
 library(DT)
 library(scales)
 
-theme_set(theme_minimal(base_size = 11))
+theme_set(theme_minimal(base_size = 12))
 
 # Carrega a base já raspada e limpa
 df_livros <- readRDS("machado_wikisource_completo.rds") %>%
@@ -61,15 +61,21 @@ tokens_limpos <- tokens(
   tokens_remove(c(stopwords("portuguese"), sw_extra))
 
 matriz_dfm <- dfm(tokens_limpos)
+
 ```
 
+
+
 ::: {.callout-note appearance="minimal"}
-**Visão Geral do Corpus:** O conjunto analisado reúne **7 obras integrais** de Machado de Assis (6 romances e 1 novela), totalizando **827 capítulos**, **8.915 parágrafos** e mais de **428 mil tokens** extraídos diretamente do Wikisource em português.
+Visão Geral do Corpus: O conjunto analisado reúne 7 obras integrais de Machado de Assis (6 romances e 1 novela) (ASSIS, 1876, 1881, 1882, 1891, 1899, 1904, 1908), totalizando 827 capítulos, 8.915 parágrafos e mais de 428 mil tokens extraídos diretamente do Wikisource em português (FUNDAÇÃO WIKIMEDIA, 2026) e processados via tidyverse (WICKHAM et al., 2019) e quanteda (BENOIT et al., 2018).
 :::
+
 
 ## 1. Estatística Descritiva das Obras
 
-A tabela executiva abaixo consolida a estrutura narrativa de cada obra, agrupada por escola/fase literária, detalhando a quantidade de capítulos, parágrafos, volume total de palavras (*tokens*) e as médias de extensão por unidade estrutural.
+A tabela executiva abaixo — formatada com o pacote gt (IANNONE et al., 2024) — consolida a estrutura narrativa de cada obra, agrupada por escola/fase literária (CANDIDO, 1970; BOSI, 1994), detalhando a quantidade de capítulos, parágrafos, volume total de palavras (tokens) e as médias de extensão por unidade estrutural.
+
+
 
 ```{r}
 #| label: tbl-volumetria-geral
@@ -115,10 +121,19 @@ tabela_geral %>%
     subtitle = "Comparação estrutural entre a Fase Romântica e a Fase Realista"
   ) %>%
   tab_source_note("Fonte: Elaboração própria a partir de textos integrais do Wikisource.")
+
 ```
 
+
+
+
+
 ### Consulta Interativa por Capítulo (`DT`)
-Para inspecionar a granularidade interna de cada romance, a tabela dinâmica abaixo permite pesquisar, ordenar e filtrar todos os **827 capítulos** por obra, número de parágrafos e extensão em palavras:
+
+Para inspecionar a granularidade interna de cada romance, a tabela dinâmica abaixo — construída com o pacote DT (XIE; CHENG; TAN, 2024) — permite pesquisar, ordenar e filtrar todos os 827 capítulos por obra, número de parágrafos e extensão em palavras:
+
+
+
 
 ```{r}
 #| label: tbl-interativa-capitulos
@@ -146,9 +161,12 @@ datatable(
 
 ---
 
+
 ## 2. Complexidade Léxica e Legibilidade
 
-A segunda tabela avalia a riqueza do repertório vocabular de cada livro após a higienização de pontuação e *stopwords*, contrastando o índice bruto (**TTR**) com o índice corrigido pela extensão (**CTTR**) e a complexidade sintática (**Flesch-Kincaid**).
+A segunda tabela avalia a riqueza do repertório vocabular de cada livro por meio do pacote quanteda.textstats (BENOIT et al., 2018) após a higienização de pontuação e stopwords, contrastando o índice bruto (TTR) com o índice corrigido pela extensão (CTTR) (CARROLL, 1964) e a complexidade sintática (Flesch-Kincaid) (KINCAID et al., 1975).
+
+
 
 ```{r}
 #| label: tbl-complexidade-lexica
@@ -196,9 +214,15 @@ tabela_complexidade %>%
   )
 ```
 
+
+
+
+
+
+
 ```{r}
 #| label: fig-diversidade-lexica
-#| fig-cap: "Comparativo visual entre a diversidade léxica bruta (TTR) e corrigida pela extensão (CTTR)."
+#| fig-cap: "Comparativo visual entre a diversidade léxica bruta (TTR) e corrigida pela extensão (CTTR) (CARROLL, 1964)."
 #| fig-width: 10
 #| fig-height: 4.8
 
@@ -220,11 +244,15 @@ tabela_complexidade %>%
   )
 ```
 
+
 ---
 
 ## 3. Frequência Vocabular e Assinatura Temática (TF-IDF)
-
 ### 3.1 Termos Mais Frequentes por Obra
+
+Utilizando a abordagem tidy de tokenização do pacote tidytext (SILGE; ROBINSON, 2016, 2017), exibem-se os 15 vocábulos mais recorrentes em cada narrativa:
+
+
 ```{r}
 #| label: fig-top-palavras
 #| fig-cap: "Top 15 palavras mais frequentes em cada obra (excluindo stopwords)."
@@ -251,17 +279,20 @@ ggplot(top_palavras, aes(x = reorder_within(word, n, book_short), y = n, fill = 
     subtitle = "Frequência absoluta após remoção de stopwords e verbos auxiliares",
     x = NULL, y = "Frequência Absoluta"
   ) +
-  theme(strip.text = element_text(face = "bold", size = 9.5))
+  theme(strip.text = element_text(face = "bold", size = 12))
 ```
 
 ---
 
 ### 3.2 Assinatura Vocabular Distintiva (TF-IDF)
-Enquanto a frequência bruta destaca vocábulos comuns a todo o corpus, a ponderação **TF-IDF** isola os termos exclusivos que caracterizam o universo de cada romance:
+
+Enquanto a frequência bruta destaca vocábulos comuns a todo o corpus, a ponderação TF-IDF (SPÄRCK JONES, 1972; SALTON; MCGILL, 1983; SILGE; ROBINSON, 2017) isola os termos exclusivos que caracterizam o universo de cada romance:
+
+
 
 ```{r}
 #| label: fig-tfidf
-#| fig-cap: "Top 10 termos mais exclusivos de cada obra segundo a métrica TF-IDF."
+#| fig-cap: "Top 10 termos mais exclusivos de cada obra segundo a métrica TF-IDF (SPÄRCK JONES, 1972)."
 #| fig-width: 12
 #| fig-height: 6.5
 
@@ -286,14 +317,19 @@ ggplot(tfidf_livros, aes(x = reorder_within(word, tf_idf, book_short), y = tf_id
     subtitle = "Termos com maior poder de discriminação temática entre os 7 livros",
     x = NULL, y = "Pontuação TF-IDF"
   ) +
-  theme(strip.text = element_text(face = "bold", size = 9.5))
+  theme(strip.text = element_text(face = "bold", size = 12))
+
 ```
+
+
+
 
 ---
 
 ## 4. Motivos Literários, Dispersão (X-Ray) e Bigramas
-
 ### 4.1 Mapa de Calor de Palavras-Chave
+
+
 ```{r}
 #| label: fig-heatmap-tematico
 #| fig-cap: "Densidade relativa de motivos literários clássicos de Machado de Assis (ocorrências por 10.000 palavras)."
@@ -326,9 +362,13 @@ ggplot(freq_especificas, aes(x = word, y = book_short, fill = freq_por_10mil)) +
 ---
 
 ### 4.2 Dispersão Léxica ao Longo das Narrativas (Gráfico de Raio-X)
+
+Utilizando a concordância Keyword-in-Context (kwic) e a visualização textplot_xray() do pacote quanteda.textplots (BENOIT et al., 2018), rastreia-se a posição exata de termos estruturantes do início ao desfecho de cada livro:
+
+
 ```{r}
 #| label: fig-xray
-#| fig-cap: "Posição relativa das ocorrências de termos selecionados do início (0) ao fim (1) de cada livro."
+#| fig-cap: "Posição relativa das ocorrências de termos selecionados do início (0) ao fim (1) de cada livro (quanteda.textplots)."
 #| fig-width: 11
 #| fig-height: 6.5
 
@@ -348,7 +388,7 @@ textplot_xray(kwic_busca, scale = "relative") +
     title = "Dispersão Léxica ao Longo dos 7 Livros (Raio-X)",
     x = "Índice Relativo de Tokens (Início -> Fim da Obra)"
   ) +
-  theme(strip.text.y = element_text(angle = 0, hjust = 0, size = 9))
+  theme(strip.text.y = element_text(angle = 0, hjust = 0, size = 10))
 ```
 
 
@@ -386,7 +426,9 @@ ggplot(bigramas_machado, aes(x = fct_reorder(bigrama, n), y = n)) +
   )
 ```
 
-Avance para a última aba, **Análise de Sentimentos**, para visualizar os arcos emocionais, a nuvem de polaridade e a clusterização estilística das obras.
+::: {.callout-note appearance="minimal"}
+Síntese Interpretativa e Nota Bibliográfica: Os resultados descritivos demonstram a eficácia da correção de escala: enquanto O Alienista lidera o TTR bruto por ser uma novela curta, os grandes romances realistas (Quincas Borba e Memórias Póstumas) assumem a liderança no CTTR devido à amplitude de seu repertório vocabular. No plano temático, o TF-IDF recupera com precisão os núcleos narrativos de cada obra (Capitu/Escobar em Dom Casmurro; Rubião/Sofia em Quincas Borba; Bacamarte/Itaguaí em O Alienista), enquanto o mapa de calor comprova a concentração máxima do motivo "olhos" em Dom Casmurro e da dicotomia "razão/loucura" em O Alienista. Todas as obras literárias, métricas e pacotes R citados encontram-se referenciados na aba Referências. Avance para Análise de Sentimentos e, em seguida, para Modelagem & Inferência.
+:::
 
 ---
 

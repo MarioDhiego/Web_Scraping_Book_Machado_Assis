@@ -1,27 +1,62 @@
-/* Barra divisória azul sólida e elegante para separar seções (---) */
+/* Importação de fontes acadêmicas e monoespaçadas */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+  --cor-primaria: #1e40af;      /* Azul acadêmico profundo */
+  --cor-realista: #1b9e77;      /* Verde (mesma paleta dos gráficos ggplot2) */
+  --cor-romantica: #d95f02;     /* Laranja (mesma paleta dos gráficos ggplot2) */
+  --cor-neutra: #7570b3;        /* Roxo estatístico */
+  --raio-borda: 8px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.72;
+}
+
+code, pre {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+}
+
+/* Barra divisória azul sólida */
 hr {
   border: 0;
   height: 3px;
-  background-color: #2780e3; /* Azul principal do tema Cosmo */
-  opacity: 0.85;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
+  background: linear-gradient(90deg, var(--cor-primaria), #60a5fa);
+  margin: 2.5rem 0;
   border-radius: 2px;
 }
 
-
-/* Justificação acadêmica dos parágrafos e itens de lista no corpo do texto */
-main p,
-main li {
+/* Justificação acadêmica rigorosa no corpo do texto */
+main p, main li {
   text-align: justify;
   text-justify: inter-word;
   hyphens: auto;
 }
 
-/* Mantém títulos, legendas de figuras e células de tabelas alinhados adequadamente */
 main h1, main h2, main h3, main h4,
 .figure-caption, figcaption,
 table p, th, td {
   text-align: left;
   hyphens: none;
+}
+
+/* Cartões KPI estilizados com borda lateral e efeito hover */
+.callout-note {
+  border-left-width: 4px !important;
+  border-radius: var(--raio-borda);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.callout-note:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* Estilização elegante das abas (tabset) */
+.nav-tabs .nav-link.active {
+  font-weight: 600;
+  border-bottom: 3px solid var(--cor-primaria);
 }

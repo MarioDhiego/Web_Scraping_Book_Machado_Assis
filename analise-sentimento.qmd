@@ -1,8 +1,11 @@
 ---
 title: "Análise de Sentimentos"
-subtitle: "Trajetória emocional longitudinal (OpLexicon v3.0), polaridade vocabular e agrupamento hierárquico"
+subtitle: "Trajetória emocional longitudinal (OpLexicon v3.0), volatilidade dramática e polaridade vocabular"
 title-block-banner: false
 ---
+
+
+
 
 ```{r}
 #| label: setup-sentimento
@@ -11,14 +14,13 @@ title-block-banner: false
 library(tidyverse)
 library(tidytext)
 library(quanteda)
-library(quanteda.textstats)
 library(lexiconPT)
 library(gt)
 library(scales)
 library(wordcloud)
 library(reshape2)
 
-theme_set(theme_minimal(base_size = 11))
+theme_set(theme_minimal(base_size = 12))
 
 df_livros <- readRDS("machado_wikisource_completo.rds") %>%
   filter(!is.na(text)) %>%
@@ -78,13 +80,20 @@ df_sentimento <- df_tokens_sent %>%
 kw_sent <- kruskal.test(polaridade_soma ~ book_short, data = df_sentimento)
 ```
 
+
+---
+
 ## 1. Estatística da Polaridade por Obra
 
-A tabela a seguir consolida o comportamento afetivo de cada romance segundo o léxico **OpLexicon v3.0**, apresentando a proporção de termos positivos, a média e a mediana de saldo emocional por capítulo, a volatilidade dramática (desvio padrão) e os capítulos extremos de cada narrativa. O teste não paramétrico de **Kruskal-Wallis** ($\chi^2 = `r round(kw_sent$statistic, 2)`$, $p = `r format.pval(kw_sent$p.value, digits = 3)`$) confirma diferenças estatisticamente significativas na distribuição de polaridade entre as obras.
+A tabela a seguir — formatada com o pacote gt (IANNONE et al., 2024) — consolida o comportamento afetivo de cada romance segundo o léxico OpLexicon v3.0 (SOUZA et al., 2011; disponibilizado em R via pacote lexiconPT, GONZAGA, 2017), apresentando a proporção de termos positivos, a média e a mediana de saldo emocional por capítulo, a volatilidade dramática (desvio padrão) e os capítulos extremos de cada narrativa. O teste não paramétrico de Kruskal-Wallis (KRUSKAL; WALLIS, 1952; R CORE TEAM, 2026) ($\chi^2 = `r round(kw_sent$statistic, 2)`$, $p = `r format.pval(kw_sent$p.value, digits = 3)`$) confirma diferenças estatisticamente significativas na distribuição de polaridade entre as obras.
+
+
+
+
 
 ```{r}
 #| label: tbl-sentimentos-geral
-#| tbl-cap: "Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v3.0)"
+#| tbl-cap: "Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v3.0 — SOUZA et al., 2011)"
 
 tabela_sentimentos <- df_sentimento %>%
   group_by(fase, book_short) %>%
@@ -127,14 +136,18 @@ tabela_sentimentos %>%
 
 ---
 
-## 2. Trajetória Emocional Longitudinal
 
+## 2. Trajetória Emocional Longitudinal
 ### 2.1 Arcos Emocionais ao Longo da Leitura
-O gráfico abaixo acompanha a evolução capítulo a capítulo do saldo líquido de polaridade de cada romance, normalizado pelo progresso relativo da narrativa ($0\%$ a $100\%$), com curva de tendência suavizada (**LOESS**):
+
+
+O gráfico abaixo — produzido com ggplot2 (WICKHAM et al., 2019) — acompanha a evolução capítulo a capítulo do saldo líquido de polaridade de cada romance, normalizado pelo progresso relativo da narrativa ($0\%$ a $100\%$), com curva de tendência suavizada por regressão local não paramétrica LOESS (CLEVELAND, 1979):
+
+
 
 ```{r}
 #| label: fig-arco-emocional
-#| fig-cap: "Evolução do saldo de polaridade ao longo do progresso relativo (0% a 100%) de cada obra, com curva de tendência LOESS."
+#| fig-cap: "Evolução do saldo de polaridade ao longo do progresso relativo (0% a 100%) de cada obra, com curva de tendência LOESS (CLEVELAND, 1979)."
 #| fig-width: 12
 #| fig-height: 6.5
 #| warning: false
@@ -154,10 +167,11 @@ g_sent1 <- ggplot(df_sentimento, aes(x = posicao_relativa,
     x = "Posição Relativa no Livro",
     y = "Saldo de Sentimento"
   ) +
-  theme(legend.position = "none", strip.text = element_text(face = "bold", size = 9.5))
-
+  theme(legend.position = "none", strip.text = element_text(face = "bold", size = 12))
 print(g_sent1)
 ```
+
+
 
 
 ### 2.2 Saldo Médio vs. Volatilidade Dramática entre Capítulos
@@ -169,6 +183,7 @@ Enquanto o arco longitudinal revela os picos e vales internos de cada história,
 #| fig-cap: "Comparativo entre o saldo médio de polaridade por capítulo e a volatilidade dramática (desvio padrão) de cada obra."
 #| fig-width: 11
 #| fig-height: 4.8
+#| warning: false
 
 df_resumo_plot <- df_sentimento %>%
   group_by(book_short) %>%
@@ -201,18 +216,21 @@ ggplot(df_resumo_plot, aes(x = reorder_within(book_short, Valor, Indicador), y =
 
 ---
 
-## 3. Polaridade Vocabular: Nuvem X Frequências
+## 3. Polaridade Vocabular: Nuvem Comparativa vs. Frequências
 
-A nuvem comparativa e o gráfico de barras divergentes abaixo contrastam os termos positivos (verde) e negativos (laranja) mais recorrentes no conjunto das obras, evidenciando o léxico afetivo característico de Machado de Assis:
+A nuvem comparativa — gerada pelos pacotes wordcloud (FELLOWS, 2018) e reshape2 (WICKHAM, 2007) — e o gráfico de barras divergentes — estruturado com tidytext (SILGE; ROBINSON, 2016, 2017) — contrastam os termos positivos (verde) e negativos (laranja) mais recorrentes no conjunto das obras, evidenciando o léxico afetivo característico de Machado de Assis:
 
 :::: {.columns}
 
 ::: {.column width="52%"}
+
+
 ```{r}
 #| label: fig-nuvem-sentimento
-#| fig-cap: "Nuvem de comparação entre termos positivos e negativos."
+#| fig-cap: "Nuvem de comparação entre termos positivos e negativos (pacote wordcloud — FELLOWS, 2018)."
 #| fig-width: 6
 #| fig-height: 5.5
+#| warning: false
 
 matriz_nuvem_sent <- df_tokens_sent %>%
   filter(polarity != 0) %>%
@@ -231,13 +249,15 @@ comparison.cloud(
   random.order = FALSE
 )
 title(main = "Nuvem Comparativa (OpLexicon v3.0)")
+
 ```
 :::
 
 ::: {.column width="48%"}
+
 ```{r}
 #| label: fig-top-sentimentos-barras
-#| fig-cap: "Top 12 termos positivos e negativos mais frequentes no corpus."
+#| fig-cap: "Top 12 termos positivos e negativos mais frequentes no corpus (OpLexicon v3.0)."
 #| fig-width: 6
 #| fig-height: 5.5
 
@@ -264,89 +284,29 @@ ggplot(top_sent_palavras, aes(x = fct_reorder(term, n_plot), y = n_plot, fill = 
     x = NULL, y = "Frequência Absoluta", fill = NULL
   ) +
   theme(legend.position = "bottom")
+
 ```
 :::
 
 ::::
 
----
+::: {.callout-note appearance="minimal"}
+Síntese Interpretativa e Nota Bibliográfica: Embora romances como Helena e Memorial de Aires apresentem saldos médios mais elevados devido à polidez social e cortesia dos diálogos, a curva LOESS (CLEVELAND, 1979) revela a queda sistemática da polaridade no terço final das narrativas realistas (Dom Casmurro, Quincas Borba e Memórias Póstumas), refletindo a desilusão psicológica, o ciúme e a degradação trágica dos protagonistas. Todas as obras literárias, métodos estatísticos e pacotes R citados encontram-se referenciados na aba Referências. Avance para Modelagem & Inferência para explorar a estrutura multivariada e latente do corpus.
+:::
 
-## 4. Similaridade de Cosseno e Agrupamento Hierárquico
 
-Antes de construir o dendrograma, inspecionamos a **Matriz de Similaridade de Cosseno ($\cos \theta$)** calculada sobre as proporções relativas do vocabulário completo de cada obra. Valores próximos de $1{,}00$ indicam alta convergência de perfil lexical entre os romances:
-
-```{r}
-#| label: setup-cluster
-#| include: false
-
-df_corpus_agregado <- df_livros %>%
-  group_by(book_short) %>%
-  summarise(text = paste(text, collapse = " "), .groups = "drop")
-
-meu_corpus <- corpus(df_corpus_agregado$text, docnames = df_corpus_agregado$book_short)
-sw_extra <- c("é", "era", "disse", "ia", "ser", "ter", "havia", "ainda", 
-              "assim", "tudo", "nada", "outro", "outra", "dous", "cousa")
-
-matriz_dfm <- tokens(meu_corpus, remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) %>%
-  tokens_tolower() %>%
-  tokens_remove(c(stopwords("portuguese"), sw_extra)) %>%
-  dfm()
-
-dfm_relativa <- dfm_weight(matriz_dfm, scheme = "prop")
-simil_livros <- textstat_simil(dfm_relativa, margin = "documents", method = "cosine")
-mat_simil <- as.matrix(simil_livros)
-
-dist_livros <- as.dist(1 - mat_simil)
-cluster_livros <- hclust(dist_livros, method = "ward.D2")
-cofenetica <- round(cor(dist_livros, cophenetic(cluster_livros)), 3)
-```
-
----
-
-### 4.1 Matriz de Similaridade de Cosseno ($7 \times 7$)
-
-```{r}
-#| label: tbl-matriz-cosseno
-#| warning: false
-#| tbl-cap: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de Assis
-
-as_tibble(mat_simil, rownames = "Obra") %>%
-  gt() %>%
-  fmt_number(columns = -Obra, decimals = 3, dec_mark = ",") %>%
-  data_color(
-    columns = -Obra,
-    palette = c("#f7fbff", "#2171b5"),
-    domain = c(min(mat_simil), 1)
-  ) %>%
-  tab_header(
-    title = md("**Matriz de Similaridade**"),
-    subtitle = "Calculada sobre frequências relativas na DFM após remoção de stopwords"
-  )
-```
 
 
 ---
 
-### 4.2 Agrupamento Hierárquico
-
-A partir da matriz de dissimilaridade angular ($D_{\cos} = 1 - \cos \theta$), aplica-se o algoritmo hierárquico aglomerativo de **Ward (`ward.D2`)**. O **Coeficiente de Correlação Cofenética ($CCC = `r cofenetica`$)** atesta a fidelidade com que a árvore bidimensional preserva as distâncias originais do espaço vetorial:
-
-```{r}
-#| label: fig-dendrograma
-#| fig-cap: "Dendrograma de agrupamento hierárquico das 7 obras baseado em distância de cosseno (Método Ward.D2)."
-#| fig-width: 9
-#| fig-height: 5
-
-par(mar = c(3, 4, 3.5, 2))
-plot(
-  cluster_livros,
-  main = "Clusterização Hierárquica dos 7 Livros de Machado de Assis",
-  sub = paste0("Distância de Cosseno (Método Ward.D2) | Correlação Cofenética (CCC) = ", cofenetica),
-  xlab = "", ylab = "Distância Estilística (1 - Cosseno)",
-  hang = -1, lwd = 1.6, col = "#08519c"
-)
-```
 
 
 
----
+
+
+
+
+
+
+
+
