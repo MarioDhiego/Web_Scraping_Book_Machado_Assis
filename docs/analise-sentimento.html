@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análise de Sentimentos – Text Mining in R</title>
+<title>Análise de Sentimentos – Curso Básico de Mineração de Texto em R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,6 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./modelagem-avancada.html" rel="next">
+<link href="./resultados-descritivos.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -102,6 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Procurar"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -136,7 +139,7 @@ window.Quarto = {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -144,7 +147,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Text Mining in R</span>
+    <span class="navbar-title">Curso Básico de Mineração de Texto em R</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -152,36 +155,6 @@ window.Quarto = {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Dataset</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./scraping-metodologia.html"> 
-<span class="menu-text">Web Scraping</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./metricas-teoria.html"> 
-<span class="menu-text">Métricas Estatísticas</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./resultados-descritivos.html"> 
-<span class="menu-text">Análise Descritiva</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./analise-sentimento.html" aria-current="page"> 
-<span class="menu-text">Análise de Sentimentos</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./modelagem-avancada.html"> 
-<span class="menu-text">Análise Inferencial</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./referencias.html"> 
-<span class="menu-text">Referências</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img" aria-label="GitHub">
@@ -200,10 +173,77 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analise-sentimento.html">5. Análise de Sentimentos</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Dataset</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./scraping-metodologia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Web Scraping</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./metricas-teoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Métricas Estatísticas</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resultados-descritivos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Análise Descritiva</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analise-sentimento.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">5. Análise de Sentimentos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modelagem-avancada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Análise Inferencial</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Referências</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -295,23 +335,23 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
 </figcaption>
 <div aria-describedby="tbl-sentimentos-geral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="zynfcyckie" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zynfcyckie table {
+<div id="idpupfymti" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#idpupfymti table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zynfcyckie thead, #zynfcyckie tbody, #zynfcyckie tfoot, #zynfcyckie tr, #zynfcyckie td, #zynfcyckie th {
+#idpupfymti thead, #idpupfymti tbody, #idpupfymti tfoot, #idpupfymti tr, #idpupfymti td, #idpupfymti th {
   border-style: none;
 }
 
-#zynfcyckie p {
+#idpupfymti p {
   margin: 0;
   padding: 0;
 }
 
-#zynfcyckie .gt_table {
+#idpupfymti .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -337,12 +377,12 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-left-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_caption {
+#idpupfymti .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zynfcyckie .gt_title {
+#idpupfymti .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -354,7 +394,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-width: 0;
 }
 
-#zynfcyckie .gt_subtitle {
+#idpupfymti .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -366,7 +406,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-top-width: 0;
 }
 
-#zynfcyckie .gt_heading {
+#idpupfymti .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -378,13 +418,13 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_bottom_border {
+#idpupfymti .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_col_headings {
+#idpupfymti .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -399,7 +439,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_col_heading {
+#idpupfymti .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -419,7 +459,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   overflow-x: hidden;
 }
 
-#zynfcyckie .gt_column_spanner_outer {
+#idpupfymti .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -431,15 +471,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 4px;
 }
 
-#zynfcyckie .gt_column_spanner_outer:first-child {
+#idpupfymti .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zynfcyckie .gt_column_spanner_outer:last-child {
+#idpupfymti .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zynfcyckie .gt_column_spanner {
+#idpupfymti .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -451,11 +491,11 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   width: 100%;
 }
 
-#zynfcyckie .gt_spanner_row {
+#idpupfymti .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zynfcyckie .gt_group_heading {
+#idpupfymti .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -481,7 +521,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   text-align: left;
 }
 
-#zynfcyckie .gt_empty_group_heading {
+#idpupfymti .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -496,15 +536,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   vertical-align: middle;
 }
 
-#zynfcyckie .gt_from_md > :first-child {
+#idpupfymti .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zynfcyckie .gt_from_md > :last-child {
+#idpupfymti .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zynfcyckie .gt_row {
+#idpupfymti .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -523,7 +563,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   overflow-x: hidden;
 }
 
-#zynfcyckie .gt_stub {
+#idpupfymti .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -536,7 +576,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#zynfcyckie .gt_stub_row_group {
+#idpupfymti .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -550,15 +590,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   vertical-align: top;
 }
 
-#zynfcyckie .gt_row_group_first td {
+#idpupfymti .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zynfcyckie .gt_row_group_first th {
+#idpupfymti .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zynfcyckie .gt_summary_row {
+#idpupfymti .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -568,16 +608,16 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#zynfcyckie .gt_first_summary_row {
+#idpupfymti .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_first_summary_row.thick {
+#idpupfymti .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zynfcyckie .gt_last_summary_row {
+#idpupfymti .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -587,7 +627,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_grand_summary_row {
+#idpupfymti .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -597,7 +637,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#zynfcyckie .gt_first_grand_summary_row {
+#idpupfymti .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -607,7 +647,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-top-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_last_grand_summary_row_top {
+#idpupfymti .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -617,11 +657,11 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_striped {
+#idpupfymti .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zynfcyckie .gt_table_body {
+#idpupfymti .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -630,7 +670,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_footnotes {
+#idpupfymti .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -644,7 +684,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_footnote {
+#idpupfymti .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -653,7 +693,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#zynfcyckie .gt_sourcenotes {
+#idpupfymti .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -667,7 +707,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#zynfcyckie .gt_sourcenote {
+#idpupfymti .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -675,72 +715,72 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#zynfcyckie .gt_left {
+#idpupfymti .gt_left {
   text-align: left;
 }
 
-#zynfcyckie .gt_center {
+#idpupfymti .gt_center {
   text-align: center;
 }
 
-#zynfcyckie .gt_right {
+#idpupfymti .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zynfcyckie .gt_font_normal {
+#idpupfymti .gt_font_normal {
   font-weight: normal;
 }
 
-#zynfcyckie .gt_font_bold {
+#idpupfymti .gt_font_bold {
   font-weight: bold;
 }
 
-#zynfcyckie .gt_font_italic {
+#idpupfymti .gt_font_italic {
   font-style: italic;
 }
 
-#zynfcyckie .gt_super {
+#idpupfymti .gt_super {
   font-size: 65%;
 }
 
-#zynfcyckie .gt_footnote_marks {
+#idpupfymti .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zynfcyckie .gt_asterisk {
+#idpupfymti .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zynfcyckie .gt_indent_1 {
+#idpupfymti .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zynfcyckie .gt_indent_2 {
+#idpupfymti .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zynfcyckie .gt_indent_3 {
+#idpupfymti .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zynfcyckie .gt_indent_4 {
+#idpupfymti .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zynfcyckie .gt_indent_5 {
+#idpupfymti .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zynfcyckie .katex-display {
+#idpupfymti .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zynfcyckie div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#idpupfymti div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1060,7 +1100,7 @@ Figura&nbsp;4: Top 12 termos positivos e negativos mais frequentes no corpus (Op
 
 </section>
 
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> De volta ao topo</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1625,17 +1665,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./resultados-descritivos.html" class="pagination-link" aria-label="4. Análise Descritiva">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4. Análise Descritiva</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./modelagem-avancada.html" class="pagination-link" aria-label="6. Análise Inferencial">
+        <span class="nav-page-text">6. Análise Inferencial</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>VALENTE © 2026</p>
+<p>VALENTE © 2026 • DETRAN-PA / RENAEST</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Framework <span class="math inline">\(Quarto_{1.5.1}\)</span></p>
+<p>Desenvolvido em R &amp; Framework Quarto<sub>1.5.1</sub></p>
 </div>
   </div>
 </footer>
@@ -1643,4 +1695,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
