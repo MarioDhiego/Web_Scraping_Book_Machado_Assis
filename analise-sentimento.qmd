@@ -241,7 +241,7 @@ matriz_nuvem_sent <- df_tokens_sent %>%
 par(mar = c(0, 0, 2, 0))
 comparison.cloud(
   matriz_nuvem_sent,
-  colors = c("#d95f02", "#1b9e77"),
+  colors = c("#D55E00", "#0072B2"),
   max.words = 80,
   scale = c(3.8, 0.8),
   title.size = 1.3,
@@ -278,7 +278,7 @@ ggplot(top_sent_palavras, aes(x = fct_reorder(term, n_plot), y = n_plot, fill = 
   ) +
   coord_flip() +
   scale_y_continuous(labels = abs, expand = expansion(mult = c(0.18, 0.18))) +
-  scale_fill_manual(values = c("Negativas (-1)" = "#d95f02", "Positivas (+1)" = "#1b9e77")) +
+  scale_fill_manual(values = c("Negativas (-1)" = "#D55E00", "Positivas (+1)" = "#0072B2")) +
   labs(
     title = "Principais Termos por Polaridade",
     x = NULL, y = "Frequência Absoluta", fill = NULL

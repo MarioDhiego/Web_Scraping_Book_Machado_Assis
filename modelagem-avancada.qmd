@@ -99,18 +99,18 @@ alpha_est <- round(-coef(modelo_zipf)[2], 3)
 r2_est <- round(summary(modelo_zipf)$r.squared, 4)
 
 ggplot(freq_zipf, aes(x = rank, y = freq_rel)) +
-  geom_line(color = "#2171b5", linewidth = 1) +
+  geom_line(color = "#0072B2", linewidth = 1) +
   geom_abline(
     intercept = coef(modelo_zipf)[1],
     slope = coef(modelo_zipf)[2],
-    linetype = "dashed", color = "#d95f02", linewidth = 0.9
+    linetype = "dashed", color = "#D55E00", linewidth = 0.9
   ) +
   scale_x_log10(labels = scales::comma) +
   scale_y_log10(labels = scales::scientific) +
   annotate(
     "text", x = 80, y = 0.015,
     label = paste0("Expoente estimado: α = ", alpha_est, "\nR² = ", r2_est),
-    hjust = 0, fontface = "bold", color = "#d95f02", size = 4
+    hjust = 0, fontface = "bold", color = "#D55E00", size = 4
   ) +
   labs(
     title = "Distribuição Empírica de Frequências (Lei de Zipf)",
@@ -147,7 +147,7 @@ dfm_fases <- tokens(corp_fases, remove_punct = TRUE, remove_numbers = TRUE, remo
 
 resultado_keyness <- textstat_keyness(dfm_fases, target = "Fase Romântica", measure = "chi2")
 
-textplot_keyness(resultado_keyness, n = 15, color = c("#d95f02", "#1b9e77")) +
+textplot_keyness(resultado_keyness, n = 15, color = c("#D55E00", "#0072B2")) +
   labs(
     title = "Teste de Hipótese Vocabular (Keyness χ²): Romantismo vs. Realismo",
     subtitle = "Termos com maior desvio significativo entre Helena (alvo) e os romances realistas (referência)",
@@ -341,12 +341,13 @@ as_tibble(S, rownames = "Obra") %>%
 #| fig-height: 5.5
 #| warning: false
 
-ggplot(df_ca_plot, aes(x = Dim1, y = Dim2, color = Fase, label = Livro)) +
+ggplot(df_ca_plot, aes(x = Dim1, y = Dim2, color = Fase, shape = Fase, label = Livro)) +
   geom_hline(yintercept = 0, linetype = "dashed", color = "gray60") +
   geom_vline(xintercept = 0, linetype = "dashed", color = "gray60") +
   geom_point(size = 4.5) +
   geom_text_repel(size = 4, fontface = "bold", box.padding = 0.6) +
-  scale_color_manual(values = c("Fase Romântica" = "#d95f02", "Fase Realista" = "#1b9e77")) +
+  scale_color_manual(values = c("Fase Romântica" = "#D55E00", "Fase Realista" = "#0072B2")) +
+  scale_shape_manual(values = c("Fase Romântica" = 17, "Fase Realista" = 16))+
   labs(
     title = "Mapa Perceptual de Correspondência (CA)",
     subtitle = paste0("Inércia acumulada nos 2 eixos: ", round(inercia_acum[2], 1), "% | Critério β = ", round(criterio_beta, 2)),
@@ -522,6 +523,7 @@ V(grafo)$eixo_narrativo <- case_when(
 ```{r}
 #| label: fig-rede-semantica
 #| fig-cap: "Componente Conexo Gigante da rede semântica de Machado de Assis, organizado nos macro-eixos narrativos de Louvain (BLONDEL et al., 2008; PEDERSEN, 2024)."
+#| fig-alt: "Figura esta Adptada para Daltônicos"
 #| fig-width: 10.5
 #| fig-height: 6.5
 #| warning: false
@@ -550,15 +552,15 @@ ggraph(grafo, layout = "stress") +
   scale_size(range = c(3.5, 11), name = "Conexões (Grau)") +
   scale_color_manual(
     values = c(
-      "Eixo 1: Espaço Doméstico & Social" = "#1b9e77",
-      "Eixo 2: Afeto, Corpo & Subjetividade" = "#d95f02",
-      "Eixo 3: Tempo, Vida & Existência" = "#7570b3",
-      "Eixo 4: Conexões Periféricas" = "#666666"
+      "Eixo 1: Espaço Doméstico & Social"  = "#0072B2", # Azul
+    "Eixo 2: Afeto, Corpo & Subjetividade" = "#D55E00", # Vermelhão
+    "Eixo 3: Tempo, Vida & Existência"     = "#009E73", # Verde-azulado
+    "Eixo 4: Conexões Periféricas"         = "#7F7F7F"  # Cinza neutro
     ),
     name = "Macro-Eixo Narrativo"
   ) +
   labs(
-    title = "Componente Semântica",
+    title = "Análise Semântica",
     subtitle = "Caixas destacadas = Top 10 Hubs Centrais | Cores = Comunidades de Louvain | Setas = Direção do Bigrama"
   ) +
   theme_void() +

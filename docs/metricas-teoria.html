@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -159,6 +125,11 @@ window.Quarto = {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./resumo-curso-text-mining.pdf" target="_blank"> <i class="bi bi-file-earmark-pdf-fill" role="img">
+</i> 
+<span class="menu-text">Apostila(PDF)</span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
@@ -299,14 +270,14 @@ window.Quarto = {
   <li><a href="#teoria-dos-grafos-e-redes-semânticas" id="toc-teoria-dos-grafos-e-redes-semânticas" class="nav-link" data-scroll-target="#teoria-dos-grafos-e-redes-semânticas">10. Teoria dos Grafos e Redes Semânticas</a></li>
   <li><a href="#síntese-geral-das-técnicas-autores-e-pacotes-r" id="toc-síntese-geral-das-técnicas-autores-e-pacotes-r" class="nav-link" data-scroll-target="#síntese-geral-das-técnicas-autores-e-pacotes-r">11. Síntese Geral das Técnicas, Autores e Pacotes R</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/blob/main/metricas-teoria.qmd" class="toc-action"><i class="bi bi-github"></i>Ver o código fonte</a></li><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Fundamentação Estatística e Linguística</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
+<h1 class="title">Fundamentação Estatística e Linguística</h1>
 <p class="subtitle lead">Formulação matemática das métricas léxicas, legibilidade, polaridade, inferência multivariada e modelagem latente</p>
 </div>
 
@@ -667,8 +638,6 @@ window.Quarto = {
 <hr>
 
 
-<!-- -->
-
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> De volta ao topo</a></main> <!-- /main -->
@@ -905,57 +874,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -1303,296 +1221,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text">4. Análise Descritiva</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Fundamentação Estatística e Linguística"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Formulação matemática das métricas léxicas, legibilidade, polaridade, inferência multivariada e modelagem latente"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">title-block-banner:</span><span class="co"> false</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal"}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>A mineração de textos transforma fenômenos estilísticos e semânticos em variáveis quantitativas comparáveis (SILGE; ROBINSON, 2017; BENOIT et al., 2018). Esta seção reúne o formalismo matemático, os autores seminais e os critérios estatísticos de decisão de **todas** as técnicas empregadas ao longo do curso — desde os indicadores descritivos de vocabulário até os modelos inferenciais, multivariados, probabilísticos e topológicos.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Diversidade e Riqueza Léxica</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>A riqueza vocabular mede o grau de variedade lexical de um autor, avaliando o equilíbrio entre a introdução de palavras novas (*Types*) e a repetição de palavras já utilizadas (*Tokens*) (CARROLL, 1964; BENOIT et al., 2018).</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.1 Type-Token Ratio ($TTR$)</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>O índice **TTR** expressa a razão simples entre o número de vocábulos únicos ($V$) e o total de palavras ocorridas ($N$) em um documento:</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>$$TTR = \frac{V}{N}$$</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Interpretação:** Varia no intervalo $(0, 1]$. Valores próximos de $1$ indicam ausência de repetição vocabular.</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Limitação Estatística (Viés de Extensão):** O $TTR$ é inversamente sensível ao tamanho do texto. Em narrativas longas, à medida que $N$ cresce, o repertório de conectivos e substantivos comuns esgota-se, fazendo com que o $TTR$ decaia naturalmente — penalizando romances extensos como *Quincas Borba* frente a novelas curtas como *O Alienista*.</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.2 Corrected Type-Token Ratio ($CTTR$)</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Proposto por John B. Carroll (1964), o **CTTR** corrige o efeito da extensão textual aplicando uma transformação de raiz quadrada no denominador:</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>$$CTTR = \frac{V}{\sqrt{2N}}$$</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Interpretação:** Ao amortecer o crescimento linear de $N$, o $CTTR$ permite comparar diretamente obras de extensões muito distintas (como uma novela de 16 mil palavras e um romance de 90 mil palavras) sem distorção de escala (CARROLL, 1964).</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Complexidade Sintática e Legibilidade</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>Para avaliar a estrutura frasal e o esforço cognitivo exigido na leitura de cada obra, utiliza-se o índice de **Flesch-Kincaid Grade Level** ($FK$), desenvolvido por J. Peter Kincaid e colaboradores (KINCAID et al., 1975) e calculado sobre o texto integral não filtrado (preservando pontuação para delimitação exata de sentenças):</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>$$FK = 0{,}39 \left( \frac{N_{\text{palavras}}}{N_{\text{sentenças}}} \right) + 11{,}8 \left( \frac{N_{\text{sílabas}}}{N_{\text{palavras}}} \right) - 15{,}59$$</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Interpretação:** O índice combina o comprimento médio das sentenças (complexidade sintática) com a extensão silábica média das palavras (complexidade morfológica). Valores mais elevados indicam períodos mais longos, subordinados e vocabulário mais erudito (KINCAID et al., 1975).</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Frequência Normalizada</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.1 Frequência Relativa por 10.000 Palavras</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>Comparar contagens brutas de palavras-chave (como *"olhos"*, *"morte"* ou *"alma"*) entre livros de tamanhos diferentes gera conclusões enviesadas. A normalização por base fixa de $10.000$ tokens estabelece uma taxa proporcional:</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>$$F_{\text{rel}}(t, d) = \left( \frac{f_{t,d}}{N_d} \right) \times 10.000$$</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>Onde $f_{t,d}$ é a frequência absoluta do termo $t$ no livro $d$, e $N_d$ é o total de palavras do livro $d$.</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.2 Term Frequency – Inverse Document Frequency ($TF\text{-}IDF$)</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>Formulada a partir dos trabalhos seminais de Karen Spärck Jones (1972) e Gerard Salton (SALTON; MCGILL, 1983), a ponderação **TF-IDF** identifica os termos que funcionam como **assinatura exclusiva** de um livro específico dentro do conjunto das 7 obras ($D$):</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>$$TF(t, d) = \frac{f_{t,d}}{\sum_{k \in d} f_{k,d}} \qquad \text{e} \qquad IDF(t, D) = \ln \left( \frac{|D|}{|<span class="sc">\{</span>d \in D : t \in d<span class="sc">\}</span>|} \right)$$</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>$$TF\text{-}IDF(t, d, D) = TF(t, d) \times IDF(t, D)$$</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Interpretação:** Um termo recebe pontuação máxima quando aparece com alta frequência em um único romance ($TF$ alto), mas é raro ou ausente nos demais romances do autor ($IDF$ alto), revelando personagens centrais, cenários e obsessões temáticas específicas de cada narrativa (SPÄRCK JONES, 1972; SILGE; ROBINSON, 2017).</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Análise de Sentimentos</span></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>A dimensão afetiva das narrativas é mensurada por meio de abordagem léxica utilizando o dicionário **OpLexicon v3.0** (SOUZA et al., 2011; disponibilizado em R via pacote <span class="in">`lexiconPT`</span> por GONZAGA, 2017), que atribui a cada termo $t$ uma polaridade discreta $p(t) \in <span class="sc">\{</span>-1, 0, +1<span class="sc">\}</span>$ (negativo, neutro ou positivo).</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.1 Saldo de Polaridade por Capítulo ($S_c$) e Progresso Relativo</span></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>Para cada capítulo $c$ de uma obra com $C$ capítulos totais, calcula-se o saldo líquido de polaridade e sua posição normalizada na linha do tempo narrativa:</span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>$$S_c = \sum_{i=1}^{n_c} p(t_i) \qquad \text{e} \qquad \text{Posição Relativa}_c = \frac{c}{C} \in (0, 1]$$</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>A normalização da posição em percentual ($0\%$ a $100\%$) permite sobrepor e comparar os **arcos emocionais** de obras com estruturas capitulares muito distintas (como os 28 capítulos longos de *Helena* frente aos 198 capítulos curtos de *Quincas Borba*), suavizados por regressão local não paramétrica (**LOESS**, proposta por CLEVELAND, 1979).</span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.2 Volatilidade Emocional ($\sigma_S$)</span></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>Mede a instabilidade dramática de cada obra por meio do desvio padrão amostral dos saldos de polaridade entre seus capítulos:</span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>$$\sigma_S = \sqrt{\frac{1}{C - 1} \sum_{c=1}^{C} \left( S_c - \bar{S} \right)^2}$$</span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Interpretação:** Obras com $\sigma_S$ elevado alternam bruscamente capítulos de euforia ou ironia positiva com capítulos de crise, luto ou pessimismo; obras com $\sigma_S$ baixo mantêm um tom emocional mais homogêneo e contido.</span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Análise de Agrupamento (*Cluster Analysis*)</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.1 Origem Histórica</span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>A **Análise de Agrupamento** (*Cluster Analysis*) é uma técnica estatística multivariada de aprendizagem não supervisionada cujo objetivo é particionar um conjunto de $n$ observações (neste estudo, as 7 obras literárias) em $g$ grupos homogêneos internamente e heterogêneos entre si, com base exclusivamente na estrutura de suas variáveis observadas (frequências vocabulares), sem rótulos prévios de classificação (HAIR JR. et al., 2009; FÁVERO; BELFIORE, 2017).</span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>O termo e as bases da taxonomia numérica foram introduzidos por **Robert C. Tryon** (1939) e consolidados sistematicamente por **Robert R. Sokal e Peter H. A. Sneath** (1963). Na estatística multivariada contemporânea, destacam-se as formulações de **Joe H. Ward Jr.** (1963) para agrupamento hierárquico por mínima variância, **James MacQueen** (1967) para partição por centróides ($k$-means), **Leonard Kaufman e Peter J. Rousseeuw** (1990) para métodos baseados em medóides e silhueta, além de **Hair Jr. et al.** (2009) e **Fávero e Belfiore** (2017) na literatura aplicada.</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.2 Métodos de Clusterização</span></span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>Na literatura estatística, os algoritmos de agrupamento dividem-se em duas grandes famílias (KAUFMAN; ROUSSEEUW, 1990; FÁVERO; BELFIORE, 2017):</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Métodos Hierárquicos (Aglomerativos ou Divisivos):**</span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>*Aglomerativos (Bottom-Up):* Partem de $n$ clusters unitários (cada livro é um grupo isolado) e fundem sucessivamente os pares mais próximos em $n - 1$ passos até formar um único agrupamento global. O histórico das fusões é representado graficamente por uma árvore binária denominada **dendrograma**.</span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>*Divisivos (Top-Down):* Partem de um único grupo contendo todas as observações e o subdividem recursivamente (ex.: algoritmo DIANA).</span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Métodos Não Hierárquicos (Particionais):** Exigem a definição *a priori* do número $k$ de clusters e realocam iterativamente as observações para minimizar uma função de dispersão em torno de centróides ($k$-means) ou medóides ($k$-medoids / PAM) (MACQUEEN, 1967). Para corpora com número reduzido de documentos ($n = 7$ obras), os **métodos hierárquicos aglomerativos** são estatisticamente superiores por revelarem toda a estrutura multiescala de proximidade sem exigir fixação arbitrária de $k$.</span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.3 Medidas de Distância e Similaridade</span></span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>Em matrizes Documento-Termo ($\mathbf{X}_{n \times M}$), cada livro $A$ é representado como um vetor de frequências relativas no espaço de alta dimensionalidade $\mathbb{R}^M$ ($M$ vocábulos únicos): $\mathbf{v}_A = (v_{A,1}, v_{A,2}, \dots, v_{A,M})$. A escolha da métrica de proximidade determina a geometria do agrupamento:</span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Distância Euclidiana ($d_E$):** Mede a distância geométrica direta entre dois pontos no espaço:</span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>  $$d_E(A, B) = \sqrt{\sum_{i=1}^{M} (v_{A,i} - v_{B,i})^2}$$</span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>  *Limitação em Text Mining:* É altamente sensível à magnitude dos vetores (extensão do livro) e sofre com a esparsidade (excesso de zeros na matriz DFM).</span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Distância de Manhattan ou *City-Block* ($d_M$):** Soma das diferenças absolutas ao longo de cada dimensão lexical:</span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>  $$d_M(A, B) = \sum_{i=1}^{M} |v_{A,i} - v_{B,i}|$$</span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Similaridade de Cosseno ($\cos \theta$) e Dissimilaridade Angular ($D_{\cos}$):** Padrão-ouro em linguística computacional e recuperação da informação (SALTON; MCGILL, 1983). Mede o cosseno do ângulo $\theta$ formado entre os vetores $\mathbf{v}_A$ e $\mathbf{v}_B$, capturando a **proporcionalidade do perfil vocabular** independentemente do tamanho absoluto dos romances:</span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>  $$\text{Similaridade}(A, B) = \cos(\theta) = \frac{\mathbf{v}_A \cdot \mathbf{v}_B}{\|\mathbf{v}_A\| \, \|\mathbf{v}_B\|} = \frac{\sum_{i=1}^{M} v_{A,i} \, v_{B,i}}{\sqrt{\sum_{i=1}^{M} v_{A,i}^2} \sqrt{\sum_{i=1}^{M} v_{B,i}^2}}$$</span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>  Como $v_{A,i}, v_{B,i} \ge 0$, tem-se $\cos(\theta) \in <span class="co">[</span><span class="ot">0, 1</span><span class="co">]</span>$, onde $1$ indica identidade proporcional absoluta e $0$ indica ortogonalidade total (ausência de palavras em comum). A **distância (dissimilaridade) de cosseno** utilizada como entrada no algoritmo de agrupamento é definida por:</span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>  $$D_{\cos}(A, B) = 1 - \cos(\theta) \in <span class="co">[</span><span class="ot">0, 1</span><span class="co">]</span>$$</span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.4 Critérios de Ligação (*Linkage*) e Método de Ward</span></span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>Definida a matriz de dissimilaridades $\mathbf{D} = <span class="co">[</span><span class="ot">D_{\cos}(A, B)</span><span class="co">]</span>$, o algoritmo hierárquico necessita de uma regra de atualização para calcular a distância entre um cluster recém-formado $(C_1 \cup C_2)$ e qualquer outro cluster $C_3$ (HAIR JR. et al., 2009):</span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Ligação Simples (*Single Linkage* — Vizinho Mais Próximo):** $d(C_1 \cup C_2, C_3) = \min<span class="sc">\{</span>d(C_1, C_3), d(C_2, C_3)<span class="sc">\}</span>$ (tende a produzir efeito de encadeamento).</span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Ligação Completa (*Complete Linkage* — Vizinho Mais Distante):** $d(C_1 \cup C_2, C_3) = \max<span class="sc">\{</span>d(C_1, C_3), d(C_2, C_3)<span class="sc">\}</span>$ (gera grupos compactos, mas sensíveis a *outliers*).</span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Ligação Média (*Average Linkage* / UPGMA):** Média ponderada das distâncias entre todos os pares dos dois grupos (SOKAL; SNEATH, 1963).</span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Método de Mínima Variância de Ward (`ward.D2`):** Proposto por **Joe H. Ward Jr.** (1963) e implementado com dissimilaridades ao quadrado por Murtagh e Legendre (2014). A cada passo, o algoritmo funde o par de clusters $(C_1, C_2)$ que minimiza o incremento na **Soma dos Quadrados Dentro dos Grupos** ($ESS$ — *Error Sum of Squares*):</span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>  $$\Delta ESS(C_1, C_2) = \frac{n_{C_1} \, n_{C_2}}{n_{C_1} + n_{C_2}} \, d^2(\bar{\mathbf{v}}_{C_1}, \bar{\mathbf{v}}_{C_2})$$</span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>  Onde $n_{C_1}$ e $n_{C_2}$ são os números de documentos nos respectivos clusters e $\bar{\mathbf{v}}_{C_1}, \bar{\mathbf{v}}_{C_2}$ são seus centróides. O método <span class="in">`ward.D2`</span> tende a formar grupos equilibrados, esféricos e de alta coesão interna (WARD JR., 1963; MURTAGH; LEGENDRE, 2014).</span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.5 Correlação Cofenética ($CCC$)</span></span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>Para avaliar o grau de fidelidade com que o dendrograma bidimensional preserva as distâncias originais da matriz $\mathbf{D}$, calcula-se o **Coeficiente de Correlação Cofenética** (SOKAL; ROHLF, 1962), definido como a correlação linear de Pearson entre as dissimilaridades originais $d_{ij}$ e as distâncias cofenéticas $c_{ij}$ (altura do nó em que os livros $i$ e $j$ são fundidos pela primeira vez na árvore):</span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>$$CCC = \frac{\sum_{i &lt; j} (d_{ij} - \bar{d})(c_{ij} - \bar{c})}{\sqrt{\sum_{i &lt; j} (d_{ij} - \bar{d})^2 \sum_{i &lt; j} (c_{ij} - \bar{c})^2}}$$</span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Critério de Decisão Estatística:** Valores de $CCC &gt; 0{,}70$ (e idealmente $CCC &gt; 0{,}80$) indicam que a estrutura hierárquica representada no dendrograma reflete com alta precisão as distâncias estilísticas reais do corpus, sem distorções severas de projeção (SOKAL; ROHLF, 1962; FÁVERO; BELFIORE, 2017).</span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Linguística Quantitativa (Lei de Zipf)</span></span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>Formulada pelo linguista de Harvard **George Kingsley Zipf** (1935, 1949), a **Lei de Zipf** descreve uma regularidade estatística universal nas línguas naturais: quando as palavras de um corpus são ordenadas da mais frequente para a menos frequente, a frequência $f(r)$ de um vocábulo é inversamente proporcional ao seu posto $r$ (*rank*):</span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>$$f(r) = \frac{C}{r^{\alpha}}$$</span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>Aplicando a transformação logarítmica em ambos os lados, obtém-se uma relação linear estimável por Mínimos Quadrados Ordinários (OLS):</span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>$$\log_{10} f(r) = \log_{10} C - \alpha \log_{10} r$$</span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Critério de Interpretação:** Em corpora literários bem formados, o expoente angular $\alpha$ situa-se tipicamente próximo de $1{,}0$ ($\alpha \approx 1$), com coeficiente de determinação $R^2 &gt; 0{,}95$, evidenciando o princípio do "mínimo esforço" na comunicação humana (poucas palavras estruturais muito repetidas e uma longa cauda de vocábulos raros) (ZIPF, 1949).</span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Análise de *Keyness* ($\chi^2$)</span></span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>Consolidada na linguística de corpus por **Mike Scott** (1997) e formalizada estatisticamente por **Paul Rayson e Roger Garside** (2000), a análise de **Keyness** (palavras-chave estatísticas) testa formalmente se a frequência de um termo $t$ difere significativamente entre um **corpus alvo** (ex.: *Fase Romântica*) e um **corpus de referência** (ex.: *Fase Realista*).</span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>Para cada termo $t$, constrói-se uma tabela de contingência $2 \times 2$ com as contagens observadas ($O_{ij}$) e esperadas ($E_{ij}$):</span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>| Grupo | Ocorrências do Termo $t$ | Demais Tokens | Total |</span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>| :--- | :---: | :---: | :---: |</span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>| **Corpus Alvo** | $O_{11}$ | $O_{12}$ | $R_1$ |</span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>| **Corpus de Referência** | $O_{21}$ | $O_{22}$ | $R_2$ |</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>| **Total** | $C_1$ | $C_2$ | $N$ |</span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>Calcula-se a estatística **Qui-Quadrado de Pearson com correção de continuidade de Yates**:</span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>$$\chi^2 = \sum_{i=1}^{2} \sum_{j=1}^{2} \frac{\left( |O_{ij} - E_{ij}| - 0{,}5 \right)^2}{E_{ij}}, \qquad \text{onde } E_{ij} = \frac{R_i \cdot C_j}{N}$$</span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Critério de Decisão Estatística:** Sob a hipótese nula $H_0$ de independência lexical ($1$ grau de liberdade), valores de $|\chi^2| &gt; 3{,}84$ correspondem a $p &lt; 0{,}05$ e $|\chi^2| &gt; 10{,}83$ correspondem a $p &lt; 0{,}001$. Valores positivos indicam termos super-representados no grupo alvo; valores negativos indicam termos característicos do grupo de referência (SCOTT, 1997; RAYSON; GARSIDE, 2000).</span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a><span class="fu">## 8. Análise de Correspondência Simples (CA)</span></span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8.1 Origem Histórica</span></span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>A **Análise de Correspondência** (*Correspondence Analysis* — CA) foi desenvolvida na década de 1960 pelo matemático e estatístico francês **Jean-Paul Benzécri** (1973), inicialmente concebida justamente para analisar tabelas de contingência linguísticas e textuais. Posteriormente, foi difundida na literatura estatística anglo-saxônica por **Michael J. Greenacre** (1984) e na literatura brasileira por autores como **Luiz Paulo Fávero e Patrícia Belfiore** (2017).</span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8.2 Formulação Geral e Decomposição SVD</span></span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>Dada uma matriz de contingência $\mathbf{N}$ de dimensão $I \times J$ (onde $I$ representa os livros e $J$ representa os termos do vocabulário), define-se a **matriz de correspondência** (frequências relativas conjuntas) $\mathbf{P} = \frac{1}{n}\mathbf{N}$, com massas marginais das linhas $\mathbf{r} = \mathbf{P}\mathbf{1}$ e das colunas $\mathbf{c} = \mathbf{P}^\top\mathbf{1}$ (GREENACRE, 1984).</span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>A matriz de **resíduos padronizados** $\mathbf{S}$ mede os desvios relativos entre as proporções observadas e as esperadas sob independência:</span>
-<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>$$s_{ij} = \frac{p_{ij} - r_i c_j}{\sqrt{r_i c_j}} \qquad \Longleftrightarrow \qquad \mathbf{S} = \mathbf{D}_r^{-1/2} \left( \mathbf{P} - \mathbf{r}\mathbf{c}^\top \right) \mathbf{D}_c^{-1/2}$$</span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>Aplica-se a **Decomposição em Valores Singulares (SVD)** sobre $\mathbf{S}$:</span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>$$\mathbf{S} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\top$$</span>
-<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>Onde $\mathbf{\Sigma} = \text{diag}(\sigma_1, \sigma_2, \dots, \sigma_K)$ contém os valores singulares ordenados ($\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_K$), e os autovalores (inércias principais) são dados por $\lambda_k = \sigma_k^2$. As coordenadas principais das obras ($\mathbf{F}$) e dos termos ($\mathbf{G}$) no espaço fatorial são obtidas por (BENZÉCRI, 1973; GREENACRE, 1984):</span>
-<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>$$\mathbf{F} = \mathbf{D}_r^{-1/2} \mathbf{U} \mathbf{\Sigma} \qquad \text{e} \qquad \mathbf{G} = \mathbf{D}_c^{-1/2} \mathbf{V} \mathbf{\Sigma}$$</span>
-<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8.3 Critérios Diagnósticos</span></span>
-<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>Para validar e interpretar adequadamente uma Análise de Correspondência em pesquisa acadêmica, avaliam-se quatro elementos fundamentais (GREENACRE, 1984; FÁVERO; BELFIORE, 2017):</span>
-<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Inércia Total e Percentual de Inércia Explicada:** A inércia total ($\Lambda$) é a soma de todos os autovalores e equivale à estatística qui-quadrado dividida pelo total de ocorrências ($\Lambda = \sum_{k=1}^K \lambda_k = \frac{\chi^2}{n}$). O percentual de variância capturado pelo eixo $k$ é:</span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>   $$\%\text{Inércia}_k = \left( \frac{\lambda_k}{\sum_{m=1}^K \lambda_m} \right) \times 100$$</span>
-<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Critério $\beta$ de Associação Significativa ($\beta &gt; 3$):** Conforme sistematizado por Fávero e Belfiore (2017), para verificar globalmente se existe associação estatisticamente significativa entre as categorias das linhas e das colunas antes de interpretar o mapa, calcula-se o indicador padronizado $\beta$:</span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>   $$\beta = \frac{\chi^2 - (I - 1)(J - 1)}{\sqrt{(I - 1)(J - 1)}} &gt; 3$$</span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>   Quando $\beta &gt; 3$, rejeita-se a independência entre obras e vocabulário ao nível de significância usual, legitimando a extração das dimensões latentes.</span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Análise dos Resíduos Padronizados:** Permitem identificar localmente quais pares específicos *(obra $\times$ palavra)* contribuem com excesso positivo ou negativo para a estatística $\chi^2$.</span>
-<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Mapa Perceptual de Correspondência:** Representação gráfica bidimensional das coordenadas principais ($\text{Dim}_1 \times \text{Dim}_2$), onde a proximidade geométrica entre pontos indica afinidade de perfil lexical e o afastamento da origem $(0,0)$ indica maior especificidade estilística (FÁVERO; BELFIORE, 2017).</span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## 9. Modelagem Probabilística de Tópicos (LDA)</span></span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>Proposta por **David M. Blei, Andrew Y. Ng e Michael I. Jordan** (2003), a **Alocação Latente de Dirichlet (*Latent Dirichlet Allocation* — LDA)** é um modelo generativo bayesiano hierárquico não supervisionado que representa cada documento (capítulo) como uma mistura probabilística sobre $K$ tópicos latentes, e cada tópico como uma distribuição multinomial sobre o vocabulário:</span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>$$P(w_i \mid d) = \sum_{k=1}^{K} P(w_i \mid z_i = k) \, P(z_i = k \mid d) = \sum_{k=1}^{K} \beta_{k, w_i} \, \gamma_{d, k}$$</span>
-<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Parâmetros Estimados (via Amostragem de Gibbs, GRIFFITHS; STEYVERS, 2004; implementado no pacote `topicmodels` por GRÜN; HORNIK, 2011):**</span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>$\boldsymbol{\gamma}_d \sim \text{Dirichlet}(\alpha)$: vetor de proporções dos $K$ tópicos dentro do capítulo $d$.</span>
-<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>$\boldsymbol{\beta}_k \sim \text{Dirichlet}(\eta)$: distribuição de probabilidade das palavras pertencentes ao tópico latente $k$.</span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## 10. Teoria dos Grafos e Redes Semânticas</span></span>
-<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>Fundamentada na **Teoria dos Grafos** (EULER, 1736; ERDŐS; RÉNYI, 1959; NEWMAN, 2010), uma rede semântica modela o texto como um grafo $G = (V, E)$, onde $V$ é o conjunto de vértices (palavras) e $E$ é o conjunto de arestas direcionadas e ponderadas pela frequência de coocorrência consecutiva (bigramas).</span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a>Para identificar os núcleos articuladores e as comunidades temáticas do vocabulário, empregam-se três métricas estruturais (FREEMAN, 1977; BLONDEL et al., 2008; NEWMAN, 2010):</span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Centralidade de Grau (*Degree Centrality*):** Mede o total de conexões incidentes e emergentes de cada vértice $v_i$:</span>
-<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>   $$C_D(v_i) = \deg^-(v_i) + \deg^+(v_i) = \sum_{j} a_{ji} + \sum_{j} a_{ij}$$</span>
-<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a>   Onde $a_{ij} = 1$ se existe aresta direcionada de $v_i$ para $v_j$ (e $0$ caso contrário). Palavras com alto grau atuam como *hubs* semânticos.</span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Centralidade de Intermediação (*Betweenness Centrality*):** Proposta por Linton C. Freeman (1977), quantifica com que frequência um vocábulo $v_i$ atua como "ponte" nos caminhos geodésicos mais curtos ($\sigma_{st}$) entre outros dois pares de palavras $(s, t)$:</span>
-<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>   $$C_B(v_i) = \sum_{s \neq v_i \neq t} \frac{\sigma_{st}(v_i)}{\sigma_{st}}$$</span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Detecção de Comunidades por Modularidade (Algoritmo de Louvain):** Proposto por Blondel et al. (2008), particiona a rede maximizando o índice de modularidade $Q$, agrupando termos que coocorrem densamente entre si em macro-eixos temáticos:</span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>   $$Q = \frac{1}{2m} \sum_{i,j} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(c_i, c_j)$$</span>
-<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## 11. Síntese Geral das Técnicas, Autores e Pacotes R</span></span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>| Dimensão Analítica | Técnica / Métrica | Autores Seminais (ABNT) | Pacote R e Autores | Objetivo na Pesquisa |</span>
-<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>| :--- | :--- | :--- | :--- | :--- |</span>
-<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>| **Riqueza Vocabular** | $TTR$ e $CTTR$ | CARROLL (1964) | <span class="in">`quanteda.textstats`</span> (BENOIT et al., 2018) | Avaliar variedade lexical com e sem controle de extensão. |</span>
-<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>| **Sintaxe / Estilo** | Flesch-Kincaid ($FK$) | KINCAID et al. (1975) | <span class="in">`quanteda.textstats`</span> (BENOIT et al., 2018) | Medir densidade frasal e complexidade de leitura. |</span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>| **Relevância Temática** | $TF\text{-}IDF$ e Freq/10k | SPÄRCK JONES (1972); SALTON; MCGILL (1983) | <span class="in">`tidytext`</span> (SILGE; ROBINSON, 2016) | Identificar assinatura exclusiva de cada romance. |</span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>| **Arco Emocional** | Polaridade ($S_c$), $\sigma_S$ e LOESS | SOUZA et al. (2011); CLEVELAND (1979) | <span class="in">`lexiconPT`</span> (GONZAGA, 2017) | Mapear trajetória afetiva e volatilidade dramática. |</span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>| **Estilometria** | Cosseno + Ward.D2 ($CCC$) | WARD JR. (1963); SOKAL; ROHLF (1962) | <span class="in">`quanteda.textstats`</span> &amp; <span class="in">`stats`</span> (R CORE TEAM, 2026) | Agrupar obras por distância vetorial de vocabulário. |</span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>| **Leis de Potência** | Lei de Zipf ($\alpha$) | ZIPF (1935, 1949) | <span class="in">`stats`</span> (<span class="in">`lm`</span>) (R CORE TEAM, 2026) | Verificar aderência do léxico à distribuição de potência. |</span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>| **Teste de Hipótese** | *Keyness* ($\chi^2$) | SCOTT (1997); RAYSON; GARSIDE (2000) | <span class="in">`quanteda.textstats`</span> (BENOIT et al., 2018) | Testar diferenças significativas entre Romantismo e Realismo. |</span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>| **Multivariada** | Correspondência (CA / $\beta$) | BENZÉCRI (1973); GREENACRE (1984); FÁVERO; BELFIORE (2017) | <span class="in">`base`</span> (<span class="in">`svd`</span>) (R CORE TEAM, 2026) | Projetar mapa perceptual e medir inércia explicada. |</span>
-<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a>| **Tópicos Latentes** | LDA (Gibbs) | BLEI; NG; JORDAN (2003); GRIFFITHS; STEYVERS (2004) | <span class="in">`topicmodels`</span> (GRÜN; HORNIK, 2011) | Descobrir núcleos temáticos latentes nos 827 capítulos. |</span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>| **Redes Semânticas** | Grafos / Grau, Intermediação e Louvain | FREEMAN (1977); BLONDEL et al. (2008); NEWMAN (2010) | <span class="in">`igraph`</span> (CSÁRDI; NEPUSZ, 2006) &amp; <span class="in">`ggraph`</span> (PEDERSEN, 2024) | Mapear conectividade, pontes e comunidades lexicais. |</span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal"}</span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>**Nota Bibliográfica:** Todas as obras metodológicas, artigos seminais e pacotes **R** citados nesta seção encontram-se referenciados integralmente na aba [**Referências**](referencias.qmd) conforme as normas da ABNT (NBR 6023). Avance para **Resultados &amp; Léxico** para explorar as tabelas descritivas e os gráficos gerados a partir das 7 obras completas.</span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1601,9 +1230,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/blob/main/metricas-teoria.qmd" class="toc-action"><i class="bi bi-github"></i>Ver o código fonte</a></li><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></div>
     <div class="nav-footer-right">
-<p>Desenvolvido com <a href="https://github.com" target="_blank"><i class="bi bi-github"></i> GitHub</a>, <a href="https://www.r-project.org/about.html" target="_blank"><i class="bi bi-code-slash"></i> R</a> e <a href="https://quarto.org/" target="_blank">Quarto</a></p>
+<p>Desenvolvido com <a href="https://github.com/MarioDhiego" target="_blank"><i class="bi bi-github"></i> GitHub</a>, <a href="https://www.r-project.org/about.html" target="_blank"><i class="bi bi-code-slash"></i> R</a> e <a href="https://quarto.org/" target="_blank">Quarto</a></p>
 </div>
   </div>
 </footer>

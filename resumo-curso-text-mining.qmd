@@ -1,0 +1,989 @@
+---
+lang: pt-BR
+format:
+  typst:
+    papersize: a4
+    margin:
+      x: 2.5cm
+      y: 2.5cm
+    toc: false
+    section-numbering: 1.1.1
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+
+```{=typst}
+// =========================================================================
+// 1. CAPA (PÁGINA 1)
+// =========================================================================
+#page(numbering: none, header: none, footer: none)[
+  #line(length: 100%, stroke: 1.5pt + rgb("#005A9C"))
+  #align(center)[
+    #v(0.5cm)
+    #text(size: 12pt, weight: "bold", tracking: 0.8pt)[
+      DEPARTAMENTO DE TRÂNSITO DO ESTADO DO PARÁ\
+      REGISTRO NACIONAL DE ESTATÍSTICA DE TRÂNSITO\
+      GERÊNCIA DE ESTATÍSTICA
+    ]
+    #v(5.2cm)
+    #text(size: 18pt, weight: "bold")[
+      CURSO BÁSICO DE MINERAÇÃO DE TEXTO EM R
+    ]
+    \
+    #text(size: 12pt, fill: rgb("#374151"))[
+      Estudo de Caso nas Obras Completas de Machado de Assis
+    ]
+    #v(5.2cm)
+    #text(size: 12pt, weight: "bold")[
+      MARIO DIEGO ROCHA VALENTE
+    ]
+    \
+    #text(size: 10pt, fill: rgb("#4B5563"))[
+      (Ciêntista de Dados)
+    ]
+    #v(1fr)
+    #v(0.4cm)
+    #text(size: 11pt, weight: "bold")[
+      BELÉM — PA\
+      2026
+    ]
+     #line(length: 100%, stroke: 1.5pt + rgb("#0072B2"))
+  ]
+]
+
+// =========================================================================
+// 2. CONTRACAPA / FOLHA DE ROSTO (PÁGINA 2)
+// =========================================================================
+#page(numbering: none, header: none, footer: none)[
+  #align(center)[
+    #v(0.5cm)
+    #text(size: 12pt, weight: "bold")[
+      MARIO DIEGO ROCHA VALENTE
+    ]
+    #v(3.2cm)
+    #text(size: 18pt, weight: "bold")[
+      CURSO BÁSICO DE MINERAÇÃO DE TEXTO EM R
+    ]
+    \
+    #text(size: 12pt, fill: rgb("#374151"))[
+     Fundamentos, Análise Descritiva, Sentimentos e Modelagem Inferencial
+    ]
+  ]
+  #v(4.2cm)
+  #align(right)[
+    #block(width: 58%)[
+      #set par(justify: true, leading: 0.65em)
+      #text(size: 10pt)[
+        Apostila Metodológica elaborada para capacitação em Ciência de Dados, Processamento de Linguagem Natural (NLP) e Estatística Multivariada aplicada a corpus de Textos literários em ambiente computacional *R* e framework *Quarto*.
+      ]
+    ]
+  ]
+  #v(1.5cm)
+  #block(
+    width: 100%,
+    inset: 12pt,
+    stroke: 0.75pt + rgb("#94A3B8"),
+    fill: rgb("#F8FAFC"),
+    radius: 4pt
+  )[
+    #set text(size: 9.5pt)
+    *Ficha Técnica e Reprodutibilidade*\
+    *Autor:* Mario Diego Rocha Valente (DETRAN-PA/UFPA)\
+    *Ambiente Computacional:* Linguagem R (v. 4.5.5) & Quarto Publishing System (Typst)\
+    *Corpus de Textos:* 7 Obras Integrais de Machado de Assis (Wikisource, 1876–1908)\
+    *Repositório Oficial:* #link("[https://github.com/MarioDhiego](https://github.com/MarioDhiego)")]
+    
+    #v(1fr)
+    #v(0.4cm)
+     #align(center)[
+    #text(size: 11pt, weight: "bold")[
+      BELÉM — PA\
+      2026
+    ]
+    ]
+  ]
+ 
+// =========================================================================
+// 3. SUMÁRIO (PÁGINA 3)
+// =========================================================================
+#page(numbering: "i")[
+  #outline(
+    title: [Sumário],
+    depth: 2,
+    indent: auto
+  )
+]
+
+// =========================================================================
+// 4. LISTA DE TABELAS (PÁGINA 4)
+// =========================================================================
+#page(numbering: "i")[
+  #outline(
+    title: [Lista de Tabelas],
+   target: figure.where(kind: "quarto-float-tbl")
+  )
+]
+
+// =========================================================================
+// 5. LISTA DE FIGURAS (PÁGINA 5)
+// =========================================================================
+#page(numbering: "i")[
+  #outline(
+    title: [Lista de Figuras],
+   target: figure.where(kind: "quarto-float-fig")
+  )
+]
+
+// =========================================================================
+// CONFIGURAÇÃO DO CORPO DO RELATÓRIO (PÁGINA 6 EM DIANTE = PÁG. 1)
+// =========================================================================
+#counter(page).update(1)
+#set page(numbering: "1")
+#set par(justify: true)
+```
+
+
+
+
+```{r}
+#| label: setup-ebook-completo
+#| include: false
+
+library(tidyverse)
+library(tidytext)
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(lexiconPT)
+library(topicmodels)
+library(igraph)
+library(ggraph)
+library(ggrepel)
+library(patchwork)
+library(wordcloud)
+library(reshape2)
+library(scales)
+library(knitr)
+
+theme_set(theme_minimal(base_size = 9.5))
+
+# Carregamento e higienização da base empírica
+df_livros <- readRDS("machado_wikisource_completo.rds") %>%
+  filter(!is.na(text)) %>%
+  filter(!str_detect(text, "^(Índice|Anterior|Próximo|Wikisource|Obra editada)")) %>%
+  mutate(
+    author = "Machado de Assis",
+    book_short = case_when(
+      str_detect(book_name, "Dom Casmurro") ~ "Dom Casmurro",
+      str_detect(book_name, "Brás Cubas") ~ "Memórias Póstumas",
+      str_detect(book_name, "Quincas Borba") ~ "Quincas Borba",
+      str_detect(book_name, "Alienista") ~ "O Alienista",
+      str_detect(book_name, "Helena") ~ "Helena",
+      str_detect(book_name, "Memorial de Aires") ~ "Memorial de Aires",
+      str_detect(book_name, "Esaú") ~ "Esaú e Jacó",
+      TRUE ~ book_name
+    ),
+    fase = ifelse(book_short == "Helena", "Fase Romântica", "Fase Realista")
+  )
+
+sw_extra <- c("é", "era", "disse", "ia", "ser", "ter", "havia", "ainda", 
+              "assim", "tudo", "nada", "outro", "outra", "dous", "cousa")
+
+# Corpus e Matriz Documento-Termo (DFM)
+df_corpus_agregado <- df_livros %>%
+  group_by(book_short, fase) %>%
+  summarise(text = paste(text, collapse = " "), .groups = "drop")
+
+meu_corpus <- corpus(df_corpus_agregado$text, docnames = df_corpus_agregado$book_short)
+docvars(meu_corpus, "fase") <- df_corpus_agregado$fase
+
+tokens_limpos <- tokens(
+  meu_corpus,
+  remove_punct = TRUE,
+  remove_numbers = TRUE,
+  remove_symbols = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra))
+
+matriz_dfm <- dfm(tokens_limpos)
+```
+
+
+
+
+
+
+
+
+
+
+# **Machado de Assis (Dataset)**
+## **Origens e Formação**
+
+**Joaquim Maria Machado de Assis** nasceu em **21 de junho de 1839**, no **Morro do Livramento**, na cidade do Rio de Janeiro (então capital do Império do Brasil). Filho de Francisco José de Assis — pintor de paredes e dourador, filho de escravizados alforriados — e de Maria Leopoldina Machado da Câmara — lavadeira açoriana oriunda da Ilha de São Miguel —, Machado cresceu em uma família modesta, marcada pela mestiçagem e pela precariedade material (MASSA, 2009).
+
+Órfão de mãe aos dez anos e de pai na adolescência, teve uma educação formal fragmentada e essencialmente autodidata. Não frequentou universidades nem colégios de elite da Corte; aprendeu os primeiros rudimentos de leitura em uma escola pública primária de São Cristóvão e aprofundou seus estudos por conta própria, frequentando gabinetes de leitura e aprendendo francês com uma padeira imigrante (Madame Gallot) e latim com o padre Silveira Sarmento (MASSA, 2009; BOSI, 1994).
+
+Ao longo da vida, sua geografia afetiva e residencial concentrou-se na antiga Corte carioca:
+
+-   **Morro do Livramento (atual bairro da Gamboa / Saúde)**: Local de seu nascimento e infância, próximo à zona portuária do Rio de Janeiro. A chácara onde nasceu (propriedade da madrinha, Maria José de Mendonça Barroso, viúva do senador Bento Barroso Pereira) deu lugar à urbanização portuária e ferroviária no início do século XX, mas o morro e a Igreja de Nossa Senhora do Livramento permanecem como marcos históricos da região.
+-   **Centro e Lapa / Catete / Flamengo:** Na juventude e início da vida adulta, circulou intensamente pelas redações e livrarias da Rua do Ouvidor (epicentro intelectual e político do Segundo Reinado), residindo em pensões e casas nos bairros centrais e no Catete após seu casamento, em 1869, com a portuguesa Carolina Augusta Xavier de Novais.
+-   **Cosme Velho (Rua Cosme Velho, nº 18):** Em 1884, mudou-se com Carolina para o chalé na Rua Cosme Velho, bairro arborizado aos pés do Corcovado, onde viveu até sua morte em 29 de setembro de 1908. Foi ali que ganhou a alcunha de "Bruxo do Cosme Velho" (popularizada pelo poeta Carlos Drummond de Andrade no poema *A um bruxo, com amor*, de 1958). A casa original foi demolida na década de 1960, mas o bairro conserva sua atmosfera histórica e abrigou por décadas instituições culturais em sua memória.
+
+## **O Brasil de Machado: Império, Escravidão e República**
+
+A vida de Machado de Assis (1839–1908) atravessa as transformações políticas e sociais mais profundas da história brasileira. Sua obra não é alienada da realidade nacional; ao contrário, utiliza a ironia e o distanciamento crítico para expor as contradições de uma sociedade patriarcal, escravocrata e estamental (SCHWARZ, 2000).
+
+-   **O Segundo Reinado (1840–1889):** Machado cresceu e amadureceu intelectualmente sob o reinado de Dom Pedro II. A estabilidade política relativa da Corte contrastava com a economia baseada na monocultura cafeeira e no trabalho escravo.
+-   **A Escravidão e o Processo Abolicionista:** Neto de escravizados libertos, Machado testemunhou todo o lento desmonte jurídico da escravidão no Brasil:
+    -   **Lei Eusébio de Queirós (1850):** Proibiu o tráfico transatlântico de escravizados quando Machado tinha 11 anos.
+    -   **Lei do Ventre Livre (1871):** Declarou livres os filhos de mulheres escravizadas nascidos a partir daquela data — lei que o próprio Machado, na condição de funcionário público do Ministério da Agricultura, ajudou a fiscalizar e aplicar administrativamente (CHALHOUB, 2003).
+    -   **Lei dos Sexagenários (1885)** e **Lei Áurea (13 de maio de 1888):** Aboliu definitivamente a escravidão, assinada pela Princesa Isabel. Dias depois, em 19 de maio de 1888, Machado publicou uma célebre crônica na série *Bons Dias!* ironizando a hipocrisia dos antigos senhores que tentavam reescrever seu passado escravista (ASSIS, 1888).
+-   **A Proclamação da República (1889) e a Primeira República:** Aos 50 anos, testemunhou a queda da monarquia liderada pelo Marechal Deodoro da Fonseca, a crise financeira do Encilhamento e os primeiros governos republicanos (Deodoro, Floriano Peixoto, Prudente de Moraes, Campos Sales e Rodrigues Alves) — contexto que serve de pano de fundo direto para romances como *Esaú e Jacó* (ASSIS, 1904) e *Memorial de Aires* (ASSIS, 1908).
+
+## **Trajetória Profissional, Funcionalismo Público e a Academia**
+
+Diferente de muitos escritores boêmios de sua geração, Machado de Assis construiu uma carreira sólida e disciplinada no serviço público e na imprensa, garantindo estabilidade financeira para dedicar-se à literatura.
+
+### Imprensa e Tipografia (1856–1897)
+
+-   **Tipógrafo e Revisor:** Iniciou sua vida profissional em 1856 como aprendiz de tipógrafo na Imprensa Nacional (então Tipografia Nacional), sob a direção de Manuel Antônio de Almeida (autor de *Memórias de um Sargento de Milícias*), seu primeiro grande incentivador. Em seguida, atuou como revisor de provas na livraria e editora de Francisco de Paula Brito, figura central da cultura negra e editorial no Rio de Janeiro (MASSA, 2009).
+-   **Jornalista e Cronista:** Ingressou no jornalismo profissional no *Correio Mercantil* (1858) e no *Diário do Rio de Janeiro* (1860), onde cobriu debates do Senado e escreveu críticas teatrais e literárias. Ao longo de quatro décadas, colaborou com os principais periódicos do país, como *A Semana Ilustrada*, *O Cruzeiro*, *A Estação* e a *Gazeta de Notícias*.
+
+### Carreira no Serviço Público (1867–1908)
+
+-   Em **1867**, foi nomeado ajudante do diretor de publicação do *Diário Oficial*.
+-   Em **1873**, ingressou como primeiro-oficial na Secretaria de Estado do Ministério da Agricultura, Comércio e Obras Públicas (pasta estratégica no Império, responsável tanto pela infraestrutura quanto pela fiscalização dos fundos de emancipação de escravos) (CHALHOUB, 2003).
+-   Ascendeu por mérito técnico até alcançar o cargo de Diretor-Geral da Diretoria de Comércio (1889) e, posteriormente, Diretor-Geral de Contabilidade do Ministério da Indústria, Viação e Obras Públicas (1902), cargo equivalente hoje ao mais alto escalão técnico ministerial, no qual permaneceu até seu falecimento.
+
+### A Fundação da Academia Brasileira de Letras (ABL)
+
+Sem diplomas universitários, mas reconhecido unanimemente como o maior homem de letras do país, Machado de Assis liderou, ao lado de intelectuais como Lúcio de Mendonça, Joaquim Nabuco, Visconde de Taunay, Olavo Bilac e Rui Barbosa, a fundação da Academia Brasileira de Letras (ABL) em 20 de julho de 1897. Eleito por unanimidade seu primeiro presidente, ocupou a Cadeira nº 23 (cujo patrono escolhido por ele foi José de Alencar) e presidiu a instituição por mais de uma década, consolidando-a como a casa máxima da língua e da literatura no Brasil (BOSI, 1994).
+
+## **Escolas Literárias e a Virada Estética**
+
+A crítica literária divide a produção romanesca de Machado de Assis em duas grandes fases, refletindo sua evolução estética de um escritor alinhado às convenções de seu tempo para um revolucionário da narrativa moderna (CANDIDO, 1970; BOSI, 1994):
+
+| Dimensão | Primeira Fase (1864–1878) | Segunda Fase (1881–1908) |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Escola Literária** | **Romantismo** (com traços de transição e análise psicológica incipiente) | **Realismo Psicológico** (precursor do Modernismo e da metalinguagem) |
+| **Foco Narrativo** | Enredos lineares, conflitos amorosos, ascensão social e moralismo familiar. | Crítica ácida à hipocrisia burguesa, pessimismo filosófico, ironia e ambiguidade. |
+| **Narrador** | Onisciente tradicional em 3ª pessoa, confiável e convencional. | Narrador não confiável (em 1ª pessoa ou irônico), digressivo e interlocutor do leitor. |
+| **Obras Representativas** | *Ressurreição*, *A Mão e a Luva*, *Helena*, *Iaiá Garcia*. | *Memórias Póstumas de Brás Cubas*, *Quincas Borba*, *Dom Casmurro*, *Esaú e Jacó*, *Memorial de Aires*. |
+
+: Comparativo estilístico entre a Primeira Fase e a Segunda Fase de Machado de Assis. {#tbl-fases-machado}
+
+## **Cronologia Completa das Obras de Machado de Assis**
+
+Para situar os **7 livros selecionados no corpus deste estudo** (*Helena*, *Memórias Póstumas de Brás Cubas*, *O Alienista*, *Quincas Borba*, *Dom Casmurro*, *Esaú e Jacó* e *Memorial de Aires*) dentro do conjunto total da produção machadiana, apresenta-se abaixo o acervo digitalizado e as tabelas cronológicas das obras publicadas em vida por gênero literário.
+
+### Romances (Produção Integral)
+
+| Ano | Título da Obra | Fase Literária | Status no Corpus deste Estudo |
+|:------------------:|:-----------------|:-----------------|:-----------------|
+| **1872** | *Ressurreição* | Primeira Fase (Romântica) | Não incluído (texto parcial no Wikisource) |
+| **1874** | *A Mão e a Luva* | Primeira Fase (Romântica) | Não incluído (texto parcial no Wikisource) |
+| **1876** | ***Helena*** | Primeira Fase (Romântica) | **Incluído (28 capítulos)** |
+| **1878** | *Iaiá Garcia* | Primeira Fase (Romântica) | Não incluído (texto parcial no Wikisource) |
+| **1881** | ***Memórias Póstumas de Brás Cubas*** | Segunda Fase (Realista) | **Incluído (160 capítulos)** |
+| **1891** | ***Quincas Borba*** | Segunda Fase (Realista) | **Incluído (198 capítulos)** |
+| **1899** | ***Dom Casmurro*** | Segunda Fase (Realista) | **Incluído (145 capítulos)** |
+| **1904** | ***Esaú e Jacó*** | Segunda Fase (Realista) | **Incluído (122 capítulos)** |
+| **1908** | ***Memorial de Aires*** | Segunda Fase (Realista) | **Incluído (161 capítulos)** |
+
+: Cronologia dos romances publicados por Machado de Assis e status no corpus. {#tbl-cronologia-romances}
+
+```{=typst}
+#pagebreak()
+```
+
+### Coletâneas de Contos e Novelas
+
+| Ano | Título da Obra | Destaques / Observações |
+|:--------------------------:|:---------------------|:---------------------|
+| **1870** | *Contos Fluminenses* | Primeira coletânea de narrativas curtas (*Miss Dollar*, *Luís Soares*). |
+| **1873** | *Histórias da Meia-Noite* | Inclui *A Parasita Azul* e *Aurora sem Dia*. |
+| **1882** | ***Papéis Avulsos*** | Contém a novela ***O Alienista*** (**incluída no corpus — 13 capítulos**), *Teoria do Medalhão* e *O Espelho*. |
+| **1884** | *Histórias sem Data* | Inclui *A Igreja do Diabo*, *Noite de Almirante* e *Conto Alexandrino*. |
+| **1896** | *Várias Histórias* | Inclui *A Cartomante*, *A Causa Secreta*, *Uns Braços* e *O Enfermeiro*. |
+| **1899** | *Páginas Recolhidas* | Inclui *Missa do Galo* e *O Caso da Vara*. |
+| **1906** | *Relíquias de Casa Velha* | Inclui *Pai contra Mãe* e textos memorialísticos. |
+
+: Principais coletâneas de contos e novelas de Machado de Assis. {#tbl-cronologia-contos}
+
+### Poesia, Teatro e Crítica
+
+| Gênero | Ano | Obras Publicadas |
+|:---------------------|:--------------------------:|:---------------------|
+| **Poesia** | 1864–1901 | *Crisálidas* (1864), *Falenas* (1870), *Americanas* (1875), *Ocidentais* (em *Poesias Completas*, 1901). |
+| **Teatro** | 1861–1881 | *Desencantos* (1861), *O Caminho da Porta* (1863), *O Protocolo* (1863), *Quase Ministro* (1864), *Os Deuses de Casaca* (1866), *Tu, só tu, puro amor* (1880). |
+| **Crônicas** | 1859–1897 | Séries publicadas na imprensa e reunidas postumamente: *Balas de Estalo* (1883–1886), *Bons Dias!* (1888–1889) e *A Semana* (1892–1897). |
+
+: Síntese da produção poética, teatral e cronística de Machado de Assis. {#tbl-cronologia-outros}
+
+```{=typst}
+#pagebreak()
+```
+
+# **Arquitetura de Coleta e Pipeline de Text Mining**
+
+Todo o fluxo de coleta e processamento foi desenvolvido em linguagem **$R_{4.5.5}$** (R CORE TEAM, 2026). Para evitar requisições repetidas aos servidores da Fundação Wikimedia (FUNDAÇÃO WIKIMEDIA, 2026), os textos raspados via `rvest` e `xml2` (WICKHAM, 2024; WICKHAM; HESTER; OOMS, 2023) foram persistidos localmente em formato binário nativo (`.rds`).
+
+## **Ecossistema de Pacotes e Referências Técnicas**
+
+O pipeline computacional deste projeto apoia-se em bibliotecas consolidadas da comunidade **R** para ciência de dados, raspagem web (*web scraping*), linguística computacional, modelagem probabilística e teoria de grafos (SILGE; ROBINSON, 2017; BENOIT et al., 2018). A tabela abaixo sistematiza cada pacote empregado ao longo das abas do curso, sua função na arquitetura do projeto e seus respectivos autores principais no padrão ABNT:
+
+| Pacote | Função no Pipeline | Autores Originais e Citação (ABNT) |
+|:-----------------------|:-----------------------|:-----------------------|
+| **`rvest` & `xml2`** | Navegação na árvore DOM/HTML, seleção de nós via CSS (`#mw-content-text`) e extração de atributos e parágrafos. | Hadley Wickham, Jim Hester & Jeroen Ooms (WICKHAM, 2024; WICKHAM; HESTER; OOMS, 2023) |
+| **`curl`** | Detecção automática de configurações de proxy do sistema operacional Windows (`ie_get_proxy_for_url`). | Jeroen Ooms (OOMS, 2024) |
+| **`tidytext`** | Tokenização em formato *tidy* (uma palavra ou *n*-grama por linha) e cálculo de ponderação estatística `TF-IDF`. | Julia Silge & David Robinson (SILGE; ROBINSON, 2016, 2017) |
+| **`quanteda`** | Construção formal do `corpus`, limpeza de tokens e geração da Matriz Documento-Termo (`dfm`). | Kenneth Benoit, Kohei Watanabe e equipe (BENOIT et al., 2018) |
+| **`quanteda.textstats`** | Cálculo de diversidade léxica (`TTR`, `CTTR`), legibilidade (`Flesch-Kincaid`), *Keyness* ($\chi^2$) e similaridade de cosseno. | Kenneth Benoit & Kohei Watanabe (BENOIT et al., 2018) |
+| **`quanteda.textplots`** | Visualização de dispersão léxica longitudinal (`textplot_xray`) e gráficos de desvios significativos (`textplot_keyness`). | Kenneth Benoit & Kohei Watanabe (BENOIT et al., 2018) |
+| **`lexiconPT`** | Fornecimento do dicionário de polaridade em língua portuguesa *OpLexicon v3.0* e base metodológica inspirada no pacote `literaturaBR`. | Sillas Gonzaga (GONZAGA, 2017; SOUZA et al., 2011) |
+| **`topicmodels`** | Estimação bayesiana não supervisionada de tópicos latentes via Alocação Latente de Dirichlet (LDA / Gibbs). | Bettina Grün & Kurt Hornik (GRÜN; HORNIK, 2011; BLEI; NG; JORDAN, 2003) |
+| **`igraph` & `ggraph`** | Modelagem de redes semânticas, métricas de centralidade, comunidades de Louvain e visualização topológica. | Gábor Csárdi, Tamás Nepusz & Thomas Lin Pedersen (CSÁRDI; NEPUSZ, 2006; PEDERSEN, 2024) |
+| **`wordcloud` & `reshape2`** | Construção de nuvens comparativas de polaridade vocabular e reestruturação de matrizes de contingência. | Ian Fellows & Hadley Wickham (FELLOWS, 2018; WICKHAM, 2007) |
+| **`ggrepel`, `patchwork` & `scales`** | Posicionamento inteligente de rótulos sem sobreposição, composição de painéis e formatação numérica. | Kamil Slowikowski, Thomas Lin Pedersen & Hadley Wickham (SLOWIKOWSKI, 2024; PEDERSEN, 2024b; WICKHAM; SEIDEL, 2023) |
+| **`gt` & `DT`** | Renderização de tabelas acadêmicas estáticas de alta precisão (`gt`) e tabelas interativas navegáveis (`DT`). | Richard Iannone (`gt`) & Yihui Xie (`DT`) (IANNONE et al., 2024; XIE; CHENG; TAN, 2024) |
+
+: Ecossistema de pacotes R utilizados na arquitetura de coleta, processamento e modelagem. {#tbl-pacotes-r}
+
+## **Estratégia de Web Scraping (`pt.wikisource.org`)**
+
+O **Wikisource** (FUNDAÇÃO WIKIMEDIA, 2026) é uma biblioteca digital livre mantida pela Fundação Wikimedia que hospeda obras em domínio público fielmente transcritas. Diferente de repositórios com arquivos únicos em `.txt`, os romances de Machado de Assis no Wikisource em português são organizados hierarquicamente na árvore DOM/HTML (MITCHELL, 2018):
+
+1.  **Página Índice da Obra:** Contém os metadados bibliográficos e uma lista de hiperlinks apontando para cada capítulo individual (ex.: `/wiki/Dom_Casmurro/I`, `/wiki/Dom_Casmurro/II`).
+2.  **Subpáginas de Capítulos:** Contêm o texto literário propriamente dito, encapsulado dentro do seletor HTML `#mw-content-text .mw-parser-output p`, acompanhado de elementos de navegação (*Anterior*, *Próximo*, *Índice*) e notas de rodapé numéricas (`[1]`, `[2]`).
+
+### Contorno de Proxy e Leitura Nativa (`wininet`)
+
+Em ambientes Windows corporativos ou institucionais com restrições de proxy, requisições diretas via `curl` ou `httr` frequentemente sofrem bloqueio de certificado SSL ou *timeout*. Para garantir estabilidade, implementou-se uma função de leitura baseada no motor nativo de rede do Windows (`method = "wininet"` via `download.file`), combinada com detecção automática de proxy via `curl::ie_get_proxy_for_url()` (OOMS, 2024) e três boas práticas de raspagem ética (MITCHELL, 2018):
+
+-   **Pausa ética (`Sys.sleep(0.25)`):** Intervalo de 250 milissegundos entre requisições para não sobrecarregar os servidores da Wikimedia.
+-   **Decodificação de URLs (`URLdecode`):** Normalização de caracteres acentuados (como em *Memórias Póstumas* e *Esaú e Jacó*) para garantir o pareamento exato dos links de capítulos.
+-   **Persistência em Cache (`.rds`):** Armazenamento local da base bruta após a primeira coleta, garantindo reprodutibilidade offline.
+
+## **Limpeza, Padronização e Estruturação do Banco de Dados**
+
+Os textos brutos extraídos da web contêm ruídos estruturais que precisam ser removidos antes de qualquer cálculo estatístico (SILGE; ROBINSON, 2017). O fluxo de higienização segue quatro etapas:
+
+1.  **Filtragem de Ruído Editorial:** Remoção de linhas vazias (`NA`) e de parágrafos administrativos capturados acidentalmente pelos seletores HTML (como cabeçalhos iniciados por *"Índice"*, *"Anterior"*, *"Próximo"*, *"Wikisource"* ou *"Obra editada"*).
+2.  **Padronização de Metadados:** Criação de identificadores curtos (`book_short`) para visualização gráfica e classificação das obras segundo a periodização crítica da literatura brasileira (**Fase Romântica** vs. **Fase Realista**) (CANDIDO, 1970; BOSI, 1994).
+3.  **Estruturação Tabular (`Tidy Data`):** Organização do banco em quatro variáveis fundamentais segundo os princípios de dados arrumados de Wickham (2014): `book_short` (obra), `chapter_name` (capítulo), `paragraph_number` (ordem sequencial do parágrafo) e `text` (conteúdo textual limpo).
+4.  **Remoção de Stopwords e Arcaísmos:** Para a análise de frequência e modelagem temática, eliminam-se pontuações, algarismos, símbolos, *stopwords* padrão da língua portuguesa e termos auxiliares/arcaicos recorrentes na prosa oitocentista (como *"dous"*, *"cousa"*, *"havia"*, *"disse"*), construindo a Matriz Documento-Termo (`dfm`) no pacote `quanteda` (BENOIT et al., 2018).
+
+| Estágio | Entrada | Processamento | Saída Estruturada |
+|:-----------------|:-----------------|:-----------------|:-----------------|
+| **1. Coleta** | URLs do Wikisource (`HTML`) | Raspagem DOM via `rvest` + `wininet` (WICKHAM, 2024) | Arquivo local `.rds` bruto |
+| **2. Higienização** | Parágrafos brutos com ruído | Regex (`stringr`) + filtros de metadados (WICKHAM, 2014) | Tabela `df_livros` (827 capítulos) |
+| **3. Tokenização** | Texto corrido por obra | Normalização + remoção de *stopwords* (BENOIT et al., 2018) | `corpus` e `dfm` (`quanteda`) |
+| **4. Modelagem** | `dfm` + `OpLexicon v3.0` | Estatística léxica, TF-IDF, sentimentos e clusters (SILGE; ROBINSON, 2017) | Tabelas `gt` e gráficos `ggplot2` |
+
+: Fluxo operacional de transformação dos dados desde o HTML até os modelos analíticos. {#tbl-pipeline-estagios}
+
+```{=typst}
+#pagebreak()
+```
+
+# **Fundamentação Estatística e Linguística**
+
+A mineração de textos transforma fenômenos estilísticos e semânticos em variáveis quantitativas comparáveis (SILGE; ROBINSON, 2017; BENOIT et al., 2018):
+
+1. **Diversidade Léxica ($TTR$ e $CTTR$):** O índice bruto $TTR = \frac{V}{N}$ relaciona vocábulos únicos ($V$) e total de palavras ($N$), mas penaliza textos longos. O **Corrected Type-Token Ratio** (CARROLL, 1964) corrige o viés de escala:
+   $$CTTR = \frac{V}{\sqrt{2N}}$$
+2. **Legibilidade Sintática (Flesch-Kincaid Grade Level):** Avalia a densidade frasal e morfológica (KINCAID et al., 1975):
+   $$FK = 0{,}39 \left( \frac{N_{\text{palavras}}}{N_{\text{sentenças}}} \right) + 11{,}8 \left( \frac{N_{\text{sílabas}}}{N_{\text{palavras}}} \right) - 15{,}59$$
+3. **Ponderação $TF\text{-}IDF$:** Identifica termos distintivos de cada romance $d$ no acervo $D$ (SPÄRCK JONES, 1972; SALTON; MCGILL, 1983):
+   $$TF\text{-}IDF(t, d, D) = \left( \frac{f_{t,d}}{\sum_{k \in d} f_{k,d}} \right) \times \ln \left( \frac{|D|}{|\{d \in D : t \in d\}|} \right)$$
+4. **Polaridade Emocional ($S_c$) e Volatilidade ($\sigma_S$):** Calculadas via **OpLexicon v3.0** (SOUZA et al., 2011; GONZAGA, 2017) com $p(t) \in \{-1, 0, +1\}$ e suavização **LOESS** (CLEVELAND, 1979):
+   $$S_c = \sum_{i=1}^{n_c} p(t_i) \qquad \text{e} \qquad \sigma_S = \sqrt{\frac{1}{C - 1} \sum_{c=1}^{C} \left( S_c - \bar{S} \right)^2}$$
+5. **Dissimilaridade de Cosseno e Ward (`ward.D2`):** A proximidade angular entre vetores vocabulares (SALTON; MCGILL, 1983) e o agrupamento por mínima variância (WARD JR., 1963; SOKAL; ROHLF, 1962) são definidos por:
+   $$D_{\cos}(A, B) = 1 - \frac{\mathbf{v}_A \cdot \mathbf{v}_B}{\|\mathbf{v}_A\| \, \|\mathbf{v}_B\|} \qquad \text{e} \qquad \Delta ESS(C_1, C_2) = \frac{n_{C_1} \, n_{C_2}}{n_{C_1} + n_{C_2}} \, d^2(\bar{\mathbf{v}}_{C_1}, \bar{\mathbf{v}}_{C_2})$$
+6. **Lei de Zipf e *Keyness* ($\chi^2$):** A lei de potência $\log_{10} f(r) = \log_{10} C - \alpha \log_{10} r$ (ZIPF, 1949) e o teste qui-quadrado com correção de Yates (SCOTT, 1997; RAYSON; GARSIDE, 2000) verificam regularidades macroestruturais e contrastes entre fases literárias.
+7. **Análise de Correspondência (CA), LDA e Grafos:** A decomposição SVD $\mathbf{S} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top$ validada pelo critério $\beta = \frac{\chi^2 - (I-1)(J-1)}{\sqrt{(I-1)(J-1)}} > 3$ (BENZÉCRI, 1973; GREENACRE, 1984; FÁVERO; BELFIORE, 2017), a Alocação Latente de Dirichlet $P(w_i \mid d) = \sum_{k=1}^{K} \beta_{k, w_i} \gamma_{d, k}$ (BLEI; NG; JORDAN, 2003) e a modularidade de Louvain (BLONDEL et al., 2008; NEWMAN, 2010) revelam a estrutura latente do corpus.
+
+```{=typst}
+#pagebreak()
+```
+
+# **Análise Descritiva e Complexidade Léxica**
+## **Volumetria Vocabular**
+
+```{r}
+#| label: tbl-pdf-volumetria
+#| tbl-cap: "Estatística Descritiva e Volumetria das 7 Obras Analisadas."
+
+tabela_geral <- df_livros %>%
+  mutate(tokens_brutos = str_count(text, "\\S+")) %>%
+  group_by(Fase = fase, Obra = book_short) %>%
+  summarise(
+    Capítulos = n_distinct(chapter_name),
+    Parágrafos = n(),
+    Tokens = sum(tokens_brutos),
+    `Tokens/Cap.` = round(Tokens / Capítulos, 1),
+    `Tokens/Par.` = round(Tokens / Parágrafos, 1),
+    .groups = "drop"
+  ) %>%
+  arrange(Fase, desc(Tokens))
+
+kable(tabela_geral, format.args = list(big.mark = ".", decimal.mark = ","))
+```
+
+
+```{r}
+#| label: tbl-pdf-complexidade
+#| tbl-cap: "Diversidade Léxica (TTR e CTTR) e Legibilidade Sintática (Flesch-Kincaid)."
+
+div_lexica <- textstat_lexdiv(matriz_dfm, measure = c("TTR", "CTTR"))
+legibilidade <- textstat_readability(meu_corpus, measure = "Flesch.Kincaid")
+
+tabela_complexidade <- div_lexica %>%
+  left_join(legibilidade, by = "document") %>%
+  left_join(
+    tibble(
+      document = docnames(matriz_dfm),
+      Types = ntype(matriz_dfm),
+      `Tokens Úteis` = ntoken(matriz_dfm)
+    ),
+    by = "document"
+  ) %>%
+  select(Obra = document, Types, `Tokens Úteis`, TTR, CTTR, `Flesch-Kincaid` = Flesch.Kincaid) %>%
+  arrange(desc(CTTR))
+
+kable(tabela_complexidade, digits = 3, format.args = list(big.mark = ".", decimal.mark = ","))
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+```{r}
+#| label: fig-pdf-diversidade
+#| fig-cap: "Comparativo visual entre diversidade léxica bruta (TTR) e corrigida pela extensão (CTTR)."
+#| fig-width: 7.5
+#| fig-height: 3.8
+
+tabela_complexidade %>%
+  select(Obra, `TTR (Bruto)` = TTR, `CTTR (Corrigido)` = CTTR) %>%
+  pivot_longer(cols = -Obra, names_to = "Metrica", values_to = "Valor") %>%
+  ggplot(aes(x = reorder_within(Obra, Valor, Metrica), y = Valor, fill = Metrica)) +
+  geom_col(show.legend = FALSE, width = 0.68) +
+  geom_text(aes(label = round(Valor, 2)), hjust = -0.15, size = 3) +
+  facet_wrap(~ Metrica, scales = "free") +
+  coord_flip() +
+  scale_x_reordered() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  scale_fill_manual(values = c("TTR (Bruto)" = "#56B4E9", "CTTR (Corrigido)" = "#0072B2")) +
+  labs(title = "Diversidade Léxica: TTR vs. CTTR", x = NULL, y = "Pontuação")
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+## **Assinatura Vocabular Distintiva (TF-IDF)**
+
+
+```{r}
+#| label: fig-pdf-tfidf
+#| fig-cap: "Top 8 termos mais exclusivos de cada obra segundo a ponderação TF-IDF."
+#| fig-width: 8
+#| fig-height: 5.2
+
+tfidf_livros <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  filter(!word %in% c(stopwords("portuguese"), sw_extra),
+         !str_detect(word, "^[0-9]+$"),
+         nchar(word) > 2) %>%
+  count(book_short, word, sort = TRUE) %>%
+  bind_tf_idf(word, book_short, n) %>%
+  group_by(book_short) %>%
+  slice_max(tf_idf, n = 8, with_ties = FALSE) %>%
+  ungroup()
+
+ggplot(tfidf_livros, aes(x = reorder_within(word, tf_idf, book_short), y = tf_idf, fill = book_short)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ book_short, scales = "free", ncol = 4) +
+  coord_flip() +
+  scale_x_reordered() +
+  labs(title = "Assinatura Vocabular Exclusiva de Cada Obra (TF-IDF)", x = NULL, y = "TF-IDF") +
+  theme(strip.text = element_text(face = "bold", size = 8), axis.text = element_text(size = 7.5))
+```
+
+
+```{r}
+#| label: fig-pdf-heatmap
+#| fig-cap: "Intensidade temática normalizada (ocorrências a cada 10.000 palavras)."
+#| fig-width: 7
+#| fig-height: 3.8
+
+palavras_alvo <- c("olhos", "amor", "morte", "fogo", "alma", "razão", "loucura", "senhora")
+
+freq_especificas <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  group_by(book_short) %>%
+  mutate(total_palavras_livro = n()) %>%
+  filter(word %in% palavras_alvo) %>%
+  count(book_short, word, total_palavras_livro) %>%
+  mutate(freq_por_10mil = round((n / total_palavras_livro) * 10000, 2)) %>%
+  ungroup()
+
+ggplot(freq_especificas, aes(x = word, y = book_short, fill = freq_por_10mil)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = freq_por_10mil), color = "black", size = 2.8) +
+  scale_fill_gradient(low = "#f7fbff", high = "#0072B2") +
+  labs(title = "Densidade Relativa de Motivos Literários (Freq / 10k)", x = NULL, y = NULL, fill = "Freq/10k")
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+# **Análise de Sentimentos**
+## **Teste de Kruskal-Wallis**
+
+
+```{r}
+#| label: calc-pdf-sentimentos
+#| include: false
+
+data("oplexicon_v3.0")
+lexico_unico <- oplexicon_v3.0 %>% distinct(term, .keep_all = TRUE)
+
+ruido_sentimento <- c(
+  stopwords("portuguese"),
+  "mas", "bem", "mal", "pouco", "pouca", "poucos", "poucas",
+  "grande", "grandes", "melhor", "pior", "certo", "certa",
+  "tal", "assim", "ainda", "agora", "sempre", "nunca", "nada", "tudo"
+)
+
+df_tokens_sent <- df_livros %>%
+  unnest_tokens(term, text) %>%
+  filter(!term %in% ruido_sentimento, nchar(term) > 2) %>%
+  inner_join(lexico_unico, by = "term")
+
+ordem_capitulos <- df_livros %>%
+  distinct(book_short, chapter_name) %>%
+  group_by(book_short) %>%
+  mutate(num_cap = row_number(), posicao_relativa = num_cap / max(num_cap)) %>%
+  ungroup()
+
+df_sentimento <- df_tokens_sent %>%
+  group_by(book_short, fase, chapter_name) %>%
+  summarise(
+    polaridade_soma = sum(polarity, na.rm = TRUE),
+    n_positivas = sum(polarity > 0, na.rm = TRUE),
+    n_negativas = sum(polarity < 0, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  left_join(ordem_capitulos, by = c("book_short", "chapter_name")) %>%
+  arrange(book_short, posicao_relativa)
+
+kw_sent <- kruskal.test(polaridade_soma ~ book_short, data = df_sentimento)
+```
+
+
+O teste não paramétrico de **Kruskal-Wallis** ($\chi^2 = `r round(kw_sent$statistic, 2)`$, $p = `r format.pval(kw_sent$p.value, digits = 3)`$) confirma diferenças estatisticamente significativas na distribuição de polaridade entre as obras.
+
+
+```{r}
+#| label: tbl-pdf-sentimentos
+#| tbl-cap: "Indicadores de Polaridade Emocional, Volatilidade e Extremos Narrativos."
+
+tabela_sentimentos <- df_sentimento %>%
+  group_by(Obra = book_short) %>%
+  summarise(
+    `% Pos.` = round(100 * sum(n_positivas) / (sum(n_positivas) + sum(n_negativas)), 1),
+    `Média/Cap.` = round(mean(polaridade_soma), 2),
+    `Mediana/Cap.` = round(median(polaridade_soma), 2),
+    `Volatilidade (DP)` = round(sd(polaridade_soma), 2),
+    `Cap. Máx.` = paste0(chapter_name[which.max(polaridade_soma)], " (", max(polaridade_soma), ")"),
+    `Cap. Mín.` = paste0(chapter_name[which.min(polaridade_soma)], " (", min(polaridade_soma), ")"),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(`Média/Cap.`))
+
+kable(tabela_sentimentos, format.args = list(decimal.mark = ","))
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+```{r}
+#| label: fig-pdf-arcos
+#| fig-cap: "Evolução longitudinal da polaridade (0% a 100%) com suavização LOESS."
+#| fig-width: 8
+#| fig-height: 4.8
+
+ggplot(df_sentimento, aes(x = posicao_relativa, y = polaridade_soma, color = fase)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray45") +
+  geom_line(alpha = 0.35) +
+  geom_smooth(method = "loess", formula = y ~ x, se = FALSE, linewidth = 0.95) +
+  facet_wrap(~ book_short, scales = "free_y", ncol = 4) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_color_manual(values = c("Fase Romântica" = "#D55E00", "Fase Realista" = "#0072B2"), name = NULL) +
+  labs(title = "Arco Emocional dos 7 Livros de Machado de Assis", x = "Progresso Relativo", y = "Saldo") +
+  theme(legend.position = "bottom", strip.text = element_text(face = "bold", size = 8))
+```
+
+
+```{r}
+#| label: fig-pdf-barras-sent
+#| fig-cap: "Top 10 vocábulos positivos e negativos mais frequentes no corpus."
+#| fig-width: 7.5
+#| fig-height: 4.2
+
+top_sent_palavras <- df_tokens_sent %>%
+  filter(polarity != 0) %>%
+  mutate(sentimento = ifelse(polarity > 0, "Positivas (+1)", "Negativas (-1)")) %>%
+  count(sentimento, term, sort = TRUE) %>%
+  group_by(sentimento) %>%
+  slice_max(n, n = 10, with_ties = FALSE) %>%
+  ungroup() %>%
+  mutate(n_plot = ifelse(sentimento == "Negativas (-1)", -n, n))
+
+ggplot(top_sent_palavras, aes(x = fct_reorder(term, n_plot), y = n_plot, fill = sentimento)) +
+  geom_col(width = 0.7) +
+  geom_text(aes(label = abs(n_plot), hjust = ifelse(n_plot >= 0, -0.15, 1.15)), size = 2.8) +
+  coord_flip() +
+  scale_y_continuous(labels = abs, expand = expansion(mult = c(0.18, 0.18))) +
+  scale_fill_manual(values = c("Negativas (-1)" = "#D55E00", "Positivas (+1)" = "#0072B2")) +
+  labs(title = "Principais Termos por Polaridade (OpLexicon v3.0)", x = NULL, y = "Frequência Absoluta", fill = NULL) +
+  theme(legend.position = "bottom")
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+# **Modelagem Inferencial e Multivariada**
+## **Lei de Zipf e Teste de *Keyness* ($\chi^2$)**
+
+
+```{r}
+#| label: fig-pdf-zipf-keyness
+#| fig-cap: "(A) Ajuste log-log da Lei de Zipf e (B) Teste Qui-Quadrado (Keyness) entre as Fases."
+#| fig-width: 8
+#| fig-height: 3.8
+
+freq_zipf <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  filter(!str_detect(word, "^[0-9]+$")) %>%
+  count(word, sort = TRUE) %>%
+  mutate(rank = row_number(), freq_rel = n / sum(n))
+
+modelo_zipf <- lm(log10(freq_rel) ~ log10(rank), data = filter(freq_zipf, rank >= 10, rank <= 5000))
+alpha_est <- round(-coef(modelo_zipf)[2], 3)
+r2_est <- round(summary(modelo_zipf)$r.squared, 4)
+
+p_zipf <- ggplot(freq_zipf, aes(x = rank, y = freq_rel)) +
+  geom_line(color = "#0072B2", linewidth = 0.8) +
+  geom_abline(intercept = coef(modelo_zipf)[1], slope = coef(modelo_zipf)[2], linetype = "dashed", color = "#D55E00") +
+  scale_x_log10(labels = scales::comma) +
+  scale_y_log10(labels = scales::scientific) +
+  annotate("text", x = 60, y = 0.015, label = paste0("α = ", alpha_est, "\nR² = ", r2_est), hjust = 0, fontface = "bold", color = "#D55E00", size = 3.2) +
+  labs(title = "A. Lei de Zipf (log-log)", x = "Posto (log10)", y = "Freq. Relativa (log10)")
+
+df_fases <- df_livros %>% group_by(fase) %>% summarise(text = paste(text, collapse = " "), .groups = "drop")
+dfm_fases <- corpus(df_fases$text, docnames = df_fases$fase) %>%
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra)) %>%
+  dfm()
+
+res_key <- textstat_keyness(dfm_fases, target = "Fase Romântica", measure = "chi2")
+
+p_key <- textplot_keyness(res_key, n = 10, color = c("#D55E00", "#0072B2")) +
+  labs(title = "B. Keyness χ²: Romantismo vs. Realismo", x = "Qui-Quadrado (χ²)") +
+  theme(legend.position = "bottom")
+
+p_zipf + p_key
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+## **Clusterização Hierárquica**
+
+
+```{r}
+#| label: calc-pdf-cluster-ca
+#| include: false
+
+dfm_relativa <- dfm_weight(matriz_dfm, scheme = "prop")
+mat_simil <- as.matrix(textstat_simil(dfm_relativa, margin = "documents", method = "cosine"))
+dist_livros <- as.dist(1 - mat_simil)
+cluster_livros <- hclust(dist_livros, method = "ward.D2")
+cofenetica <- round(cor(dist_livros, cophenetic(cluster_livros)), 3)
+
+dfm_ca <- dfm_trim(matriz_dfm, min_termfreq = 40, min_docfreq = 3)
+N_ca <- as.matrix(dfm_ca)
+P <- N_ca / sum(N_ca)
+r <- rowSums(P)
+c_mass <- colSums(P)
+S <- (P - outer(r, c_mass)) / sqrt(outer(r, c_mass))
+svd_res <- svd(S)
+
+chi2_ca <- sum(N_ca) * sum(S^2)
+gl_ca <- (nrow(N_ca) - 1) * (ncol(N_ca) - 1)
+criterio_beta <- round((chi2_ca - gl_ca) / sqrt(gl_ca), 2)
+autovalores <- svd_res$d^2
+inercia_pct <- (autovalores / sum(autovalores)) * 100
+coord_docs <- sweep(sweep(svd_res$u[, 1:2], 1, sqrt(r), "/"), 2, svd_res$d[1:2], "*")
+
+df_ca_plot <- tibble(
+  Livro = docnames(dfm_ca),
+  Fase = docvars(meu_corpus, "fase"),
+  Dim1 = coord_docs[, 1],
+  Dim2 = coord_docs[, 2]
+)
+```
+
+
+A clusterização hierárquica sobre a dissimilaridade de cosseno atinge **Correlação Cofenética $CCC = `r cofenetica`$**, enquanto a Análise de Correspondência apresenta **Critério $\beta = `r criterio_beta` > 3$** ($p < 0{,}001$), confirmando a separação estilística entre *Helena* e os romances realistas.
+
+
+```{r}
+#| label: fig-pdf-dendrograma
+#| fig-cap: "Dendrograma de agrupamento hierárquico (Ward.D2 sobre distância de cosseno)."
+#| fig-width: 7
+#| fig-height: 4.5
+
+par(mar = c(2.5, 4, 3, 1.5))
+plot(
+  cluster_livros,
+  main = "Clusterização Hierárquica das 7 Obras (Método Ward.D2)",
+  sub = paste0("Dissimilaridade de Cosseno | Correlação Cofenética (CCC) = ", cofenetica),
+  xlab = "", ylab = "Distância (1 - Cosseno)",
+  hang = -1, lwd = 2.5, col = "#0072B2"
+)
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+## **Análise de Correspondência (CA)**
+
+```{r}
+#| label: fig-pdf-ca
+#| fig-cap: "Mapa Perceptual da Análise de Correspondência (codificação redundante cor + forma)."
+#| fig-width: 7
+#| fig-height: 4.8
+
+ggplot(df_ca_plot, aes(x = Dim1, y = Dim2, color = Fase, shape = Fase, label = Livro)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray60") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray60") +
+  geom_point(size = 3.8) +
+  geom_text_repel(size = 3.4, fontface = "bold", box.padding = 0.5) +
+  scale_color_manual(values = c("Fase Romântica" = "#D55E00", "Fase Realista" = "#0072B2")) +
+  scale_shape_manual(values = c("Fase Romântica" = 17, "Fase Realista" = 16)) +
+  labs(
+    title = paste0("Mapa Perceptual de Correspondência (Critério β = ", criterio_beta, ")"),
+    x = paste0("Dimensão 1 (", round(inercia_pct[1], 1), "% da inércia)"),
+    y = paste0("Dimensão 2 (", round(inercia_pct[2], 1), "% da inércia)")
+  ) +
+  theme(legend.position = "bottom")
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+## **Modelagem Probabilística de Tópicos (LDA)**
+
+```{r}
+#| label: fig-pdf-lda
+#| fig-cap: "Alocação Latente de Dirichlet (LDA, K = 4): assinatura vocabular (β) e composição por obra (γ)."
+#| fig-width: 8.2
+#| fig-height: 6.2
+
+df_caps <- df_livros %>%
+  mutate(doc_id = paste(book_short, chapter_name, sep = " :: ")) %>%
+  group_by(doc_id, book_short) %>%
+  summarise(text = paste(text, collapse = " "), .groups = "drop")
+
+dfm_caps <- corpus(df_caps$text, docnames = df_caps$doc_id) %>%
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra)) %>%
+  dfm() %>%
+  dfm_trim(min_termfreq = 15, min_docfreq = 5)
+
+dfm_caps <- dfm_subset(dfm_caps, ntoken(dfm_caps) > 0)
+dtm_lda <- convert(dfm_caps, to = "topicmodels")
+
+set.seed(2026)
+modelo_lda <- LDA(dtm_lda, k = 4, method = "Gibbs", control = list(iter = 600, burnin = 150))
+
+rotulos_topicos <- c(
+  "1" = "Tópico 1: Família & Casamento",
+  "2" = "Tópico 2: Império & Sociedade",
+  "3" = "Tópico 3: Filosofia & Psicologia",
+  "4" = "Tópico 4: Afeto & Relações"
+)
+
+topicos_beta <- tidy(modelo_lda, matrix = "beta") %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 6, with_ties = FALSE) %>%
+  ungroup() %>%
+  mutate(topic_label = recode(as.character(topic), !!!rotulos_topicos))
+
+p_beta <- ggplot(topicos_beta, aes(x = reorder_within(term, beta, topic_label), y = beta, fill = topic_label)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic_label, scales = "free", ncol = 2) +
+  coord_flip() +
+  scale_x_reordered() +
+  scale_fill_manual(values = c("#0072B2", "#D55E00", "#009E73", "#CC79A7")) +
+  labs(title = "A. Termos Dominantes por Tópico (Matriz β)", x = NULL, y = "Probabilidade (β)") +
+  theme(strip.text = element_text(face = "bold", size = 8))
+
+topicos_gamma <- tidy(modelo_lda, matrix = "gamma") %>%
+  separate(document, into = c("Livro", "Capitulo"), sep = " :: ", extra = "merge") %>%
+  group_by(Livro, topic) %>%
+  summarise(gamma_medio = mean(gamma), .groups = "drop") %>%
+  mutate(topic_label = recode(as.character(topic), !!!rotulos_topicos))
+
+p_gamma <- ggplot(topicos_gamma, aes(x = Livro, y = gamma_medio, fill = topic_label)) +
+  geom_col(position = "fill", width = 0.65) +
+  coord_flip() +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = c("#0072B2", "#D55E00", "#009E73", "#CC79A7"), name = NULL) +
+  guides(fill = guide_legend(ncol = 2)) +
+  labs(title = "B. Composição Temática por Obra (Matriz γ)", x = NULL, y = "Proporção Média (γ)") +
+  theme(legend.position = "bottom", legend.text = element_text(size = 8))
+
+p_beta / p_gamma + plot_layout(heights = c(1.3, 1))
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+```{r}
+#| label: fig-pdf-grafo
+#| fig-cap: "Componente Conexo Gigante da rede semântica de Machado de Assis (Comunidades de Louvain)."
+#| fig-width: 8
+#| fig-height: 5.5
+
+arestas_rede <- df_livros %>%
+  unnest_tokens(bigrama, text, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigrama)) %>%
+  separate(bigrama, c("from", "to"), sep = " ") %>%
+  filter(
+    !from %in% c(stopwords("portuguese"), sw_extra),
+    !to %in% c(stopwords("portuguese"), sw_extra),
+    nchar(from) > 2, nchar(to) > 2
+  ) %>%
+  count(from, to, sort = TRUE) %>%
+  filter(n >= 15)
+
+grafo_bruto <- graph_from_data_frame(arestas_rede, directed = TRUE)
+comp <- components(grafo_bruto)
+nos_gigante <- names(comp$membership[comp$membership == which.max(comp$csize)])
+grafo <- induced_subgraph(grafo_bruto, nos_gigante)
+
+V(grafo)$grau <- degree(grafo, mode = "all")
+V(grafo)$is_hub <- rank(-V(grafo)$grau, ties.method = "min") <= 10
+
+comunidades <- cluster_louvain(as.undirected(grafo))
+membros <- membership(comunidades)
+top3_com <- names(sort(table(membros), decreasing = TRUE))[1:3]
+
+V(grafo)$eixo_narrativo <- case_when(
+  as.character(membros) == top3_com[1] ~ "Eixo 1: Espaço Doméstico & Social",
+  as.character(membros) == top3_com[2] ~ "Eixo 2: Afeto, Corpo & Subjetividade",
+  as.character(membros) == top3_com[3] ~ "Eixo 3: Tempo, Vida & Existência",
+  TRUE ~ "Eixo 4: Conexões Periféricas"
+)
+
+set.seed(2026)
+ggraph(grafo, layout = "stress") +
+  geom_edge_link(aes(edge_width = n), edge_colour = "gray80", alpha = 0.7,
+                 arrow = arrow(length = unit(1.8, "mm")), end_cap = circle(3, "mm")) +
+  geom_node_point(aes(size = grau, color = eixo_narrativo), alpha = 0.92) +
+  geom_node_text(aes(label = ifelse(!is_hub, name, "")), repel = TRUE, size = 2.6, color = "gray35", max.overlaps = 15) +
+  geom_node_label(aes(label = ifelse(is_hub, name, ""), color = eixo_narrativo),
+                  repel = TRUE, size = 3, fontface = "bold", fill = "white", label.size = 0.3, show.legend = FALSE) +
+  scale_edge_width(range = c(0.3, 1.8), name = "Freq.") +
+  scale_size(range = c(3, 9), name = "Grau") +
+  scale_color_manual(
+    values = c(
+      "Eixo 1: Espaço Doméstico & Social" = "#0072B2",
+      "Eixo 2: Afeto, Corpo & Subjetividade" = "#D55E00",
+      "Eixo 3: Tempo, Vida & Existência" = "#009E73",
+      "Eixo 4: Conexões Periféricas" = "#7F7F7F"
+    ),
+    name = "Macro-Eixo (Louvain)"
+  ) +
+  labs(title = "Rede Semântica e Comunidades de Louvain (Top 10 Hubs Destacados)") +
+  theme_void() +
+  theme(plot.title = element_text(face = "bold", size = 11), legend.position = "right", legend.text = element_text(size = 8))
+```
+
+
+```{=typst}
+#pagebreak()
+```
+
+
+# **Referências Bibliográficas**
+
+* ASSIS, Joaquim Maria Machado de. **Helena** [1876]; **Memórias Póstumas de Brás Cubas** [1881]; **O Alienista** [1882]; **Quincas Borba** [1891]; **Dom Casmurro** [1899]; **Esaú e Jacó** [1904]; **Memorial de Aires** [1908]. Edições digitais disponíveis em: <https://pt.wikisource.org>. Acesso em: 23 nov. 2026.
+* BENOIT, Kenneth et al. quanteda: An R package for the quantitative analysis of textual data. **Journal of Open Source Software**, v. 3, n. 30, p. 774, 2018.
+* BENZÉCRI, Jean-Paul. **L'Analyse des Données: Tome 2 — L'Analyse des Correspondances**. Paris: Dunod, 1973.
+* BLEI, David M.; NG, Andrew Y.; JORDAN, Michael I. Latent Dirichlet Allocation. **Journal of Machine Learning Research**, v. 3, p. 993–1022, 2003.
+* BLONDEL, Vincent D. et al. Fast unfolding of communities in large networks. **Journal of Statistical Mechanics**, v. 2008, p. P10008, 2008.
+* BOSI, Alfredo. **História Concisa da Literatura Brasileira**. 32. ed. São Paulo: Cultrix, 1994.
+* CANDIDO, Antonio. Esquema de Machado de Assis. In: **Vários Escritos**. São Paulo: Duas Cidades, 1970.
+* CARROLL, John B. **Language and Thought**. Englewood Cliffs: Prentice-Hall, 1964.
+* CHALHOUB, Sidney. **Machado de Assis, Historiador**. São Paulo: Companhia das Letras, 2003.
+* CLEVELAND, William S. Robust Locally Weighted Regression and Smoothing Scatterplots. **JASA**, v. 74, n. 368, p. 829–836, 1979.
+* FÁVERO, Luiz Paulo; BELFIORE, Patrícia. **Manual de Análise de Dados**. Rio de Janeiro: Elsevier, 2017.
+* GONZAGA, Sillas. **lexiconPT: Lexicons for Portuguese Text Analysis**. R package version 0.1.0, 2017.
+* GREENACRE, Michael J. **Theory and Applications of Correspondence Analysis**. London: Academic Press, 1984.
+* GRÜN, Bettina; HORNIK, Kurt. topicmodels: An R Package for Fitting Topic Models. **JSS**, v. 40, n. 13, p. 1–30, 2011.
+* KINCAID, J. Peter et al. **Derivation of New Readability Formulas**. Research Branch Report 8-75, 1975.
+* KRUSKAL, William H.; WALLIS, W. Allen. Use of ranks in one-criterion variance analysis. **JASA**, v. 47, n. 260, p. 583–621, 1952.
+* MASSA, Jean-Michel. **A Juventude de Machado de Assis (1839–1870)**. 2. ed. São Paulo: Editora UNESP, 2009.
+* NEWMAN, Mark E. J. **Networks: An Introduction**. Oxford: Oxford University Press, 2010.
+* OKABE, Masataka; ITO, Kei. **Color Universal Design (CUD)**. J*Fly Data Depository, 2008.
+* R CORE TEAM. **R: A Language and Environment for Statistical Computing**. Vienna: R Foundation, 2026.
+* RAYSON, Paul; GARSIDE, Roger. Comparing Corpora Using Frequency Profiling. **ACL Workshop**, p. 1–6, 2000.
+* SALTON, Gerard; MCGILL, Michael J. **Introduction to Modern Information Retrieval**. New York: McGraw-Hill, 1983.
+* SCHWARZ, Roberto. **Ao Vencedor as Batatas**. 5. ed. São Paulo: Duas Cidades; Editora 34, 2000.
+* SCOTT, Mike. PC Analysis of Key Words. **System**, v. 25, n. 2, p. 233–245, 1997.
+* SILGE, Julia; ROBINSON, David. **Text Mining with R: A Tidy Approach**. Sebastopol: O'Reilly Media, 2017.
+* SOKAL, Robert R.; ROHLF, F. James. The Comparison of Dendrograms by Objective Methods. **Taxon**, v. 11, n. 2, p. 33–40, 1962.
+* SOUZA, Marlo et al. Construction of a Portuguese Opinion Lexicon from Multiple Resources. **STIL**, p. 59–66, 2011.
+* SPÄRCK JONES, Karen. A Statistical Interpretation of Term Specificity. **Journal of Documentation**, v. 28, n. 1, p. 11–21, 1972.
+* VALENTE, Mario Diego Rocha. **Curso Básico de Mineração de Texto: Estudo de Caso nas Obras Completas de Machado de Assis em Linguagem R**. Belém: DETRAN-PA / RENAEST, 2026.
+* WARD JR., Joe H. Hierarchical Grouping to Optimize an Objective Function. **JASA**, v. 58, n. 301, p. 236–244, 1963.
+* WICKHAM, Hadley et al. Welcome to the tidyverse. **JOSS**, v. 4, n. 43, p. 1686, 2019.
+* ZIPF, George Kingsley. **Human Behavior and the Principle of Least Effort**. Cambridge: Addison-Wesley, 1949.

@@ -1,17 +1,20 @@
-/* Importação de fontes acadêmicas e monoespaçadas */
+/* Importação de fontes acadêmicas de alta legibilidade */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
 
 :root {
-  --cor-primaria: #1e40af;      /* Azul acadêmico profundo */
-  --cor-realista: #1b9e77;      /* Verde (mesma paleta dos gráficos ggplot2) */
-  --cor-romantica: #d95f02;     /* Laranja (mesma paleta dos gráficos ggplot2) */
-  --cor-neutra: #7570b3;        /* Roxo estatístico */
+  /* Paleta Universal Okabe-Ito (Colorblind-Safe - WCAG AA/AAA) */
+  --cor-primaria: #005A9C;       /* Azul institucional de alto contraste */
+  --cor-okabe-azul: #0072B2;     /* Categoria A / Positivo / Realismo */
+  --cor-okabe-laranja: #D55E00;  /* Categoria B / Negativo / Romantismo */
+  --cor-okabe-verde: #009E73;    /* Categoria C / Eixo Temático */
+  --cor-okabe-roxo: #CC79A7;     /* Categoria D / Eixo Secundário */
+  --cor-okabe-ambar: #E69F00;    /* Destaque / Alerta */
   --raio-borda: 8px;
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.72;
+  line-height: 1.75;
 }
 
 code, pre {
@@ -19,11 +22,11 @@ code, pre {
   font-size: 0.9em;
 }
 
-/* Barra divisória azul sólida */
+/* Barra divisória com gradiente acessível */
 hr {
   border: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--cor-primaria), #60a5fa);
+  background: linear-gradient(90deg, var(--cor-primaria), var(--cor-okabe-azul));
   margin: 2.5rem 0;
   border-radius: 2px;
 }
@@ -42,21 +45,28 @@ table p, th, td {
   hyphens: none;
 }
 
-/* Cartões KPI estilizados com borda lateral e efeito hover */
+/* Links sempre sublinhados no corpo do texto (não dependem apenas da cor) */
+main a:not(.btn):not(.nav-link) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* Cartões KPI com borda lateral espessa */
 .callout-note {
-  border-left-width: 4px !important;
+  border-left: 5px solid var(--cor-okabe-azul) !important;
   border-radius: var(--raio-borda);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.callout-note:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+.callout-important {
+  border-left: 5px solid var(--cor-okabe-laranja) !important;
+  border-radius: var(--raio-borda);
 }
 
-/* Estilização elegante das abas (tabset) */
-.nav-tabs .nav-link.active {
-  font-weight: 600;
-  border-bottom: 3px solid var(--cor-primaria);
+/* Indicador de foco nítido para navegação acessível */
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--cor-okabe-ambar);
+  outline-offset: 2px;
 }

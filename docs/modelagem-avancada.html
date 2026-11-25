@@ -162,6 +162,11 @@ window.Quarto = {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./resumo-curso-text-mining.pdf" target="_blank"> <i class="bi bi-file-earmark-pdf-fill" role="img">
+</i> 
+<span class="menu-text">Apostila(PDF)</span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
@@ -286,14 +291,14 @@ window.Quarto = {
   <li><a href="#tabela-dos-principais-hubs-vocabulares-da-rede" id="toc-tabela-dos-principais-hubs-vocabulares-da-rede" class="nav-link" data-scroll-target="#tabela-dos-principais-hubs-vocabulares-da-rede">6.2 Tabela dos Principais <em>Hubs</em> Vocabulares da Rede</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/blob/main/modelagem-avancada.qmd" class="toc-action"><i class="bi bi-github"></i>Ver o código fonte</a></li><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Modelagem Inferencial</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Código</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Mostrar o código</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Esconder o código</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">Ver o código fonte</a></li></ul></div></div>
+<h1 class="title">Modelagem Inferencial</h1>
 <p class="subtitle lead">Leis de Potência, Keyness (χ²), Clusterização, Análise de Correspondência, LDA e Redes Semânticas</p>
 </div>
 
@@ -343,18 +348,18 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>r2_est <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(modelo_zipf)<span class="sc">$</span>r.squared, <span class="dv">4</span>)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(freq_zipf, <span class="fu">aes</span>(<span class="at">x =</span> rank, <span class="at">y =</span> freq_rel)) <span class="sc">+</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#2171b5"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#0072B2"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">coef</span>(modelo_zipf)[<span class="dv">1</span>],</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">coef</span>(modelo_zipf)[<span class="dv">2</span>],</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#d95f02"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#D55E00"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>scientific) <span class="sc">+</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">80</span>, <span class="at">y =</span> <span class="fl">0.015</span>,</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Expoente estimado: α = "</span>, alpha_est, <span class="st">"</span><span class="sc">\n</span><span class="st">R² = "</span>, r2_est),</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#d95f02"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#D55E00"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição Empírica de Frequências (Lei de Zipf)"</span>,</span>
@@ -397,7 +402,7 @@ Figura&nbsp;1: Ajuste log-log da Lei de Zipf (ZIPF, 1949) sobre o vocabulário i
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>resultado_keyness <span class="ot">&lt;-</span> <span class="fu">textstat_keyness</span>(dfm_fases, <span class="at">target =</span> <span class="st">"Fase Romântica"</span>, <span class="at">measure =</span> <span class="st">"chi2"</span>)</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_keyness</span>(resultado_keyness, <span class="at">n =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#d95f02"</span>, <span class="st">"#1b9e77"</span>)) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_keyness</span>(resultado_keyness, <span class="at">n =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#D55E00"</span>, <span class="st">"#0072B2"</span>)) <span class="sc">+</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Teste de Hipótese Vocabular (Keyness χ²): Romantismo vs. Realismo"</span>,</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Termos com maior desvio significativo entre Helena (alvo) e os romances realistas (referência)"</span>,</span>
@@ -452,23 +457,23 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
 </figcaption>
 <div aria-describedby="tbl-matriz-cosseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="gomrcvcubl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gomrcvcubl table {
+<div id="wczygoidfd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wczygoidfd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gomrcvcubl thead, #gomrcvcubl tbody, #gomrcvcubl tfoot, #gomrcvcubl tr, #gomrcvcubl td, #gomrcvcubl th {
+#wczygoidfd thead, #wczygoidfd tbody, #wczygoidfd tfoot, #wczygoidfd tr, #wczygoidfd td, #wczygoidfd th {
   border-style: none;
 }
 
-#gomrcvcubl p {
+#wczygoidfd p {
   margin: 0;
   padding: 0;
 }
 
-#gomrcvcubl .gt_table {
+#wczygoidfd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -494,12 +499,12 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-left-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_caption {
+#wczygoidfd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gomrcvcubl .gt_title {
+#wczygoidfd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -511,7 +516,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-width: 0;
 }
 
-#gomrcvcubl .gt_subtitle {
+#wczygoidfd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -523,7 +528,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-width: 0;
 }
 
-#gomrcvcubl .gt_heading {
+#wczygoidfd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -535,13 +540,13 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_bottom_border {
+#wczygoidfd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_col_headings {
+#wczygoidfd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -556,7 +561,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_col_heading {
+#wczygoidfd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -576,7 +581,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#gomrcvcubl .gt_column_spanner_outer {
+#wczygoidfd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -588,15 +593,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 4px;
 }
 
-#gomrcvcubl .gt_column_spanner_outer:first-child {
+#wczygoidfd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gomrcvcubl .gt_column_spanner_outer:last-child {
+#wczygoidfd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gomrcvcubl .gt_column_spanner {
+#wczygoidfd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -608,11 +613,11 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   width: 100%;
 }
 
-#gomrcvcubl .gt_spanner_row {
+#wczygoidfd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gomrcvcubl .gt_group_heading {
+#wczygoidfd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -638,7 +643,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   text-align: left;
 }
 
-#gomrcvcubl .gt_empty_group_heading {
+#wczygoidfd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -653,15 +658,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: middle;
 }
 
-#gomrcvcubl .gt_from_md > :first-child {
+#wczygoidfd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gomrcvcubl .gt_from_md > :last-child {
+#wczygoidfd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gomrcvcubl .gt_row {
+#wczygoidfd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -680,7 +685,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#gomrcvcubl .gt_stub {
+#wczygoidfd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -693,7 +698,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#gomrcvcubl .gt_stub_row_group {
+#wczygoidfd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -707,15 +712,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: top;
 }
 
-#gomrcvcubl .gt_row_group_first td {
+#wczygoidfd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gomrcvcubl .gt_row_group_first th {
+#wczygoidfd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gomrcvcubl .gt_summary_row {
+#wczygoidfd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -725,16 +730,16 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#gomrcvcubl .gt_first_summary_row {
+#wczygoidfd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_first_summary_row.thick {
+#wczygoidfd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gomrcvcubl .gt_last_summary_row {
+#wczygoidfd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -744,7 +749,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_grand_summary_row {
+#wczygoidfd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -754,7 +759,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#gomrcvcubl .gt_first_grand_summary_row {
+#wczygoidfd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -764,7 +769,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_last_grand_summary_row_top {
+#wczygoidfd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -774,11 +779,11 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_striped {
+#wczygoidfd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gomrcvcubl .gt_table_body {
+#wczygoidfd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -787,7 +792,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_footnotes {
+#wczygoidfd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -801,7 +806,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_footnote {
+#wczygoidfd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -810,7 +815,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#gomrcvcubl .gt_sourcenotes {
+#wczygoidfd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -824,7 +829,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#gomrcvcubl .gt_sourcenote {
+#wczygoidfd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -832,72 +837,72 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#gomrcvcubl .gt_left {
+#wczygoidfd .gt_left {
   text-align: left;
 }
 
-#gomrcvcubl .gt_center {
+#wczygoidfd .gt_center {
   text-align: center;
 }
 
-#gomrcvcubl .gt_right {
+#wczygoidfd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gomrcvcubl .gt_font_normal {
+#wczygoidfd .gt_font_normal {
   font-weight: normal;
 }
 
-#gomrcvcubl .gt_font_bold {
+#wczygoidfd .gt_font_bold {
   font-weight: bold;
 }
 
-#gomrcvcubl .gt_font_italic {
+#wczygoidfd .gt_font_italic {
   font-style: italic;
 }
 
-#gomrcvcubl .gt_super {
+#wczygoidfd .gt_super {
   font-size: 65%;
 }
 
-#gomrcvcubl .gt_footnote_marks {
+#wczygoidfd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gomrcvcubl .gt_asterisk {
+#wczygoidfd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gomrcvcubl .gt_indent_1 {
+#wczygoidfd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gomrcvcubl .gt_indent_2 {
+#wczygoidfd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gomrcvcubl .gt_indent_3 {
+#wczygoidfd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gomrcvcubl .gt_indent_4 {
+#wczygoidfd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gomrcvcubl .gt_indent_5 {
+#wczygoidfd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gomrcvcubl .katex-display {
+#wczygoidfd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gomrcvcubl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wczygoidfd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1085,23 +1090,23 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
 </figcaption>
 <div aria-describedby="tbl-diagnostico-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="zphqalirdx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zphqalirdx table {
+<div id="nszizdyqij" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nszizdyqij table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zphqalirdx thead, #zphqalirdx tbody, #zphqalirdx tfoot, #zphqalirdx tr, #zphqalirdx td, #zphqalirdx th {
+#nszizdyqij thead, #nszizdyqij tbody, #nszizdyqij tfoot, #nszizdyqij tr, #nszizdyqij td, #nszizdyqij th {
   border-style: none;
 }
 
-#zphqalirdx p {
+#nszizdyqij p {
   margin: 0;
   padding: 0;
 }
 
-#zphqalirdx .gt_table {
+#nszizdyqij .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1127,12 +1132,12 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-left-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_caption {
+#nszizdyqij .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zphqalirdx .gt_title {
+#nszizdyqij .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1144,7 +1149,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-width: 0;
 }
 
-#zphqalirdx .gt_subtitle {
+#nszizdyqij .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1156,7 +1161,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-top-width: 0;
 }
 
-#zphqalirdx .gt_heading {
+#nszizdyqij .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1168,13 +1173,13 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_bottom_border {
+#nszizdyqij .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_col_headings {
+#nszizdyqij .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1189,7 +1194,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_col_heading {
+#nszizdyqij .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1209,7 +1214,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   overflow-x: hidden;
 }
 
-#zphqalirdx .gt_column_spanner_outer {
+#nszizdyqij .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1221,15 +1226,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 4px;
 }
 
-#zphqalirdx .gt_column_spanner_outer:first-child {
+#nszizdyqij .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zphqalirdx .gt_column_spanner_outer:last-child {
+#nszizdyqij .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zphqalirdx .gt_column_spanner {
+#nszizdyqij .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1241,11 +1246,11 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   width: 100%;
 }
 
-#zphqalirdx .gt_spanner_row {
+#nszizdyqij .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zphqalirdx .gt_group_heading {
+#nszizdyqij .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1271,7 +1276,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   text-align: left;
 }
 
-#zphqalirdx .gt_empty_group_heading {
+#nszizdyqij .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1286,15 +1291,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   vertical-align: middle;
 }
 
-#zphqalirdx .gt_from_md > :first-child {
+#nszizdyqij .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zphqalirdx .gt_from_md > :last-child {
+#nszizdyqij .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zphqalirdx .gt_row {
+#nszizdyqij .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1313,7 +1318,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   overflow-x: hidden;
 }
 
-#zphqalirdx .gt_stub {
+#nszizdyqij .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1326,7 +1331,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#zphqalirdx .gt_stub_row_group {
+#nszizdyqij .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1340,15 +1345,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   vertical-align: top;
 }
 
-#zphqalirdx .gt_row_group_first td {
+#nszizdyqij .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zphqalirdx .gt_row_group_first th {
+#nszizdyqij .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zphqalirdx .gt_summary_row {
+#nszizdyqij .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1358,16 +1363,16 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#zphqalirdx .gt_first_summary_row {
+#nszizdyqij .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_first_summary_row.thick {
+#nszizdyqij .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zphqalirdx .gt_last_summary_row {
+#nszizdyqij .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1377,7 +1382,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_grand_summary_row {
+#nszizdyqij .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1387,7 +1392,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#zphqalirdx .gt_first_grand_summary_row {
+#nszizdyqij .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1397,7 +1402,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-top-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_last_grand_summary_row_top {
+#nszizdyqij .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1407,11 +1412,11 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_striped {
+#nszizdyqij .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zphqalirdx .gt_table_body {
+#nszizdyqij .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1420,7 +1425,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_footnotes {
+#nszizdyqij .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1434,7 +1439,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_footnote {
+#nszizdyqij .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1443,7 +1448,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#zphqalirdx .gt_sourcenotes {
+#nszizdyqij .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1457,7 +1462,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#zphqalirdx .gt_sourcenote {
+#nszizdyqij .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1465,72 +1470,72 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#zphqalirdx .gt_left {
+#nszizdyqij .gt_left {
   text-align: left;
 }
 
-#zphqalirdx .gt_center {
+#nszizdyqij .gt_center {
   text-align: center;
 }
 
-#zphqalirdx .gt_right {
+#nszizdyqij .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zphqalirdx .gt_font_normal {
+#nszizdyqij .gt_font_normal {
   font-weight: normal;
 }
 
-#zphqalirdx .gt_font_bold {
+#nszizdyqij .gt_font_bold {
   font-weight: bold;
 }
 
-#zphqalirdx .gt_font_italic {
+#nszizdyqij .gt_font_italic {
   font-style: italic;
 }
 
-#zphqalirdx .gt_super {
+#nszizdyqij .gt_super {
   font-size: 65%;
 }
 
-#zphqalirdx .gt_footnote_marks {
+#nszizdyqij .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zphqalirdx .gt_asterisk {
+#nszizdyqij .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zphqalirdx .gt_indent_1 {
+#nszizdyqij .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zphqalirdx .gt_indent_2 {
+#nszizdyqij .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zphqalirdx .gt_indent_3 {
+#nszizdyqij .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zphqalirdx .gt_indent_4 {
+#nszizdyqij .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zphqalirdx .gt_indent_5 {
+#nszizdyqij .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zphqalirdx .katex-display {
+#nszizdyqij .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zphqalirdx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nszizdyqij div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1624,23 +1629,23 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
 </figcaption>
 <div aria-describedby="tbl-residuos-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="rbpuqncbvh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rbpuqncbvh table {
+<div id="rigcbmtacl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rigcbmtacl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rbpuqncbvh thead, #rbpuqncbvh tbody, #rbpuqncbvh tfoot, #rbpuqncbvh tr, #rbpuqncbvh td, #rbpuqncbvh th {
+#rigcbmtacl thead, #rigcbmtacl tbody, #rigcbmtacl tfoot, #rigcbmtacl tr, #rigcbmtacl td, #rigcbmtacl th {
   border-style: none;
 }
 
-#rbpuqncbvh p {
+#rigcbmtacl p {
   margin: 0;
   padding: 0;
 }
 
-#rbpuqncbvh .gt_table {
+#rigcbmtacl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1666,12 +1671,12 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-left-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_caption {
+#rigcbmtacl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rbpuqncbvh .gt_title {
+#rigcbmtacl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1683,7 +1688,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-width: 0;
 }
 
-#rbpuqncbvh .gt_subtitle {
+#rigcbmtacl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1695,7 +1700,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-top-width: 0;
 }
 
-#rbpuqncbvh .gt_heading {
+#rigcbmtacl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1707,13 +1712,13 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_bottom_border {
+#rigcbmtacl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_col_headings {
+#rigcbmtacl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1728,7 +1733,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_col_heading {
+#rigcbmtacl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1748,7 +1753,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   overflow-x: hidden;
 }
 
-#rbpuqncbvh .gt_column_spanner_outer {
+#rigcbmtacl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1760,15 +1765,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 4px;
 }
 
-#rbpuqncbvh .gt_column_spanner_outer:first-child {
+#rigcbmtacl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rbpuqncbvh .gt_column_spanner_outer:last-child {
+#rigcbmtacl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rbpuqncbvh .gt_column_spanner {
+#rigcbmtacl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1780,11 +1785,11 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   width: 100%;
 }
 
-#rbpuqncbvh .gt_spanner_row {
+#rigcbmtacl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rbpuqncbvh .gt_group_heading {
+#rigcbmtacl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1810,7 +1815,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   text-align: left;
 }
 
-#rbpuqncbvh .gt_empty_group_heading {
+#rigcbmtacl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1825,15 +1830,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   vertical-align: middle;
 }
 
-#rbpuqncbvh .gt_from_md > :first-child {
+#rigcbmtacl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rbpuqncbvh .gt_from_md > :last-child {
+#rigcbmtacl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rbpuqncbvh .gt_row {
+#rigcbmtacl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1852,7 +1857,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   overflow-x: hidden;
 }
 
-#rbpuqncbvh .gt_stub {
+#rigcbmtacl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1865,7 +1870,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rbpuqncbvh .gt_stub_row_group {
+#rigcbmtacl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1879,15 +1884,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   vertical-align: top;
 }
 
-#rbpuqncbvh .gt_row_group_first td {
+#rigcbmtacl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rbpuqncbvh .gt_row_group_first th {
+#rigcbmtacl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rbpuqncbvh .gt_summary_row {
+#rigcbmtacl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1897,16 +1902,16 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rbpuqncbvh .gt_first_summary_row {
+#rigcbmtacl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_first_summary_row.thick {
+#rigcbmtacl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rbpuqncbvh .gt_last_summary_row {
+#rigcbmtacl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1916,7 +1921,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_grand_summary_row {
+#rigcbmtacl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1926,7 +1931,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rbpuqncbvh .gt_first_grand_summary_row {
+#rigcbmtacl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1936,7 +1941,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-top-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_last_grand_summary_row_top {
+#rigcbmtacl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1946,11 +1951,11 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_striped {
+#rigcbmtacl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rbpuqncbvh .gt_table_body {
+#rigcbmtacl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1959,7 +1964,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_footnotes {
+#rigcbmtacl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1973,7 +1978,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_footnote {
+#rigcbmtacl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1982,7 +1987,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rbpuqncbvh .gt_sourcenotes {
+#rigcbmtacl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1996,7 +2001,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#rbpuqncbvh .gt_sourcenote {
+#rigcbmtacl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2004,72 +2009,72 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rbpuqncbvh .gt_left {
+#rigcbmtacl .gt_left {
   text-align: left;
 }
 
-#rbpuqncbvh .gt_center {
+#rigcbmtacl .gt_center {
   text-align: center;
 }
 
-#rbpuqncbvh .gt_right {
+#rigcbmtacl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rbpuqncbvh .gt_font_normal {
+#rigcbmtacl .gt_font_normal {
   font-weight: normal;
 }
 
-#rbpuqncbvh .gt_font_bold {
+#rigcbmtacl .gt_font_bold {
   font-weight: bold;
 }
 
-#rbpuqncbvh .gt_font_italic {
+#rigcbmtacl .gt_font_italic {
   font-style: italic;
 }
 
-#rbpuqncbvh .gt_super {
+#rigcbmtacl .gt_super {
   font-size: 65%;
 }
 
-#rbpuqncbvh .gt_footnote_marks {
+#rigcbmtacl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rbpuqncbvh .gt_asterisk {
+#rigcbmtacl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rbpuqncbvh .gt_indent_1 {
+#rigcbmtacl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rbpuqncbvh .gt_indent_2 {
+#rigcbmtacl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rbpuqncbvh .gt_indent_3 {
+#rigcbmtacl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rbpuqncbvh .gt_indent_4 {
+#rigcbmtacl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rbpuqncbvh .gt_indent_5 {
+#rigcbmtacl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rbpuqncbvh .katex-display {
+#rigcbmtacl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rbpuqncbvh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#rigcbmtacl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2184,18 +2189,19 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
 <div class="cell">
 <details class="code-fold">
 <summary>Script R</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_ca_plot, <span class="fu">aes</span>(<span class="at">x =</span> Dim1, <span class="at">y =</span> Dim2, <span class="at">color =</span> Fase, <span class="at">label =</span> Livro)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_ca_plot, <span class="fu">aes</span>(<span class="at">x =</span> Dim1, <span class="at">y =</span> Dim2, <span class="at">color =</span> Fase, <span class="at">shape =</span> Fase, <span class="at">label =</span> Livro)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">4.5</span>) <span class="sc">+</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">box.padding =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Fase Romântica"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>, <span class="st">"Fase Realista"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>)) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mapa Perceptual de Correspondência (CA)"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Inércia acumulada nos 2 eixos: "</span>, <span class="fu">round</span>(inercia_acum[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"% | Critério β = "</span>, <span class="fu">round</span>(criterio_beta, <span class="dv">2</span>)),</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 1 ("</span>, <span class="fu">round</span>(inercia_pct[<span class="dv">1</span>], <span class="dv">1</span>), <span class="st">"% da inércia)"</span>),</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 2 ("</span>, <span class="fu">round</span>(inercia_pct[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"% da inércia)"</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Fase Romântica"</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>, <span class="st">"Fase Realista"</span> <span class="ot">=</span> <span class="st">"#0072B2"</span>)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Fase Romântica"</span> <span class="ot">=</span> <span class="dv">17</span>, <span class="st">"Fase Realista"</span> <span class="ot">=</span> <span class="dv">16</span>))<span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mapa Perceptual de Correspondência (CA)"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Inércia acumulada nos 2 eixos: "</span>, <span class="fu">round</span>(inercia_acum[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"% | Critério β = "</span>, <span class="fu">round</span>(criterio_beta, <span class="dv">2</span>)),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 1 ("</span>, <span class="fu">round</span>(inercia_pct[<span class="dv">1</span>], <span class="dv">1</span>), <span class="st">"% da inércia)"</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 2 ("</span>, <span class="fu">round</span>(inercia_pct[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"% da inércia)"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-correspondencia" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2345,15 +2351,15 @@ Figura&nbsp;5: Decomposição temática via LDA (K = 4): (A) Probabilidade condi
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="dv">11</span>), <span class="at">name =</span> <span class="st">"Conexões (Grau)"</span>) <span class="sc">+</span></span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
 <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 1: Espaço Doméstico &amp; Social"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>,</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 2: Afeto, Corpo &amp; Subjetividade"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>,</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 3: Tempo, Vida &amp; Existência"</span> <span class="ot">=</span> <span class="st">"#7570b3"</span>,</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 4: Conexões Periféricas"</span> <span class="ot">=</span> <span class="st">"#666666"</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 1: Espaço Doméstico &amp; Social"</span>  <span class="ot">=</span> <span class="st">"#0072B2"</span>, <span class="co"># Azul</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Eixo 2: Afeto, Corpo &amp; Subjetividade"</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>, <span class="co"># Vermelhão</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Eixo 3: Tempo, Vida &amp; Existência"</span>     <span class="ot">=</span> <span class="st">"#009E73"</span>, <span class="co"># Verde-azulado</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Eixo 4: Conexões Periféricas"</span>         <span class="ot">=</span> <span class="st">"#7F7F7F"</span>  <span class="co"># Cinza neutro</span></span>
 <span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Macro-Eixo Narrativo"</span></span>
 <span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Componente Semântica"</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Análise Semântica"</span>,</span>
 <span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Caixas destacadas = Top 10 Hubs Centrais | Cores = Comunidades de Louvain | Setas = Direção do Bigrama"</span></span>
 <span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
@@ -2364,10 +2370,10 @@ Figura&nbsp;5: Decomposição temática via LDA (K = 4): (A) Probabilidade condi
 <span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-rede-semantica" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-rede-semantica" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Figura esta Adptada para Daltônicos">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rede-semantica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="modelagem-avancada_files/figure-html/fig-rede-semantica-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figura&nbsp;6: Componente Conexo Gigante da rede semântica de Machado de Assis, organizado nos macro-eixos narrativos de Louvain (BLONDEL et al., 2008; PEDERSEN, 2024)."><img src="modelagem-avancada_files/figure-html/fig-rede-semantica-1.png" class="img-fluid figure-img" width="1008"></a>
+<a href="modelagem-avancada_files/figure-html/fig-rede-semantica-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figura&nbsp;6: Componente Conexo Gigante da rede semântica de Machado de Assis, organizado nos macro-eixos narrativos de Louvain (BLONDEL et al., 2008; PEDERSEN, 2024)."><img src="modelagem-avancada_files/figure-html/fig-rede-semantica-1.png" class="img-fluid figure-img" alt="Figura esta Adptada para Daltônicos" width="1008"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rede-semantica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;6: Componente Conexo Gigante da rede semântica de Machado de Assis, organizado nos macro-eixos narrativos de Louvain (BLONDEL et al., 2008; PEDERSEN, 2024).
@@ -2953,8 +2959,6 @@ Tabela&nbsp;4: Top 10 Palavras Centrais (Hubs) do Componente Gigante por Grau e 
 <hr>
 
 
-<!-- -->
-
 </section>
 </section>
 
@@ -3192,57 +3196,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -3590,631 +3543,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text">7. Referências</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Modelagem Inferencial"</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Leis de Potência, Keyness (χ²), Clusterização, Análise de Correspondência, LDA e Redes Semânticas"</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="an">title-block-banner:</span><span class="co"> false</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-avancado</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(topicmodels)</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>))</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>df_livros <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"machado_wikisource_completo.rds"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(text)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(text, <span class="st">"^(Índice|Anterior|Próximo|Wikisource|Obra editada)"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">book_short =</span> <span class="fu">case_when</span>(</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Dom Casmurro"</span>) <span class="sc">~</span> <span class="st">"Dom Casmurro"</span>,</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Brás Cubas"</span>) <span class="sc">~</span> <span class="st">"Memórias Póstumas"</span>,</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Quincas Borba"</span>) <span class="sc">~</span> <span class="st">"Quincas Borba"</span>,</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Alienista"</span>) <span class="sc">~</span> <span class="st">"O Alienista"</span>,</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Helena"</span>) <span class="sc">~</span> <span class="st">"Helena"</span>,</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Memorial de Aires"</span>) <span class="sc">~</span> <span class="st">"Memorial de Aires"</span>,</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(book_name, <span class="st">"Esaú"</span>) <span class="sc">~</span> <span class="st">"Esaú e Jacó"</span>,</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> book_name</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">fase =</span> <span class="fu">ifelse</span>(book_short <span class="sc">==</span> <span class="st">"Helena"</span>, <span class="st">"Fase Romântica"</span>, <span class="st">"Fase Realista"</span>)</span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>sw_extra <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"é"</span>, <span class="st">"era"</span>, <span class="st">"disse"</span>, <span class="st">"ia"</span>, <span class="st">"ser"</span>, <span class="st">"ter"</span>, <span class="st">"havia"</span>, <span class="st">"ainda"</span>, </span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>              <span class="st">"assim"</span>, <span class="st">"tudo"</span>, <span class="st">"nada"</span>, <span class="st">"outro"</span>, <span class="st">"outra"</span>, <span class="st">"dous"</span>, <span class="st">"cousa"</span>)</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Corpus e DFM agregados por obra (base compartilhada entre Cluster e CA)</span></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>df_corpus_agregado <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book_short, fase) <span class="sc">%&gt;%</span></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>corp_obras <span class="ot">&lt;-</span> <span class="fu">corpus</span>(df_corpus_agregado<span class="sc">$</span>text, <span class="at">docnames =</span> df_corpus_agregado<span class="sc">$</span>book_short)</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(corp_obras, <span class="st">"fase"</span>) <span class="ot">&lt;-</span> df_corpus_agregado<span class="sc">$</span>fase</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>matriz_dfm <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_obras, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>()</span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal"}</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>Nível Pós-Graduação (Mestrado &amp; Doutorado): Esta seção avança da estatística descritiva para a modelagem inferencial e multivariada, testando formalmente leis empíricas de distribuição vocabular, hipóteses estilométricas, agrupamento hierárquico, redução de dimensionalidade, tópicos latentes bayesianos (LDA) e topologia de redes semânticas.</span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Leis Empíricas da Linguística Quantitativa (Lei de Zipf)</span></span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>A **Lei de Zipf** postula que, em qualquer corpus natural suficientemente extenso, a frequência $f(r)$ de uma palavra é inversamente proporcional ao seu posto $r$ na tabela de frequências ordenadas:</span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>$$f(r) = \frac{C}{r^{\alpha}} \implies \log_{10} f(r) = \log_{10} C - \alpha \log_{10} r$$</span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>Aplicando uma regressão linear ordinária (OLS) via stats::lm() (R CORE TEAM, 2026) sobre os logaritmos da frequência e do posto (rank) no conjunto integral das 7 obras, estimamos o expoente empírico $\alpha$ do léxico machadiano:</span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-lei-zipf</span></span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Ajuste log-log da Lei de Zipf (ZIPF, 1949) sobre o vocabulário integral das 7 obras de Machado de Assis."</span></span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9.5</span></span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.8</span></span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>freq_zipf <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="st">"^[0-9]+$"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank =</span> <span class="fu">row_number</span>(),</span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq_rel =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)</span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>modelo_zipf <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(freq_rel) <span class="sc">~</span> <span class="fu">log10</span>(rank), <span class="at">data =</span> <span class="fu">filter</span>(freq_zipf, rank <span class="sc">&gt;=</span> <span class="dv">10</span>, rank <span class="sc">&lt;=</span> <span class="dv">5000</span>))</span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>alpha_est <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="sc">-</span><span class="fu">coef</span>(modelo_zipf)[<span class="dv">2</span>], <span class="dv">3</span>)</span>
-<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>r2_est <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(modelo_zipf)<span class="sc">$</span>r.squared, <span class="dv">4</span>)</span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(freq_zipf, <span class="fu">aes</span>(<span class="at">x =</span> rank, <span class="at">y =</span> freq_rel)) <span class="sc">+</span></span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#2171b5"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">coef</span>(modelo_zipf)[<span class="dv">1</span>],</span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">coef</span>(modelo_zipf)[<span class="dv">2</span>],</span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#d95f02"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span></span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>scientific) <span class="sc">+</span></span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
-<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">80</span>, <span class="at">y =</span> <span class="fl">0.015</span>,</span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Expoente estimado: α = "</span>, alpha_est, <span class="st">"</span><span class="sc">\n</span><span class="st">R² = "</span>, r2_est),</span>
-<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#d95f02"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
-<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição Empírica de Frequências (Lei de Zipf)"</span>,</span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Escala log-log com ajuste linear tracejado (ranks 10 a 5.000)"</span>,</span>
-<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Posto no Ranking Vocabular (log10)"</span>,</span>
-<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequência Relativa (log10)"</span></span>
-<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Análise de *Keyness* ($\chi^2$)</span></span>
-<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>Para testar se a transição estética entre a Fase Romântica (Helena, 1876) e a Fase Realista (1881–1908) (CANDIDO, 1970; BOSI, 1994) produz alterações estatisticamente significativas no vocabulário, aplicamos o teste de qui-quadrado ($\chi^2$) de Keyness (SCOTT, 1997; RAYSON; GARSIDE, 2000) com correção de Yates por meio dos pacotes quanteda.textstats e quanteda.textplots (BENOIT et al., 2018):</span>
-<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-keyness</span></span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Estatística Qui-Quadrado (χ²) dos termos significativamente associados à Fase Romântica vs. Fase Realista (RAYSON; GARSIDE, 2000; BENOIT et al., 2018)."</span></span>
-<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5.5</span></span>
-<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>df_fases <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fase) <span class="sc">%&gt;%</span></span>
-<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>corp_fases <span class="ot">&lt;-</span> <span class="fu">corpus</span>(df_fases<span class="sc">$</span>text, <span class="at">docnames =</span> df_fases<span class="sc">$</span>fase)</span>
-<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>dfm_fases <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_fases, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>()</span>
-<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>resultado_keyness <span class="ot">&lt;-</span> <span class="fu">textstat_keyness</span>(dfm_fases, <span class="at">target =</span> <span class="st">"Fase Romântica"</span>, <span class="at">measure =</span> <span class="st">"chi2"</span>)</span>
-<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_keyness</span>(resultado_keyness, <span class="at">n =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#d95f02"</span>, <span class="st">"#1b9e77"</span>)) <span class="sc">+</span></span>
-<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Teste de Hipótese Vocabular (Keyness χ²): Romantismo vs. Realismo"</span>,</span>
-<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Termos com maior desvio significativo entre Helena (alvo) e os romances realistas (referência)"</span>,</span>
-<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Estatística Qui-Quadrado (χ²)"</span></span>
-<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Similaridade de Cosseno e Cluster</span></span>
-<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>Calculamos a Matriz de Similaridade de Cosseno ($\cos \theta$) (SALTON; MCGILL, 1983) sobre as frequências relativas do vocabulário completo de cada obra via quanteda.textstats (BENOIT et al., 2018). Valores próximos de $1{,}00$ indicam alta convergência lexical entre os romances:</span>
-<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-cluster</span></span>
-<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>dfm_relativa <span class="ot">&lt;-</span> <span class="fu">dfm_weight</span>(matriz_dfm, <span class="at">scheme =</span> <span class="st">"prop"</span>)</span>
-<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>simil_livros <span class="ot">&lt;-</span> <span class="fu">textstat_simil</span>(dfm_relativa, <span class="at">margin =</span> <span class="st">"documents"</span>, <span class="at">method =</span> <span class="st">"cosine"</span>)</span>
-<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>mat_simil <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(simil_livros)</span>
-<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>dist_livros <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span> mat_simil)</span>
-<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>cluster_livros <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_livros, <span class="at">method =</span> <span class="st">"ward.D2"</span>)</span>
-<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a>cofenetica <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(dist_livros, <span class="fu">cophenetic</span>(cluster_livros)), <span class="dv">3</span>)</span>
-<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.1 Matriz de Similaridade de Cosseno</span></span>
-<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-matriz-cosseno</span></span>
-<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de Assis (SALTON; MCGILL, 1983)"</span></span>
-<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(mat_simil, <span class="at">rownames =</span> <span class="st">"Obra"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="sc">-</span>Obra, <span class="at">decimals =</span> <span class="dv">3</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(</span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="sc">-</span>Obra,</span>
-<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#f7fbff"</span>, <span class="st">"#2171b5"</span>),</span>
-<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>    <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(mat_simil), <span class="dv">1</span>)</span>
-<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Matriz de Similaridade Estilística (Cosseno)**"</span>),</span>
-<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Calculada sobre frequências relativas na DFM após remoção de stopwords"</span></span>
-<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.2 Agrupamento Hierárquico</span></span>
-<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>A partir da matriz de dissimilaridade angular ($D_{\cos} = 1 - \cos \theta$), aplica-se o algoritmo hierárquico aglomerativo de mínima variância de Ward (ward.D2) (WARD JR., 1963; MURTAGH; LEGENDRE, 2014). O Coeficiente de Correlação Cofenética ($CCC = <span class="in">`r cofenetica`</span>$) (SOKAL; ROHLF, 1962) atesta a fidelidade com que a árvore bidimensional preserva as distâncias originais do espaço vetorial:</span>
-<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dendrograma</span></span>
-<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Dendrograma de agrupamento hierárquico das 7 obras baseado em distância de cosseno (Método Ward.D2 — WARD JR., 1963)."</span></span>
-<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9</span></span>
-<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.8</span></span>
-<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="fl">3.5</span>, <span class="dv">2</span>))</span>
-<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>  cluster_livros,</span>
-<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Clusterização Hierárquica dos 7 Livros de Machado de Assis"</span>,</span>
-<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a>  <span class="at">sub =</span> <span class="fu">paste0</span>(<span class="st">"Distância de Cosseno (Método Ward.D2) | Correlação Cofenética (CCC) = "</span>, cofenetica),</span>
-<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Distância Estilística (1 - Cosseno)"</span>,</span>
-<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a>  <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"#08519c"</span></span>
-<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Análise de Correspondência (CA)</span></span>
-<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a>Enquanto o dendrograma força partições discretas, a Análise de Correspondência (CA) (BENZÉCRI, 1973; GREENACRE, 1984) decompõe a tabela de contingência Documento-Termo via Decomposição em Valores Singulares (base::svd(), R CORE TEAM, 2026), projetando os 7 livros em um espaço euclidiano contínuo.</span>
-<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: calc-ca</span></span>
-<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtra termos recorrentes em pelo menos 3 obras e mínimo de 40 ocorrências</span></span>
-<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a>dfm_ca <span class="ot">&lt;-</span> <span class="fu">dfm_trim</span>(matriz_dfm, <span class="at">min_termfreq =</span> <span class="dv">40</span>, <span class="at">min_docfreq =</span> <span class="dv">3</span>)</span>
-<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>N_ca <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dfm_ca)</span>
-<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a>n_total_ca <span class="ot">&lt;-</span> <span class="fu">sum</span>(N_ca)</span>
-<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> N_ca <span class="sc">/</span> n_total_ca</span>
-<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(P)</span>
-<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>c_mass <span class="ot">&lt;-</span> <span class="fu">colSums</span>(P)</span>
-<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">outer</span>(r, c_mass)</span>
-<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> (P <span class="sc">-</span> E) <span class="sc">/</span> <span class="fu">sqrt</span>(E)</span>
-<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a>svd_res <span class="ot">&lt;-</span> <span class="fu">svd</span>(S)</span>
-<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Diagnósticos globais (Qui-Quadrado, Critério Beta e Inércia)</span></span>
-<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>chi2_ca <span class="ot">&lt;-</span> n_total_ca <span class="sc">*</span> <span class="fu">sum</span>(S<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>gl_ca <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(N_ca) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> (<span class="fu">ncol</span>(N_ca) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a>criterio_beta <span class="ot">&lt;-</span> (chi2_ca <span class="sc">-</span> gl_ca) <span class="sc">/</span> <span class="fu">sqrt</span>(gl_ca)</span>
-<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a>p_valor_ca <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(chi2_ca, <span class="at">df =</span> gl_ca, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a>autovalores <span class="ot">&lt;-</span> svd_res<span class="sc">$</span>d<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a>inercia_pct <span class="ot">&lt;-</span> (autovalores <span class="sc">/</span> <span class="fu">sum</span>(autovalores)) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a>inercia_acum <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(inercia_pct)</span>
-<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a><span class="co"># Coordenadas principais das obras</span></span>
-<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a>coord_docs <span class="ot">&lt;-</span> <span class="fu">sweep</span>(svd_res<span class="sc">$</span>u[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="dv">1</span>, <span class="fu">sqrt</span>(r), <span class="st">"/"</span>)</span>
-<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a>coord_docs <span class="ot">&lt;-</span> <span class="fu">sweep</span>(coord_docs, <span class="dv">2</span>, svd_res<span class="sc">$</span>d[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="st">"*"</span>)</span>
-<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-277"><a href="#cb12-277" aria-hidden="true" tabindex="-1"></a>df_ca_plot <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb12-278"><a href="#cb12-278" aria-hidden="true" tabindex="-1"></a>  <span class="at">Livro =</span> <span class="fu">docnames</span>(dfm_ca),</span>
-<span id="cb12-279"><a href="#cb12-279" aria-hidden="true" tabindex="-1"></a>  <span class="at">Fase =</span> <span class="fu">docvars</span>(corp_obras, <span class="st">"fase"</span>),</span>
-<span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dim1 =</span> coord_docs[, <span class="dv">1</span>],</span>
-<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dim2 =</span> coord_docs[, <span class="dv">2</span>]</span>
-<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-287"><a href="#cb12-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.1 Critério $\beta$ e Decomposição da Inércia</span></span>
-<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a>A tabela abaixo — formatada com o pacote gt (IANNONE et al., 2024) — apresenta o teste global de associação entre livros e vocabulário (Critério $\beta = <span class="in">`r round(criterio_beta, 2)`</span> &gt; 3$, conforme FÁVERO; BELFIORE, 2017, rejeitando independência com $p &lt; 0{,}001$) e a distribuição da inércia explicada pelos eixos fatoriais extraídos via SVD:</span>
-<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-diagnostico-ca</span></span>
-<span id="cb12-298"><a href="#cb12-298" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Diagnóstico Estatístico da Análise de Correspondência (Autovalores, Inércia e Critério Beta — FÁVERO; BELFIORE, 2017)"</span></span>
-<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb12-300"><a href="#cb12-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb12-302"><a href="#cb12-302" aria-hidden="true" tabindex="-1"></a>  Dimensão <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">"Dimensão "</span>, <span class="fu">seq_along</span>(autovalores)),</span>
-<span id="cb12-303"><a href="#cb12-303" aria-hidden="true" tabindex="-1"></a>  <span class="at">Autovalor =</span> autovalores,</span>
-<span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Inércia Explicada (%)</span><span class="st">`</span> <span class="ot">=</span> inercia_pct,</span>
-<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Inércia Acumulada (%)</span><span class="st">`</span> <span class="ot">=</span> inercia_acum</span>
-<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> Autovalor, <span class="at">decimals =</span> <span class="dv">4</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-310"><a href="#cb12-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">Inércia Explicada (%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">Inércia Acumulada (%)</span><span class="st">`</span>), <span class="at">decimals =</span> <span class="dv">2</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Decomposição da Inércia Principal (SVD)**"</span>),</span>
-<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"χ² = "</span>, <span class="fu">format</span>(<span class="fu">round</span>(chi2_ca, <span class="dv">1</span>), <span class="at">big.mark =</span> <span class="st">"."</span>), </span>
-<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a>                      <span class="st">" | gl = "</span>, gl_ca, </span>
-<span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a>                      <span class="st">" | Critério β = "</span>, <span class="fu">round</span>(criterio_beta, <span class="dv">2</span>), <span class="st">" (&gt; 3: associação significativa)"</span>)</span>
-<span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-320"><a href="#cb12-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-321"><a href="#cb12-321" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.2 Resíduos Padronizados: Maiores Associações Obra $\times$ Palavra</span></span>
-<span id="cb12-322"><a href="#cb12-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a>Para interpretar o que atrai cada romance para seu quadrante no mapa perceptual, listamos os pares (Obra $\times$ Termo) com os maiores resíduos padronizados positivos ($s_{ij}$) (GREENACRE, 1984):</span>
-<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-residuos-ca</span></span>
-<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Maiores Resíduos Padronizados Positivos por Obra na Matriz de Correspondência"</span></span>
-<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb12-333"><a href="#cb12-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-334"><a href="#cb12-334" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(S, <span class="at">rownames =</span> <span class="st">"Obra"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-335"><a href="#cb12-335" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Obra, <span class="at">names_to =</span> <span class="st">"Termo"</span>, <span class="at">values_to =</span> <span class="st">"Residuo_Padronizado"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-336"><a href="#cb12-336" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Obra) <span class="sc">%&gt;%</span></span>
-<span id="cb12-337"><a href="#cb12-337" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(Residuo_Padronizado, <span class="at">n =</span> <span class="dv">2</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-338"><a href="#cb12-338" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-339"><a href="#cb12-339" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Residuo_Padronizado)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-340"><a href="#cb12-340" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-341"><a href="#cb12-341" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> Residuo_Padronizado, <span class="at">decimals =</span> <span class="dv">3</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-342"><a href="#cb12-342" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> Residuo_Padronizado, <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#e5f5e0"</span>, <span class="st">"#1b9e77"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Principais Atrações Vocabulares por Obra (Resíduos Padronizados)**"</span>),</span>
-<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Os dois termos com maior excesso relativo em cada romance dentro da matriz CA"</span></span>
-<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.3 Mapa Perceptual de Correspondência</span></span>
-<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correspondencia</span></span>
-<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Mapa Perceptual da Análise de Correspondência projetando as 7 obras nos dois primeiros eixos latentes (ggrepel — SLOWIKOWSKI, 2024)."</span></span>
-<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 9.5</span></span>
-<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5.5</span></span>
-<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_ca_plot, <span class="fu">aes</span>(<span class="at">x =</span> Dim1, <span class="at">y =</span> Dim2, <span class="at">color =</span> Fase, <span class="at">label =</span> Livro)) <span class="sc">+</span></span>
-<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
-<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
-<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">4.5</span>) <span class="sc">+</span></span>
-<span id="cb12-368"><a href="#cb12-368" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">box.padding =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb12-369"><a href="#cb12-369" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Fase Romântica"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>, <span class="st">"Fase Realista"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>)) <span class="sc">+</span></span>
-<span id="cb12-370"><a href="#cb12-370" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-371"><a href="#cb12-371" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mapa Perceptual de Correspondência (CA)"</span>,</span>
-<span id="cb12-372"><a href="#cb12-372" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Inércia acumulada nos 2 eixos: "</span>, <span class="fu">round</span>(inercia_acum[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"% | Critério β = "</span>, <span class="fu">round</span>(criterio_beta, <span class="dv">2</span>)),</span>
-<span id="cb12-373"><a href="#cb12-373" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 1 ("</span>, <span class="fu">round</span>(inercia_pct[<span class="dv">1</span>], <span class="dv">1</span>), <span class="st">"% da inércia)"</span>),</span>
-<span id="cb12-374"><a href="#cb12-374" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"Dimensão 2 ("</span>, <span class="fu">round</span>(inercia_pct[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"% da inércia)"</span>)</span>
-<span id="cb12-375"><a href="#cb12-375" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-376"><a href="#cb12-376" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-377"><a href="#cb12-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-378"><a href="#cb12-378" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb12-379"><a href="#cb12-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-380"><a href="#cb12-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-381"><a href="#cb12-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-382"><a href="#cb12-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-383"><a href="#cb12-383" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Modelagem Probabilística de Tópicos (LDA)</span></span>
-<span id="cb12-384"><a href="#cb12-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-385"><a href="#cb12-385" aria-hidden="true" tabindex="-1"></a>Utilizando a Alocação Latente de Dirichlet (LDA) (BLEI; NG; JORDAN, 2003) sobre a matriz dos 827 capítulos, estimamos $K = 4$ tópicos latentes via amostragem de Gibbs (GRIFFITHS; STEYVERS, 2004) por meio do pacote topicmodels (GRÜN; HORNIK, 2011), compondo os painéis com patchwork (PEDERSEN, 2024b). A análise desdobra-se em duas matrizes probabilísticas complementares:</span>
-<span id="cb12-386"><a href="#cb12-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-387"><a href="#cb12-387" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Matriz $\beta = P(\text{palavra} \mid \text{tópico})$:** Define o campo semântico de cada tópico latente;</span>
-<span id="cb12-388"><a href="#cb12-388" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Matriz $\gamma = P(\text{tópico} \mid \text{documento})$:** Revela a composição temática predominante de cada romance.</span>
-<span id="cb12-389"><a href="#cb12-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-390"><a href="#cb12-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-391"><a href="#cb12-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-392"><a href="#cb12-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-395"><a href="#cb12-395" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-396"><a href="#cb12-396" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-lda-topicos</span></span>
-<span id="cb12-397"><a href="#cb12-397" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Decomposição temática via LDA (K = 4): (A) Probabilidade condicional β dos termos por tópico rotulado e (B) Proporção média γ de cada tema por romance (BLEI; NG; JORDAN, 2003; GRÜN; HORNIK, 2011)."</span></span>
-<span id="cb12-398"><a href="#cb12-398" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb12-399"><a href="#cb12-399" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8.8</span></span>
-<span id="cb12-400"><a href="#cb12-400" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb12-401"><a href="#cb12-401" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb12-402"><a href="#cb12-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-403"><a href="#cb12-403" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(topicmodels)</span>
-<span id="cb12-404"><a href="#cb12-404" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb12-405"><a href="#cb12-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-406"><a href="#cb12-406" aria-hidden="true" tabindex="-1"></a>df_caps <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
-<span id="cb12-407"><a href="#cb12-407" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">paste</span>(book_short, chapter_name, <span class="at">sep =</span> <span class="st">" :: "</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-408"><a href="#cb12-408" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(doc_id, book_short) <span class="sc">%&gt;%</span></span>
-<span id="cb12-409"><a href="#cb12-409" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> <span class="fu">paste</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb12-410"><a href="#cb12-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-411"><a href="#cb12-411" aria-hidden="true" tabindex="-1"></a>dfm_caps <span class="ot">&lt;-</span> <span class="fu">corpus</span>(df_caps<span class="sc">$</span>text, <span class="at">docnames =</span> df_caps<span class="sc">$</span>doc_id) <span class="sc">%&gt;%</span></span>
-<span id="cb12-412"><a href="#cb12-412" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-413"><a href="#cb12-413" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-414"><a href="#cb12-414" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-415"><a href="#cb12-415" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-416"><a href="#cb12-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">15</span>, <span class="at">min_docfreq =</span> <span class="dv">5</span>)</span>
-<span id="cb12-417"><a href="#cb12-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-418"><a href="#cb12-418" aria-hidden="true" tabindex="-1"></a>dfm_caps <span class="ot">&lt;-</span> <span class="fu">dfm_subset</span>(dfm_caps, <span class="fu">ntoken</span>(dfm_caps) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb12-419"><a href="#cb12-419" aria-hidden="true" tabindex="-1"></a>dtm_lda <span class="ot">&lt;-</span> <span class="fu">convert</span>(dfm_caps, <span class="at">to =</span> <span class="st">"topicmodels"</span>)</span>
-<span id="cb12-420"><a href="#cb12-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-421"><a href="#cb12-421" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb12-422"><a href="#cb12-422" aria-hidden="true" tabindex="-1"></a>modelo_lda <span class="ot">&lt;-</span> <span class="fu">LDA</span>(dtm_lda, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">method =</span> <span class="st">"Gibbs"</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter =</span> <span class="dv">600</span>, <span class="at">burnin =</span> <span class="dv">150</span>))</span>
-<span id="cb12-423"><a href="#cb12-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-424"><a href="#cb12-424" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotulação semântica interpretativa (Topic Labeling) baseada nos termos dominantes (β)</span></span>
-<span id="cb12-425"><a href="#cb12-425" aria-hidden="true" tabindex="-1"></a>rotulos_topicos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb12-426"><a href="#cb12-426" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"Tópico 1: Família &amp; Casamento"</span>,</span>
-<span id="cb12-427"><a href="#cb12-427" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"Tópico 2: Império &amp; Sociedade Carioca"</span>,</span>
-<span id="cb12-428"><a href="#cb12-428" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"Tópico 3: Filosofia &amp; Crítica Psicológica"</span>,</span>
-<span id="cb12-429"><a href="#cb12-429" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"Tópico 4: Afeto &amp; Relações Interpessoais"</span></span>
-<span id="cb12-430"><a href="#cb12-430" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-431"><a href="#cb12-431" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-432"><a href="#cb12-432" aria-hidden="true" tabindex="-1"></a><span class="co"># Painel A: Matriz Beta (Termos por Tópico Rotulado)</span></span>
-<span id="cb12-433"><a href="#cb12-433" aria-hidden="true" tabindex="-1"></a>topicos_beta <span class="ot">&lt;-</span> <span class="fu">tidy</span>(modelo_lda, <span class="at">matrix =</span> <span class="st">"beta"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-434"><a href="#cb12-434" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(topic) <span class="sc">%&gt;%</span></span>
-<span id="cb12-435"><a href="#cb12-435" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(beta, <span class="at">n =</span> <span class="dv">8</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-436"><a href="#cb12-436" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-437"><a href="#cb12-437" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">topic_label =</span> <span class="fu">recode</span>(<span class="fu">as.character</span>(topic), <span class="sc">!!!</span>rotulos_topicos))</span>
-<span id="cb12-438"><a href="#cb12-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-439"><a href="#cb12-439" aria-hidden="true" tabindex="-1"></a>p_beta <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(topicos_beta, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder_within</span>(term, beta, topic_label), <span class="at">y =</span> beta, <span class="at">fill =</span> topic_label)) <span class="sc">+</span></span>
-<span id="cb12-440"><a href="#cb12-440" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb12-441"><a href="#cb12-441" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> topic_label, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb12-442"><a href="#cb12-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb12-443"><a href="#cb12-443" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reordered</span>() <span class="sc">+</span></span>
-<span id="cb12-444"><a href="#cb12-444" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
-<span id="cb12-445"><a href="#cb12-445" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-446"><a href="#cb12-446" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"A. Assinatura Vocabular de Cada Tema Latente (Matriz β)"</span>,</span>
-<span id="cb12-447"><a href="#cb12-447" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Top 8 palavras com maior probabilidade de geração dentro de cada núcleo temático"</span>,</span>
-<span id="cb12-448"><a href="#cb12-448" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Probabilidade Condicional (β)"</span></span>
-<span id="cb12-449"><a href="#cb12-449" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-450"><a href="#cb12-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">9.5</span>))</span>
-<span id="cb12-451"><a href="#cb12-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a><span class="co"># Painel B: Matriz Gamma (Proporção de Tópicos por Livro)</span></span>
-<span id="cb12-453"><a href="#cb12-453" aria-hidden="true" tabindex="-1"></a>topicos_gamma <span class="ot">&lt;-</span> <span class="fu">tidy</span>(modelo_lda, <span class="at">matrix =</span> <span class="st">"gamma"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-454"><a href="#cb12-454" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(document, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Livro"</span>, <span class="st">"Capitulo"</span>), <span class="at">sep =</span> <span class="st">" :: "</span>, <span class="at">extra =</span> <span class="st">"merge"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-455"><a href="#cb12-455" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Livro, topic) <span class="sc">%&gt;%</span></span>
-<span id="cb12-456"><a href="#cb12-456" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">gamma_medio =</span> <span class="fu">mean</span>(gamma), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-457"><a href="#cb12-457" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">topic_label =</span> <span class="fu">recode</span>(<span class="fu">as.character</span>(topic), <span class="sc">!!!</span>rotulos_topicos))</span>
-<span id="cb12-458"><a href="#cb12-458" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-459"><a href="#cb12-459" aria-hidden="true" tabindex="-1"></a>p_gamma <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(topicos_gamma, <span class="fu">aes</span>(<span class="at">x =</span> Livro, <span class="at">y =</span> gamma_medio, <span class="at">fill =</span> topic_label)) <span class="sc">+</span></span>
-<span id="cb12-460"><a href="#cb12-460" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">width =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
-<span id="cb12-461"><a href="#cb12-461" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb12-462"><a href="#cb12-462" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb12-463"><a href="#cb12-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>, <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb12-464"><a href="#cb12-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">ncol =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb12-465"><a href="#cb12-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-466"><a href="#cb12-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"B. Composição Temática por Romance (Matriz γ Média)"</span>,</span>
-<span id="cb12-467"><a href="#cb12-467" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Proporção média de cada tema latente ao longo dos capítulos de cada obra"</span>,</span>
-<span id="cb12-468"><a href="#cb12-468" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Proporção Média nos Capítulos (γ)"</span></span>
-<span id="cb12-469"><a href="#cb12-469" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-470"><a href="#cb12-470" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))</span>
-<span id="cb12-471"><a href="#cb12-471" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-472"><a href="#cb12-472" aria-hidden="true" tabindex="-1"></a>p_beta <span class="sc">/</span> p_gamma <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="fl">1.35</span>, <span class="dv">1</span>))</span>
-<span id="cb12-473"><a href="#cb12-473" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-474"><a href="#cb12-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-475"><a href="#cb12-475" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-476"><a href="#cb12-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-477"><a href="#cb12-477" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb12-478"><a href="#cb12-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-479"><a href="#cb12-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-480"><a href="#cb12-480" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Teoria dos Grafos: Arquitetura Semântica e *Storytelling* Lexical</span></span>
-<span id="cb12-481"><a href="#cb12-481" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-482"><a href="#cb12-482" aria-hidden="true" tabindex="-1"></a>Para contar uma história clara sobre como o discurso machadiano se organiza — sem poluição de pares soltos —, extraímos o Componente Conexo Gigante (LCC) (NEWMAN, 2010) da rede de bigramas por meio do pacote igraph (CSÁRDI; NEPUSZ, 2006) e aplicamos o algoritmo de modularidade de Louvain (BLONDEL et al., 2008) com visualização via ggraph (PEDERSEN, 2024) para revelar os 3 macro-eixos temáticos que sustentam a narrativa:</span>
-<span id="cb12-483"><a href="#cb12-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-484"><a href="#cb12-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-485"><a href="#cb12-485" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-486"><a href="#cb12-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-489"><a href="#cb12-489" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-490"><a href="#cb12-490" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-grafo</span></span>
-<span id="cb12-491"><a href="#cb12-491" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb12-492"><a href="#cb12-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-493"><a href="#cb12-493" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb12-494"><a href="#cb12-494" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
-<span id="cb12-495"><a href="#cb12-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-496"><a href="#cb12-496" aria-hidden="true" tabindex="-1"></a>arestas_rede <span class="ot">&lt;-</span> df_livros <span class="sc">%&gt;%</span></span>
-<span id="cb12-497"><a href="#cb12-497" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigrama, text, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-498"><a href="#cb12-498" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bigrama)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-499"><a href="#cb12-499" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigrama, <span class="fu">c</span>(<span class="st">"from"</span>, <span class="st">"to"</span>), <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-500"><a href="#cb12-500" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb12-501"><a href="#cb12-501" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span>from <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra),</span>
-<span id="cb12-502"><a href="#cb12-502" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span>to <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), sw_extra),</span>
-<span id="cb12-503"><a href="#cb12-503" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nchar</span>(from) <span class="sc">&gt;</span> <span class="dv">2</span>, <span class="fu">nchar</span>(to) <span class="sc">&gt;</span> <span class="dv">2</span></span>
-<span id="cb12-504"><a href="#cb12-504" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb12-505"><a href="#cb12-505" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(from, to, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-506"><a href="#cb12-506" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">15</span>)</span>
-<span id="cb12-507"><a href="#cb12-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-508"><a href="#cb12-508" aria-hidden="true" tabindex="-1"></a>grafo_bruto <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(arestas_rede, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-509"><a href="#cb12-509" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-510"><a href="#cb12-510" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extrai APENAS o Componente Conexo Gigante (elimina ilhas isoladas e poluição visual)</span></span>
-<span id="cb12-511"><a href="#cb12-511" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">components</span>(grafo_bruto)</span>
-<span id="cb12-512"><a href="#cb12-512" aria-hidden="true" tabindex="-1"></a>id_gigante <span class="ot">&lt;-</span> <span class="fu">which.max</span>(comp<span class="sc">$</span>csize)</span>
-<span id="cb12-513"><a href="#cb12-513" aria-hidden="true" tabindex="-1"></a>nos_gigante <span class="ot">&lt;-</span> <span class="fu">names</span>(comp<span class="sc">$</span>membership[comp<span class="sc">$</span>membership <span class="sc">==</span> id_gigante])</span>
-<span id="cb12-514"><a href="#cb12-514" aria-hidden="true" tabindex="-1"></a>grafo <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(grafo_bruto, nos_gigante)</span>
-<span id="cb12-515"><a href="#cb12-515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-516"><a href="#cb12-516" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Métricas formais de centralidade</span></span>
-<span id="cb12-517"><a href="#cb12-517" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(grafo)<span class="sc">$</span>grau <span class="ot">&lt;-</span> <span class="fu">degree</span>(grafo, <span class="at">mode =</span> <span class="st">"all"</span>)</span>
-<span id="cb12-518"><a href="#cb12-518" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(grafo)<span class="sc">$</span>intermediacao <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">betweenness</span>(grafo, <span class="at">directed =</span> <span class="cn">FALSE</span>), <span class="dv">1</span>)</span>
-<span id="cb12-519"><a href="#cb12-519" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(grafo)<span class="sc">$</span>is_hub <span class="ot">&lt;-</span> <span class="fu">rank</span>(<span class="sc">-</span><span class="fu">V</span>(grafo)<span class="sc">$</span>grau, <span class="at">ties.method =</span> <span class="st">"min"</span>) <span class="sc">&lt;=</span> <span class="dv">10</span></span>
-<span id="cb12-520"><a href="#cb12-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-521"><a href="#cb12-521" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Detecção de comunidades (Louvain) consolidada nos 3 principais macro-eixos</span></span>
-<span id="cb12-522"><a href="#cb12-522" aria-hidden="true" tabindex="-1"></a>comunidades <span class="ot">&lt;-</span> <span class="fu">cluster_louvain</span>(<span class="fu">as.undirected</span>(grafo))</span>
-<span id="cb12-523"><a href="#cb12-523" aria-hidden="true" tabindex="-1"></a>membros <span class="ot">&lt;-</span> <span class="fu">membership</span>(comunidades)</span>
-<span id="cb12-524"><a href="#cb12-524" aria-hidden="true" tabindex="-1"></a>top3_com <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">sort</span>(<span class="fu">table</span>(membros), <span class="at">decreasing =</span> <span class="cn">TRUE</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
-<span id="cb12-525"><a href="#cb12-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-526"><a href="#cb12-526" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(grafo)<span class="sc">$</span>eixo_narrativo <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
-<span id="cb12-527"><a href="#cb12-527" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>(membros) <span class="sc">==</span> top3_com[<span class="dv">1</span>] <span class="sc">~</span> <span class="st">"Eixo 1: Espaço Doméstico &amp; Social"</span>,</span>
-<span id="cb12-528"><a href="#cb12-528" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>(membros) <span class="sc">==</span> top3_com[<span class="dv">2</span>] <span class="sc">~</span> <span class="st">"Eixo 2: Afeto, Corpo &amp; Subjetividade"</span>,</span>
-<span id="cb12-529"><a href="#cb12-529" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>(membros) <span class="sc">==</span> top3_com[<span class="dv">3</span>] <span class="sc">~</span> <span class="st">"Eixo 3: Tempo, Vida &amp; Existência"</span>,</span>
-<span id="cb12-530"><a href="#cb12-530" aria-hidden="true" tabindex="-1"></a>  <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Eixo 4: Conexões Periféricas"</span></span>
-<span id="cb12-531"><a href="#cb12-531" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-532"><a href="#cb12-532" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-533"><a href="#cb12-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-534"><a href="#cb12-534" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-535"><a href="#cb12-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-536"><a href="#cb12-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-537"><a href="#cb12-537" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.1 Como Ler o Grafo Semântico (Narrativa Estrutural)</span></span>
-<span id="cb12-538"><a href="#cb12-538" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-539"><a href="#cb12-539" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Tamanho dos Círculos (Centralidade de Grau):** Indica quantas expressões diferentes gravitam em torno daquela palavra (NEWMAN, 2010). Vocábulos grandes funcionam como ímãs semânticos (ex.: casa, olhos, tempo, amor, vida).</span>
-<span id="cb12-540"><a href="#cb12-540" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Cores (Comunidades de Louvain):** Agrupam automaticamente palavras que coocorrem densamente entre si (BLONDEL et al., 2008), revelando microcampos narrativos (o campo doméstico/familiar em torno de casa/pai/mãe, o campo afetivo/corporal em torno de olhos/coração/alma, e o campo temporal/existencial em torno de tempo/dia/anos).</span>
-<span id="cb12-541"><a href="#cb12-541" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Espessura e Seta das Linhas:** Mostram a direção de leitura (<span class="in">`palavra 1 -&gt; palavra 2`</span>) e a força de repetição da expressão no corpus.</span>
-<span id="cb12-542"><a href="#cb12-542" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-543"><a href="#cb12-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-544"><a href="#cb12-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-545"><a href="#cb12-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-548"><a href="#cb12-548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-549"><a href="#cb12-549" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-rede-semantica</span></span>
-<span id="cb12-550"><a href="#cb12-550" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Componente Conexo Gigante da rede semântica de Machado de Assis, organizado nos macro-eixos narrativos de Louvain (BLONDEL et al., 2008; PEDERSEN, 2024)."</span></span>
-<span id="cb12-551"><a href="#cb12-551" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10.5</span></span>
-<span id="cb12-552"><a href="#cb12-552" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6.5</span></span>
-<span id="cb12-553"><a href="#cb12-553" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb12-554"><a href="#cb12-554" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb12-555"><a href="#cb12-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-556"><a href="#cb12-556" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb12-557"><a href="#cb12-557" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(grafo, <span class="at">layout =</span> <span class="st">"stress"</span>) <span class="sc">+</span></span>
-<span id="cb12-558"><a href="#cb12-558" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(</span>
-<span id="cb12-559"><a href="#cb12-559" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">edge_width =</span> n),</span>
-<span id="cb12-560"><a href="#cb12-560" aria-hidden="true" tabindex="-1"></a>    <span class="at">edge_colour =</span> <span class="st">"gray80"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb12-561"><a href="#cb12-561" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"mm"</span>)), <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="fl">3.5</span>, <span class="st">"mm"</span>)</span>
-<span id="cb12-562"><a href="#cb12-562" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-563"><a href="#cb12-563" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> grau, <span class="at">color =</span> eixo_narrativo), <span class="at">alpha =</span> <span class="fl">0.92</span>) <span class="sc">+</span></span>
-<span id="cb12-564"><a href="#cb12-564" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rótulos discretos para nós secundários</span></span>
-<span id="cb12-565"><a href="#cb12-565" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_text</span>(</span>
-<span id="cb12-566"><a href="#cb12-566" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(<span class="sc">!</span>is_hub, name, <span class="st">""</span>)),</span>
-<span id="cb12-567"><a href="#cb12-567" aria-hidden="true" tabindex="-1"></a>    <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="fl">3.1</span>, <span class="at">color =</span> <span class="st">"gray35"</span>, <span class="at">max.overlaps =</span> <span class="dv">15</span></span>
-<span id="cb12-568"><a href="#cb12-568" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-569"><a href="#cb12-569" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Etiquetas destacadas apenas para os Top 10 Hubs (hierarquia visual)</span></span>
-<span id="cb12-570"><a href="#cb12-570" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_label</span>(</span>
-<span id="cb12-571"><a href="#cb12-571" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(is_hub, name, <span class="st">""</span>), <span class="at">color =</span> eixo_narrativo),</span>
-<span id="cb12-572"><a href="#cb12-572" aria-hidden="true" tabindex="-1"></a>    <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="fl">3.6</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>,</span>
-<span id="cb12-573"><a href="#cb12-573" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">label.size =</span> <span class="fl">0.35</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
-<span id="cb12-574"><a href="#cb12-574" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-575"><a href="#cb12-575" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_edge_width</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">2.2</span>), <span class="at">name =</span> <span class="st">"Freq. Bigrama"</span>) <span class="sc">+</span></span>
-<span id="cb12-576"><a href="#cb12-576" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="dv">11</span>), <span class="at">name =</span> <span class="st">"Conexões (Grau)"</span>) <span class="sc">+</span></span>
-<span id="cb12-577"><a href="#cb12-577" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb12-578"><a href="#cb12-578" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb12-579"><a href="#cb12-579" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 1: Espaço Doméstico &amp; Social"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>,</span>
-<span id="cb12-580"><a href="#cb12-580" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 2: Afeto, Corpo &amp; Subjetividade"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>,</span>
-<span id="cb12-581"><a href="#cb12-581" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 3: Tempo, Vida &amp; Existência"</span> <span class="ot">=</span> <span class="st">"#7570b3"</span>,</span>
-<span id="cb12-582"><a href="#cb12-582" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Eixo 4: Conexões Periféricas"</span> <span class="ot">=</span> <span class="st">"#666666"</span></span>
-<span id="cb12-583"><a href="#cb12-583" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb12-584"><a href="#cb12-584" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Macro-Eixo Narrativo"</span></span>
-<span id="cb12-585"><a href="#cb12-585" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-586"><a href="#cb12-586" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-587"><a href="#cb12-587" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Componente Semântica"</span>,</span>
-<span id="cb12-588"><a href="#cb12-588" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Caixas destacadas = Top 10 Hubs Centrais | Cores = Comunidades de Louvain | Setas = Direção do Bigrama"</span></span>
-<span id="cb12-589"><a href="#cb12-589" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-590"><a href="#cb12-590" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb12-591"><a href="#cb12-591" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb12-592"><a href="#cb12-592" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">13.5</span>),</span>
-<span id="cb12-593"><a href="#cb12-593" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">9.8</span>, <span class="at">color =</span> <span class="st">"gray35"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">8</span>)),</span>
-<span id="cb12-594"><a href="#cb12-594" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span></span>
-<span id="cb12-595"><a href="#cb12-595" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-596"><a href="#cb12-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-597"><a href="#cb12-597" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-598"><a href="#cb12-598" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-599"><a href="#cb12-599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-600"><a href="#cb12-600" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-601"><a href="#cb12-601" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.2 Tabela dos Principais *Hubs* Vocabulares da Rede</span></span>
-<span id="cb12-602"><a href="#cb12-602" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-605"><a href="#cb12-605" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-606"><a href="#cb12-606" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-centralidade-rede</span></span>
-<span id="cb12-607"><a href="#cb12-607" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Top 10 Palavras Centrais (Hubs) do Componente Gigante por Grau e Intermediação (FREEMAN, 1977; NEWMAN, 2010)"</span></span>
-<span id="cb12-608"><a href="#cb12-608" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-609"><a href="#cb12-609" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb12-610"><a href="#cb12-610" aria-hidden="true" tabindex="-1"></a>  <span class="at">Palavra =</span> <span class="fu">V</span>(grafo)<span class="sc">$</span>name,</span>
-<span id="cb12-611"><a href="#cb12-611" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Macro-Eixo Narrativo</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">V</span>(grafo)<span class="sc">$</span>eixo_narrativo,</span>
-<span id="cb12-612"><a href="#cb12-612" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Grau Total (Conexões)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">V</span>(grafo)<span class="sc">$</span>grau,</span>
-<span id="cb12-613"><a href="#cb12-613" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Intermediação (Ponte)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">V</span>(grafo)<span class="sc">$</span>intermediacao</span>
-<span id="cb12-614"><a href="#cb12-614" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-615"><a href="#cb12-615" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Grau Total (Conexões)</span><span class="st">`</span>), <span class="fu">desc</span>(<span class="st">`</span><span class="at">Intermediação (Ponte)</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-616"><a href="#cb12-616" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-617"><a href="#cb12-617" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-618"><a href="#cb12-618" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="st">`</span><span class="at">Intermediação (Ponte)</span><span class="st">`</span>, <span class="at">decimals =</span> <span class="dv">1</span>, <span class="at">dec_mark =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-619"><a href="#cb12-619" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">`</span><span class="at">Grau Total (Conexões)</span><span class="st">`</span>, <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#f7fbff"</span>, <span class="st">"#08519c"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-620"><a href="#cb12-620" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb12-621"><a href="#cb12-621" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Núcleos Articuladores e Pontes do Discurso Machadiano**"</span>),</span>
-<span id="cb12-622"><a href="#cb12-622" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Ranking estatístico baseado no Componente Conexo Gigante"</span></span>
-<span id="cb12-623"><a href="#cb12-623" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-624"><a href="#cb12-624" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-625"><a href="#cb12-625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-626"><a href="#cb12-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-627"><a href="#cb12-627" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-628"><a href="#cb12-628" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal"}</span>
-<span id="cb12-629"><a href="#cb12-629" aria-hidden="true" tabindex="-1"></a>Síntese Inferencial e Nota Bibliográfica: A triangulação dos modelos confirma a coerência estética e estatística do corpus machadiano: a Lei de Zipf valida a regularidade macroestrutural do léxico; o teste de Keyness ($\chi^2$), o dendrograma de Ward (ward.D2) e o mapa perceptual da Análise de Correspondência ($\beta &gt; 3$) isolam consistentemente a transição estilística entre a prosa romântica de Helena e a maturidade realista; por fim, o modelo LDA e a topologia de comunidades de Louvain revelam como o autor entrelaça o espaço doméstico, a subjetividade afetiva e a reflexão temporal. Todas as obras, metodologias e pacotes R citados encontram-se listados na aba Referências.</span>
-<span id="cb12-630"><a href="#cb12-630" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-631"><a href="#cb12-631" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-632"><a href="#cb12-632" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-633"><a href="#cb12-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-634"><a href="#cb12-634" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb12-635"><a href="#cb12-635" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-636"><a href="#cb12-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-637"><a href="#cb12-637" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-638"><a href="#cb12-638" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-639"><a href="#cb12-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-640"><a href="#cb12-640" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-641"><a href="#cb12-641" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-642"><a href="#cb12-642" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-643"><a href="#cb12-643" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-644"><a href="#cb12-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-645"><a href="#cb12-645" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-646"><a href="#cb12-646" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-647"><a href="#cb12-647" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-648"><a href="#cb12-648" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-649"><a href="#cb12-649" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-650"><a href="#cb12-650" aria-hidden="true" tabindex="-1"></a></span>
-</code><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -4223,13 +3552,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/blob/main/modelagem-avancada.qmd" class="toc-action"><i class="bi bi-github"></i>Ver o código fonte</a></li><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></div>
     <div class="nav-footer-right">
-<p>Desenvolvido com <a href="https://github.com" target="_blank"><i class="bi bi-github"></i> GitHub</a>, <a href="https://www.r-project.org/about.html" target="_blank"><i class="bi bi-code-slash"></i> R</a> e <a href="https://quarto.org/" target="_blank">Quarto</a></p>
+<p>Desenvolvido com <a href="https://github.com/MarioDhiego" target="_blank"><i class="bi bi-github"></i> GitHub</a>, <a href="https://www.r-project.org/about.html" target="_blank"><i class="bi bi-code-slash"></i> R</a> e <a href="https://quarto.org/" target="_blank">Quarto</a></p>
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","loop":false,"closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
