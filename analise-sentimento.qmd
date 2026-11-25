@@ -216,7 +216,7 @@ ggplot(df_resumo_plot, aes(x = reorder_within(book_short, Valor, Indicador), y =
 
 ---
 
-## 3. Polaridade Vocabular: Nuvem Comparativa vs. Frequências
+## 3. Polaridade: Nuvem Comparativa vs. Frequências
 
 A nuvem comparativa — gerada pelos pacotes wordcloud (FELLOWS, 2018) e reshape2 (WICKHAM, 2007) — e o gráfico de barras divergentes — estruturado com tidytext (SILGE; ROBINSON, 2016, 2017) — contrastam os termos positivos (verde) e negativos (laranja) mais recorrentes no conjunto das obras, evidenciando o léxico afetivo característico de Machado de Assis:
 

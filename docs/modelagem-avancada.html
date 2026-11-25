@@ -247,7 +247,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./analise-sentimento.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. <strong>Sentimentos</strong></span></a>
+ <span class="menu-text">5. <strong>Análise de Sentimentos</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -295,7 +295,7 @@ window.Quarto = {
     <h2 id="toc-title">SUMÁRIO</h2>
    
   <ul>
-  <li><a href="#leis-empíricas-da-linguística-quantitativa-lei-de-zipf" id="toc-leis-empíricas-da-linguística-quantitativa-lei-de-zipf" class="nav-link active" data-scroll-target="#leis-empíricas-da-linguística-quantitativa-lei-de-zipf">1. Leis Empíricas da Linguística Quantitativa (Lei de Zipf)</a></li>
+  <li><a href="#linguística-quantitativa-lei-de-zipf" id="toc-linguística-quantitativa-lei-de-zipf" class="nav-link active" data-scroll-target="#linguística-quantitativa-lei-de-zipf">1. Linguística Quantitativa (Lei de Zipf)</a></li>
   <li><a href="#análise-de-keyness-chi2" id="toc-análise-de-keyness-chi2" class="nav-link" data-scroll-target="#análise-de-keyness-chi2">2. Análise de <em>Keyness</em> (<span class="math inline">\(\chi^2\)</span>)</a></li>
   <li><a href="#similaridade-de-cosseno-e-cluster" id="toc-similaridade-de-cosseno-e-cluster" class="nav-link" data-scroll-target="#similaridade-de-cosseno-e-cluster">3. Similaridade de Cosseno e Cluster</a>
   <ul class="collapse">
@@ -305,11 +305,11 @@ window.Quarto = {
   <li><a href="#análise-de-correspondência-ca" id="toc-análise-de-correspondência-ca" class="nav-link" data-scroll-target="#análise-de-correspondência-ca">4. Análise de Correspondência (CA)</a>
   <ul class="collapse">
   <li><a href="#critério-beta-e-decomposição-da-inércia" id="toc-critério-beta-e-decomposição-da-inércia" class="nav-link" data-scroll-target="#critério-beta-e-decomposição-da-inércia">4.1 Critério <span class="math inline">\(\beta\)</span> e Decomposição da Inércia</a></li>
-  <li><a href="#resíduos-padronizados-maiores-associações-obra-times-palavra" id="toc-resíduos-padronizados-maiores-associações-obra-times-palavra" class="nav-link" data-scroll-target="#resíduos-padronizados-maiores-associações-obra-times-palavra">4.2 Resíduos Padronizados: Maiores Associações Obra <span class="math inline">\(\times\)</span> Palavra</a></li>
+  <li><a href="#resíduos-associações-obra-times-palavra" id="toc-resíduos-associações-obra-times-palavra" class="nav-link" data-scroll-target="#resíduos-associações-obra-times-palavra">4.2 Resíduos: Associações Obra <span class="math inline">\(\times\)</span> Palavra</a></li>
   <li><a href="#mapa-perceptual-de-correspondência" id="toc-mapa-perceptual-de-correspondência" class="nav-link" data-scroll-target="#mapa-perceptual-de-correspondência">4.3 Mapa Perceptual de Correspondência</a></li>
   </ul></li>
   <li><a href="#modelagem-probabilística-de-tópicos-lda" id="toc-modelagem-probabilística-de-tópicos-lda" class="nav-link" data-scroll-target="#modelagem-probabilística-de-tópicos-lda">5. Modelagem Probabilística de Tópicos (LDA)</a></li>
-  <li><a href="#teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical" id="toc-teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical" class="nav-link" data-scroll-target="#teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical">6. Teoria dos Grafos: Arquitetura Semântica e <em>Storytelling</em> Lexical</a>
+  <li><a href="#teoria-dos-grafos-semântica-e-storytelling-lexical" id="toc-teoria-dos-grafos-semântica-e-storytelling-lexical" class="nav-link" data-scroll-target="#teoria-dos-grafos-semântica-e-storytelling-lexical">6. Teoria dos Grafos: Semântica e <em>Storytelling</em> Lexical</a>
   <ul class="collapse">
   <li><a href="#como-ler-o-grafo-semântico-narrativa-estrutural" id="toc-como-ler-o-grafo-semântico-narrativa-estrutural" class="nav-link" data-scroll-target="#como-ler-o-grafo-semântico-narrativa-estrutural">6.1 Como Ler o Grafo Semântico (Narrativa Estrutural)</a></li>
   <li><a href="#tabela-dos-principais-hubs-vocabulares-da-rede" id="toc-tabela-dos-principais-hubs-vocabulares-da-rede" class="nav-link" data-scroll-target="#tabela-dos-principais-hubs-vocabulares-da-rede">6.2 Tabela dos Principais <em>Hubs</em> Vocabulares da Rede</a></li>
@@ -350,8 +350,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<section id="leis-empíricas-da-linguística-quantitativa-lei-de-zipf" class="level2">
-<h2 class="anchored" data-anchor-id="leis-empíricas-da-linguística-quantitativa-lei-de-zipf">1. Leis Empíricas da Linguística Quantitativa (Lei de Zipf)</h2>
+<section id="linguística-quantitativa-lei-de-zipf" class="level2">
+<h2 class="anchored" data-anchor-id="linguística-quantitativa-lei-de-zipf">1. Linguística Quantitativa (Lei de Zipf)</h2>
 <p>A <strong>Lei de Zipf</strong> postula que, em qualquer corpus natural suficientemente extenso, a frequência <span class="math inline">\(f(r)\)</span> de uma palavra é inversamente proporcional ao seu posto <span class="math inline">\(r\)</span> na tabela de frequências ordenadas:</p>
 <p><span class="math display">\[f(r) = \frac{C}{r^{\alpha}} \implies \log_{10} f(r) = \log_{10} C - \alpha \log_{10} r\]</span></p>
 <p>Aplicando uma regressão linear ordinária (OLS) via stats::lm() (R CORE TEAM, 2026) sobre os logaritmos da frequência e do posto (rank) no conjunto integral das 7 obras, estimamos o expoente empírico <span class="math inline">\(\alpha\)</span> do léxico machadiano:</p>
@@ -481,23 +481,23 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
 </figcaption>
 <div aria-describedby="tbl-matriz-cosseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="rplnnitmjc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rplnnitmjc table {
+<div id="vafuvvnaup" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vafuvvnaup table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rplnnitmjc thead, #rplnnitmjc tbody, #rplnnitmjc tfoot, #rplnnitmjc tr, #rplnnitmjc td, #rplnnitmjc th {
+#vafuvvnaup thead, #vafuvvnaup tbody, #vafuvvnaup tfoot, #vafuvvnaup tr, #vafuvvnaup td, #vafuvvnaup th {
   border-style: none;
 }
 
-#rplnnitmjc p {
+#vafuvvnaup p {
   margin: 0;
   padding: 0;
 }
 
-#rplnnitmjc .gt_table {
+#vafuvvnaup .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -523,12 +523,12 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-left-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_caption {
+#vafuvvnaup .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rplnnitmjc .gt_title {
+#vafuvvnaup .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -540,7 +540,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-width: 0;
 }
 
-#rplnnitmjc .gt_subtitle {
+#vafuvvnaup .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -552,7 +552,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-width: 0;
 }
 
-#rplnnitmjc .gt_heading {
+#vafuvvnaup .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -564,13 +564,13 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_bottom_border {
+#vafuvvnaup .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_col_headings {
+#vafuvvnaup .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -585,7 +585,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_col_heading {
+#vafuvvnaup .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -605,7 +605,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#rplnnitmjc .gt_column_spanner_outer {
+#vafuvvnaup .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -617,15 +617,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 4px;
 }
 
-#rplnnitmjc .gt_column_spanner_outer:first-child {
+#vafuvvnaup .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rplnnitmjc .gt_column_spanner_outer:last-child {
+#vafuvvnaup .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rplnnitmjc .gt_column_spanner {
+#vafuvvnaup .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -637,11 +637,11 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   width: 100%;
 }
 
-#rplnnitmjc .gt_spanner_row {
+#vafuvvnaup .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rplnnitmjc .gt_group_heading {
+#vafuvvnaup .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -667,7 +667,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   text-align: left;
 }
 
-#rplnnitmjc .gt_empty_group_heading {
+#vafuvvnaup .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -682,15 +682,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: middle;
 }
 
-#rplnnitmjc .gt_from_md > :first-child {
+#vafuvvnaup .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rplnnitmjc .gt_from_md > :last-child {
+#vafuvvnaup .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rplnnitmjc .gt_row {
+#vafuvvnaup .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -709,7 +709,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#rplnnitmjc .gt_stub {
+#vafuvvnaup .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -722,7 +722,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rplnnitmjc .gt_stub_row_group {
+#vafuvvnaup .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -736,15 +736,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: top;
 }
 
-#rplnnitmjc .gt_row_group_first td {
+#vafuvvnaup .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rplnnitmjc .gt_row_group_first th {
+#vafuvvnaup .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rplnnitmjc .gt_summary_row {
+#vafuvvnaup .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -754,16 +754,16 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rplnnitmjc .gt_first_summary_row {
+#vafuvvnaup .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_first_summary_row.thick {
+#vafuvvnaup .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rplnnitmjc .gt_last_summary_row {
+#vafuvvnaup .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -773,7 +773,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_grand_summary_row {
+#vafuvvnaup .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -783,7 +783,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rplnnitmjc .gt_first_grand_summary_row {
+#vafuvvnaup .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -793,7 +793,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_last_grand_summary_row_top {
+#vafuvvnaup .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -803,11 +803,11 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_striped {
+#vafuvvnaup .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rplnnitmjc .gt_table_body {
+#vafuvvnaup .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -816,7 +816,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_footnotes {
+#vafuvvnaup .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -830,7 +830,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_footnote {
+#vafuvvnaup .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -839,7 +839,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rplnnitmjc .gt_sourcenotes {
+#vafuvvnaup .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -853,7 +853,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#rplnnitmjc .gt_sourcenote {
+#vafuvvnaup .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -861,72 +861,72 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#rplnnitmjc .gt_left {
+#vafuvvnaup .gt_left {
   text-align: left;
 }
 
-#rplnnitmjc .gt_center {
+#vafuvvnaup .gt_center {
   text-align: center;
 }
 
-#rplnnitmjc .gt_right {
+#vafuvvnaup .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rplnnitmjc .gt_font_normal {
+#vafuvvnaup .gt_font_normal {
   font-weight: normal;
 }
 
-#rplnnitmjc .gt_font_bold {
+#vafuvvnaup .gt_font_bold {
   font-weight: bold;
 }
 
-#rplnnitmjc .gt_font_italic {
+#vafuvvnaup .gt_font_italic {
   font-style: italic;
 }
 
-#rplnnitmjc .gt_super {
+#vafuvvnaup .gt_super {
   font-size: 65%;
 }
 
-#rplnnitmjc .gt_footnote_marks {
+#vafuvvnaup .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rplnnitmjc .gt_asterisk {
+#vafuvvnaup .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rplnnitmjc .gt_indent_1 {
+#vafuvvnaup .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rplnnitmjc .gt_indent_2 {
+#vafuvvnaup .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rplnnitmjc .gt_indent_3 {
+#vafuvvnaup .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rplnnitmjc .gt_indent_4 {
+#vafuvvnaup .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rplnnitmjc .gt_indent_5 {
+#vafuvvnaup .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rplnnitmjc .katex-display {
+#vafuvvnaup .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rplnnitmjc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vafuvvnaup div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1114,23 +1114,23 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
 </figcaption>
 <div aria-describedby="tbl-diagnostico-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="fhumvezkpp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fhumvezkpp table {
+<div id="gyiovjmspg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gyiovjmspg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fhumvezkpp thead, #fhumvezkpp tbody, #fhumvezkpp tfoot, #fhumvezkpp tr, #fhumvezkpp td, #fhumvezkpp th {
+#gyiovjmspg thead, #gyiovjmspg tbody, #gyiovjmspg tfoot, #gyiovjmspg tr, #gyiovjmspg td, #gyiovjmspg th {
   border-style: none;
 }
 
-#fhumvezkpp p {
+#gyiovjmspg p {
   margin: 0;
   padding: 0;
 }
 
-#fhumvezkpp .gt_table {
+#gyiovjmspg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1156,12 +1156,12 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-left-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_caption {
+#gyiovjmspg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fhumvezkpp .gt_title {
+#gyiovjmspg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1173,7 +1173,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-width: 0;
 }
 
-#fhumvezkpp .gt_subtitle {
+#gyiovjmspg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1185,7 +1185,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-top-width: 0;
 }
 
-#fhumvezkpp .gt_heading {
+#gyiovjmspg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1197,13 +1197,13 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_bottom_border {
+#gyiovjmspg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_col_headings {
+#gyiovjmspg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1218,7 +1218,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_col_heading {
+#gyiovjmspg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1238,7 +1238,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   overflow-x: hidden;
 }
 
-#fhumvezkpp .gt_column_spanner_outer {
+#gyiovjmspg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1250,15 +1250,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 4px;
 }
 
-#fhumvezkpp .gt_column_spanner_outer:first-child {
+#gyiovjmspg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fhumvezkpp .gt_column_spanner_outer:last-child {
+#gyiovjmspg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fhumvezkpp .gt_column_spanner {
+#gyiovjmspg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1270,11 +1270,11 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   width: 100%;
 }
 
-#fhumvezkpp .gt_spanner_row {
+#gyiovjmspg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fhumvezkpp .gt_group_heading {
+#gyiovjmspg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1300,7 +1300,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   text-align: left;
 }
 
-#fhumvezkpp .gt_empty_group_heading {
+#gyiovjmspg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1315,15 +1315,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   vertical-align: middle;
 }
 
-#fhumvezkpp .gt_from_md > :first-child {
+#gyiovjmspg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fhumvezkpp .gt_from_md > :last-child {
+#gyiovjmspg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fhumvezkpp .gt_row {
+#gyiovjmspg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1342,7 +1342,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   overflow-x: hidden;
 }
 
-#fhumvezkpp .gt_stub {
+#gyiovjmspg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1355,7 +1355,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#fhumvezkpp .gt_stub_row_group {
+#gyiovjmspg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1369,15 +1369,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   vertical-align: top;
 }
 
-#fhumvezkpp .gt_row_group_first td {
+#gyiovjmspg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fhumvezkpp .gt_row_group_first th {
+#gyiovjmspg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fhumvezkpp .gt_summary_row {
+#gyiovjmspg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1387,16 +1387,16 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#fhumvezkpp .gt_first_summary_row {
+#gyiovjmspg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_first_summary_row.thick {
+#gyiovjmspg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fhumvezkpp .gt_last_summary_row {
+#gyiovjmspg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1406,7 +1406,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_grand_summary_row {
+#gyiovjmspg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1416,7 +1416,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#fhumvezkpp .gt_first_grand_summary_row {
+#gyiovjmspg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1426,7 +1426,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-top-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_last_grand_summary_row_top {
+#gyiovjmspg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1436,11 +1436,11 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_striped {
+#gyiovjmspg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fhumvezkpp .gt_table_body {
+#gyiovjmspg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1449,7 +1449,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_footnotes {
+#gyiovjmspg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1463,7 +1463,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_footnote {
+#gyiovjmspg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1472,7 +1472,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#fhumvezkpp .gt_sourcenotes {
+#gyiovjmspg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1486,7 +1486,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#fhumvezkpp .gt_sourcenote {
+#gyiovjmspg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1494,72 +1494,72 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#fhumvezkpp .gt_left {
+#gyiovjmspg .gt_left {
   text-align: left;
 }
 
-#fhumvezkpp .gt_center {
+#gyiovjmspg .gt_center {
   text-align: center;
 }
 
-#fhumvezkpp .gt_right {
+#gyiovjmspg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fhumvezkpp .gt_font_normal {
+#gyiovjmspg .gt_font_normal {
   font-weight: normal;
 }
 
-#fhumvezkpp .gt_font_bold {
+#gyiovjmspg .gt_font_bold {
   font-weight: bold;
 }
 
-#fhumvezkpp .gt_font_italic {
+#gyiovjmspg .gt_font_italic {
   font-style: italic;
 }
 
-#fhumvezkpp .gt_super {
+#gyiovjmspg .gt_super {
   font-size: 65%;
 }
 
-#fhumvezkpp .gt_footnote_marks {
+#gyiovjmspg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fhumvezkpp .gt_asterisk {
+#gyiovjmspg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fhumvezkpp .gt_indent_1 {
+#gyiovjmspg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fhumvezkpp .gt_indent_2 {
+#gyiovjmspg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fhumvezkpp .gt_indent_3 {
+#gyiovjmspg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fhumvezkpp .gt_indent_4 {
+#gyiovjmspg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fhumvezkpp .gt_indent_5 {
+#gyiovjmspg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fhumvezkpp .katex-display {
+#gyiovjmspg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fhumvezkpp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gyiovjmspg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1626,8 +1626,8 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
 </div>
 </div>
 </section>
-<section id="resíduos-padronizados-maiores-associações-obra-times-palavra" class="level3">
-<h3 class="anchored" data-anchor-id="resíduos-padronizados-maiores-associações-obra-times-palavra">4.2 Resíduos Padronizados: Maiores Associações Obra <span class="math inline">\(\times\)</span> Palavra</h3>
+<section id="resíduos-associações-obra-times-palavra" class="level3">
+<h3 class="anchored" data-anchor-id="resíduos-associações-obra-times-palavra">4.2 Resíduos: Associações Obra <span class="math inline">\(\times\)</span> Palavra</h3>
 <p>Para interpretar o que atrai cada romance para seu quadrante no mapa perceptual, listamos os pares (Obra <span class="math inline">\(\times\)</span> Termo) com os maiores resíduos padronizados positivos (<span class="math inline">\(s_{ij}\)</span>) (GREENACRE, 1984):</p>
 <div class="cell">
 <details class="code-fold">
@@ -1653,23 +1653,23 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
 </figcaption>
 <div aria-describedby="tbl-residuos-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="xgdzkwzisk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xgdzkwzisk table {
+<div id="urenurafyn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#urenurafyn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xgdzkwzisk thead, #xgdzkwzisk tbody, #xgdzkwzisk tfoot, #xgdzkwzisk tr, #xgdzkwzisk td, #xgdzkwzisk th {
+#urenurafyn thead, #urenurafyn tbody, #urenurafyn tfoot, #urenurafyn tr, #urenurafyn td, #urenurafyn th {
   border-style: none;
 }
 
-#xgdzkwzisk p {
+#urenurafyn p {
   margin: 0;
   padding: 0;
 }
 
-#xgdzkwzisk .gt_table {
+#urenurafyn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1695,12 +1695,12 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-left-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_caption {
+#urenurafyn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xgdzkwzisk .gt_title {
+#urenurafyn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1712,7 +1712,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-width: 0;
 }
 
-#xgdzkwzisk .gt_subtitle {
+#urenurafyn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1724,7 +1724,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-top-width: 0;
 }
 
-#xgdzkwzisk .gt_heading {
+#urenurafyn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1736,13 +1736,13 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_bottom_border {
+#urenurafyn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_col_headings {
+#urenurafyn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1757,7 +1757,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_col_heading {
+#urenurafyn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1777,7 +1777,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   overflow-x: hidden;
 }
 
-#xgdzkwzisk .gt_column_spanner_outer {
+#urenurafyn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1789,15 +1789,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 4px;
 }
 
-#xgdzkwzisk .gt_column_spanner_outer:first-child {
+#urenurafyn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xgdzkwzisk .gt_column_spanner_outer:last-child {
+#urenurafyn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xgdzkwzisk .gt_column_spanner {
+#urenurafyn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1809,11 +1809,11 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   width: 100%;
 }
 
-#xgdzkwzisk .gt_spanner_row {
+#urenurafyn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xgdzkwzisk .gt_group_heading {
+#urenurafyn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1839,7 +1839,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   text-align: left;
 }
 
-#xgdzkwzisk .gt_empty_group_heading {
+#urenurafyn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1854,15 +1854,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   vertical-align: middle;
 }
 
-#xgdzkwzisk .gt_from_md > :first-child {
+#urenurafyn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xgdzkwzisk .gt_from_md > :last-child {
+#urenurafyn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xgdzkwzisk .gt_row {
+#urenurafyn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1881,7 +1881,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   overflow-x: hidden;
 }
 
-#xgdzkwzisk .gt_stub {
+#urenurafyn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1894,7 +1894,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#xgdzkwzisk .gt_stub_row_group {
+#urenurafyn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1908,15 +1908,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   vertical-align: top;
 }
 
-#xgdzkwzisk .gt_row_group_first td {
+#urenurafyn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xgdzkwzisk .gt_row_group_first th {
+#urenurafyn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xgdzkwzisk .gt_summary_row {
+#urenurafyn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1926,16 +1926,16 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#xgdzkwzisk .gt_first_summary_row {
+#urenurafyn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_first_summary_row.thick {
+#urenurafyn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xgdzkwzisk .gt_last_summary_row {
+#urenurafyn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1945,7 +1945,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_grand_summary_row {
+#urenurafyn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1955,7 +1955,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#xgdzkwzisk .gt_first_grand_summary_row {
+#urenurafyn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1965,7 +1965,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-top-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_last_grand_summary_row_top {
+#urenurafyn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1975,11 +1975,11 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_striped {
+#urenurafyn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xgdzkwzisk .gt_table_body {
+#urenurafyn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1988,7 +1988,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_footnotes {
+#urenurafyn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2002,7 +2002,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_footnote {
+#urenurafyn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2011,7 +2011,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#xgdzkwzisk .gt_sourcenotes {
+#urenurafyn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2025,7 +2025,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#xgdzkwzisk .gt_sourcenote {
+#urenurafyn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2033,72 +2033,72 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#xgdzkwzisk .gt_left {
+#urenurafyn .gt_left {
   text-align: left;
 }
 
-#xgdzkwzisk .gt_center {
+#urenurafyn .gt_center {
   text-align: center;
 }
 
-#xgdzkwzisk .gt_right {
+#urenurafyn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xgdzkwzisk .gt_font_normal {
+#urenurafyn .gt_font_normal {
   font-weight: normal;
 }
 
-#xgdzkwzisk .gt_font_bold {
+#urenurafyn .gt_font_bold {
   font-weight: bold;
 }
 
-#xgdzkwzisk .gt_font_italic {
+#urenurafyn .gt_font_italic {
   font-style: italic;
 }
 
-#xgdzkwzisk .gt_super {
+#urenurafyn .gt_super {
   font-size: 65%;
 }
 
-#xgdzkwzisk .gt_footnote_marks {
+#urenurafyn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xgdzkwzisk .gt_asterisk {
+#urenurafyn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xgdzkwzisk .gt_indent_1 {
+#urenurafyn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xgdzkwzisk .gt_indent_2 {
+#urenurafyn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xgdzkwzisk .gt_indent_3 {
+#urenurafyn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xgdzkwzisk .gt_indent_4 {
+#urenurafyn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xgdzkwzisk .gt_indent_5 {
+#urenurafyn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xgdzkwzisk .katex-display {
+#urenurafyn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xgdzkwzisk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#urenurafyn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2339,8 +2339,8 @@ Figura&nbsp;5: Decomposição temática via LDA (K = 4): (A) Probabilidade condi
 </div>
 <hr>
 </section>
-<section id="teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical" class="level2">
-<h2 class="anchored" data-anchor-id="teoria-dos-grafos-arquitetura-semântica-e-storytelling-lexical">6. Teoria dos Grafos: Arquitetura Semântica e <em>Storytelling</em> Lexical</h2>
+<section id="teoria-dos-grafos-semântica-e-storytelling-lexical" class="level2">
+<h2 class="anchored" data-anchor-id="teoria-dos-grafos-semântica-e-storytelling-lexical">6. Teoria dos Grafos: Semântica e <em>Storytelling</em> Lexical</h2>
 <p>Para contar uma história clara sobre como o discurso machadiano se organiza — sem poluição de pares soltos —, extraímos o Componente Conexo Gigante (LCC) (NEWMAN, 2010) da rede de bigramas por meio do pacote igraph (CSÁRDI; NEPUSZ, 2006) e aplicamos o algoritmo de modularidade de Louvain (BLONDEL et al., 2008) com visualização via ggraph (PEDERSEN, 2024) para revelar os 3 macro-eixos temáticos que sustentam a narrativa:</p>
 <section id="como-ler-o-grafo-semântico-narrativa-estrutural" class="level3">
 <h3 class="anchored" data-anchor-id="como-ler-o-grafo-semântico-narrativa-estrutural">6.1 Como Ler o Grafo Semântico (Narrativa Estrutural)</h3>
@@ -3558,8 +3558,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./analise-sentimento.html" class="pagination-link" aria-label="5. **Sentimentos**">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">5. <strong>Sentimentos</strong></span>
+      <a href="./analise-sentimento.html" class="pagination-link" aria-label="5. **Análise de Sentimentos**">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">5. <strong>Análise de Sentimentos</strong></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -3582,7 +3582,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

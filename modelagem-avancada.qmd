@@ -67,7 +67,7 @@ Nível Pós-Graduação (Mestrado & Doutorado): Esta seção avança da estatís
 
 
 
-## 1. Leis Empíricas da Linguística Quantitativa (Lei de Zipf)
+## 1. Linguística Quantitativa (Lei de Zipf)
 
 A **Lei de Zipf** postula que, em qualquer corpus natural suficientemente extenso, a frequência $f(r)$ de uma palavra é inversamente proporcional ao seu posto $r$ na tabela de frequências ordenadas:
 
@@ -302,7 +302,7 @@ tibble(
 
 
 
-### 4.2 Resíduos Padronizados: Maiores Associações Obra $\times$ Palavra
+### 4.2 Resíduos: Associações Obra $\times$ Palavra
 
 Para interpretar o que atrai cada romance para seu quadrante no mapa perceptual, listamos os pares (Obra $\times$ Termo) com os maiores resíduos padronizados positivos ($s_{ij}$) (GREENACRE, 1984):
 
@@ -456,7 +456,7 @@ p_beta / p_gamma + plot_layout(heights = c(1.35, 1))
 ---
 
 
-## 6. Teoria dos Grafos: Arquitetura Semântica e *Storytelling* Lexical
+## 6. Teoria dos Grafos: Semântica e *Storytelling* Lexical
 
 Para contar uma história clara sobre como o discurso machadiano se organiza — sem poluição de pares soltos —, extraímos o Componente Conexo Gigante (LCC) (NEWMAN, 2010) da rede de bigramas por meio do pacote igraph (CSÁRDI; NEPUSZ, 2006) e aplicamos o algoritmo de modularidade de Louvain (BLONDEL et al., 2008) com visualização via ggraph (PEDERSEN, 2024) para revelar os 3 macro-eixos temáticos que sustentam a narrativa:
 

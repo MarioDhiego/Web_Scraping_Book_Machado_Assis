@@ -37,7 +37,7 @@ Base empírica
 **Reprodutibilidade:** Todo o fluxo de coleta e processamento foi desenvolvido em linguagem **$R_{4.5.5}$** (R CORE TEAM, 2026). Para evitar requisições repetidas aos servidores da Fundação Wikimedia durante a compilação deste portfólio, os textos coletados foram persistidos localmente em formato binário nativo (`.rds`).
 :::
 
-## 1. Ecossistema de Pacotes e Referências Técnicas
+## 1. Ecossistema e Referências Técnicas
 
 O pipeline computacional deste projeto apoia-se em bibliotecas consolidadas da comunidade **R** para ciência de dados, raspagem web (*web scraping*), linguística computacional, modelagem probabilística e teoria de grafos (SILGE; ROBINSON, 2017; BENOIT et al., 2018). A tabela abaixo sistematiza cada pacote empregado ao longo das abas do curso, sua função na arquitetura do projeto e seus respectivos autores principais no padrão ABNT:
 
@@ -200,7 +200,7 @@ if (file.exists(arquivo_cache)) {
 
 ------------------------------------------------------------------------
 
-## 3. Limpeza, Padronização e Estruturação do Banco de Dados
+## 3. Limpeza e Padronização do Banco de Dados
 
 Os textos brutos extraídos da web contêm ruídos estruturais que precisam ser removidos antes de qualquer cálculo estatístico (SILGE; ROBINSON, 2017). O fluxo de higienização segue quatro etapas:
 

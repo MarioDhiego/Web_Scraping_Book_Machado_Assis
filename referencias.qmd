@@ -11,7 +11,7 @@ VALENTE, Mario Diego Rocha. **Curso Básico de Mineração de Texto: Estudo de C
 
 ------------------------------------------------------------------------
 
-## 1. Corpus de Texto (Fontes Primárias — Wikisource)
+## 1. Corpus de Texto (Wikisource)
 
 * ASSIS, Joaquim Maria Machado de. **Ressurreição** [1872]. Rio de Janeiro: B. L. Garnier, 1872.
 * ASSIS, Joaquim Maria Machado de. **A Mão e a Luva** [1874]. Rio de Janeiro: Gomes de Oliveira & C., 1874.
@@ -39,7 +39,7 @@ VALENTE, Mario Diego Rocha. **Curso Básico de Mineração de Texto: Estudo de C
 
 ------------------------------------------------------------------------
 
-## 3. Fundamentação Estatística, Linguística e Ciência de Dados
+## 3. Fundamentação Estatística e Linguística
 
 * BENZÉCRI, Jean-Paul. **L'Analyse des Données: Tome 2 — L'Analyse des Correspondances**. Paris: Dunod, 1973.
 * BLEI, David M.; NG, Andrew Y.; JORDAN, Michael I. Latent Dirichlet Allocation. **Journal of Machine Learning Research**, v. 3, p. 993–1022, 2003.
@@ -76,7 +76,7 @@ VALENTE, Mario Diego Rocha. **Curso Básico de Mineração de Texto: Estudo de C
 
 ------------------------------------------------------------------------
 
-## 4. Ecossistema Computacional (Linguagem R, Quarto e Pacotes)
+## 4. Ecossistema (Linguagem R, Quarto e Pacotes)
 
 * ALLAIRE, J. J.; TEAGUE, Charles; SCHEIDEGGER, Carlos; XIE, Yihui; DERVIEUX, Christophe. **Quarto**: an open-source scientific and technical publishing system. Version 1.4. Boston: Posit Software, PBC, 2024. Disponível em: <https://quarto.org>. Acesso em: 23 nov. 2026.
 * BENOIT, Kenneth; WATANABE, Kohei; WANG, Haiyan; NULTY, Paul; OBENG, Adam; MÜLLER, Stefan; MATSUO, Akitaka. quanteda: An R package for the quantitative analysis of textual data. **Journal of Open Source Software**, v. 3, n. 30, p. 774, 2018. Disponível em: <https://doi.org/10.21105/joss.00774>. Acesso em: 23 nov. 2026.

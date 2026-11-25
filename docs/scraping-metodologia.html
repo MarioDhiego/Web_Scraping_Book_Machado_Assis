@@ -250,7 +250,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./analise-sentimento.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. <strong>Sentimentos</strong></span></a>
+ <span class="menu-text">5. <strong>Análise de Sentimentos</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -298,12 +298,12 @@ window.Quarto = {
     <h2 id="toc-title">SUMÁRIO</h2>
    
   <ul>
-  <li><a href="#ecossistema-de-pacotes-e-referências-técnicas" id="toc-ecossistema-de-pacotes-e-referências-técnicas" class="nav-link active" data-scroll-target="#ecossistema-de-pacotes-e-referências-técnicas">1. Ecossistema de Pacotes e Referências Técnicas</a></li>
+  <li><a href="#ecossistema-e-referências-técnicas" id="toc-ecossistema-e-referências-técnicas" class="nav-link active" data-scroll-target="#ecossistema-e-referências-técnicas">1. Ecossistema e Referências Técnicas</a></li>
   <li><a href="#estratégia-de-web-scraping-pt.wikisource.org" id="toc-estratégia-de-web-scraping-pt.wikisource.org" class="nav-link" data-scroll-target="#estratégia-de-web-scraping-pt.wikisource.org">2. Estratégia de Web Scraping (<code>pt.wikisource.org</code>)</a>
   <ul class="collapse">
   <li><a href="#contorno-de-proxy-e-leitura-nativa-wininet" id="toc-contorno-de-proxy-e-leitura-nativa-wininet" class="nav-link" data-scroll-target="#contorno-de-proxy-e-leitura-nativa-wininet">Contorno de Proxy e Leitura Nativa (<code>wininet</code>)</a></li>
   </ul></li>
-  <li><a href="#limpeza-padronização-e-estruturação-do-banco-de-dados" id="toc-limpeza-padronização-e-estruturação-do-banco-de-dados" class="nav-link" data-scroll-target="#limpeza-padronização-e-estruturação-do-banco-de-dados">3. Limpeza, Padronização e Estruturação do Banco de Dados</a></li>
+  <li><a href="#limpeza-e-padronização-do-banco-de-dados" id="toc-limpeza-e-padronização-do-banco-de-dados" class="nav-link" data-scroll-target="#limpeza-e-padronização-do-banco-de-dados">3. Limpeza e Padronização do Banco de Dados</a></li>
   <li><a href="#fluxo-completo-da-arquitetura" id="toc-fluxo-completo-da-arquitetura" class="nav-link" data-scroll-target="#fluxo-completo-da-arquitetura">4. Fluxo Completo da Arquitetura</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/blob/main/scraping-metodologia.qmd" class="toc-action"><i class="bi bi-github"></i>Ver o código fonte</a></li><li><a href="https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
@@ -401,8 +401,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<section id="ecossistema-de-pacotes-e-referências-técnicas" class="level2">
-<h2 class="anchored" data-anchor-id="ecossistema-de-pacotes-e-referências-técnicas">1. Ecossistema de Pacotes e Referências Técnicas</h2>
+<section id="ecossistema-e-referências-técnicas" class="level2">
+<h2 class="anchored" data-anchor-id="ecossistema-e-referências-técnicas">1. Ecossistema e Referências Técnicas</h2>
 <p>O pipeline computacional deste projeto apoia-se em bibliotecas consolidadas da comunidade <strong>R</strong> para ciência de dados, raspagem web (<em>web scraping</em>), linguística computacional, modelagem probabilística e teoria de grafos (SILGE; ROBINSON, 2017; BENOIT et al., 2018). A tabela abaixo sistematiza cada pacote empregado ao longo das abas do curso, sua função na arquitetura do projeto e seus respectivos autores principais no padrão ABNT:</p>
 <table class="caption-top table">
 <colgroup>
@@ -621,8 +621,8 @@ Figura&nbsp;1: Acervo das 7 obras de Machado de Assis raspadas integralmente do 
 <hr>
 </section>
 </section>
-<section id="limpeza-padronização-e-estruturação-do-banco-de-dados" class="level2">
-<h2 class="anchored" data-anchor-id="limpeza-padronização-e-estruturação-do-banco-de-dados">3. Limpeza, Padronização e Estruturação do Banco de Dados</h2>
+<section id="limpeza-e-padronização-do-banco-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="limpeza-e-padronização-do-banco-de-dados">3. Limpeza e Padronização do Banco de Dados</h2>
 <p>Os textos brutos extraídos da web contêm ruídos estruturais que precisam ser removidos antes de qualquer cálculo estatístico (SILGE; ROBINSON, 2017). O fluxo de higienização segue quatro etapas:</p>
 <ol type="1">
 <li><strong>Filtragem de Ruído Editorial:</strong> Remoção de linhas vazias (<code>NA</code>) e de parágrafos administrativos capturados acidentalmente pelos seletores HTML (como cabeçalhos iniciados por <em>“Índice”</em>, <em>“Anterior”</em>, <em>“Próximo”</em>, <em>“Wikisource”</em> ou <em>“Obra editada”</em>).</li>
@@ -1392,7 +1392,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

@@ -128,7 +128,7 @@ tabela_geral %>%
 
 
 
-### Consulta Interativa por Capítulo (`DT`)
+### 1.1 Consulta Interativa por Capítulo (`DT`)
 
 Para inspecionar a granularidade interna de cada romance, a tabela dinâmica abaixo — construída com o pacote DT (XIE; CHENG; TAN, 2024) — permite pesquisar, ordenar e filtrar todos os 827 capítulos por obra, número de parágrafos e extensão em palavras:
 
@@ -247,7 +247,7 @@ tabela_complexidade %>%
 
 ---
 
-## 3. Frequência Vocabular e Assinatura Temática (TF-IDF)
+## 3. Frequência e Assinatura Temática (TF-IDF)
 ### 3.1 Termos Mais Frequentes por Obra
 
 Utilizando a abordagem tidy de tokenização do pacote tidytext (SILGE; ROBINSON, 2016, 2017), exibem-se os 15 vocábulos mais recorrentes em cada narrativa:
