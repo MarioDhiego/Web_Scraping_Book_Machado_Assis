@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Modelagem Inferencial – Curso Básico de Mineração de Texto em R</title>
+<title>Modelagem Inferencial – WEB SCRAPING AND TEXT MINING IN LANGUAGE \(R_{4.6}\)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -66,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./referencias.html" rel="next">
 <link href="./analise-sentimento.html" rel="prev">
+<link href="./images/obras-machado-corpus.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -140,9 +140,10 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Modelagem Inferencial – Curso Básico de Mineração de Texto em R">
-<meta property="og:description" content="Leis de Potência, Keyness (χ²), Clusterização, Análise de Correspondência, LDA e Redes Semânticas">
-<meta property="og:site_name" content="Curso Básico de Mineração de Texto em R">
+<meta property="og:title" content="Modelagem Inferencial – WEB SCRAPING AND TEXT MINING IN LANGUAGE \(R_{4.6}\)">
+<meta property="og:description" content="Estudo de caso em Text Mining, Web Scraping, Análise de Sentimentos e Modelagem Inferencial nas obras completas de Machado de Assis em R.">
+<meta property="og:image" content="https://mariodhiego.github.io/Web_Scraping_Book_Machado_Assis/images/obras-machado-corpus.jpg">
+<meta property="og:site_name" content="WEB SCRAPING AND TEXT MINING IN LANGUAGE $R_{4.6}$">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -153,7 +154,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Curso Básico de Mineração de Texto em R</span>
+    <span class="navbar-title">WEB SCRAPING AND TEXT MINING IN LANGUAGE <span class="math inline">\(R_{4.6}\)</span></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -163,34 +164,24 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./resumo-curso-text-mining.pdf" target="_blank"> <i class="bi bi-file-earmark-pdf-fill" role="img">
+    <a class="nav-link active" href="./resumo-curso-text-mining.pdf" target="_blank" aria-current="page"> <i class="bi bi-file-earmark-pdf-fill" role="img">
 </i> 
-<span class="menu-text">Apostila(PDF)</span></a>
+<span class="menu-text">Apostila</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img" aria-label="GitHub">
+  <li class="nav-item">
+    <a class="nav-link" href="./machado_wikisource_completo.rds" target="_blank"> <i class="bi bi-database-fill-down" role="img">
 </i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/mário-diego/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://instagram.com/Dhiego_Valente"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="mailto:mario.valente@detran.pa.gov.br"> <i class="bi bi-envelope" role="img" aria-label="E-mail">
-</i> 
-<span class="menu-text"></span></a>
+<span class="menu-text">Dataset</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -199,7 +190,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./modelagem-avancada.html">6. Análise Inferencial</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./modelagem-avancada.html">6. <strong>Análise Inferencial</strong></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -212,6 +203,16 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/obras-machado-corpus.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/MarioDhiego" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://www.linkedin.com/in/mário-diego/" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="https://instagram.com/Dhiego_Valente" title="Instagram" class="quarto-navigation-tool px-1" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+</div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
@@ -222,45 +223,68 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Dataset</span></a>
+ <span class="menu-text">1. <strong>Dataset</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./scraping-metodologia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Web Scraping</span></a>
+ <span class="menu-text">2. <strong>Web Scraping</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./metricas-teoria.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Métricas Estatísticas</span></a>
+ <span class="menu-text">3. <strong>Métricas Estatísticas</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./resultados-descritivos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. Análise Descritiva</span></a>
+ <span class="menu-text">4. <strong>Análise Descritiva</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./analise-sentimento.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. Análise de Sentimentos</span></a>
+ <span class="menu-text">5. <strong>Sentimentos</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modelagem-avancada.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">6. Análise Inferencial</span></a>
+ <span class="menu-text">6. <strong>Análise Inferencial</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./referencias.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">7. Referências</span></a>
+ <span class="menu-text">7. <strong>Referências</strong></span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Downloads</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resumo-curso-text-mining.pdf" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Apostila (PDF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./machado_wikisource_completo.rds" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Dataset Corpus (.rds)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -457,23 +481,23 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
 </figcaption>
 <div aria-describedby="tbl-matriz-cosseno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="wczygoidfd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wczygoidfd table {
+<div id="rplnnitmjc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rplnnitmjc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wczygoidfd thead, #wczygoidfd tbody, #wczygoidfd tfoot, #wczygoidfd tr, #wczygoidfd td, #wczygoidfd th {
+#rplnnitmjc thead, #rplnnitmjc tbody, #rplnnitmjc tfoot, #rplnnitmjc tr, #rplnnitmjc td, #rplnnitmjc th {
   border-style: none;
 }
 
-#wczygoidfd p {
+#rplnnitmjc p {
   margin: 0;
   padding: 0;
 }
 
-#wczygoidfd .gt_table {
+#rplnnitmjc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -499,12 +523,12 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-left-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_caption {
+#rplnnitmjc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wczygoidfd .gt_title {
+#rplnnitmjc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -516,7 +540,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-width: 0;
 }
 
-#wczygoidfd .gt_subtitle {
+#rplnnitmjc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -528,7 +552,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-width: 0;
 }
 
-#wczygoidfd .gt_heading {
+#rplnnitmjc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -540,13 +564,13 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_bottom_border {
+#rplnnitmjc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_col_headings {
+#rplnnitmjc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -561,7 +585,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_col_heading {
+#rplnnitmjc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -581,7 +605,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#wczygoidfd .gt_column_spanner_outer {
+#rplnnitmjc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -593,15 +617,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 4px;
 }
 
-#wczygoidfd .gt_column_spanner_outer:first-child {
+#rplnnitmjc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wczygoidfd .gt_column_spanner_outer:last-child {
+#rplnnitmjc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wczygoidfd .gt_column_spanner {
+#rplnnitmjc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -613,11 +637,11 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   width: 100%;
 }
 
-#wczygoidfd .gt_spanner_row {
+#rplnnitmjc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wczygoidfd .gt_group_heading {
+#rplnnitmjc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -643,7 +667,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   text-align: left;
 }
 
-#wczygoidfd .gt_empty_group_heading {
+#rplnnitmjc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -658,15 +682,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: middle;
 }
 
-#wczygoidfd .gt_from_md > :first-child {
+#rplnnitmjc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wczygoidfd .gt_from_md > :last-child {
+#rplnnitmjc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wczygoidfd .gt_row {
+#rplnnitmjc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -685,7 +709,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   overflow-x: hidden;
 }
 
-#wczygoidfd .gt_stub {
+#rplnnitmjc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -698,7 +722,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#wczygoidfd .gt_stub_row_group {
+#rplnnitmjc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -712,15 +736,15 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   vertical-align: top;
 }
 
-#wczygoidfd .gt_row_group_first td {
+#rplnnitmjc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wczygoidfd .gt_row_group_first th {
+#rplnnitmjc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wczygoidfd .gt_summary_row {
+#rplnnitmjc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -730,16 +754,16 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#wczygoidfd .gt_first_summary_row {
+#rplnnitmjc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_first_summary_row.thick {
+#rplnnitmjc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wczygoidfd .gt_last_summary_row {
+#rplnnitmjc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -749,7 +773,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_grand_summary_row {
+#rplnnitmjc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -759,7 +783,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#wczygoidfd .gt_first_grand_summary_row {
+#rplnnitmjc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -769,7 +793,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-top-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_last_grand_summary_row_top {
+#rplnnitmjc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -779,11 +803,11 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_striped {
+#rplnnitmjc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wczygoidfd .gt_table_body {
+#rplnnitmjc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -792,7 +816,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-bottom-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_footnotes {
+#rplnnitmjc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -806,7 +830,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_footnote {
+#rplnnitmjc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -815,7 +839,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#wczygoidfd .gt_sourcenotes {
+#rplnnitmjc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -829,7 +853,7 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   border-right-color: #D3D3D3;
 }
 
-#wczygoidfd .gt_sourcenote {
+#rplnnitmjc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -837,72 +861,72 @@ Tabela&nbsp;1: Matriz de Similaridade de Cosseno entre as 7 Obras de Machado de 
   padding-right: 5px;
 }
 
-#wczygoidfd .gt_left {
+#rplnnitmjc .gt_left {
   text-align: left;
 }
 
-#wczygoidfd .gt_center {
+#rplnnitmjc .gt_center {
   text-align: center;
 }
 
-#wczygoidfd .gt_right {
+#rplnnitmjc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wczygoidfd .gt_font_normal {
+#rplnnitmjc .gt_font_normal {
   font-weight: normal;
 }
 
-#wczygoidfd .gt_font_bold {
+#rplnnitmjc .gt_font_bold {
   font-weight: bold;
 }
 
-#wczygoidfd .gt_font_italic {
+#rplnnitmjc .gt_font_italic {
   font-style: italic;
 }
 
-#wczygoidfd .gt_super {
+#rplnnitmjc .gt_super {
   font-size: 65%;
 }
 
-#wczygoidfd .gt_footnote_marks {
+#rplnnitmjc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wczygoidfd .gt_asterisk {
+#rplnnitmjc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wczygoidfd .gt_indent_1 {
+#rplnnitmjc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wczygoidfd .gt_indent_2 {
+#rplnnitmjc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wczygoidfd .gt_indent_3 {
+#rplnnitmjc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wczygoidfd .gt_indent_4 {
+#rplnnitmjc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wczygoidfd .gt_indent_5 {
+#rplnnitmjc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wczygoidfd .katex-display {
+#rplnnitmjc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wczygoidfd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#rplnnitmjc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1090,23 +1114,23 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
 </figcaption>
 <div aria-describedby="tbl-diagnostico-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="nszizdyqij" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nszizdyqij table {
+<div id="fhumvezkpp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fhumvezkpp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nszizdyqij thead, #nszizdyqij tbody, #nszizdyqij tfoot, #nszizdyqij tr, #nszizdyqij td, #nszizdyqij th {
+#fhumvezkpp thead, #fhumvezkpp tbody, #fhumvezkpp tfoot, #fhumvezkpp tr, #fhumvezkpp td, #fhumvezkpp th {
   border-style: none;
 }
 
-#nszizdyqij p {
+#fhumvezkpp p {
   margin: 0;
   padding: 0;
 }
 
-#nszizdyqij .gt_table {
+#fhumvezkpp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1132,12 +1156,12 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-left-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_caption {
+#fhumvezkpp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nszizdyqij .gt_title {
+#fhumvezkpp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1149,7 +1173,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-width: 0;
 }
 
-#nszizdyqij .gt_subtitle {
+#fhumvezkpp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1161,7 +1185,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-top-width: 0;
 }
 
-#nszizdyqij .gt_heading {
+#fhumvezkpp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1173,13 +1197,13 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_bottom_border {
+#fhumvezkpp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_col_headings {
+#fhumvezkpp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1194,7 +1218,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_col_heading {
+#fhumvezkpp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1214,7 +1238,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   overflow-x: hidden;
 }
 
-#nszizdyqij .gt_column_spanner_outer {
+#fhumvezkpp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1226,15 +1250,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 4px;
 }
 
-#nszizdyqij .gt_column_spanner_outer:first-child {
+#fhumvezkpp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nszizdyqij .gt_column_spanner_outer:last-child {
+#fhumvezkpp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nszizdyqij .gt_column_spanner {
+#fhumvezkpp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1246,11 +1270,11 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   width: 100%;
 }
 
-#nszizdyqij .gt_spanner_row {
+#fhumvezkpp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nszizdyqij .gt_group_heading {
+#fhumvezkpp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1276,7 +1300,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   text-align: left;
 }
 
-#nszizdyqij .gt_empty_group_heading {
+#fhumvezkpp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1291,15 +1315,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   vertical-align: middle;
 }
 
-#nszizdyqij .gt_from_md > :first-child {
+#fhumvezkpp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nszizdyqij .gt_from_md > :last-child {
+#fhumvezkpp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nszizdyqij .gt_row {
+#fhumvezkpp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1318,7 +1342,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   overflow-x: hidden;
 }
 
-#nszizdyqij .gt_stub {
+#fhumvezkpp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1331,7 +1355,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#nszizdyqij .gt_stub_row_group {
+#fhumvezkpp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1345,15 +1369,15 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   vertical-align: top;
 }
 
-#nszizdyqij .gt_row_group_first td {
+#fhumvezkpp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nszizdyqij .gt_row_group_first th {
+#fhumvezkpp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nszizdyqij .gt_summary_row {
+#fhumvezkpp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1363,16 +1387,16 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#nszizdyqij .gt_first_summary_row {
+#fhumvezkpp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_first_summary_row.thick {
+#fhumvezkpp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nszizdyqij .gt_last_summary_row {
+#fhumvezkpp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1382,7 +1406,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_grand_summary_row {
+#fhumvezkpp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1392,7 +1416,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#nszizdyqij .gt_first_grand_summary_row {
+#fhumvezkpp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1402,7 +1426,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-top-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_last_grand_summary_row_top {
+#fhumvezkpp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1412,11 +1436,11 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_striped {
+#fhumvezkpp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nszizdyqij .gt_table_body {
+#fhumvezkpp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1425,7 +1449,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-bottom-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_footnotes {
+#fhumvezkpp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1439,7 +1463,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_footnote {
+#fhumvezkpp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1448,7 +1472,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#nszizdyqij .gt_sourcenotes {
+#fhumvezkpp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1462,7 +1486,7 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   border-right-color: #D3D3D3;
 }
 
-#nszizdyqij .gt_sourcenote {
+#fhumvezkpp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1470,72 +1494,72 @@ Tabela&nbsp;2: Diagnóstico Estatístico da Análise de Correspondência (Autova
   padding-right: 5px;
 }
 
-#nszizdyqij .gt_left {
+#fhumvezkpp .gt_left {
   text-align: left;
 }
 
-#nszizdyqij .gt_center {
+#fhumvezkpp .gt_center {
   text-align: center;
 }
 
-#nszizdyqij .gt_right {
+#fhumvezkpp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nszizdyqij .gt_font_normal {
+#fhumvezkpp .gt_font_normal {
   font-weight: normal;
 }
 
-#nszizdyqij .gt_font_bold {
+#fhumvezkpp .gt_font_bold {
   font-weight: bold;
 }
 
-#nszizdyqij .gt_font_italic {
+#fhumvezkpp .gt_font_italic {
   font-style: italic;
 }
 
-#nszizdyqij .gt_super {
+#fhumvezkpp .gt_super {
   font-size: 65%;
 }
 
-#nszizdyqij .gt_footnote_marks {
+#fhumvezkpp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nszizdyqij .gt_asterisk {
+#fhumvezkpp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nszizdyqij .gt_indent_1 {
+#fhumvezkpp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nszizdyqij .gt_indent_2 {
+#fhumvezkpp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nszizdyqij .gt_indent_3 {
+#fhumvezkpp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nszizdyqij .gt_indent_4 {
+#fhumvezkpp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nszizdyqij .gt_indent_5 {
+#fhumvezkpp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#nszizdyqij .katex-display {
+#fhumvezkpp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#nszizdyqij div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fhumvezkpp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1629,23 +1653,23 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
 </figcaption>
 <div aria-describedby="tbl-residuos-ca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="rigcbmtacl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rigcbmtacl table {
+<div id="xgdzkwzisk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xgdzkwzisk table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rigcbmtacl thead, #rigcbmtacl tbody, #rigcbmtacl tfoot, #rigcbmtacl tr, #rigcbmtacl td, #rigcbmtacl th {
+#xgdzkwzisk thead, #xgdzkwzisk tbody, #xgdzkwzisk tfoot, #xgdzkwzisk tr, #xgdzkwzisk td, #xgdzkwzisk th {
   border-style: none;
 }
 
-#rigcbmtacl p {
+#xgdzkwzisk p {
   margin: 0;
   padding: 0;
 }
 
-#rigcbmtacl .gt_table {
+#xgdzkwzisk .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1671,12 +1695,12 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-left-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_caption {
+#xgdzkwzisk .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rigcbmtacl .gt_title {
+#xgdzkwzisk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1688,7 +1712,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-width: 0;
 }
 
-#rigcbmtacl .gt_subtitle {
+#xgdzkwzisk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1700,7 +1724,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-top-width: 0;
 }
 
-#rigcbmtacl .gt_heading {
+#xgdzkwzisk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1712,13 +1736,13 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_bottom_border {
+#xgdzkwzisk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_col_headings {
+#xgdzkwzisk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1733,7 +1757,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_col_heading {
+#xgdzkwzisk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1753,7 +1777,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   overflow-x: hidden;
 }
 
-#rigcbmtacl .gt_column_spanner_outer {
+#xgdzkwzisk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1765,15 +1789,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 4px;
 }
 
-#rigcbmtacl .gt_column_spanner_outer:first-child {
+#xgdzkwzisk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rigcbmtacl .gt_column_spanner_outer:last-child {
+#xgdzkwzisk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rigcbmtacl .gt_column_spanner {
+#xgdzkwzisk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1785,11 +1809,11 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   width: 100%;
 }
 
-#rigcbmtacl .gt_spanner_row {
+#xgdzkwzisk .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rigcbmtacl .gt_group_heading {
+#xgdzkwzisk .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1815,7 +1839,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   text-align: left;
 }
 
-#rigcbmtacl .gt_empty_group_heading {
+#xgdzkwzisk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1830,15 +1854,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   vertical-align: middle;
 }
 
-#rigcbmtacl .gt_from_md > :first-child {
+#xgdzkwzisk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rigcbmtacl .gt_from_md > :last-child {
+#xgdzkwzisk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rigcbmtacl .gt_row {
+#xgdzkwzisk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1857,7 +1881,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   overflow-x: hidden;
 }
 
-#rigcbmtacl .gt_stub {
+#xgdzkwzisk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1870,7 +1894,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rigcbmtacl .gt_stub_row_group {
+#xgdzkwzisk .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1884,15 +1908,15 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   vertical-align: top;
 }
 
-#rigcbmtacl .gt_row_group_first td {
+#xgdzkwzisk .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rigcbmtacl .gt_row_group_first th {
+#xgdzkwzisk .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rigcbmtacl .gt_summary_row {
+#xgdzkwzisk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1902,16 +1926,16 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rigcbmtacl .gt_first_summary_row {
+#xgdzkwzisk .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_first_summary_row.thick {
+#xgdzkwzisk .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rigcbmtacl .gt_last_summary_row {
+#xgdzkwzisk .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1921,7 +1945,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_grand_summary_row {
+#xgdzkwzisk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1931,7 +1955,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rigcbmtacl .gt_first_grand_summary_row {
+#xgdzkwzisk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1941,7 +1965,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-top-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_last_grand_summary_row_top {
+#xgdzkwzisk .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1951,11 +1975,11 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_striped {
+#xgdzkwzisk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rigcbmtacl .gt_table_body {
+#xgdzkwzisk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1964,7 +1988,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-bottom-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_footnotes {
+#xgdzkwzisk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1978,7 +2002,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_footnote {
+#xgdzkwzisk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1987,7 +2011,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rigcbmtacl .gt_sourcenotes {
+#xgdzkwzisk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2001,7 +2025,7 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   border-right-color: #D3D3D3;
 }
 
-#rigcbmtacl .gt_sourcenote {
+#xgdzkwzisk .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2009,72 +2033,72 @@ Tabela&nbsp;3: Maiores Resíduos Padronizados Positivos por Obra na Matriz de Co
   padding-right: 5px;
 }
 
-#rigcbmtacl .gt_left {
+#xgdzkwzisk .gt_left {
   text-align: left;
 }
 
-#rigcbmtacl .gt_center {
+#xgdzkwzisk .gt_center {
   text-align: center;
 }
 
-#rigcbmtacl .gt_right {
+#xgdzkwzisk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rigcbmtacl .gt_font_normal {
+#xgdzkwzisk .gt_font_normal {
   font-weight: normal;
 }
 
-#rigcbmtacl .gt_font_bold {
+#xgdzkwzisk .gt_font_bold {
   font-weight: bold;
 }
 
-#rigcbmtacl .gt_font_italic {
+#xgdzkwzisk .gt_font_italic {
   font-style: italic;
 }
 
-#rigcbmtacl .gt_super {
+#xgdzkwzisk .gt_super {
   font-size: 65%;
 }
 
-#rigcbmtacl .gt_footnote_marks {
+#xgdzkwzisk .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rigcbmtacl .gt_asterisk {
+#xgdzkwzisk .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rigcbmtacl .gt_indent_1 {
+#xgdzkwzisk .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rigcbmtacl .gt_indent_2 {
+#xgdzkwzisk .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rigcbmtacl .gt_indent_3 {
+#xgdzkwzisk .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rigcbmtacl .gt_indent_4 {
+#xgdzkwzisk .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rigcbmtacl .gt_indent_5 {
+#xgdzkwzisk .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rigcbmtacl .katex-display {
+#xgdzkwzisk .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rigcbmtacl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xgdzkwzisk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3534,13 +3558,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./analise-sentimento.html" class="pagination-link" aria-label="5. Análise de Sentimentos">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">5. Análise de Sentimentos</span>
+      <a href="./analise-sentimento.html" class="pagination-link" aria-label="5. **Sentimentos**">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">5. <strong>Sentimentos</strong></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./referencias.html" class="pagination-link" aria-label="7. Referências">
-        <span class="nav-page-text">7. Referências</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./referencias.html" class="pagination-link" aria-label="7. **Referências**">
+        <span class="nav-page-text">7. <strong>Referências</strong></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -3548,7 +3572,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 VALENTE, M. D. R.</p>
+<p>© 2026 VALENTE, M. D. R. • DETRAN-PA / RENAEST</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
@@ -3558,7 +3582,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

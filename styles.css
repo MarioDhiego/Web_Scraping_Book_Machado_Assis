@@ -70,3 +70,20 @@ a:focus-visible, button:focus-visible {
   outline: 3px solid var(--cor-okabe-ambar);
   outline-offset: 2px;
 }
+
+
+/* Estilização da imagem na barra lateral esquerda */
+.sidebar-logo {
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  margin-bottom: 0.75rem;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+
+
+
+
+
+

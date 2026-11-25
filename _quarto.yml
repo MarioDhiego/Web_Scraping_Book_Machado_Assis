@@ -1,57 +1,91 @@
 project:
   type: website
   output-dir: docs
-
+  
 website:
-  title: "Curso Básico de Mineração de Texto em R"
+  title: "WEB SCRAPING AND TEXT MINING IN LANGUAGE $R_{4.6}$"
+  favicon: images/obras-machado-corpus.jpg
   site-url: "https://mariodhiego.github.io/Web_Scraping_Book_Machado_Assis/"
   repo-url: "https://github.com/MarioDhiego/Web_Scraping_Book_Machado_Assis"
   repo-actions: [source, issue]
-  open-graph: true
+  open-graph:
+    image: images/obras-machado-corpus.jpg
+    description: "Estudo de caso em Text Mining, Web Scraping, Análise de Sentimentos e Modelagem Inferencial nas obras completas de Machado de Assis em R."
   search: true
   page-navigation: true
   back-to-top-navigation: true
+  bread-crumbs: true
+  reader-mode: true
+ # announcement:
+#    icon: mortarboard-fill
+ #   dismissable: true
+  #  content: "**Acesse a [**Apostila Completa em PDF**]{target=_blank} ou baixe o corpus** estruturado."
+  #  type: primary
+  #  position: below-navbar
   navbar:
     background: primary
+    pinned: true
     right:
       - icon: file-earmark-pdf-fill
-        text: "Apostila(PDF)"
+        text: "Apostila"
         href: resumo-curso-text-mining.pdf
         target: _blank
-      - icon: github
-        href: https://github.com/MarioDhiego
-        aria-label: GitHub
-      - icon: linkedin
-        href: https://www.linkedin.com/in/mário-diego/
-        aria-label: LinkedIn
-      - icon: instagram
-        href: https://instagram.com/Dhiego_Valente
-        aria-label: Instagram
-      - icon: envelope
-        href: mailto:mario.valente@detran.pa.gov.br
-        aria-label: E-mail
+      - icon: database-fill-down
+        text: "Dataset"
+        href: machado_wikisource_completo.rds
+        target: _blank
+     # - icon: github
+    #    href: https://github.com/MarioDhiego
+    #    aria-label: GitHub
+    #  - icon: linkedin
+    #    href: https://www.linkedin.com/in/mário-diego/
+    #    aria-label: LinkedIn
+    #  - icon: instagram
+    #    href: https://instagram.com/Dhiego_Valente
+    #    aria-label: Instagram
+    #  - icon: envelope
+     #   href: mailto:mario.valente@detran.pa.gov.br
+     #   aria-label: E-mail
   sidebar:
+    logo: images/obras-machado-corpus.jpg
     style: "docked"
     search: true
-    collapse-level: 2
+    collapse-level: 3
+    tools:
+      - icon: github
+        href: https://github.com/MarioDhiego
+        text: "GitHub"
+      - icon: linkedin
+        href: https://www.linkedin.com/in/mário-diego/
+        text: "LinkedIn"
+      - icon: instagram
+        href: https://instagram.com/Dhiego_Valente
+        text: "Instagram"
     contents:
       - href: index.qmd
-        text: "1. Dataset"
+        text: "1. **Dataset**"
       - href: scraping-metodologia.qmd
-        text: "2. Web Scraping"
+        text: "2. **Web Scraping**"
       - href: metricas-teoria.qmd
-        text: "3. Métricas Estatísticas"
+        text: "3. **Métricas Estatísticas**"
       - href: resultados-descritivos.qmd
-        text: "4. Análise Descritiva"
+        text: "4. **Análise Descritiva**"
       - href: analise-sentimento.qmd
-        text: "5. Análise de Sentimentos"
+        text: "5. **Sentimentos**"
       - href: modelagem-avancada.qmd
-        text: "6. Análise Inferencial"
+        text: "6. **Análise Inferencial**"
       - href: referencias.qmd
-        text: "7. Referências"
-        
+        text: "7. **Referências**"
+      - section: "**Downloads**"
+        contents:
+          - href: resumo-curso-text-mining.pdf
+            text: "Apostila (PDF)"
+            target: _blank
+          - href: machado_wikisource_completo.rds
+            text: "Dataset Corpus (.rds)"
+            target: _blank
   page-footer:
-    left: "© 2026 VALENTE, M. D. R."
+    left: "© 2026 VALENTE, M. D. R. • DETRAN-PA / RENAEST"
     right: 'Desenvolvido com [<i class="bi bi-github"></i> GitHub](https://github.com/MarioDhiego){target=_blank}, [<i class="bi bi-code-slash"></i> R](https://www.r-project.org/about.html){target=_blank} e [Quarto](https://quarto.org/){target=_blank}'
 
 format:
@@ -72,3 +106,7 @@ format:
     code-overflow: wrap
     link-external-newwindow: true
     lang: pt-BR
+    
+    
+    
+    

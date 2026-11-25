@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análise de Sentimentos – Curso Básico de Mineração de Texto em R</title>
+<title>Análise de Sentimentos – WEB SCRAPING AND TEXT MINING IN LANGUAGE \(R_{4.6}\)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -66,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./modelagem-avancada.html" rel="next">
 <link href="./resultados-descritivos.html" rel="prev">
+<link href="./images/obras-machado-corpus.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -140,9 +140,10 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Análise de Sentimentos – Curso Básico de Mineração de Texto em R">
-<meta property="og:description" content="Trajetória emocional longitudinal (OpLexicon v3.0), volatilidade dramática e polaridade vocabular">
-<meta property="og:site_name" content="Curso Básico de Mineração de Texto em R">
+<meta property="og:title" content="Análise de Sentimentos – WEB SCRAPING AND TEXT MINING IN LANGUAGE \(R_{4.6}\)">
+<meta property="og:description" content="Estudo de caso em Text Mining, Web Scraping, Análise de Sentimentos e Modelagem Inferencial nas obras completas de Machado de Assis em R.">
+<meta property="og:image" content="https://mariodhiego.github.io/Web_Scraping_Book_Machado_Assis/images/obras-machado-corpus.jpg">
+<meta property="og:site_name" content="WEB SCRAPING AND TEXT MINING IN LANGUAGE $R_{4.6}$">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -153,7 +154,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Curso Básico de Mineração de Texto em R</span>
+    <span class="navbar-title">WEB SCRAPING AND TEXT MINING IN LANGUAGE <span class="math inline">\(R_{4.6}\)</span></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -163,34 +164,24 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./resumo-curso-text-mining.pdf" target="_blank"> <i class="bi bi-file-earmark-pdf-fill" role="img">
+    <a class="nav-link active" href="./resumo-curso-text-mining.pdf" target="_blank" aria-current="page"> <i class="bi bi-file-earmark-pdf-fill" role="img">
 </i> 
-<span class="menu-text">Apostila(PDF)</span></a>
+<span class="menu-text">Apostila</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img" aria-label="GitHub">
+  <li class="nav-item">
+    <a class="nav-link" href="./machado_wikisource_completo.rds" target="_blank"> <i class="bi bi-database-fill-down" role="img">
 </i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/mário-diego/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://instagram.com/Dhiego_Valente"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="mailto:mario.valente@detran.pa.gov.br"> <i class="bi bi-envelope" role="img" aria-label="E-mail">
-</i> 
-<span class="menu-text"></span></a>
+<span class="menu-text">Dataset</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -199,7 +190,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analise-sentimento.html">5. Análise de Sentimentos</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analise-sentimento.html">5. <strong>Sentimentos</strong></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -212,6 +203,16 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/obras-machado-corpus.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/MarioDhiego" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://www.linkedin.com/in/mário-diego/" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="https://instagram.com/Dhiego_Valente" title="Instagram" class="quarto-navigation-tool px-1" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+</div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
@@ -222,45 +223,68 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Dataset</span></a>
+ <span class="menu-text">1. <strong>Dataset</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./scraping-metodologia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Web Scraping</span></a>
+ <span class="menu-text">2. <strong>Web Scraping</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./metricas-teoria.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Métricas Estatísticas</span></a>
+ <span class="menu-text">3. <strong>Métricas Estatísticas</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./resultados-descritivos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. Análise Descritiva</span></a>
+ <span class="menu-text">4. <strong>Análise Descritiva</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./analise-sentimento.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">5. Análise de Sentimentos</span></a>
+ <span class="menu-text">5. <strong>Sentimentos</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modelagem-avancada.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. Análise Inferencial</span></a>
+ <span class="menu-text">6. <strong>Análise Inferencial</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./referencias.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">7. Referências</span></a>
+ <span class="menu-text">7. <strong>Referências</strong></span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Downloads</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resumo-curso-text-mining.pdf" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Apostila (PDF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./machado_wikisource_completo.rds" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Dataset Corpus (.rds)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -356,23 +380,23 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
 </figcaption>
 <div aria-describedby="tbl-sentimentos-geral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="ecwsxrngdq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ecwsxrngdq table {
+<div id="syoxdeaapy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#syoxdeaapy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ecwsxrngdq thead, #ecwsxrngdq tbody, #ecwsxrngdq tfoot, #ecwsxrngdq tr, #ecwsxrngdq td, #ecwsxrngdq th {
+#syoxdeaapy thead, #syoxdeaapy tbody, #syoxdeaapy tfoot, #syoxdeaapy tr, #syoxdeaapy td, #syoxdeaapy th {
   border-style: none;
 }
 
-#ecwsxrngdq p {
+#syoxdeaapy p {
   margin: 0;
   padding: 0;
 }
 
-#ecwsxrngdq .gt_table {
+#syoxdeaapy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -398,12 +422,12 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-left-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_caption {
+#syoxdeaapy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ecwsxrngdq .gt_title {
+#syoxdeaapy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -415,7 +439,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-width: 0;
 }
 
-#ecwsxrngdq .gt_subtitle {
+#syoxdeaapy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -427,7 +451,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-top-width: 0;
 }
 
-#ecwsxrngdq .gt_heading {
+#syoxdeaapy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -439,13 +463,13 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_bottom_border {
+#syoxdeaapy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_col_headings {
+#syoxdeaapy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -460,7 +484,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_col_heading {
+#syoxdeaapy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -480,7 +504,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   overflow-x: hidden;
 }
 
-#ecwsxrngdq .gt_column_spanner_outer {
+#syoxdeaapy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -492,15 +516,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 4px;
 }
 
-#ecwsxrngdq .gt_column_spanner_outer:first-child {
+#syoxdeaapy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ecwsxrngdq .gt_column_spanner_outer:last-child {
+#syoxdeaapy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ecwsxrngdq .gt_column_spanner {
+#syoxdeaapy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -512,11 +536,11 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   width: 100%;
 }
 
-#ecwsxrngdq .gt_spanner_row {
+#syoxdeaapy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ecwsxrngdq .gt_group_heading {
+#syoxdeaapy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -542,7 +566,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   text-align: left;
 }
 
-#ecwsxrngdq .gt_empty_group_heading {
+#syoxdeaapy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -557,15 +581,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   vertical-align: middle;
 }
 
-#ecwsxrngdq .gt_from_md > :first-child {
+#syoxdeaapy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ecwsxrngdq .gt_from_md > :last-child {
+#syoxdeaapy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ecwsxrngdq .gt_row {
+#syoxdeaapy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -584,7 +608,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   overflow-x: hidden;
 }
 
-#ecwsxrngdq .gt_stub {
+#syoxdeaapy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -597,7 +621,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ecwsxrngdq .gt_stub_row_group {
+#syoxdeaapy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -611,15 +635,15 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   vertical-align: top;
 }
 
-#ecwsxrngdq .gt_row_group_first td {
+#syoxdeaapy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ecwsxrngdq .gt_row_group_first th {
+#syoxdeaapy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ecwsxrngdq .gt_summary_row {
+#syoxdeaapy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -629,16 +653,16 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ecwsxrngdq .gt_first_summary_row {
+#syoxdeaapy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_first_summary_row.thick {
+#syoxdeaapy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ecwsxrngdq .gt_last_summary_row {
+#syoxdeaapy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -648,7 +672,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_grand_summary_row {
+#syoxdeaapy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -658,7 +682,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ecwsxrngdq .gt_first_grand_summary_row {
+#syoxdeaapy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -668,7 +692,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-top-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_last_grand_summary_row_top {
+#syoxdeaapy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -678,11 +702,11 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_striped {
+#syoxdeaapy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ecwsxrngdq .gt_table_body {
+#syoxdeaapy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -691,7 +715,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-bottom-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_footnotes {
+#syoxdeaapy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -705,7 +729,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_footnote {
+#syoxdeaapy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -714,7 +738,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ecwsxrngdq .gt_sourcenotes {
+#syoxdeaapy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -728,7 +752,7 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   border-right-color: #D3D3D3;
 }
 
-#ecwsxrngdq .gt_sourcenote {
+#syoxdeaapy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -736,72 +760,72 @@ Tabela&nbsp;1: Resumo Estatístico da Polaridade Emocional por Obra (OpLexicon v
   padding-right: 5px;
 }
 
-#ecwsxrngdq .gt_left {
+#syoxdeaapy .gt_left {
   text-align: left;
 }
 
-#ecwsxrngdq .gt_center {
+#syoxdeaapy .gt_center {
   text-align: center;
 }
 
-#ecwsxrngdq .gt_right {
+#syoxdeaapy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ecwsxrngdq .gt_font_normal {
+#syoxdeaapy .gt_font_normal {
   font-weight: normal;
 }
 
-#ecwsxrngdq .gt_font_bold {
+#syoxdeaapy .gt_font_bold {
   font-weight: bold;
 }
 
-#ecwsxrngdq .gt_font_italic {
+#syoxdeaapy .gt_font_italic {
   font-style: italic;
 }
 
-#ecwsxrngdq .gt_super {
+#syoxdeaapy .gt_super {
   font-size: 65%;
 }
 
-#ecwsxrngdq .gt_footnote_marks {
+#syoxdeaapy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ecwsxrngdq .gt_asterisk {
+#syoxdeaapy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ecwsxrngdq .gt_indent_1 {
+#syoxdeaapy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ecwsxrngdq .gt_indent_2 {
+#syoxdeaapy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ecwsxrngdq .gt_indent_3 {
+#syoxdeaapy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ecwsxrngdq .gt_indent_4 {
+#syoxdeaapy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ecwsxrngdq .gt_indent_5 {
+#syoxdeaapy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ecwsxrngdq .katex-display {
+#syoxdeaapy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ecwsxrngdq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#syoxdeaapy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1693,13 +1717,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./resultados-descritivos.html" class="pagination-link" aria-label="4. Análise Descritiva">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4. Análise Descritiva</span>
+      <a href="./resultados-descritivos.html" class="pagination-link" aria-label="4. **Análise Descritiva**">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4. <strong>Análise Descritiva</strong></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./modelagem-avancada.html" class="pagination-link" aria-label="6. Análise Inferencial">
-        <span class="nav-page-text">6. Análise Inferencial</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./modelagem-avancada.html" class="pagination-link" aria-label="6. **Análise Inferencial**">
+        <span class="nav-page-text">6. <strong>Análise Inferencial</strong></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1707,7 +1731,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 VALENTE, M. D. R.</p>
+<p>© 2026 VALENTE, M. D. R. • DETRAN-PA / RENAEST</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
@@ -1717,7 +1741,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

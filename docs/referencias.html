@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Referências Bibliográficas – Curso Básico de Mineração de Texto em R</title>
+<title>Referências Bibliográficas – WEB SCRAPING AND TEXT MINING IN LANGUAGE \(R_{4.6}\)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,13 +24,14 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./resumo-curso-text-mining.pdf" rel="next">
 <link href="./modelagem-avancada.html" rel="prev">
+<link href="./images/obras-machado-corpus.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -71,11 +72,41 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Referências Bibliográficas – Curso Básico de Mineração de Texto em R">
-<meta property="og:description" content="Fontes primárias, crítica literária, fundamentação estatística e ecossistema R (ABNT NBR 6023)">
-<meta property="og:site_name" content="Curso Básico de Mineração de Texto em R">
+<meta property="og:title" content="Referências Bibliográficas – WEB SCRAPING AND TEXT MINING IN LANGUAGE \(R_{4.6}\)">
+<meta property="og:description" content="Estudo de caso em Text Mining, Web Scraping, Análise de Sentimentos e Modelagem Inferencial nas obras completas de Machado de Assis em R.">
+<meta property="og:image" content="https://mariodhiego.github.io/Web_Scraping_Book_Machado_Assis/images/obras-machado-corpus.jpg">
+<meta property="og:site_name" content="WEB SCRAPING AND TEXT MINING IN LANGUAGE $R_{4.6}$">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -86,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Curso Básico de Mineração de Texto em R</span>
+    <span class="navbar-title">WEB SCRAPING AND TEXT MINING IN LANGUAGE <span class="math inline">\(R_{4.6}\)</span></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Procurar"></div>
@@ -96,34 +127,24 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./resumo-curso-text-mining.pdf" target="_blank"> <i class="bi bi-file-earmark-pdf-fill" role="img">
+    <a class="nav-link active" href="./resumo-curso-text-mining.pdf" target="_blank" aria-current="page"> <i class="bi bi-file-earmark-pdf-fill" role="img">
 </i> 
-<span class="menu-text">Apostila(PDF)</span></a>
+<span class="menu-text">Apostila</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/MarioDhiego"> <i class="bi bi-github" role="img" aria-label="GitHub">
+  <li class="nav-item">
+    <a class="nav-link" href="./machado_wikisource_completo.rds" target="_blank"> <i class="bi bi-database-fill-down" role="img">
 </i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/mário-diego/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://instagram.com/Dhiego_Valente"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="mailto:mario.valente@detran.pa.gov.br"> <i class="bi bi-envelope" role="img" aria-label="E-mail">
-</i> 
-<span class="menu-text"></span></a>
+<span class="menu-text">Dataset</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -132,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./referencias.html">7. Referências</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./referencias.html">7. <strong>Referências</strong></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -145,6 +166,16 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/obras-machado-corpus.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/MarioDhiego" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://www.linkedin.com/in/mário-diego/" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="https://instagram.com/Dhiego_Valente" title="Instagram" class="quarto-navigation-tool px-1" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+</div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
@@ -155,45 +186,68 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Dataset</span></a>
+ <span class="menu-text">1. <strong>Dataset</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./scraping-metodologia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Web Scraping</span></a>
+ <span class="menu-text">2. <strong>Web Scraping</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./metricas-teoria.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Métricas Estatísticas</span></a>
+ <span class="menu-text">3. <strong>Métricas Estatísticas</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./resultados-descritivos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. Análise Descritiva</span></a>
+ <span class="menu-text">4. <strong>Análise Descritiva</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./analise-sentimento.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. Análise de Sentimentos</span></a>
+ <span class="menu-text">5. <strong>Sentimentos</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modelagem-avancada.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. Análise Inferencial</span></a>
+ <span class="menu-text">6. <strong>Análise Inferencial</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./referencias.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">7. Referências</span></a>
+ <span class="menu-text">7. <strong>Referências</strong></span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Downloads</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resumo-curso-text-mining.pdf" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Apostila (PDF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./machado_wikisource_completo.rds" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Dataset Corpus (.rds)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -217,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Referências Bibliográficas</h1>
-<p class="subtitle lead">Fontes primárias, crítica literária, fundamentação estatística e ecossistema R (ABNT NBR 6023)</p>
+<p class="subtitle lead">Fontes Primárias, Fundamentação Estatística e Linguagem R (ABNT NBR 6023)</p>
 </div>
 
 
@@ -234,14 +288,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Como citar este material didático (ABNT NBR 6023):</strong><br>
-VALENTE, Mario Diego Rocha. <strong>Curso Básico de Mineração de Texto: Estudo de Caso nas Obras Completas de Machado de Assis em Linguagem R</strong>. Belém: DETRAN-PA / RENAEST, 2026. Disponível em: <a href="https://github.com/MarioDhiego" class="uri">https://github.com/MarioDhiego</a>. Acesso em: 23 nov. 2026.</p>
+VALENTE, Mario Diego Rocha. <strong>Curso Básico de Mineração de Texto: Estudo de Caso nas Obras Completas de Machado de Assis em Linguagem R</strong>. Belém: DETRAN-PA, 2026. Disponível em: <a href="https://github.com/MarioDhiego" class="uri">https://github.com/MarioDhiego</a>. Acesso em: 25 nov. 2026.</p>
 </div>
 </div>
 </div>
@@ -926,18 +980,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./modelagem-avancada.html" class="pagination-link" aria-label="6. Análise Inferencial">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">6. Análise Inferencial</span>
+      <a href="./modelagem-avancada.html" class="pagination-link" aria-label="6. **Análise Inferencial**">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">6. <strong>Análise Inferencial</strong></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./resumo-curso-text-mining.pdf" class="pagination-link" aria-label="Apostila (PDF)">
+        <span class="nav-page-text">Apostila (PDF)</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 VALENTE, M. D. R.</p>
+<p>© 2026 VALENTE, M. D. R. • DETRAN-PA / RENAEST</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

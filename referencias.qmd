@@ -1,12 +1,12 @@
 ---
 title: "Referências Bibliográficas"
-subtitle: "Fontes primárias, crítica literária, fundamentação estatística e ecossistema R (ABNT NBR 6023)"
+subtitle: "Fontes Primárias, Fundamentação Estatística e Linguagem R (ABNT NBR 6023)"
 title-block-banner: false
 ---
 
-::: {.callout-tip appearance="minimal"}
+::: {.callout-note appearance="minimal"}
 **Como citar este material didático (ABNT NBR 6023):**  
-VALENTE, Mario Diego Rocha. **Curso Básico de Mineração de Texto: Estudo de Caso nas Obras Completas de Machado de Assis em Linguagem R**. Belém: DETRAN-PA / RENAEST, 2026. Disponível em: <https://github.com/MarioDhiego>. Acesso em: 23 nov. 2026.
+VALENTE, Mario Diego Rocha. **Curso Básico de Mineração de Texto: Estudo de Caso nas Obras Completas de Machado de Assis em Linguagem R**. Belém: DETRAN-PA, 2026. Disponível em: <https://github.com/MarioDhiego>. Acesso em: 25 nov. 2026.
 :::
 
 ------------------------------------------------------------------------

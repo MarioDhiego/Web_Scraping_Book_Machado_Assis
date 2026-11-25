@@ -1,12 +1,12 @@
 ---
-title: "Mineração de Texto"
-subtitle: "Estudo de Caso (Machado de Assis)"
+title: "Estudo de Caso (Machado de Assis)"
+subtitle: ""
 author:
-  - name: Mario Diego Rocha Valente
+  - name: MÁRIO DIEGO ROCHA VALENTE
     email: mario.valente@detran.pa.gov.br
     orcid: 0000-0001-7262-3336
     affiliations:
-      - name: DETRAN-PA
+      - name: DETRAN-PA/UFPA
         department: RENAEST
 title-block-banner: false
 ---
