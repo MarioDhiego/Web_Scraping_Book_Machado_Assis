@@ -409,6 +409,137 @@ VALENTE, Mario Diego Rocha. <strong>Curso Básico de Mineração de Texto: Estud
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> De volta ao topo</a></main> <!-- /main -->
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const namespace = "mariodhiego-machado-textmining-2026";
+
+  const key = "apostila-pdf-downloads";
+
+
+
+  // Localiza todos os links que apontam para o PDF (barra superior, sidebar ou botões)
+
+  const linksPdf = document.querySelectorAll('a[href*="resumo-curso-text-mining.pdf"]');
+
+  if (linksPdf.length === 0) return;
+
+
+
+  // Cria o selo numérico ao lado de cada link do PDF
+
+  const badges = [];
+
+  linksPdf.forEach(link => {
+
+    // Evita duplicar se já existir
+
+    if (!link.querySelector(".contador-pdf-badge")) {
+
+      const span = document.createElement("span");
+
+      span.className = "contador-pdf-badge badge rounded-pill bg-warning text-dark ms-1";
+
+      span.style.fontSize = "0.75em";
+
+      span.style.fontWeight = "700";
+
+      span.textContent = "0";
+
+      link.appendChild(span);
+
+      badges.push(span);
+
+    }
+
+  });
+
+
+
+  function atualizarBadges(valor) {
+
+    badges.forEach(b => {
+
+      b.textContent = valor;
+
+    });
+
+  }
+
+
+
+  // 1. Busca o valor atual (usando endpoint de leitura segura)
+
+  fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/`)
+
+    .then(res => {
+
+      if (!res.ok) throw new Error("Chave ainda não iniciada");
+
+      return res.json();
+
+    })
+
+    .then(data => {
+
+      if (data && typeof data.count === "number") {
+
+        atualizarBadges(data.count);
+
+      }
+
+    })
+
+    .catch(() => {
+
+      // Se for o primeiro acesso antes do 1º clique, mantém "0"
+
+      atualizarBadges(0);
+
+    });
+
+
+
+  // 2. Soma +1 e atualiza o número imediatamente ao clicar para baixar
+
+  linksPdf.forEach(link => {
+
+    link.addEventListener("click", function () {
+
+      // Atualiza visualmente na hora para feedback imediato
+
+      const atual = parseInt(badges[0]?.textContent || "0", 10) || 0;
+
+      atualizarBadges(atual + 1);
+
+
+
+      // Registra no servidor
+
+      fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
+
+        .then(res => res.json())
+
+        .then(data => {
+
+          if (data && typeof data.count === "number") {
+
+            atualizarBadges(data.count);
+
+          }
+
+        })
+
+        .catch(err => console.warn("Contador offline:", err));
+
+    });
+
+  });
+
+});
+
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

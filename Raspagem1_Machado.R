@@ -1,0 +1,566 @@
+# ==============================================================================
+# PROJETO: WEB SCRAPING (WININET) E TEXT MINING - MACHADO DE ASSIS (7 LIVROS)
+# Pipeline Completo: Coleta, Limpeza, Léxico, TF-IDF, N-gramas, Sentimento e Clusters
+# Baseado na arquitetura de Sillas Gonzaga (pacote literaturaBR)
+# ==============================================================================
+
+library(tidyverse)
+library(rvest)
+library(tidytext)
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(lexiconPT)
+library(scales)
+library(wordcloud)
+library(reshape2)
+
+theme_set(theme_minimal(base_size = 12))
+
+# ==============================================================================
+# ETAPA 0: CONFIGURAÇÃO DE REDE E LEITURA HTML NATIVA DO WINDOWS (WININET)
+# ==============================================================================
+proxy_sistema <- tryCatch(curl::ie_get_proxy_for_url("https://pt.wikisource.org"),
+                          error = function(e) NA)
+if (!is.na(proxy_sistema) && proxy_sistema != "") {
+  Sys.setenv(https_proxy = proxy_sistema, http_proxy = proxy_sistema)
+}
+
+ler_html_wininet <- function(url) {
+  arquivo_temp <- tempfile(fileext = ".html")
+  
+  status <- tryCatch(
+    suppressWarnings(
+      download.file(url, destfile = arquivo_temp, method = "wininet", quiet = TRUE)
+    ),
+    error = function(e) return(1)
+  )
+  
+  if (status != 0 || !file.exists(arquivo_temp)) return(NULL)
+  
+  pagina <- tryCatch(read_html(arquivo_temp, encoding = "UTF-8"), error = function(e) NULL)
+  unlink(arquivo_temp)
+  return(pagina)
+}
+
+# ==============================================================================
+# ETAPA 1: FUNÇÕES DE WEB SCRAPING DO WIKISOURCE
+# ==============================================================================
+extrair_texto_pagina <- function(url_pagina) {
+  Sys.sleep(0.25) # Pausa ética para evitar bloqueio do servidor
+  
+  pagina <- ler_html_wininet(url_pagina)
+  if (is.null(pagina)) {
+    return(tibble(url = url_pagina, paragraph_number = NA_integer_, text = NA_character_))
+  }
+  
+  paragrafos <- pagina %>%
+    html_elements("#mw-content-text .mw-parser-output p") %>%
+    html_text2() %>%
+    str_remove_all("\\[\\d+\\]") %>%
+    str_squish()
+  
+  paragrafos <- paragrafos[paragrafos != "" & nchar(paragrafos) > 1]
+  
+  if (length(paragrafos) == 0) {
+    return(tibble(url = url_pagina, paragraph_number = NA_integer_, text = NA_character_))
+  }
+  
+  tibble(
+    url = url_pagina,
+    paragraph_number = seq_along(paragrafos),
+    text = paragrafos
+  )
+}
+
+extrair_livro_wikisource <- function(url_livro) {
+  message("Iniciando raspagem: ", url_livro)
+  html_principal <- ler_html_wininet(url_livro)
+  
+  if (is.null(html_principal)) {
+    warning("Não foi possível acessar: ", url_livro)
+    return(NULL)
+  }
+  
+  titulo_livro <- html_principal %>%
+    html_element("#firstHeading") %>%
+    html_text2()
+  
+  links_elementos <- html_principal %>%
+    html_elements("#mw-content-text a")
+  
+  hrefs <- html_attr(links_elementos, "href")
+  nomes_cap <- html_text2(links_elementos)
+  
+  hrefs_completos <- ifelse(
+    !is.na(hrefs) & str_starts(hrefs, "/wiki/"),
+    paste0("https://pt.wikisource.org", hrefs),
+    hrefs
+  )
+  
+  prefixo_decodificado <- URLdecode(paste0(url_livro, "/"))
+  hrefs_decodificados <- URLdecode(hrefs_completos)
+  
+  filtro <- !is.na(hrefs_decodificados) &
+    str_starts(hrefs_decodificados, fixed(prefixo_decodificado)) &
+    !str_detect(hrefs_decodificados, "#|\\?|Índice|Capa|Ficha")
+  
+  if (sum(filtro) > 0) {
+    df_urls <- tibble(
+      book_name = titulo_livro,
+      chapter_name = nomes_cap[filtro],
+      url = hrefs_completos[filtro]
+    ) %>%
+      filter(chapter_name != "", !str_detect(chapter_name, "^(Anterior|Próximo|Índice)$")) %>%
+      distinct(url, .keep_all = TRUE)
+    
+    message(" -> Encontrados ", nrow(df_urls), " capítulos. Baixando textos...")
+    
+    df_textos <- map_dfr(df_urls$url, extrair_texto_pagina)
+    df_final <- left_join(df_urls, df_textos, by = "url")
+    
+  } else {
+    message(" -> Obra em página única. Extraindo texto integral...")
+    df_textos <- extrair_texto_pagina(url_livro)
+    df_final <- df_textos %>%
+      mutate(book_name = titulo_livro, chapter_name = "Texto Único") %>%
+      select(book_name, chapter_name, url, paragraph_number, text)
+  }
+  
+  return(df_final)
+}
+
+# ==============================================================================
+# ETAPA 2: EXECUÇÃO DA RASPAGEM (SOMENTE OS 7 LIVROS COMPLETOS)
+# ==============================================================================
+arquivo_cache <- "machado_wikisource_completo.rds"
+
+urls_machado <- c(
+  "https://pt.wikisource.org/wiki/Dom_Casmurro",
+  "https://pt.wikisource.org/wiki/Mem%C3%B3rias_P%C3%B3stumas_de_Br%C3%A1s_Cubas",
+  "https://pt.wikisource.org/wiki/Quincas_Borba",
+  "https://pt.wikisource.org/wiki/O_Alienista",
+  "https://pt.wikisource.org/wiki/Helena",
+  "https://pt.wikisource.org/wiki/Memorial_de_Aires",
+  "https://pt.wikisource.org/wiki/Esa%C3%BA_e_Jac%C3%B3"
+)
+
+if (file.exists(arquivo_cache)) {
+  message("Carregando dados locais de '", arquivo_cache, "'...")
+  df_livros_bruto <- readRDS(arquivo_cache)
+} else if (file.exists("machado_wikisource_10completos.rds") || file.exists("machado_wikisource_12livros.rds")) {
+  # Reaproveita os 7 livros completos já baixados anteriormente sem precisar baixar de novo
+  arquivo_anterior <- ifelse(file.exists("machado_wikisource_10completos.rds"), 
+                             "machado_wikisource_10completos.rds", 
+                             "machado_wikisource_12livros.rds")
+  message("Extraindo os 7 livros completos do cache local '", arquivo_anterior, "'...")
+  
+  df_livros_bruto <- readRDS(arquivo_anterior) %>%
+    filter(str_detect(book_name, "Dom Casmurro|Brás Cubas|Quincas Borba|Alienista|Helena|Memorial de Aires|Esaú"))
+  
+  saveRDS(df_livros_bruto, arquivo_cache)
+  message("Base dos 7 livros salva em '", arquivo_cache, "'!")
+} else {
+  df_livros_bruto <- map_dfr(urls_machado, extrair_livro_wikisource)
+  saveRDS(df_livros_bruto, arquivo_cache)
+  message("Raspagem concluída e salva em '", arquivo_cache, "'!")
+}
+
+# ==============================================================================
+# ETAPA 3: LIMPEZA, AJUSTES E MANIPULAÇÃO DOS DADOS
+# ==============================================================================
+df_livros <- df_livros_bruto %>%
+  filter(!is.na(text)) %>%
+  filter(!str_detect(text, "^(Índice|Anterior|Próximo|Wikisource|Obra editada)")) %>%
+  mutate(
+    author = "Machado de Assis",
+    book_short = case_when(
+      str_detect(book_name, "Dom Casmurro") ~ "Dom Casmurro",
+      str_detect(book_name, "Brás Cubas") ~ "Memórias Póstumas",
+      str_detect(book_name, "Quincas Borba") ~ "Quincas Borba",
+      str_detect(book_name, "Alienista") ~ "O Alienista",
+      str_detect(book_name, "Helena") ~ "Helena",
+      str_detect(book_name, "Memorial de Aires") ~ "Memorial de Aires",
+      str_detect(book_name, "Esaú") ~ "Esaú e Jacó",
+      TRUE ~ book_name
+    ),
+    fase = ifelse(
+      str_to_lower(book_short) %in% c("helena", "ressurreição", "a mão e a luva", "iaiá garcia"),
+      "Fase Romântica",
+      "Fase Realista"
+    )
+  )
+
+# Tabela Resumo Estrutural e Volumetria
+tabela_resumo <- df_livros %>%
+  mutate(qtd_palavras = str_count(text, "\\S+")) %>%
+  group_by(Livro = book_short, Fase = fase) %>%
+  summarise(
+    Capitulos = n_distinct(chapter_name),
+    Paragrafos = n(),
+    Total_Palavras = sum(qtd_palavras),
+    Media_Palavras_Cap = round(Total_Palavras / Capitulos, 1),
+    .groups = "drop"
+  ) %>%
+  arrange(Fase, desc(Total_Palavras))
+
+print("=== RESUMO ESTRUTURAL E VOLUMETRIA DOS 7 LIVROS ===")
+print(tabela_resumo)
+
+# ==============================================================================
+# ETAPA 4: CONSTRUÇÃO DO CORPUS E MATRIZ DOCUMENTO-TERMO (QUANTEDA)
+# ==============================================================================
+df_corpus_agregado <- df_livros %>%
+  group_by(book_short) %>%
+  summarise(text = paste(text, collapse = " "), .groups = "drop")
+
+meu_corpus <- corpus(df_corpus_agregado$text, 
+                     docnames = df_corpus_agregado$book_short)
+
+sw_extra <- c("é", "era", "disse", "ia", "ser", "ter", "havia", "ainda", 
+              "assim", "tudo", "nada", "outro", "outra", "dous", "cousa")
+
+tokens_limpos <- tokens(
+  meu_corpus,
+  remove_punct = TRUE,
+  remove_numbers = TRUE,
+  remove_symbols = TRUE
+) %>%
+  tokens_tolower() %>%
+  tokens_remove(c(stopwords("portuguese"), sw_extra))
+
+matriz_dfm <- dfm(tokens_limpos)
+
+# ==============================================================================
+# ETAPA 5: COMPLEXIDADE LÉXICA E LEGIBILIDADE
+# ==============================================================================
+div_lexica <- textstat_lexdiv(matriz_dfm, measure = c("TTR", "CTTR"))
+legibilidade <- textstat_readability(meu_corpus, measure = "Flesch.Kincaid")
+
+tabela_complexidade <- div_lexica %>%
+  left_join(legibilidade, by = "document") %>%
+  rename(
+    Livro = document,
+    Diversidade_TTR = TTR,
+    Diversidade_Corrigida_CTTR = CTTR,
+    Complexidade_Flesch_Kincaid = Flesch.Kincaid
+  ) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 3))) %>%
+  arrange(desc(Diversidade_Corrigida_CTTR))
+
+print("=== MÉTRICAS DE COMPLEXIDADE LÉXICA E LEGIBILIDADE ===")
+print(tabela_complexidade)
+
+# Gráfico 5.1: Diversidade Léxica Bruta (TTR)
+g_ttr <- tabela_complexidade %>%
+  mutate(Livro = fct_reorder(Livro, Diversidade_TTR)) %>%
+  ggplot(aes(x = Livro, y = Diversidade_TTR, fill = Livro)) +
+  geom_col(show.legend = FALSE, width = 0.65) +
+  geom_text(aes(label = round(Diversidade_TTR, 3)), hjust = -0.15, size = 3.8, fontface = "bold") +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    title = "Diversidade Léxica Bruta (Métrica TTR)",
+    subtitle = "Proporção de palavras únicas / total de palavras",
+    x = NULL, y = "TTR (Type-Token Ratio)"
+  )
+print(g_ttr)
+
+# Gráfico 5.2: Comparativo TTR vs CTTR
+g_lex_comp <- tabela_complexidade %>%
+  select(Livro, `TTR (Bruto)` = Diversidade_TTR, `CTTR (Corrigido)` = Diversidade_Corrigida_CTTR) %>%
+  pivot_longer(cols = -Livro, names_to = "Metrica", values_to = "Valor") %>%
+  ggplot(aes(x = reorder_within(Livro, Valor, Metrica), y = Valor, fill = Metrica)) +
+  geom_col(show.legend = FALSE, width = 0.7) +
+  geom_text(aes(label = round(Valor, 2)), hjust = -0.15, size = 3.4) +
+  facet_wrap(~ Metrica, scales = "free") +
+  coord_flip() +
+  scale_x_reordered() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
+  labs(
+    title = "Comparativo de Diversidade Léxica: TTR vs. CTTR",
+    subtitle = "O CTTR corrige o efeito do tamanho do livro na contagem de vocabulário",
+    x = NULL, y = "Pontuação"
+  )
+print(g_lex_comp)
+
+# ==============================================================================
+# ETAPA 6: OCORRÊNCIA DE PALAVRAS ESPECÍFICAS E DISPERSÃO (X-RAY)
+# ==============================================================================
+# 6.1 Top 15 palavras mais frequentes por livro
+top_palavras <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  filter(!word %in% c(stopwords("portuguese"), sw_extra), 
+         !str_detect(word, "^[0-9]+$"),
+         nchar(word) > 2) %>%
+  count(book_short, word, sort = TRUE) %>%
+  group_by(book_short) %>%
+  slice_max(n, n = 15, with_ties = FALSE) %>%
+  ungroup()
+
+g_top <- ggplot(top_palavras, 
+                aes(x = reorder_within(word, n, book_short), 
+                    y = n, 
+                    fill = book_short)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ book_short, scales = "free", ncol = 4) +
+  coord_flip() +
+  scale_x_reordered() +
+  labs(
+    title = "Top 15 Palavras Mais Frequentes por Livro de Machado de Assis",
+    subtitle = "Excluindo stopwords e verbos auxiliares comuns",
+    x = NULL, y = "Frequência Absoluta"
+  ) +
+  theme(strip.text = element_text(face = "bold", size = 9.5))
+print(g_top)
+
+# 6.2 Frequência normalizada de palavras específicas
+palavras_alvo <- c("olhos", "amor", "morte", "fogo", 
+                   "alma", "razão", "loucura", "senhora")
+
+freq_especificas <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  group_by(book_short) %>%
+  mutate(total_palavras_livro = n()) %>%
+  filter(word %in% palavras_alvo) %>%
+  count(book_short, word, total_palavras_livro) %>%
+  mutate(freq_por_10mil = round((n / total_palavras_livro) * 10000, 2)) %>%
+  ungroup() %>%
+  arrange(word, desc(freq_por_10mil))
+
+print("=== OCORRÊNCIA DE PALAVRAS ESPECÍFICAS (A CADA 10 MIL PALAVRAS) ===")
+print(freq_especificas %>% select(book_short, word, n, freq_por_10mil), n = 40)
+
+g_heatmap <- ggplot(freq_especificas, aes(x = word, y = book_short, fill = freq_por_10mil)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = freq_por_10mil), color = "black", size = 3.5) +
+  scale_fill_gradient(low = "#f7fbff", high = "#2171b5") +
+  labs(
+    title = "Intensidade Temática: Ocorrência Relativa por Livro",
+    subtitle = "Frequência normalizada a cada 10.000 palavras",
+    x = "Palavra-Chave", y = NULL, fill = "Freq / 10k"
+  )
+print(g_heatmap)
+
+# 6.3 Gráfico de Raio-X (Dispersão Léxica nos 7 Livros)
+kwic_busca <- kwic(
+  tokens(meu_corpus),
+  pattern = c("olhos", "alma", "amor", "dinheiro", "senhora"),
+  case_insensitive = TRUE
+)
+
+if (nrow(kwic_busca) > 0) {
+  kwic_busca$docname <- factor(kwic_busca$docname, levels = docnames(meu_corpus))
+  
+  g_xray <- textplot_xray(kwic_busca, scale = "relative") +
+    aes(color = keyword) +
+    scale_color_brewer(palette = "Dark2", guide = "none") +
+    facet_grid(docname ~ keyword, drop = FALSE) +
+    labs(
+      title = "Dispersão Léxica ao Longo dos 7 Livros (Raio-X)",
+      x = "Índice Relativo de Tokens (Início -> Fim da Obra)"
+    ) +
+    theme(strip.text.y = element_text(angle = 0, hjust = 0, size = 9))
+  
+  print(g_xray)
+}
+
+# ==============================================================================
+# ETAPA 7: ANÁLISE DE SENTIMENTO E NUVEM DE POLARIDADE (LEXICONPT)
+# ==============================================================================
+data("oplexicon_v3.0")
+
+lexico_unico <- oplexicon_v3.0 %>%
+  distinct(term, .keep_all = TRUE)
+
+ruido_sentimento <- c(
+  stopwords("portuguese"),
+  "mas", "bem", "mal", "pouco", "pouca", "poucos", "poucas",
+  "grande", "grandes", "melhor", "pior", "certo", "certa",
+  "tal", "assim", "ainda", "agora", "sempre", "nunca", "nada", "tudo"
+)
+
+df_tokens_sent <- df_livros %>%
+  unnest_tokens(term, text) %>%
+  filter(!term %in% ruido_sentimento, nchar(term) > 2) %>%
+  inner_join(lexico_unico, by = "term")
+
+ordem_capitulos <- df_livros %>%
+  distinct(book_short, chapter_name) %>%
+  group_by(book_short) %>%
+  mutate(
+    num_cap = row_number(),
+    posicao_relativa = num_cap / max(num_cap)
+  ) %>%
+  ungroup()
+
+df_sentimento <- df_tokens_sent %>%
+  group_by(book_short, chapter_name) %>%
+  summarise(
+    polaridade_soma = sum(polarity, na.rm = TRUE),
+    polaridade_media = mean(polarity, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  left_join(ordem_capitulos, by = c("book_short", "chapter_name")) %>%
+  arrange(book_short, posicao_relativa)
+
+tabela_sentimentos <- df_sentimento %>%
+  group_by(Livro = book_short) %>%
+  summarise(
+    Media_Polaridade_Cap = round(mean(polaridade_soma), 2),
+    Desvio_Padrao_Cap = round(sd(polaridade_soma), 2),
+    Cap_Mais_Positivo = chapter_name[which.max(polaridade_soma)],
+    Cap_Mais_Negativo = chapter_name[which.min(polaridade_soma)],
+    .groups = "drop"
+  ) %>%
+  arrange(desc(Media_Polaridade_Cap))
+
+print("=== ESTATÍSTICAS DE SENTIMENTO POR LIVRO (FILTRADO) ===")
+print(tabela_sentimentos)
+
+# Gráfico 7.1: Arco Emocional ao longo dos 7 livros
+g_sent1 <- ggplot(df_sentimento, aes(x = posicao_relativa, 
+                                     y = polaridade_soma, 
+                                     color = book_short)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray40") +
+  geom_line(alpha = 0.45) +
+  geom_smooth(method = "loess", se = FALSE, linewidth = 1.0) +
+  facet_wrap(~ book_short, scales = "free_y", ncol = 4) +
+  scale_x_continuous(labels = scales::percent) +
+  labs(
+    title = "Arco Emocional dos 7 Livros de Machado de Assis",
+    subtitle = "Saldo de polaridade por capítulo (OpLexicon v3.0) com curva de tendência",
+    x = "Posição Relativa no Livro",
+    y = "Saldo de Sentimento"
+  ) +
+  theme(legend.position = "none", strip.text = element_text(face = "bold", size = 9.5))
+print(g_sent1)
+
+# Gráfico 7.2: Volatilidade Emocional
+g_sent2 <- df_sentimento %>%
+  group_by(book_short) %>%
+  summarise(desvio = sd(polaridade_soma, na.rm = TRUE), .groups = "drop") %>%
+  mutate(book_short = fct_reorder(book_short, desvio)) %>%
+  ggplot(aes(x = book_short, y = desvio, fill = book_short)) +
+  geom_col(show.legend = FALSE, width = 0.65) +
+  geom_text(aes(label = round(desvio, 2)), hjust = -0.15, size = 3.6) +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    title = "Volatilidade Emocional por Livro",
+    subtitle = "Desvio padrão da polaridade entre os capítulos",
+    x = NULL,
+    y = "Desvio Padrão do Sentimento"
+  )
+print(g_sent2)
+
+# Gráfico 7.3: Nuvem de Comparação (Positivas vs Negativas)
+matriz_nuvem_sent <- df_tokens_sent %>%
+  filter(polarity != 0) %>%
+  mutate(sentimento = ifelse(polarity > 0, "Positivas", "Negativas")) %>%
+  count(term, sentimento, sort = TRUE) %>%
+  acast(term ~ sentimento, value.var = "n", fill = 0)
+
+par(mar = c(0, 0, 2, 0))
+comparison.cloud(
+  matriz_nuvem_sent,
+  colors = c("#d95f02", "#1b9e77"),
+  max.words = 80,
+  scale = c(4.5, 0.9),
+  title.size = 1.5,
+  title.bg.colors = "white",
+  random.order = FALSE
+)
+title(main = "Termos Positivos vs. Negativos - Machado de Assis")
+
+# ==============================================================================
+# ETAPA 8: DISTINTIVIDADE VOCABULAR (TF-IDF) E CONTEXTO (BIGRAMAS)
+
+# 8.1 TF-IDF: Palavras mais exclusivas de cada um dos 7 livros
+tfidf_livros <- df_livros %>%
+  unnest_tokens(word, text) %>%
+  filter(!word %in% c(stopwords("portuguese"), sw_extra),
+         !str_detect(word, "^[0-9]+$"),
+         nchar(word) > 2) %>%
+  count(book_short, word, sort = TRUE) %>%
+  bind_tf_idf(word, book_short, n) %>%
+  group_by(book_short) %>%
+  slice_max(tf_idf, n = 10, with_ties = FALSE) %>%
+  ungroup()
+
+g_tfidf <- ggplot(tfidf_livros, aes(x = reorder_within(word, tf_idf, book_short), y = tf_idf, fill = book_short)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ book_short, scales = "free", ncol = 4) +
+  coord_flip() +
+  scale_x_reordered() +
+  labs(
+    title = "Assinatura Vocabular de Cada Livro (TF-IDF)",
+    subtitle = "Top 10 termos mais exclusivos e distintivos por obra",
+    x = NULL, y = "Pontuação TF-IDF"
+  ) +
+  theme(strip.text = element_text(face = "bold", size = 9.5))
+print(g_tfidf)
+
+# 8.2 Bigramas: Expressões consecutivas mais frequentes
+bigramas_machado <- df_livros %>%
+  unnest_tokens(bigrama, text, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigrama)) %>%
+  separate(bigrama, c("palavra1", "palavra2"), sep = " ") %>%
+  filter(
+    !palavra1 %in% c(stopwords("portuguese"), sw_extra),
+    !palavra2 %in% c(stopwords("portuguese"), sw_extra),
+    nchar(palavra1) > 2, nchar(palavra2) > 2
+  ) %>%
+  unite(bigrama, palavra1, palavra2, sep = " ") %>%
+  count(bigrama, sort = TRUE) %>%
+  slice_max(n, n = 20)
+
+g_bigramas <- ggplot(bigramas_machado, aes(x = fct_reorder(bigrama, n), y = n)) +
+  geom_col(fill = "#2c7fb8", width = 0.75) +
+  geom_text(aes(label = n), hjust = -0.2, size = 3.5) +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(
+    title = "Top 20 Expressões Mais Comuns (Bigramas)",
+    subtitle = "Pares de palavras consecutivas no conjunto dos 7 livros",
+    x = NULL, y = "Frequência"
+  )
+print(g_bigramas)
+# ==============================================================================
+
+
+
+
+
+# ==============================================================================
+# ETAPA 9: SIMILARIDADE ESTATÍSTICA E CLUSTERIZAÇÃO HIERÁRQUICA
+
+dfm_relativa <- dfm_weight(matriz_dfm, scheme = "prop")
+
+simil_livros <- textstat_simil(dfm_relativa, margin = "documents", method = "cosine")
+print("=== MATRIZ DE SIMILARIDADE DE COSSENO ENTRE OS 7 LIVROS ===")
+print(round(as.matrix(simil_livros), 3))
+
+dist_livros <- as.dist(1 - as.matrix(simil_livros))
+cluster_livros <- hclust(dist_livros, method = "ward.D2")
+
+par(mar = c(3, 4, 3, 2))
+plot(
+  cluster_livros,
+  main = "Clusterização Hierárquica dos 7 Livros de Machado de Assis",
+  sub = "Distância baseada em Similaridade de Cosseno (Método Ward.D2)",
+  xlab = "", ylab = "Distância Estilística"
+)
+# ==============================================================================
+
+
+
+
+
+
+
+
+
+
+
+

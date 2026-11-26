@@ -94,6 +94,7 @@ format:
       light: cosmo
       dark: darkly
     css: styles.css
+    include-after-body: contador-pdf.html
     grid:
       sidebar-width: 300px
       body-width: 900px

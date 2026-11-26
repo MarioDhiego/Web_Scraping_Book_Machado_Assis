@@ -377,8 +377,8 @@ Figura&nbsp;1: Machado de Assis (1839–1908), fundador e primeiro presidente da
 <div id="fig-mapa-machado" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mapa-machado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-0151593986c171fb530c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-0151593986c171fb530c">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[-22.8981,-22.9035,-22.9419],[-43.1925,-43.1772,-43.2008],8,null,null,{"interactive":true,"className":"","stroke":true,"color":"#2780e3","weight":5,"opacity":0.5,"fill":true,"fillColor":"#2780e3","fillOpacity":0.85},null,null,["<b>Morro do Livramento (Gamboa)<\/b><br/>Nascimento (1839) e infância na antiga chácara do Livramento.","<b>Rua do Ouvidor (Centro)<\/b><br/>Epicentro jornalístico, livraria Paula Brito e redações do Segundo Reinado.","<b>Rua Cosme Velho, nº 18<\/b><br/>Residência com Carolina (1884–1908), onde ganhou a alcunha de 'Bruxo do Cosme Velho'."],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"fitBounds":[-22.948,-43.208,-22.892,-43.17,[]],"limits":{"lat":[-22.9419,-22.8981],"lng":[-43.2008,-43.1772]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-49c2d82b3217fcb295f2" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-49c2d82b3217fcb295f2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[-22.8981,-22.9035,-22.9419],[-43.1925,-43.1772,-43.2008],8,null,null,{"interactive":true,"className":"","stroke":true,"color":"#2780e3","weight":5,"opacity":0.5,"fill":true,"fillColor":"#2780e3","fillOpacity":0.85},null,null,["<b>Morro do Livramento (Gamboa)<\/b><br/>Nascimento (1839) e infância na antiga chácara do Livramento.","<b>Rua do Ouvidor (Centro)<\/b><br/>Epicentro jornalístico, livraria Paula Brito e redações do Segundo Reinado.","<b>Rua Cosme Velho, nº 18<\/b><br/>Residência com Carolina (1884–1908), onde ganhou a alcunha de 'Bruxo do Cosme Velho'."],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"fitBounds":[-22.948,-43.208,-22.892,-43.17,[]],"limits":{"lat":[-22.9419,-22.8981],"lng":[-43.2008,-43.1772]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapa-machado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;2: Geografia afetiva e residencial de Machado de Assis no Rio de Janeiro (1839–1908). Elaborado em R com os pacotes leaflet (CHENG; KARAMBELKAR; XIE, 2024) e tibble (MÜLLER; WICKHAM, 2023).
@@ -662,6 +662,137 @@ Figura&nbsp;2: Geografia afetiva e residencial de Machado de Assis no Rio de Jan
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> De volta ao topo</a></main> <!-- /main -->
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const namespace = "mariodhiego-machado-textmining-2026";
+
+  const key = "apostila-pdf-downloads";
+
+
+
+  // Localiza todos os links que apontam para o PDF (barra superior, sidebar ou botões)
+
+  const linksPdf = document.querySelectorAll('a[href*="resumo-curso-text-mining.pdf"]');
+
+  if (linksPdf.length === 0) return;
+
+
+
+  // Cria o selo numérico ao lado de cada link do PDF
+
+  const badges = [];
+
+  linksPdf.forEach(link => {
+
+    // Evita duplicar se já existir
+
+    if (!link.querySelector(".contador-pdf-badge")) {
+
+      const span = document.createElement("span");
+
+      span.className = "contador-pdf-badge badge rounded-pill bg-warning text-dark ms-1";
+
+      span.style.fontSize = "0.75em";
+
+      span.style.fontWeight = "700";
+
+      span.textContent = "0";
+
+      link.appendChild(span);
+
+      badges.push(span);
+
+    }
+
+  });
+
+
+
+  function atualizarBadges(valor) {
+
+    badges.forEach(b => {
+
+      b.textContent = valor;
+
+    });
+
+  }
+
+
+
+  // 1. Busca o valor atual (usando endpoint de leitura segura)
+
+  fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/`)
+
+    .then(res => {
+
+      if (!res.ok) throw new Error("Chave ainda não iniciada");
+
+      return res.json();
+
+    })
+
+    .then(data => {
+
+      if (data && typeof data.count === "number") {
+
+        atualizarBadges(data.count);
+
+      }
+
+    })
+
+    .catch(() => {
+
+      // Se for o primeiro acesso antes do 1º clique, mantém "0"
+
+      atualizarBadges(0);
+
+    });
+
+
+
+  // 2. Soma +1 e atualiza o número imediatamente ao clicar para baixar
+
+  linksPdf.forEach(link => {
+
+    link.addEventListener("click", function () {
+
+      // Atualiza visualmente na hora para feedback imediato
+
+      const atual = parseInt(badges[0]?.textContent || "0", 10) || 0;
+
+      atualizarBadges(atual + 1);
+
+
+
+      // Registra no servidor
+
+      fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
+
+        .then(res => res.json())
+
+        .then(data => {
+
+          if (data && typeof data.count === "number") {
+
+            atualizarBadges(data.count);
+
+          }
+
+        })
+
+        .catch(err => console.warn("Contador offline:", err));
+
+    });
+
+  });
+
+});
+
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1254,7 +1385,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"openEffect":"zoom","descPosition":"bottom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
